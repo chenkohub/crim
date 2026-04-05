@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sort It Out - LawGames</title>
+    <link rel="stylesheet" href="../../theme.css">
+    <style>
+        :root {
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.15);
+            --bucket-height: 60px;
+        }
+
+        body {
+            background: var(--color-bg-secondary, linear-gradient(135deg, #f5f7fa 0%, #f0f4f8 100%));
+            min-height: 100vh;
+            font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+            margin: 0;
+            padding: 0;
+        }
+
+        .game-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Mode Selector Screen */
+        .mode-selector {
+            text-align: center;
+        }
+
+        .mode-selector h2 {
+            font-size: 1.5rem;
+            color: var(--color-text-primary, #1a1a1a);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .mode-selector p {
+            color: var(--color-text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .modes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .mode-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .mode-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--color-category-blue);
+        }
+
+        .mode-card h3 {
+            font-size: 1.25rem;
+            color: var(--color-text-primary);
+            margin: 0 0 0.75rem 0;
+            font-weight: 600;
+        }
+
+        .mode-card .card-count {
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            margin: 0;
+        }
+
+        .mode-card .card-count strong {
+            font-size: 1.5rem;
+            color: var(--color-category-blue);
+            font-weight: 700;
+        }
+
+        /* Game View */
+        .game-view {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+        }
+
+        .game-view.active {
+            display: flex;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .game-stats {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .game-stats > div {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--color-text-secondary);
+            font-weight: normal;
+            font-size: 0.9rem;
+        }
+
+        .stat-value {
+            color: var(--color-text-primary);
+            font-size: 1.3rem;
+        }
+
+        .stat-correct {
+            color: var(--color-correct);
+        }
+
+        .stat-incorrect {
+            color: var(--color-wrong);
+        }
+
+        .stat-streak {
+            color: var(--color-category-yellow);
+        }
+
+        .progress-bar-container {
+            background: var(--color-bg-tertiary);
+            border-radius: 8px;
+            height: 6px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--color-category-blue) 0%, #357abd 100%);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .game-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        /* Statement Card */
+        .statement-card {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: var(--card-shadow);
+            width: 100%;
+            max-width: 600px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .statement-card.correct {
+            background: rgba(76, 175, 80, 0.1);
+            animation: cardFlash 0.6s ease;
+        }
+
+        .statement-card.incorrect {
+            animation: cardShake 0.4s ease;
+            background: rgba(244, 67, 54, 0.1);
+        }
+
+        .statement-card p {
+            font-size: 1.3rem;
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        @keyframes cardFlash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes cardShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+        }
+
+        .feedback-float {
+            position: absolute;
+            font-weight: 700;
+            font-size: 1.5rem;
+            pointer-events: none;
+            animation: floatUp 1s ease-out forwards;
+        }
+
+        .feedback-float.correct {
+            color: var(--color-correct);
+        }
+
+        .feedback-float.incorrect {
+            color: var(--color-wrong);
+        }
+
+        .feedback-explanation {
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            background: var(--color-bg-tertiary);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--color-category-blue);
+            margin-top: 1rem;
+            min-height: 40px;
+            text-align: center;
+        }
+
+        /* Buckets */
+        .buckets {
+            display: flex;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 600px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .buckets.grid-2x2 {
+            max-width: 550px;
+            justify-content: center;
+        }
+
+        .bucket-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bucket-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .bucket-btn:active {
+            transform: translateY(0);
+        }
+
+        .bucket-btn-1 {
+            background: linear-gradient(135deg, var(--color-category-blue) 0%, #357abd 100%);
+        }
+
+        .bucket-btn-2 {
+            background: linear-gradient(135deg, var(--color-wrong) 0%, #c0392b 100%);
+        }
+
+        .bucket-btn-3 {
+            background: linear-gradient(135deg, var(--color-correct) 0%, #229954 100%);
+        }
+
+        .bucket-btn-4 {
+            background: linear-gradient(135deg, var(--color-category-yellow) 0%, #d68910 100%);
+        }
+
+        /* End Screen */
+        .end-screen {
+            display: none;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .end-screen.active {
+            display: block;
+        }
+
+        .end-screen h2 {
+            font-size: 2rem;
+            color: var(--color-text-primary);
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .final-score {
+            font-size: 2.5rem;
+            color: var(--color-category-blue);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .final-percentage {
+            font-size: 1.3rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .end-stats {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .end-stats > div {
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--color-border-subtle);
+        }
+
+        .end-stats > div:nth-child(odd) {
+            border-right: 1px solid var(--color-border-subtle);
+            border-bottom: 1px solid var(--color-border-subtle);
+        }
+
+        @media (max-width: 500px) {
+            .end-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .end-stats > div {
+                border-right: none;
+            }
+
+            .end-stats > div:nth-child(odd) {
+                border-right: none;
+            }
+        }
+
+        .end-stats h3 {
+            font-size: 0.85rem;
+            color: var(--color-text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 0.5rem 0;
+            font-weight: 600;
+        }
+
+        .end-stats .value {
+            font-size: 1.8rem;
+            color: var(--color-text-primary);
+            font-weight: 700;
+        }
+
+        .mistakes-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+            text-align: left;
+        }
+
+        .mistakes-section h3 {
+            font-size: 1.2rem;
+            color: var(--color-text-primary);
+            margin: 0 0 1.5rem 0;
+            font-weight: 600;
+        }
+
+        .mistake-item {
+            padding: 1.5rem;
+            background: rgba(244, 67, 54, 0.05);
+            border-left: 4px solid var(--color-wrong);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .mistake-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .mistake-statement {
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin: 0 0 0.75rem 0;
+            font-size: 0.95rem;
+        }
+
+        .mistake-answer {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .mistake-answer strong {
+            color: var(--color-correct);
+        }
+
+        .mistake-explanation {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            margin: 0;
+            font-style: italic;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-category-blue) 0%, #357abd 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--color-bg-tertiary);
+            color: var(--color-text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-border);
+            transform: translateY(-2px);
+        }
+
+        .btn-share {
+            background: linear-gradient(135deg, var(--color-category-yellow) 0%, #d68910 100%);
+            color: white;
+        }
+
+        .btn-share:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .game-container {
+                padding: 1rem;
+            }
+
+            .statement-card {
+                padding: 2rem;
+                min-height: 160px;
+            }
+
+            .statement-card p {
+                font-size: 1.1rem;
+            }
+
+            .bucket-btn {
+                min-width: 120px;
+                padding: 1.25rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .game-stats {
+                font-size: 0.9rem;
+                gap: 1rem;
+            }
+
+            .end-screen {
+                margin: 0 1rem;
+            }
+
+            .modes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Timer (optional, small) */
+        .timer {
+            font-size: 0.85rem;
+            color: var(--color-text-tertiary);
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+        }
+
+        /* ── Dark theme overrides (dark, midnight, forest, ocean, sunset) ── */
+        [data-theme="dark"] .mode-card,
+        [data-theme="midnight"] .mode-card,
+        [data-theme="forest"] .mode-card,
+        [data-theme="ocean"] .mode-card,
+        [data-theme="sunset"] .mode-card,
+        [data-theme="dark"] .statement-card,
+        [data-theme="midnight"] .statement-card,
+        [data-theme="forest"] .statement-card,
+        [data-theme="ocean"] .statement-card,
+        [data-theme="sunset"] .statement-card,
+        [data-theme="dark"] .end-stats,
+        [data-theme="midnight"] .end-stats,
+        [data-theme="forest"] .end-stats,
+        [data-theme="ocean"] .end-stats,
+        [data-theme="sunset"] .end-stats,
+        [data-theme="dark"] .mistakes-section,
+        [data-theme="midnight"] .mistakes-section,
+        [data-theme="forest"] .mistakes-section,
+        [data-theme="ocean"] .mistakes-section,
+        [data-theme="sunset"] .mistakes-section {
+            background: var(--color-bg-secondary);
+            color: var(--color-text-primary);
+        }
+
+        [data-theme="dark"] .mode-card h3,
+        [data-theme="midnight"] .mode-card h3,
+        [data-theme="forest"] .mode-card h3,
+        [data-theme="ocean"] .mode-card h3,
+        [data-theme="sunset"] .mode-card h3,
+        [data-theme="dark"] .statement-card p,
+        [data-theme="midnight"] .statement-card p,
+        [data-theme="forest"] .statement-card p,
+        [data-theme="ocean"] .statement-card p,
+        [data-theme="sunset"] .statement-card p,
+        [data-theme="dark"] .end-screen h2,
+        [data-theme="midnight"] .end-screen h2,
+        [data-theme="forest"] .end-screen h2,
+        [data-theme="ocean"] .end-screen h2,
+        [data-theme="sunset"] .end-screen h2,
+        [data-theme="dark"] .stat-value,
+        [data-theme="midnight"] .stat-value,
+        [data-theme="forest"] .stat-value,
+        [data-theme="ocean"] .stat-value,
+        [data-theme="sunset"] .stat-value,
+        [data-theme="dark"] .end-stats .value,
+        [data-theme="midnight"] .end-stats .value,
+        [data-theme="forest"] .end-stats .value,
+        [data-theme="ocean"] .end-stats .value,
+        [data-theme="sunset"] .end-stats .value,
+        [data-theme="dark"] .mistakes-section h3,
+        [data-theme="midnight"] .mistakes-section h3,
+        [data-theme="forest"] .mistakes-section h3,
+        [data-theme="ocean"] .mistakes-section h3,
+        [data-theme="sunset"] .mistakes-section h3,
+        [data-theme="dark"] .mistake-statement,
+        [data-theme="midnight"] .mistake-statement,
+        [data-theme="forest"] .mistake-statement,
+        [data-theme="ocean"] .mistake-statement,
+        [data-theme="sunset"] .mistake-statement {
+            color: var(--color-text-primary);
+        }
+
+        [data-theme="dark"] .mode-card .card-count,
+        [data-theme="midnight"] .mode-card .card-count,
+        [data-theme="forest"] .mode-card .card-count,
+        [data-theme="ocean"] .mode-card .card-count,
+        [data-theme="sunset"] .mode-card .card-count,
+        [data-theme="dark"] .stat-label,
+        [data-theme="midnight"] .stat-label,
+        [data-theme="forest"] .stat-label,
+        [data-theme="ocean"] .stat-label,
+        [data-theme="sunset"] .stat-label,
+        [data-theme="dark"] .mode-selector p,
+        [data-theme="midnight"] .mode-selector p,
+        [data-theme="forest"] .mode-selector p,
+        [data-theme="ocean"] .mode-selector p,
+        [data-theme="sunset"] .mode-selector p,
+        [data-theme="dark"] .progress-text,
+        [data-theme="midnight"] .progress-text,
+        [data-theme="forest"] .progress-text,
+        [data-theme="ocean"] .progress-text,
+        [data-theme="sunset"] .progress-text,
+        [data-theme="dark"] .final-percentage,
+        [data-theme="midnight"] .final-percentage,
+        [data-theme="forest"] .final-percentage,
+        [data-theme="ocean"] .final-percentage,
+        [data-theme="sunset"] .final-percentage,
+        [data-theme="dark"] .end-stats h3,
+        [data-theme="midnight"] .end-stats h3,
+        [data-theme="forest"] .end-stats h3,
+        [data-theme="ocean"] .end-stats h3,
+        [data-theme="sunset"] .end-stats h3,
+        [data-theme="dark"] .mistake-answer,
+        [data-theme="midnight"] .mistake-answer,
+        [data-theme="forest"] .mistake-answer,
+        [data-theme="ocean"] .mistake-answer,
+        [data-theme="sunset"] .mistake-answer,
+        [data-theme="dark"] .mistake-explanation,
+        [data-theme="midnight"] .mistake-explanation,
+        [data-theme="forest"] .mistake-explanation,
+        [data-theme="ocean"] .mistake-explanation,
+        [data-theme="sunset"] .mistake-explanation,
+        [data-theme="dark"] .feedback-explanation,
+        [data-theme="midnight"] .feedback-explanation,
+        [data-theme="forest"] .feedback-explanation,
+        [data-theme="ocean"] .feedback-explanation,
+        [data-theme="sunset"] .feedback-explanation {
+            color: var(--color-text-secondary);
+        }
+
+        [data-theme="dark"] .statement-card.correct,
+        [data-theme="midnight"] .statement-card.correct,
+        [data-theme="forest"] .statement-card.correct,
+        [data-theme="ocean"] .statement-card.correct,
+        [data-theme="sunset"] .statement-card.correct {
+            background: rgba(39, 174, 96, 0.2);
+        }
+
+        [data-theme="dark"] .statement-card.incorrect,
+        [data-theme="midnight"] .statement-card.incorrect,
+        [data-theme="forest"] .statement-card.incorrect,
+        [data-theme="ocean"] .statement-card.incorrect,
+        [data-theme="sunset"] .statement-card.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+        }
+
+        [data-theme="dark"] .feedback-explanation,
+        [data-theme="midnight"] .feedback-explanation,
+        [data-theme="forest"] .feedback-explanation,
+        [data-theme="ocean"] .feedback-explanation,
+        [data-theme="sunset"] .feedback-explanation {
+            background: var(--color-bg-tertiary);
+        }
+
+        [data-theme="dark"] .mistake-item,
+        [data-theme="midnight"] .mistake-item,
+        [data-theme="forest"] .mistake-item,
+        [data-theme="ocean"] .mistake-item,
+        [data-theme="sunset"] .mistake-item {
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        [data-theme="dark"] .progress-bar-container,
+        [data-theme="midnight"] .progress-bar-container,
+        [data-theme="forest"] .progress-bar-container,
+        [data-theme="ocean"] .progress-bar-container,
+        [data-theme="sunset"] .progress-bar-container {
+            background: var(--color-bg-tertiary);
+        }
+
+        [data-theme="dark"] .end-stats > div,
+        [data-theme="midnight"] .end-stats > div,
+        [data-theme="forest"] .end-stats > div,
+        [data-theme="ocean"] .end-stats > div,
+        [data-theme="sunset"] .end-stats > div,
+        [data-theme="dark"] .end-stats > div:nth-child(odd),
+        [data-theme="midnight"] .end-stats > div:nth-child(odd),
+        [data-theme="forest"] .end-stats > div:nth-child(odd),
+        [data-theme="ocean"] .end-stats > div:nth-child(odd),
+        [data-theme="sunset"] .end-stats > div:nth-child(odd) {
+            border-color: var(--color-border);
+        }
+
+        [data-theme="dark"] .btn-secondary,
+        [data-theme="midnight"] .btn-secondary,
+        [data-theme="forest"] .btn-secondary,
+        [data-theme="ocean"] .btn-secondary,
+        [data-theme="sunset"] .btn-secondary {
+            background: var(--color-bg-tertiary);
+            color: var(--color-text-primary);
+        }
+
+        [data-theme="dark"] .timer,
+        [data-theme="midnight"] .timer,
+        [data-theme="forest"] .timer,
+        [data-theme="ocean"] .timer,
+        [data-theme="sunset"] .timer {
+            background: var(--color-bg-tertiary);
+            color: var(--color-text-secondary);
+        }
+
+        [data-theme="dark"] .mode-card:hover,
+        [data-theme="midnight"] .mode-card:hover,
+        [data-theme="forest"] .mode-card:hover,
+        [data-theme="ocean"] .mode-card:hover,
+        [data-theme="sunset"] .mode-card:hover {
+            border-color: var(--color-subject-crim);
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <!-- Header -->
+        <div id="header"></div>
+
+        <!-- Mode Selector -->
+        <div class="mode-selector" id="modeSelector">
+            <h2>Choose a Mode</h2>
+            <p>Test your knowledge of criminal law concepts</p>
+            <div class="modes-grid" id="modesGrid"></div>
+        </div>
+
+        <!-- Game View -->
+        <div class="game-view" id="gameView">
+            <div class="game-header">
+                <div class="game-stats">
+                    <div>
+                        <span class="stat-label">Correct:</span>
+                        <span class="stat-value stat-correct" id="statCorrect">0</span>
+                    </div>
+                    <div>
+                        <span class="stat-label">Incorrect:</span>
+                        <span class="stat-value stat-incorrect" id="statIncorrect">0</span>
+                    </div>
+                    <div>
+                        <span class="stat-label">Streak:</span>
+                        <span class="stat-value stat-streak" id="statStreak">🔥 0</span>
+                    </div>
+                </div>
+                <div class="timer" id="timer"></div>
+            </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p class="progress-text" id="progressText">Card 1 of 20</p>
+
+            <div class="game-content">
+                <div class="statement-card" id="statementCard">
+                    <p id="statementText"></p>
+                </div>
+
+                <div class="buckets" id="bucketsContainer"></div>
+            </div>
+        </div>
+
+        <!-- End Screen -->
+        <div class="end-screen" id="endScreen">
+            <h2>Game Complete</h2>
+            <div class="final-score" id="finalScore">24/30</div>
+            <div class="final-percentage" id="finalPercentage">80% Correct</div>
+
+            <div class="end-stats">
+                <div>
+                    <h3>Time</h3>
+                    <div class="value" id="finalTime">2:30</div>
+                </div>
+                <div>
+                    <h3>Best Streak</h3>
+                    <div class="value" id="finalStreak">🔥 12</div>
+                </div>
+            </div>
+
+            <div id="mistakesContainer" class="mistakes-section" style="display: none;">
+                <h3>Mistakes to Review</h3>
+                <div id="mistakesList"></div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="playAgainBtn">Play Again</button>
+                <button class="btn btn-secondary" id="tryAnotherModeBtn">Try Another Mode</button>
+                <button class="btn btn-share" id="shareBtn">Share Score</button>
+            </div>
+        </div>
+    </div>
+    <script src="../../shared.js"></script>
+    <script src="../../navbar.js"></script>
+    <script>
+        var SORT_DATA = {
+  "modes": [
+    {
+      "id": "cl-vs-mpc",
+      "title": "Common Law vs. MPC",
+      "buckets": ["Common Law", "MPC"],
+      "pairs": [
+        {
+          "statement": "Murder is divided into first and second degrees.",
+          "answer": "Common Law",
+          "explanation": "Common law distinguishes between first-degree murder (P&D, statutory, FM) and second-degree murder. The MPC uses no degrees—only 'murder' defined by specific mental states."
+        },
+        {
+          "statement": "Murder requires purposely or knowingly killing, or recklessly killing under extreme indifference.",
+          "answer": "MPC",
+          "explanation": "MPC § 210.2 defines murder via mental states (purpose, knowledge, extreme recklessness). Common law uses 'malice aforethought' with four forms."
+        },
+        {
+          "statement": "Involuntary manslaughter can be based on ordinary negligence.",
+          "answer": "Common Law",
+          "explanation": "CL allows recklessness, gross negligence, or negligence. MPC § 210.3 permits only recklessness for involuntary manslaughter—never negligence."
+        },
+        {
+          "statement": "The default mens rea is recklessness when none is specified.",
+          "answer": "MPC",
+          "explanation": "MPC § 2.02 sets recklessness as the default. Common law defaults vary by jurisdiction and crime."
+        },
+        {
+          "statement": "Voluntary manslaughter reduction is based on categorical legal provocation (battery, adultery, etc.).",
+          "answer": "Common Law",
+          "explanation": "CL uses the categorical approach with judge-decided categories. MPC § 210.3 uses EMED with a jury-decided reasonableness standard."
+        },
+        {
+          "statement": "EMED is the framework for mitigating murder to manslaughter.",
+          "answer": "MPC",
+          "explanation": "MPC § 210.3 defines Extreme Mental or Emotional Disturbance (EMED). Common law uses categorical provocation or modern 'reasonable person' approach."
+        },
+        {
+          "statement": "Felony murder applies as an automatic doctrine when death results from a dangerous felony.",
+          "answer": "Common Law",
+          "explanation": "Common law uses FM with limitations (inherently dangerous, res gestae, merger, agency). The MPC eliminates FM but presumes extreme recklessness for enumerated felonies."
+        },
+        {
+          "statement": "A stated mental state modifies all actus reus elements unless contrary intent appears.",
+          "answer": "MPC",
+          "explanation": "MPC § 2.02(3)–(4) establishes this principle. Common law does not have a uniform rule applying mens rea across elements."
+        },
+        {
+          "statement": "Mistake of fact defense for specific intent crimes requires the mistake to be both honest and reasonable.",
+          "answer": "Common Law",
+          "explanation": "For CL general intent crimes, both honesty and reasonableness required. Specific intent crimes only need honesty. MPC § 2.04 has a unified framework based on the mental state required."
+        },
+        {
+          "statement": "Willful blindness satisfies 'knowingly' when there is conscious purpose to avoid learning the truth.",
+          "answer": "MPC",
+          "explanation": "United States v. Jewell (MPC jurisdiction) holds willful blindness = knowledge. Common law jurisdictions vary on whether willful blindness counts as knowledge."
+        },
+        {
+          "statement": "An omission can satisfy actus reus when a legal duty exists.",
+          "answer": "Common Law",
+          "explanation": "Both systems recognize omission as satisfying actus reus if duty exists (special relationship, contract, statute, creation of risk, voluntary assumption). This is universal."
+        },
+        {
+          "statement": "The prosecution must prove deliberation and premeditation as separate elements.",
+          "answer": "Common Law",
+          "explanation": "CL first-degree murder requires willful, deliberate, and premeditated killing. MPC has no 'deliberation' or 'premeditation'—only mental state definitions."
+        },
+        {
+          "statement": "Recklessness is defined as conscious disregard of a substantial and unjustifiable risk.",
+          "answer": "MPC",
+          "explanation": "MPC § 2.02 defines recklessness this way. Common law uses similar concept but applies it variably across different crime categories."
+        },
+        {
+          "statement": "Conditional intent is a cognizable mental state that satisfies the mens rea requirement.",
+          "answer": "MPC",
+          "explanation": "MPC § 2.02(6) recognizes conditional intent. Common law does not uniformly recognize it."
+        },
+        {
+          "statement": "Transferred intent applies when defendant intends harm to one person but causes it to another.",
+          "answer": "Common Law",
+          "explanation": "Both systems recognize transferred intent to an extent, but it originates in common law doctrine. People v. Scott applies it to bad-aim killings."
+        }
+      ]
+    },
+    {
+      "id": "gen-vs-spec",
+      "title": "General Intent vs. Specific Intent",
+      "buckets": ["General Intent", "Specific Intent"],
+      "pairs": [
+        {
+          "statement": "Assault — the attempt or threat of force.",
+          "answer": "General Intent",
+          "explanation": "Assault requires only intent to do the act (threat or attempt). No intent beyond the actus reus."
+        },
+        {
+          "statement": "Theft — the intent to permanently deprive the owner of property.",
+          "answer": "Specific Intent",
+          "explanation": "Theft requires intent to PERMANENTLY DEPRIVE, which goes beyond the taking itself. This is additional intent beyond the actus reus."
+        },
+        {
+          "statement": "Battery — the unlawful application of force.",
+          "answer": "General Intent",
+          "explanation": "Battery requires only intent to apply force. No additional intent beyond the actus reus."
+        },
+        {
+          "statement": "Burglary — breaking and entering a building with intent to commit a crime inside.",
+          "answer": "Specific Intent",
+          "explanation": "Burglary requires intent to commit a crime INSIDE (future crime). This intent goes beyond the entry itself."
+        },
+        {
+          "statement": "Rape — non-consensual sexual intercourse.",
+          "answer": "General Intent",
+          "explanation": "Rape requires only intent to commit the sexual act. No additional intent beyond the actus reus (though jurisdictions vary)."
+        },
+        {
+          "statement": "Robbery — taking property by force or threat with intent to permanently deprive.",
+          "answer": "Specific Intent",
+          "explanation": "Robbery requires specific intent to permanently deprive (the intent of theft) plus the act of taking by force."
+        },
+        {
+          "statement": "Murder — unlawful killing with malice aforethought.",
+          "answer": "General Intent",
+          "explanation": "Murder is generally classified as general intent—intent to do the act of killing, with malice inferred from circumstances. (Some modern courts debate this.)"
+        },
+        {
+          "statement": "Larceny — the trespassory taking and carrying away of personal property of another with intent to permanently deprive.",
+          "answer": "Specific Intent",
+          "explanation": "The specific intent to PERMANENTLY DEPRIVE is an intent beyond the taking; this makes it specific intent."
+        },
+        {
+          "statement": "Under the specific intent rule, an honest mistake of fact is a complete defense.",
+          "answer": "Specific Intent",
+          "explanation": "For specific intent crimes, even an unreasonable honest mistake negates intent. General intent crimes require the mistake to be both honest AND reasonable."
+        },
+        {
+          "statement": "Under the general intent rule, a mistake of fact is only a defense if both honest and reasonable.",
+          "answer": "General Intent",
+          "explanation": "General intent crimes require the higher standard: the mistake must be both honest AND reasonable to be a valid defense."
+        },
+        {
+          "statement": "Arson — the malicious burning of a dwelling or property.",
+          "answer": "Specific Intent",
+          "explanation": "Arson requires malice (intent to burn), which is an additional mental state beyond the act of burning. Specific intent crime."
+        },
+        {
+          "statement": "Manslaughter — unlawful killing without malice aforethought.",
+          "answer": "General Intent",
+          "explanation": "Voluntary manslaughter (heat of passion) requires only intent to kill or do GBI. Involuntary manslaughter requires recklessness or negligence. General intent."
+        },
+        {
+          "statement": "False pretenses — obtaining title and possession of property through fraudulent misrepresentation.",
+          "answer": "Specific Intent",
+          "explanation": "False pretenses requires specific intent to defraud (intent to permanently deprive), going beyond the receipt of property."
+        },
+        {
+          "statement": "Forgery — making or altering a false document with intent to defraud.",
+          "answer": "Specific Intent",
+          "explanation": "Forgery requires specific intent to defraud or use the false document. Intent beyond the mere act of creating the document."
+        },
+        {
+          "statement": "Kidnapping — the unlawful taking and carrying away of a person without consent.",
+          "answer": "Specific Intent",
+          "explanation": "Kidnapping requires specific intent—intent to move the person or confine them. Specific intent crime."
+        }
+      ]
+    },
+    {
+      "id": "justify-vs-excuse",
+      "title": "Justification vs. Excuse",
+      "buckets": ["Justification", "Excuse"],
+      "pairs": [
+        {
+          "statement": "Self-defense — using proportional force to protect yourself from imminent harm.",
+          "answer": "Justification",
+          "explanation": "Self-defense is a justification: the defendant's act was RIGHT under the circumstances. The law approves of defending oneself from attack."
+        },
+        {
+          "statement": "Duress — committing a crime under threat of imminent bodily harm from a human threat.",
+          "answer": "Excuse",
+          "explanation": "Duress is an excuse: the defendant's act was WRONG, but the defendant is not criminally responsible due to the coercive circumstances. (Note: duress does not excuse murder.)"
+        },
+        {
+          "statement": "Necessity — choosing the lesser evil when faced with a choice of harms from natural circumstances.",
+          "answer": "Justification",
+          "explanation": "Necessity is typically treated as a justification: the defendant's choice to cause lesser harm was RIGHT under the circumstances. (Cannot justify killing an innocent person.)"
+        },
+        {
+          "statement": "Insanity — the defendant lacked capacity to appreciate the nature/wrongfulness of the act due to mental illness.",
+          "answer": "Excuse",
+          "explanation": "Insanity is an excuse: the defendant's act was wrong, but the defendant is excused from responsibility due to lack of mental capacity to appreciate wrongfulness."
+        },
+        {
+          "statement": "Defense of others — using force to protect another person from imminent harm.",
+          "answer": "Justification",
+          "explanation": "Defense of others is a justification: defending an innocent third party from harm is socially approved, like self-defense."
+        },
+        {
+          "statement": "Infancy/age — a child under a certain age (typically 7) cannot form criminal intent.",
+          "answer": "Excuse",
+          "explanation": "Infancy is typically an excuse: young children lack the cognitive capacity to appreciate wrongfulness. It's status-based, not about the rightness of the act."
+        },
+        {
+          "statement": "Intoxication (involuntary) — someone secretly slipped the defendant drugs without knowledge or consent.",
+          "answer": "Excuse",
+          "explanation": "Involuntary intoxication is an excuse: the defendant's act may have been wrong, but the defendant lacked capacity to form intent due to unknown intoxication."
+        },
+        {
+          "statement": "Voluntary intoxication — the defendant knowingly consumed alcohol or drugs before committing the crime.",
+          "answer": "Excuse",
+          "explanation": "Voluntary intoxication is sometimes treated as an excuse (negates specific intent) or partial excuse. It typically does not excuse general intent crimes or gross negligence."
+        }
+      ]
+    },
+    {
+      "id": "theft-types",
+      "title": "Classify the Theft",
+      "buckets": ["Larceny", "Larceny by Trick", "False Pretenses", "Embezzlement"],
+      "pairs": [
+        {
+          "statement": "D shoplifts a coat from a store by concealing it in a bag and walking out.",
+          "answer": "Larceny",
+          "explanation": "Classic larceny: trespassory taking (without owner consent) + asportation (carrying away) + intent to permanently deprive. No fraud involved."
+        },
+        {
+          "statement": "D tells a jeweler that she is buying on behalf of a royal family, securing possession of a necklace to show the 'client,' then sells it.",
+          "answer": "Larceny by Trick",
+          "explanation": "D obtained possession through fraud (false statement) but NOT title. Larceny by trick: fraudulent deception → possession obtained. The jeweler still owned the necklace."
+        },
+        {
+          "statement": "D uses a fake ID to pose as a bank official, convincing a homeowner to sign documents transferring property title. The homeowner thinks D is a legitimate buyer.",
+          "answer": "False Pretenses",
+          "explanation": "D obtained BOTH title AND possession through fraud. The victim transferred ownership believing D was legitimate. This is false pretenses (State v. Pierce)."
+        },
+        {
+          "statement": "D, a cashier at a grocery store, pockets $100 from the register over the course of her shift.",
+          "answer": "Embezzlement",
+          "explanation": "D is in lawful possession of the money through employment. She then CONVERTS it (uses it contrary to the owner's interests). This is embezzlement—conversion by someone entrusted."
+        },
+        {
+          "statement": "D borrowed her friend's car with permission, intending to return it. She drives it to another state and sells it.",
+          "answer": "Embezzlement",
+          "explanation": "D had lawful possession (lent the car). She then converted it (sold it instead of returning). Embezzlement: lawful possession + conversion."
+        },
+        {
+          "statement": "D convinces a store manager that she is a health inspector and needs to 'inspect' valuable merchandise for quality control, takes it, and never returns it.",
+          "answer": "Larceny by Trick",
+          "explanation": "D obtained possession through a false pretense (false identity) but the store manager never intended to transfer title. Possession obtained via fraud = larceny by trick."
+        },
+        {
+          "statement": "D's employer gives D a check to deposit in the company account. D cashes it and keeps the money instead.",
+          "answer": "Embezzlement",
+          "explanation": "D had lawful possession of the check (entrusted to deposit it). She converted it to her own use instead. Embezzlement."
+        },
+        {
+          "statement": "D picks a pocket and steals a wallet without the victim's knowledge or consent.",
+          "answer": "Larceny",
+          "explanation": "Classic larceny: trespassory taking (without consent) + carrying away + intent to permanently deprive. No fraud; purely a stealth taking."
+        },
+        {
+          "statement": "D, a bank teller, gradually skims small amounts from dormant accounts over six months, totaling $12,000.",
+          "answer": "Embezzlement",
+          "explanation": "D had lawful possession (as teller) and converted the funds. Systematic conversion by someone entrusted = embezzlement."
+        },
+        {
+          "statement": "D rents an apartment, claiming to be employed at a prestigious firm and showing fake employment verification. After the lease is signed and she receives keys, she moves in and lives there for three months without paying rent.",
+          "answer": "False Pretenses",
+          "explanation": "D obtained the right to POSSESSION (and arguably an estate in the property) through fraudulent misrepresentation of identity/employment. False pretenses."
+        },
+        {
+          "statement": "D tells a pawn broker that a watch is his own, when it actually belongs to a relative. The pawn broker buys the watch.",
+          "answer": "Larceny by Trick",
+          "explanation": "D lied about ownership, causing the pawn broker to take possession believing D had the right to sell. But the pawn broker never got good title. Larceny by trick."
+        },
+        {
+          "statement": "D, a handyman hired to repair a homeowner's roof, finds valuable jewelry in the attic and takes it.",
+          "answer": "Larceny",
+          "explanation": "D was in lawful possession of the house (invited) but took the jewelry trespassorily (without consent). Not embezzlement because the homeowner never entrusted the jewelry to D."
+        },
+        {
+          "statement": "D finds a package containing expensive electronics on a public street. D takes it and sells it.",
+          "answer": "Larceny",
+          "explanation": "D takes property of another without consent + carries it away + intent to permanently deprive. Though found, it is still property of another. Larceny."
+        },
+        {
+          "statement": "D, a lawyer, is given client funds to hold in trust. D uses the funds for personal gambling, intending to replace them later but never does.",
+          "answer": "Embezzlement",
+          "explanation": "D had lawful possession (entrusted as fiduciary/lawyer). D converted the funds to personal use. Embezzlement."
+        }
+      ]
+    },
+    {
+      "id": "mens-rea",
+      "title": "MPC Mens Rea Levels",
+      "buckets": ["Purposely", "Knowingly", "Recklessly", "Negligently"],
+      "pairs": [
+        {
+          "statement": "D shoots a gun at a target at a shooting range, consciously aiming to hit the bullseye.",
+          "answer": "Purposely",
+          "explanation": "D has a conscious OBJECT to hit the target. Purposely = desire to produce the result. This is the highest mental state."
+        },
+        {
+          "statement": "D drives a car knowing the brakes are defective, aware that failure to stop at a red light is practically certain.",
+          "answer": "Knowingly",
+          "explanation": "D is aware that braking failure is practically CERTAIN (virtual certainty). Knowingly = awareness the result is practically certain, even if not the conscious object."
+        },
+        {
+          "statement": "D drives 80 mph in a residential neighborhood, aware of a substantial risk that someone might be hit.",
+          "answer": "Recklessly",
+          "explanation": "D consciously disregards a SUBSTANTIAL and UNJUSTIFIABLE RISK of harm. Aware of the risk but disregarding it = recklessness."
+        },
+        {
+          "statement": "D leaves a loaded gun on a coffee table in a home with young children present, without thinking about the risks.",
+          "answer": "Negligently",
+          "explanation": "D SHOULD BE AWARE of the risk but is not actually conscious of it. Negligence = objective; reasonable person standard. D should have known better."
+        },
+        {
+          "statement": "D puts a cup of coffee on a ledge intending to trip a coworker, causing the coworker to break an arm.",
+          "answer": "Purposely",
+          "explanation": "D has conscious object to cause harm (injury). Purposely—the conscious object to cause bodily injury."
+        },
+        {
+          "statement": "D sells a car knowing the engine will definitely fail within 100 miles, though the buyer doesn't know this.",
+          "answer": "Knowingly",
+          "explanation": "D is aware the engine failure is practically CERTAIN. Not D's conscious object, but virtually certain. Knowingly."
+        },
+        {
+          "statement": "D throws a rock off a cliff, aware of a substantial risk it will hit a hiker below, but indifferent to the outcome.",
+          "answer": "Recklessly",
+          "explanation": "D is consciously aware of a substantial risk and consciously disregards it. Recklessness = awareness + disregard."
+        },
+        {
+          "statement": "D leaves a banana peel on a grocery store floor. A reasonable store manager would have noticed and removed the hazard, but D did not think about it.",
+          "answer": "Negligently",
+          "explanation": "D is not consciously aware of the risk. But a reasonable person would be aware. Negligence = should have been aware."
+        },
+        {
+          "statement": "D manufactures a faulty bridge with a conscious objective to harm people who cross it.",
+          "answer": "Purposely",
+          "explanation": "Purposely requires conscious object/desire to cause harm. D intentionally built a dangerous bridge to cause injury."
+        },
+        {
+          "statement": "D releases a swarm of bees into a crowded marketplace, knowing people will certainly be stung.",
+          "answer": "Knowingly",
+          "explanation": "D knows stings are practically CERTAIN (virtual certainty). Not D's object/desire, but knowledge of certainty = knowingly."
+        },
+        {
+          "statement": "D plays Russian roulette with a loaded revolver, conscious of the substantial risk of death.",
+          "answer": "Recklessly",
+          "explanation": "D consciously disregards a substantial risk of death. Recklessness—conscious awareness + conscious disregard."
+        },
+        {
+          "statement": "D parks a car on a steep hill without engaging the parking brake. A reasonable driver would have used the brake, but D was careless.",
+          "answer": "Negligently",
+          "explanation": "D is not conscious of the risk. A reasonable person would engage the brake. Negligence = objective failure to be aware of risk."
+        },
+        {
+          "statement": "D adds poison to a drink with the intent to kill the person who drinks it.",
+          "answer": "Purposely",
+          "explanation": "Conscious object to cause death. Purposely—the highest and clearest form of culpability."
+        },
+        {
+          "statement": "D operates a heavily polluting factory, fully aware that the pollution will definitely cause respiratory illness in nearby residents.",
+          "answer": "Knowingly",
+          "explanation": "D knows illness is practically certain (virtual certainty), even if D's object is just to operate the factory profitably. Knowingly."
+        }
+      ]
+    }
+  ]
+};
+
+        // ============================================================================
+        // SORT IT OUT GAME
+        // ============================================================================
+
+        class SortItOutGame {
+            constructor() {
+                this.gameData = null;
+                this.currentMode = null;
+                this.cards = [];
+                this.currentCardIndex = 0;
+                this.correct = 0;
+                this.incorrect = 0;
+                this.currentStreak = 0;
+                this.bestStreak = 0;
+                this.mistakes = [];
+                this.startTime = null;
+                this.endTime = null;
+                this.canAnswer = true;
+                this.timerIntervalId = null;
+
+                this.init();
+            }
+
+            async init() {
+                // Load game data
+                try {
+                    this.gameData = SORT_DATA;
+                } catch (error) {
+                    console.error('Failed to load game data:', error);
+                    alert('Failed to load game data. Please refresh the page.');
+                    return;
+                }
+
+                // Create header
+                var headerEl = document.getElementById('header');
+                headerEl.innerHTML = '';
+                headerEl.appendChild(LawGames.createHeader('Sort It Out', true));
+
+                // Render mode selector
+                this.renderModeSelector();
+
+                // Setup event listeners
+                this.setupEventListeners();
+
+                // Start timer
+                this.startTimer();
+            }
+
+            renderModeSelector() {
+                const grid = document.getElementById('modesGrid');
+                grid.innerHTML = '';
+
+                this.gameData.modes.forEach(mode => {
+                    const card = document.createElement('div');
+                    card.className = 'mode-card';
+                    card.innerHTML = `
+                        <h3>${mode.title}</h3>
+                        <p class="card-count"><strong>${mode.pairs.length}</strong> cards</p>
+                    `;
+                    card.addEventListener('click', () => this.startGame(mode));
+                    grid.appendChild(card);
+                });
+            }
+
+            startGame(mode) {
+                this.currentMode = mode;
+                this.cards = this.shuffleArray([...mode.pairs]);
+                this.currentCardIndex = 0;
+                this.correct = 0;
+                this.incorrect = 0;
+                this.currentStreak = 0;
+                this.bestStreak = 0;
+                this.mistakes = [];
+                this.canAnswer = true;
+                this.startTime = Date.now();
+
+                // Show game view
+                document.getElementById('modeSelector').style.display = 'none';
+                document.getElementById('gameView').classList.add('active');
+                document.getElementById('endScreen').classList.remove('active');
+
+                this.renderBuckets();
+                this.showCard();
+            }
+
+            renderBuckets() {
+                const container = document.getElementById('bucketsContainer');
+                container.innerHTML = '';
+                container.className = 'buckets';
+
+                // Add grid-2x2 class if 4 buckets
+                if (this.currentMode.buckets.length === 4) {
+                    container.classList.add('grid-2x2');
+                }
+
+                this.currentMode.buckets.forEach((bucket, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = `bucket-btn bucket-btn-${index + 1}`;
+                    btn.textContent = bucket;
+                    btn.addEventListener('click', () => this.answerCard(bucket));
+                    container.appendChild(btn);
+                });
+            }
+
+            showCard() {
+                if (this.currentCardIndex >= this.cards.length) {
+                    this.endGame();
+                    return;
+                }
+
+                const card = this.cards[this.currentCardIndex];
+                document.getElementById('statementText').textContent = card.statement;
+                document.getElementById('statementCard').className = 'statement-card';
+
+                // Update progress
+                const progress = ((this.currentCardIndex) / this.cards.length) * 100;
+                document.getElementById('progressBar').style.width = progress + '%';
+                document.getElementById('progressText').textContent =
+                    `Card ${this.currentCardIndex + 1} of ${this.cards.length}`;
+
+                this.updateStats();
+                this.canAnswer = true;
+            }
+
+            answerCard(selectedBucket) {
+                if (!this.canAnswer) return;
+                this.canAnswer = false;
+
+                const card = this.cards[this.currentCardIndex];
+                const isCorrect = selectedBucket === card.answer;
+
+                if (isCorrect) {
+                    this.handleCorrectAnswer(card);
+                } else {
+                    this.handleIncorrectAnswer(card);
+                }
+            }
+
+            handleCorrectAnswer(card) {
+                this.correct++;
+                this.currentStreak++;
+                if (this.currentStreak > this.bestStreak) {
+                    this.bestStreak = this.currentStreak;
+                }
+
+                // Visual feedback
+                const statementCard = document.getElementById('statementCard');
+                statementCard.classList.add('correct');
+
+                // Float up "+1"
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback-float correct';
+                feedback.textContent = '+1';
+                statementCard.appendChild(feedback);
+                setTimeout(() => feedback.remove(), 1000);
+
+                // Show explanation and Next button
+                this.updateStats();
+                setTimeout(() => {
+                    const explanation = document.createElement('div');
+                    explanation.className = 'feedback-explanation';
+                    explanation.innerHTML = `<strong style="color:#27ae60;">✓ Correct — ${card.answer}</strong><br>${card.explanation}`;
+                    statementCard.appendChild(explanation);
+
+                    this.showNextButton();
+                }, 300);
+            }
+
+            handleIncorrectAnswer(card) {
+                this.incorrect++;
+                this.currentStreak = 0;
+
+                this.mistakes.push({
+                    statement: card.statement,
+                    correctAnswer: card.answer,
+                    explanation: card.explanation
+                });
+
+                // Visual feedback
+                const statementCard = document.getElementById('statementCard');
+                statementCard.classList.add('incorrect');
+
+                // Float up "X"
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback-float incorrect';
+                feedback.textContent = '✗';
+                statementCard.appendChild(feedback);
+                setTimeout(() => feedback.remove(), 1000);
+
+                // Show correct answer, explanation, and Next button
+                this.updateStats();
+                setTimeout(() => {
+                    const explanation = document.createElement('div');
+                    explanation.className = 'feedback-explanation';
+                    explanation.innerHTML = `<strong style="color:#e74c3c;">✗ Incorrect — Correct answer: ${card.answer}</strong><br>${card.explanation}`;
+                    statementCard.appendChild(explanation);
+
+                    this.showNextButton();
+                }, 300);
+            }
+
+            showNextButton() {
+                // Hide bucket buttons
+                const buckets = document.getElementById('bucketsContainer');
+                buckets.style.display = 'none';
+
+                // Create Next button
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'btn btn-primary';
+                nextBtn.textContent = this.currentCardIndex < this.cards.length - 1 ? 'Next Card →' : 'See Results →';
+                nextBtn.style.marginTop = '1rem';
+                nextBtn.style.fontSize = '1.1rem';
+                nextBtn.style.padding = '1rem 3rem';
+                nextBtn.id = 'nextCardBtn';
+
+                nextBtn.addEventListener('click', () => {
+                    nextBtn.remove();
+                    buckets.style.display = '';
+                    this.currentCardIndex++;
+                    this.showCard();
+                });
+
+                document.querySelector('.game-content').appendChild(nextBtn);
+            }
+
+            updateStats() {
+                document.getElementById('statCorrect').textContent = this.correct;
+                document.getElementById('statIncorrect').textContent = this.incorrect;
+                document.getElementById('statStreak').textContent = `🔥 ${this.currentStreak}`;
+            }
+
+            endGame() {
+                this.endTime = Date.now();
+
+                // Clear timer
+                if (this.timerIntervalId) {
+                    clearInterval(this.timerIntervalId);
+                    this.timerIntervalId = null;
+                }
+
+                // Hide game view
+                document.getElementById('gameView').classList.remove('active');
+                document.getElementById('endScreen').classList.add('active');
+
+                // Populate end screen
+                const totalCards = this.cards.length;
+                const percentage = Math.round((this.correct / totalCards) * 100);
+
+                document.getElementById('finalScore').textContent = `${this.correct}/${totalCards}`;
+                document.getElementById('finalPercentage').textContent = `${percentage}% Correct`;
+
+                // Time
+                const seconds = Math.round((this.endTime - this.startTime) / 1000);
+                const minutes = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                const timeStr = `${minutes}:${secs.toString().padStart(2, '0')}`;
+                document.getElementById('finalTime').textContent = timeStr;
+
+                // Streak
+                document.getElementById('finalStreak').textContent = `🔥 ${this.bestStreak}`;
+
+                // Mistakes
+                if (this.mistakes.length > 0) {
+                    const mistakesContainer = document.getElementById('mistakesContainer');
+                    const mistakesList = document.getElementById('mistakesList');
+                    mistakesList.innerHTML = '';
+
+                    this.mistakes.forEach(mistake => {
+                        const item = document.createElement('div');
+                        item.className = 'mistake-item';
+                        item.innerHTML = `
+                            <div class="mistake-statement">${mistake.statement}</div>
+                            <div class="mistake-answer">Correct answer: <strong>${mistake.correctAnswer}</strong></div>
+                            <div class="mistake-explanation">"${mistake.explanation}"</div>
+                        `;
+                        mistakesList.appendChild(item);
+                    });
+
+                    mistakesContainer.style.display = 'block';
+                } else {
+                    document.getElementById('mistakesContainer').style.display = 'none';
+                }
+
+                // Record game stats
+                LawGames.recordGame('sort', {
+                    mode: this.currentMode.id,
+                    total: totalCards,
+                    correct: this.correct,
+                    percentage: percentage,
+                    streak: this.bestStreak,
+                    time: seconds
+                });
+            }
+
+            setupEventListeners() {
+                // Play Again
+                document.getElementById('playAgainBtn').addEventListener('click', () => {
+                    this.startGame(this.currentMode);
+                });
+
+                // Try Another Mode
+                document.getElementById('tryAnotherModeBtn').addEventListener('click', () => {
+                    document.getElementById('modeSelector').style.display = 'block';
+                    document.getElementById('endScreen').classList.remove('active');
+                    document.getElementById('gameView').classList.remove('active');
+                    this.renderModeSelector();
+                });
+
+                // Share
+                document.getElementById('shareBtn').addEventListener('click', () => {
+                    this.shareScore();
+                });
+
+                // Keyboard shortcuts for 2-bucket modes
+                document.addEventListener('keydown', (e) => {
+                    if (!document.getElementById('gameView').classList.contains('active')) return;
+                    if (!this.canAnswer) return;
+
+                    if (this.currentMode.buckets.length === 2) {
+                        if (e.key === 'ArrowLeft' || e.key === '1') {
+                            this.answerCard(this.currentMode.buckets[0]);
+                        } else if (e.key === 'ArrowRight' || e.key === '2') {
+                            this.answerCard(this.currentMode.buckets[1]);
+                        }
+                    }
+                });
+            }
+
+            shareScore() {
+                const totalCards = this.cards.length;
+                const percentage = Math.round((this.correct / totalCards) * 100);
+
+                const shareText = `⚖️ Sort It Out — ${this.currentMode.title}\n` +
+                    `${this.correct}/${totalCards} (${percentage}%) | 🔥 Best streak: ${this.bestStreak}\n` +
+                    `lawgames.github.io`;
+
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Sort It Out',
+                        text: shareText
+                    }).catch(() => {
+                        this.copyToClipboard(shareText);
+                    });
+                } else {
+                    this.copyToClipboard(shareText);
+                }
+            }
+
+            copyToClipboard(text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Score copied to clipboard!');
+                });
+            }
+
+            shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            startTimer() {
+                const timerEl = document.getElementById('timer');
+                let seconds = 0;
+
+                this.timerIntervalId = setInterval(() => {
+                    if (!document.getElementById('gameView').classList.contains('active')) return;
+
+                    seconds++;
+                    const mins = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    timerEl.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+                }, 1000);
+            }
+        }
+
+        // Initialize game when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            new SortItOutGame();
+        });
+    </script>
+</body>
+</html>

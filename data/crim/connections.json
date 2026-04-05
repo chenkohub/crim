@@ -1,0 +1,529 @@
+{
+  "puzzles": [
+    {
+      "id": 1,
+      "groups": [
+        {
+          "category": "Forms of Malice Aforethought",
+          "difficulty": 1,
+          "items": ["Intent to Kill", "Intent to Inflict GBI", "Depraved Heart", "Felony Murder"]
+        },
+        {
+          "category": "Felony Murder Limitations",
+          "difficulty": 2,
+          "items": ["Inherently Dangerous", "Res Gestae", "Merger Doctrine", "Agency Rule"]
+        },
+        {
+          "category": "MPC Mens Rea Levels",
+          "difficulty": 3,
+          "items": ["Purposely", "Knowingly", "Recklessly", "Negligently"]
+        },
+        {
+          "category": "Heat of Passion Elements",
+          "difficulty": 4,
+          "items": ["Heat of Passion", "Adequate Provocation", "No Cooling Off", "Causal Link"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "groups": [
+        {
+          "category": "Theft Offense Types",
+          "difficulty": 1,
+          "items": ["Larceny", "Larceny by Trick", "False Pretenses", "Embezzlement"]
+        },
+        {
+          "category": "Criminal Defenses",
+          "difficulty": 2,
+          "items": ["Self-Defense", "Necessity", "Duress", "Insanity"]
+        },
+        {
+          "category": "Larceny Elements",
+          "difficulty": 3,
+          "items": ["Trespassory Taking", "Asportation", "Personal Property of Another", "Intent to Permanently Deprive"]
+        },
+        {
+          "category": "Key Homicide Cases",
+          "difficulty": 4,
+          "items": ["State v. Brown", "State v. Bingham", "People v. Berry", "People v. Knoller"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "groups": [
+        {
+          "category": "Punishment Theories",
+          "difficulty": 1,
+          "items": ["Deterrence", "Rehabilitation", "Incapacitation", "Retribution"]
+        },
+        {
+          "category": "Duties to Act (Omissions)",
+          "difficulty": 2,
+          "items": ["Special Relationship", "Contractual Duty", "Statutory Duty", "Creation of Risk"]
+        },
+        {
+          "category": "Elements of First-Degree Murder",
+          "difficulty": 3,
+          "items": ["Willful", "Deliberate", "Premeditated", "Killing"]
+        },
+        {
+          "category": "Common Law Adequate Provocation Categories",
+          "difficulty": 4,
+          "items": ["Battery/Assault", "Mutual Combat", "Serious Crime Against Relative", "Illegal Arrest"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "groups": [
+        {
+          "category": "MPC Murder Elements",
+          "difficulty": 1,
+          "items": ["Purposely", "Knowingly", "Extreme Indifference", "Human Life"]
+        },
+        {
+          "category": "Involuntary Manslaughter Standards",
+          "difficulty": 2,
+          "items": ["Recklessness", "Gross Negligence", "Negligence", "Criminal Negligence"]
+        },
+        {
+          "category": "Causation Types",
+          "difficulty": 3,
+          "items": ["Actual Cause", "But-For Test", "Proximate Cause", "Intervening Cause"]
+        },
+        {
+          "category": "Key Felony Murder Cases",
+          "difficulty": 4,
+          "items": ["People v. James", "People v. Bodely", "Rose v. State", "State v. Canola"]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "groups": [
+        {
+          "category": "Voluntary Manslaughter Frameworks",
+          "difficulty": 1,
+          "items": ["Categorical Approach", "Modern Approach", "MPC EMED", "Reasonable Person"]
+        },
+        {
+          "category": "Actus Reus Requirements",
+          "difficulty": 2,
+          "items": ["Voluntary Act", "Omission (if Duty)", "Causal Link", "Social Harm"]
+        },
+        {
+          "category": "Mistake Defense Rules",
+          "difficulty": 3,
+          "items": ["Specific Intent", "General Intent", "Strict Liability", "Honest Mistake"]
+        },
+        {
+          "category": "Key Mens Rea Cases",
+          "difficulty": 4,
+          "items": ["People v. Atkins", "State v. Freeman", "Morissette v. United States", "United States v. Jewell"]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "groups": [
+        {
+          "category": "Intervening Cause Analysis",
+          "difficulty": 1,
+          "items": ["Responsive IC", "Dependent IC", "Coincidental IC", "Independent IC"]
+        },
+        {
+          "category": "Breaking the Chain of Causation",
+          "difficulty": 2,
+          "items": ["Extremely Bizarre", "Unforeseeable", "Superceding", "Intervening Cause"]
+        },
+        {
+          "category": "Depraved Heart Murder Standards",
+          "difficulty": 3,
+          "items": ["Extreme Recklessness", "Extreme Indifference", "Risk of Death", "Conscious Disregard"]
+        },
+        {
+          "category": "Key Theft Cases",
+          "difficulty": 4,
+          "items": ["State v. Barbour", "State v. Pierce", "State v. Williams", "People v. Navarro"]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "groups": [
+        {
+          "category": "Arson/Property Crimes",
+          "difficulty": 1,
+          "items": ["Arson", "Burglary", "Robbery", "Vandalism"]
+        },
+        {
+          "category": "Mental State Modifiers",
+          "difficulty": 2,
+          "items": ["Conditional Intent", "Transferred Intent", "Willful Blindness", "Knowledge"]
+        },
+        {
+          "category": "Strict Liability Characteristics",
+          "difficulty": 3,
+          "items": ["No Mens Rea Requirement", "Health/Safety Offense", "Light Penalties", "Regulatory"]
+        },
+        {
+          "category": "EMED and Provocation Cases",
+          "difficulty": 4,
+          "items": ["State v. Dumlao", "People v. Berry", "State v. Arrington", "Commonwealth v. Mercado"]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "groups": [
+        {
+          "category": "Jurisdictional Approaches to FM",
+          "difficulty": 1,
+          "items": ["In the Abstract", "Fact-Specific", "Inherently Dangerous", "Enumerated Felonies"]
+        },
+        {
+          "category": "Premeditation Evidence",
+          "difficulty": 2,
+          "items": ["Weapon Ready", "Considering Alternatives", "Positioning to Avoid Detection", "Returning for Additional Weapon"]
+        },
+        {
+          "category": "MPC Hierarchy Key Features",
+          "difficulty": 3,
+          "items": ["Desire to Produce Result", "Virtual Certainty", "Awareness + Disregard", "Should Be Aware"]
+        },
+        {
+          "category": "Accomplice Liability Elements",
+          "difficulty": 4,
+          "items": ["Act of Assistance", "Intent to Assist", "Intent Crime Be Committed", "Knowledge"]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "groups": [
+        {
+          "category": "Larceny Conceptual Boundaries",
+          "difficulty": 1,
+          "items": ["Possession", "Custody", "Constructive Possession", "Breaking the Bulk"]
+        },
+        {
+          "category": "Concurrence Requirements",
+          "difficulty": 2,
+          "items": ["Temporal Concurrence", "Motivational Concurrence", "Continuous Transaction", "Same Time"]
+        },
+        {
+          "category": "Void for Vagueness Issues",
+          "difficulty": 3,
+          "items": ["Fair Notice", "Arbitrary Enforcement", "Due Process", "Fourteenth Amendment"]
+        },
+        {
+          "category": "Self-Defense Doctrine",
+          "difficulty": 4,
+          "items": ["Proportional Force", "Imperfect Self-Defense", "Duty to Retreat", "Castle Doctrine"]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "groups": [
+        {
+          "category": "Transferred Intent Applications",
+          "difficulty": 1,
+          "items": ["Bad Aim Killings", "Wrong Person", "Same Type of Harm", "Intent for Harm"]
+        },
+        {
+          "category": "MPC vs CL Differences",
+          "difficulty": 2,
+          "items": ["Degrees vs Single Murder", "P&D vs Purposely/Knowingly", "Default Mens Rea", "Murder Definition"]
+        },
+        {
+          "category": "Reasonable Person Standard",
+          "difficulty": 3,
+          "items": ["Heat of Passion", "Self-Defense", "Cooling Off Period", "Objective Test"]
+        },
+        {
+          "category": "Merger Doctrine Specifics",
+          "difficulty": 4,
+          "items": ["Independent Felonious Purpose", "Assaultive Felonies", "Underlying Felony", "Robbery Exception"]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "groups": [
+        {
+          "category": "Conscious Disregard Factors",
+          "difficulty": 1,
+          "items": ["Substantial Risk", "Unjustifiable Risk", "Awareness", "Reckless Disregard"]
+        },
+        {
+          "category": "Jurisdiction-Specific Rules",
+          "difficulty": 2,
+          "items": ["Pennsylvania Model", "California Model", "Proximate Cause Theory", "Agency Rule Theory"]
+        },
+        {
+          "category": "Causation Doctrines",
+          "difficulty": 3,
+          "items": ["Thin Skull", "Take Victim as Found", "Foreseeability", "Medical Complications"]
+        },
+        {
+          "category": "Willfulness and Knowledge Cases",
+          "difficulty": 4,
+          "items": ["Cheek v. United States", "United States v. Yermian", "People v. Scott", "State v. Fugate"]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "groups": [
+        {
+          "category": "Actus Reus Defects",
+          "difficulty": 1,
+          "items": ["Reflexes", "Convulsions", "Sleep/Unconsciousness", "No Effort or Determination"]
+        },
+        {
+          "category": "Battery Categories for Provocation",
+          "difficulty": 2,
+          "items": ["Mutual Combat", "Sudden Attack", "Serious Bodily Harm", "Physical Touching"]
+        },
+        {
+          "category": "MPC Default Rules",
+          "difficulty": 3,
+          "items": ["Recklessness Suffices", "Jurisdictional Elements Exempted", "Stated Mental State Modifies", "Conditional Intent Cognizable"]
+        },
+        {
+          "category": "Duress/Necessity Cases",
+          "difficulty": 4,
+          "items": ["Regina v. Dudley & Stephens", "Innocent Person Cannot Die", "Imminence Requirement", "Last Resort"]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "groups": [
+        {
+          "category": "Possession vs Title Issues",
+          "difficulty": 1,
+          "items": ["Larceny by Trick", "False Pretenses", "Owner Consent", "Fraudulent Deception"]
+        },
+        {
+          "category": "Omission Categories",
+          "difficulty": 2,
+          "items": ["Voluntary Assumption of Care", "Creation of Risk", "Special Relationship", "Parent-Child"]
+        },
+        {
+          "category": "Knowledge vs Recklessness Boundary",
+          "difficulty": 3,
+          "items": ["Practical Certainty", "Substantial Risk", "Virtual Certainty", "Conscious Awareness"]
+        },
+        {
+          "category": "Statutory FM Elements",
+          "difficulty": 4,
+          "items": ["Enumerated Felony", "Death Results", "Commission or Attempted Commission", "Prescribed Manner"]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "groups": [
+        {
+          "category": "Deliberation Factors",
+          "difficulty": 1,
+          "items": ["Weighing Reasons", "Measuring Facets", "Considering Consequences", "Cool Head Capable"]
+        },
+        {
+          "category": "Premeditation Markers",
+          "difficulty": 2,
+          "items": ["Thinking Beforehand", "Preparation", "Planning", "Time to Reflect"]
+        },
+        {
+          "category": "Recklessness Key Components",
+          "difficulty": 3,
+          "items": ["Substantial Risk", "Unjustifiable", "Conscious Awareness", "Conscious Disregard"]
+        },
+        {
+          "category": "Extreme Indifference Cases",
+          "difficulty": 4,
+          "items": ["Phillips Test", "Risk of Death Only", "Serious Bodily Injury Insufficient", "Extreme Callousness"]
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "groups": [
+        {
+          "category": "General Intent Crime Characteristics",
+          "difficulty": 1,
+          "items": ["Intent to Do Actus Reus", "Honest AND Reasonable Mistake", "No Additional Purpose", "Simple Crimes"]
+        },
+        {
+          "category": "Specific Intent Crime Characteristics",
+          "difficulty": 2,
+          "items": ["Intent Beyond Actus Reus", "Honest Mistake Only", "Additional Mental State", "Complex Crimes"]
+        },
+        {
+          "category": "Embezzlement Elements",
+          "difficulty": 3,
+          "items": ["Lawful Possession", "Entrusted Position", "Conversion", "Fiduciary Duty"]
+        },
+        {
+          "category": "Mistake of Law Framework",
+          "difficulty": 4,
+          "items": ["Official Interpretation Reliance", "Willfulness Crimes", "Ignorance No Excuse", "Marrero Exception"]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "groups": [
+        {
+          "category": "Voluntary Act Requirement",
+          "difficulty": 1,
+          "items": ["Product of Effort", "Product of Determination", "Conscious Control", "Voluntary Choice"]
+        },
+        {
+          "category": "Mens Rea Modifying Function",
+          "difficulty": 2,
+          "items": ["Applies to All Elements", "Contrary Intent Exception", "Stated Mental State", "Default Application"]
+        },
+        {
+          "category": "Felony Murder Shield Exception",
+          "difficulty": 3,
+          "items": ["Using Innocent Shield", "Third Party Killer", "Co-Felon's Act", "Death by Associate"]
+        },
+        {
+          "category": "Necessity Elements",
+          "difficulty": 4,
+          "items": ["Choice of Lesser Evil", "Imminent Threat", "No Reasonable Alternative", "Not Justifying Innocent Death"]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "groups": [
+        {
+          "category": "Breaking and Entering Elements",
+          "difficulty": 1,
+          "items": ["Breaking", "Entering", "Building", "Intent to Commit Crime"]
+        },
+        {
+          "category": "Responsible IC Characteristics",
+          "difficulty": 2,
+          "items": ["Reaction to D's Act", "Not Bizarre", "D Remains Proximate Cause", "Dependent on Initial Act"]
+        },
+        {
+          "category": "Robbery Offense Elements",
+          "difficulty": 3,
+          "items": ["Theft", "Force or Threat", "Against Person", "Permanent Deprivation"]
+        },
+        {
+          "category": "Duress Requirements",
+          "difficulty": 4,
+          "items": ["Coercion/Threat", "Imminent Harm", "Not Available to Murder", "Human Threat vs Natural Circumstance"]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "groups": [
+        {
+          "category": "Cooling Off Analysis",
+          "difficulty": 1,
+          "items": ["Reasonable Time", "Reasonable Opportunity", "Heat Dissipated", "Objective Standard"]
+        },
+        {
+          "category": "Risk Assessment in Recklessness",
+          "difficulty": 2,
+          "items": ["Death Risk vs SBI Risk", "Degree of Risk", "Justification for Risk", "Extreme vs Ordinary"]
+        },
+        {
+          "category": "Foreseeable IC Rule",
+          "difficulty": 3,
+          "items": ["Independent IC", "Predictable Consequence", "Medical Complications", "Traffic Delays"]
+        },
+        {
+          "category": "Attempt Doctrine Basics",
+          "difficulty": 4,
+          "items": ["Substantial Step Test", "Dangerous Proximity Test", "Specific Intent Crime", "Last Act Test"]
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "groups": [
+        {
+          "category": "Embezzlement Elements",
+          "difficulty": 1,
+          "items": ["Lawful Possession", "Fiduciary Relationship", "Intentional Conversion", "Property of Another"]
+        },
+        {
+          "category": "Burglary Elements (Common Law)",
+          "difficulty": 2,
+          "items": ["Breaking", "Entry", "Dwelling House", "Intent to Commit Felony"]
+        },
+        {
+          "category": "Robbery vs. Larceny Distinction",
+          "difficulty": 3,
+          "items": ["Force or Intimidation", "Immediate Presence", "Trespassory Taking", "Asportation Phase"]
+        },
+        {
+          "category": "Key Theft Cases",
+          "difficulty": 4,
+          "items": ["Mills (False Pretenses)", "Steele (Embezzlement)", "Barbour (Larceny by Trick)", "Crocker (Not Robbery)"]
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "groups": [
+        {
+          "category": "Self-Defense Core Elements",
+          "difficulty": 1,
+          "items": ["Reasonable Belief", "Imminent Threat", "Necessity of Force", "Proportionality"]
+        },
+        {
+          "category": "MPC Self-Defense Features",
+          "difficulty": 2,
+          "items": ["Subjective Belief Standard", "Immediately Necessary", "Reckless Belief = Manslaughter", "No Duty to Retreat"]
+        },
+        {
+          "category": "Justification vs. Excuse",
+          "difficulty": 3,
+          "items": ["Self-Defense (Justification)", "Necessity (Justification)", "Duress (Excuse)", "Insanity (Excuse)"]
+        },
+        {
+          "category": "Key Self-Defense Cases",
+          "difficulty": 4,
+          "items": ["Goetz (Objective Standard)", "Simon (Reasonable Person)", "MPC § 3.04", "MPC § 3.09(2)"]
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "groups": [
+        {
+          "category": "Void for Vagueness Cases",
+          "difficulty": 1,
+          "items": ["Bronstein", "Morales", "Johnson v. United States", "Skilling v. United States"]
+        },
+        {
+          "category": "Actus Reus Concepts",
+          "difficulty": 2,
+          "items": ["Voluntary Act", "Omission", "Possession", "Status Crimes"]
+        },
+        {
+          "category": "Strict Liability Concerns (Malcolm)",
+          "difficulty": 3,
+          "items": ["Morally Innocent", "No Mens Rea Required", "Regulatory Offenses", "Overcriminalization"]
+        },
+        {
+          "category": "Criminal Justice Theory Articles",
+          "difficulty": 4,
+          "items": ["Ristroph (Carceral State)", "Morgan (Abolition)", "Natapoff", "Pinard"]
+        }
+      ]
+    }
+  ]
+}

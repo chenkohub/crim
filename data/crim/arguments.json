@@ -1,0 +1,482 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "fact_pattern": "Dave stabbed Victor during a bar fight after Victor shoved him following an insult to Dave's wife. Victor died on the way to the hospital after a 40-minute ambulance delay.",
+      "side": "Prosecution",
+      "charge": "Second-Degree Murder",
+      "correct_blocks": [
+        {
+          "type": "issue",
+          "text": "Whether Dave is guilty of second-degree murder—an unlawful killing with malice aforethought, but lacking willfulness, deliberation, and premeditation."
+        },
+        {
+          "type": "rule",
+          "text": "Under common law, second-degree murder requires malice aforethought but not the elements of first-degree murder. The four forms of malice are: (1) intent to kill, (2) intent to inflict grievous bodily injury, (3) depraved heart murder, or (4) felony murder."
+        },
+        {
+          "type": "rule",
+          "text": "Malice is presumed when a defendant intentionally uses a deadly weapon and directs it at a vital area of the body, absent evidence to the contrary."
+        },
+        {
+          "type": "application",
+          "text": "Dave intentionally pulled out a knife and stabbed Victor in the chest—a vital area. This demonstrates intent to either kill or inflict grievous bodily injury, satisfying malice aforethought."
+        },
+        {
+          "type": "application",
+          "text": "Dave's conduct cannot be reduced to negligent homicide or involuntary manslaughter because he acted with conscious intent, not mere recklessness or negligence."
+        },
+        {
+          "type": "application",
+          "text": "While Dave may argue he lacked premeditation (the shove occurred only moments before the stabbing), he clearly possessed malice, making second-degree murder the appropriate charge even if first-degree murder fails."
+        },
+        {
+          "type": "conclusion",
+          "text": "Dave is guilty of second-degree murder. His intentional use of a deadly weapon on a vital area establishes malice aforethought. The state need not prove premeditation and deliberation for this conviction."
+        }
+      ],
+      "decoy_blocks": [
+        {
+          "type": "rule",
+          "text": "Involuntary manslaughter requires gross negligence or recklessness, not intentional conduct. Therefore, Dave's deliberate stabbing cannot be charged as involuntary manslaughter."
+        },
+        {
+          "type": "application",
+          "text": "Since Dave had time to think (even briefly) between the shove and the stabbing, he must have premeditated, making first-degree murder the only proper charge."
+        },
+        {
+          "type": "rule",
+          "text": "Heat of passion is a valid defense to murder, reducing it to manslaughter. Dave's rage after Victor's shove negates his criminal responsibility entirely."
+        },
+        {
+          "type": "application",
+          "text": "The ambulance delay was the true cause of Victor's death, not Dave's stabbing. Without this intervening cause, Dave would be guilty of only assault, not homicide."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "fact_pattern": "Carol, a bank teller, gradually skimmed money from dormant customer accounts over six months, stealing $12,000 total. She intended to 'borrow' the funds and repay them but never did.",
+      "side": "Prosecution",
+      "charge": "Embezzlement",
+      "correct_blocks": [
+        {
+          "type": "issue",
+          "text": "Whether Carol is guilty of embezzlement—the intentional conversion of property by one in lawful possession and entrusted with that property."
+        },
+        {
+          "type": "rule",
+          "text": "Embezzlement requires: (1) lawful possession of another's property, (2) conversion of that property to the defendant's own use, and (3) specific intent to permanently deprive the owner of the property or its use."
+        },
+        {
+          "type": "rule",
+          "text": "A fiduciary or person in a position of trust, such as a bank employee, has a legal duty to act in the owner's interest. Any use of the property contrary to that duty constitutes conversion."
+        },
+        {
+          "type": "application",
+          "text": "As a bank teller, Carol had lawful possession of the funds through her employment. She was entrusted with the bank's and customers' money as part of her job duties."
+        },
+        {
+          "type": "application",
+          "text": "Carol's gradual skimming of funds over six months—totaling $12,000—constitutes conversion. She used the funds for her own purposes rather than for the bank's or customers' benefit."
+        },
+        {
+          "type": "application",
+          "text": "Carol's intent is demonstrated by her pattern of repeated, systematic theft. Even if she subjectively intended to repay the money, the objective facts show she took and used the funds without authority."
+        },
+        {
+          "type": "conclusion",
+          "text": "Carol is guilty of embezzlement. Her position as a bank teller, combined with her deliberate conversion of funds and failure to repay, satisfies all elements of the crime."
+        }
+      ],
+      "decoy_blocks": [
+        {
+          "type": "rule",
+          "text": "Larceny requires a trespassory taking, meaning the original transfer of possession must be without the owner's consent. Since the bank gave Carol possession, no larceny occurred."
+        },
+        {
+          "type": "application",
+          "text": "Carol's intent to repay the funds means she lacked specific intent to permanently deprive the bank. Therefore, she cannot be convicted of any theft crime."
+        },
+        {
+          "type": "rule",
+          "text": "False pretenses requires that the defendant obtain both title and possession through fraud. Carol merely used funds already in her possession, so false pretenses does not apply."
+        },
+        {
+          "type": "application",
+          "text": "Since Carol is only a bank employee and not an owner, she had no duty to repay customer accounts. The customers' funds are entirely the bank's responsibility."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "fact_pattern": "Marcus was driving 65 mph in a 25 mph school zone where children were visibly playing on a nearby lawn. A child suddenly ran into the street, and Marcus hit the child, causing fatal internal injuries.",
+      "side": "Prosecution",
+      "charge": "Involuntary Manslaughter",
+      "correct_blocks": [
+        {
+          "type": "issue",
+          "text": "Whether Marcus is guilty of involuntary manslaughter—an unlawful killing caused by reckless conduct or gross negligence without intent to kill."
+        },
+        {
+          "type": "rule",
+          "text": "Involuntary manslaughter under common law requires either recklessness (conscious disregard of a substantial and unjustifiable risk) or gross negligence (failure to perceive an extreme risk)."
+        },
+        {
+          "type": "rule",
+          "text": "Recklessness is established when the defendant acts with conscious awareness of a substantial risk and consciously disregards that risk. The greater the risk and the weaker the justification, the more likely the conduct is reckless."
+        },
+        {
+          "type": "application",
+          "text": "Marcus drove 2.6 times the posted speed limit (65 mph vs. 25 mph) in a school zone where children were visibly playing. Marcus consciously disregarded this obvious and substantial risk to child safety."
+        },
+        {
+          "type": "application",
+          "text": "The justification for Marcus's speeding was minimal or non-existent. There is no emergency indicated; Marcus was simply prioritizing speed over safety in a zone designated for children."
+        },
+        {
+          "type": "application",
+          "text": "The child's sudden entry into the street, while an intervening cause, does not break the chain of proximate causation. Children entering streets in school zones are foreseeable, and drivers must account for this risk."
+        },
+        {
+          "type": "conclusion",
+          "text": "Marcus is guilty of involuntary manslaughter. His grossly negligent and reckless conduct in a school zone directly caused the child's death. The conscious disregard for an obvious risk satisfies the mens rea requirement."
+        }
+      ],
+      "decoy_blocks": [
+        {
+          "type": "rule",
+          "text": "Negligence alone, even gross negligence, is insufficient for murder under the MPC. Only recklessness satisfies the MPC standard for involuntary manslaughter."
+        },
+        {
+          "type": "application",
+          "text": "The child's decision to run into the street was a superceding intervening cause that breaks the chain of causation. Marcus is not responsible for the child's own reckless action."
+        },
+        {
+          "type": "rule",
+          "text": "Driving a car at any speed is a lawful activity. Without proving Marcus intentionally harmed the child, no criminal liability can attach."
+        },
+        {
+          "type": "application",
+          "text": "Marcus's minor marijuana presence in his bloodstream negates any finding of conscious disregard because his reaction time was normal and he was not visibly impaired."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "fact_pattern": "Dana robbed Eddie at knifepoint in an upstairs bedroom. As Dana fled with Eddie's wallet, Eddie chased Dana into the street where Eddie was struck and killed by a passing car.",
+      "side": "Prosecution",
+      "charge": "Felony Murder",
+      "correct_blocks": [
+        {
+          "type": "issue",
+          "text": "Whether Dana is guilty of felony murder—murder committed during the commission or attempted commission of a dangerous felony."
+        },
+        {
+          "type": "rule",
+          "text": "Felony murder applies when a death results during the commission or attempted commission of a dangerous felony. The four limitations are: (1) the felony must be inherently dangerous, (2) the death must occur within the res gestae of the felony, (3) the underlying felony must not merge with the homicide, and (4) the defendant must have agency over the person killed."
+        },
+        {
+          "type": "rule",
+          "text": "Robbery—taking property by force or threat of force—is an inherently dangerous felony because it by definition creates a substantial risk of death or serious bodily injury."
+        },
+        {
+          "type": "application",
+          "text": "Dana committed robbery at knifepoint, taking Eddie's wallet by threat of force. This satisfies the inherent danger requirement because robbery always involves force or threat."
+        },
+        {
+          "type": "rule",
+          "text": "Under the temporary safety rule, the felony is not complete until the defendant reaches a place of temporary safety. Eddie's death occurred while Dana was still in flight from the robbery, within the res gestae of the crime."
+        },
+        {
+          "type": "application",
+          "text": "Dana was fleeing the house with Eddie's wallet when struck by the car. This is within the temporal and geographical proximity of the robbery. The robbery had not concluded; Dana had not yet reached safety."
+        },
+        {
+          "type": "application",
+          "text": "The underlying felony (robbery) has an independent felonious purpose—to steal Eddie's wallet. The death is incidental to this purpose, not a separate assault. The merger doctrine does not apply."
+        },
+        {
+          "type": "conclusion",
+          "text": "Dana is guilty of felony murder. The crime of robbery is inherently dangerous, the death occurred within the res gestae of the robbery, the underlying felony does not merge, and the defendant committed the underlying felony. All elements are satisfied."
+        }
+      ],
+      "decoy_blocks": [
+        {
+          "type": "rule",
+          "text": "Under the agency rule, felony murder only applies to killings directly caused by the defendant or a co-felon. Third-party killings (by the car driver) cannot support felony murder liability."
+        },
+        {
+          "type": "application",
+          "text": "Dana did not kill Eddie; a car driver did. Since the driver is not Dana's agent or co-felon, Dana cannot be liable for felony murder under the agency rule."
+        },
+        {
+          "type": "rule",
+          "text": "Once Dana reached the street and was no longer in the house, the robbery was complete and the res gestae ended. Any death after this point is not felony murder."
+        },
+        {
+          "type": "application",
+          "text": "Eddie's decision to chase Dana was an intervening cause that breaks the chain of causation. Dana is not responsible for consequences of Eddie's own reckless action."
+        },
+        {
+          "type": "application",
+          "text": "Since the murder charge is based on a robbery, and robbery is an assaultive felony, the merger doctrine applies. The robbery merges into the homicide, and felony murder cannot be charged."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "fact_pattern": "Alex hosted a house party with drugs and alcohol. Ben, heavily intoxicated, beat Chris severely in a fight. Alex saw the beating but did nothing to intervene. Chris later died from his injuries, which were fatal due to a rare heart condition.",
+      "side": "Prosecution",
+      "charge": "Involuntary Manslaughter (via omission)",
+      "correct_blocks": [
+        {
+          "type": "issue",
+          "text": "Whether Alex is guilty of involuntary manslaughter based on a failure to act (omission), when Alex had a legal duty to act and failed to prevent Chris's death."
+        },
+        {
+          "type": "rule",
+          "text": "An omission can constitute actus reus if a legal duty to act exists. Five categories of legal duty are recognized: (1) special relationship, (2) contractual duty, (3) statutory duty, (4) creation of the risk, and (5) voluntary assumption of care."
+        },
+        {
+          "type": "rule",
+          "text": "A property owner or person in control of premises may have a duty to prevent harm to persons on the premises, similar to a business owner's duty to invitees or patrons."
+        },
+        {
+          "type": "application",
+          "text": "Alex hosted the party and had control over the premises. By serving alcohol and permitting drug use, Alex created the dangerous conditions that led to the fight between Ben and Chris."
+        },
+        {
+          "type": "rule",
+          "text": "A person who creates a risk has a legal duty to mitigate or prevent harm resulting from that risk. Alex's creation of the dangerous environment (intoxication, drugs) triggered a duty to prevent foreseeable harm."
+        },
+        {
+          "type": "application",
+          "text": "Alex witnessed the beating and was therefore aware of the substantial risk of death to Chris. By failing to intervene or call for help, Alex consciously disregarded this risk—establishing recklessness."
+        },
+        {
+          "type": "application",
+          "text": "Chris's rare heart condition does not break causation. Under the 'thin skull' or 'take your victim as found' principle, Alex must accept Chris's vulnerability. The beating was the proximate cause regardless of the underlying condition."
+        },
+        {
+          "type": "conclusion",
+          "text": "Alex is guilty of involuntary manslaughter. Alex had a legal duty based on creation of risk and control of premises, consciously disregarded a substantial risk to Chris's life by failing to act, and this recklessness directly caused Chris's death."
+        }
+      ],
+      "decoy_blocks": [
+        {
+          "type": "rule",
+          "text": "Under Beardsley, a mere social relationship as host and guest creates no legal duty. The fight was between two unrelated adults, not Alex's responsibility."
+        },
+        {
+          "type": "application",
+          "text": "Since Alex did not start the fight, Alex has no liability for injuries resulting from the fight. Only the person who initiated the violence (Ben) is criminally responsible."
+        },
+        {
+          "type": "rule",
+          "text": "Even if a duty existed, Chris's rare and undiagnosed heart condition is an intervening cause that breaks the chain of proximate causation."
+        },
+        {
+          "type": "application",
+          "text": "Because Alex did not intend for Chris to be beaten, Alex lacks the mens rea for any crime. Criminal liability requires intent or willfulness."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "fact_pattern": "Mia borrowed her neighbor Tom's expensive watch, falsely telling him she needed it for a formal event. Instead, Mia pawned the watch and kept the money. Tom expected to get the watch back.",
+      "side": "Prosecution",
+      "charge": "Larceny by Trick",
+      "correct_blocks": [
+        {
+          "type": "issue",
+          "text": "Whether Mia is guilty of larceny by trick—obtaining possession of another's property through fraudulent misrepresentation with intent to permanently deprive the owner."
+        },
+        {
+          "type": "rule",
+          "text": "Larceny by trick requires: (1) obtaining possession (but not title) of another's property through fraudulent deception or artifice, and (2) intent to permanently deprive the owner of the property."
+        },
+        {
+          "type": "rule",
+          "text": "The distinction from false pretenses is critical: larceny by trick involves fraud that obtains possession only; false pretenses involves fraud that obtains both title and possession. In larceny by trick, the owner retains title but loses possession."
+        },
+        {
+          "type": "application",
+          "text": "Mia made a false statement to Tom—that she needed the watch for a formal event—to induce Tom to give her the watch. This is fraudulent deception."
+        },
+        {
+          "type": "application",
+          "text": "Tom loaned the watch to Mia and expected to receive it back. Tom never intended to transfer title to Mia; he only transferred possession for temporary use. Tom retained ownership."
+        },
+        {
+          "type": "application",
+          "text": "Mia's conversion of the watch by pawning it and keeping the money demonstrates her intent to permanently deprive Tom of the property. She had no intention of returning the watch or its proceeds to Tom."
+        },
+        {
+          "type": "conclusion",
+          "text": "Mia is guilty of larceny by trick. She obtained possession through fraud, Tom retained title, and she converted the watch with intent to permanently deprive Tom. All elements are satisfied."
+        }
+      ],
+      "decoy_blocks": [
+        {
+          "type": "rule",
+          "text": "This is false pretenses because Mia obtained possession of property owned by Tom through false representation. Larceny by trick does not apply when the owner retains title."
+        },
+        {
+          "type": "rule",
+          "text": "Since Tom voluntarily handed over the watch (even under false pretenses), no trespassory taking occurred. Therefore, no larceny of any kind is possible."
+        },
+        {
+          "type": "application",
+          "text": "Mia's status as a neighbor with whom Tom had a lending relationship means the transaction is civil, not criminal. Failure to return borrowed property is breach of contract, not theft."
+        },
+        {
+          "type": "rule",
+          "text": "Larceny requires an intent to permanently deprive the owner of the specific item. Since Mia pawned the watch and it is still in the world (with the pawn shop), no permanent deprivation occurred."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "fact_pattern": "Late at night, Rex forced open the locked back door of a warehouse and entered to steal electronics. The warehouse owner had given Rex permission to enter during business hours to make deliveries, but Rex entered at 2 AM when the business was closed. Rex argues that since he had prior permission to enter, he cannot be convicted of burglary.",
+      "side": "Prosecution",
+      "charge": "Burglary",
+      "correct_blocks": [
+        {
+          "type": "issue",
+          "text": "Whether Rex committed burglary by breaking and entering a structure at night with intent to commit a felony, despite having limited prior permission to enter during business hours."
+        },
+        {
+          "type": "rule",
+          "text": "At common law, burglary requires: (1) breaking, (2) entry, (3) of a dwelling house, (4) at nighttime, (5) with intent to commit a felony within. Modern statutes often expand 'dwelling house' to any structure."
+        },
+        {
+          "type": "rule",
+          "text": "Under Thibeault, burglary requires proof that the defendant knew they were not licensed or privileged to enter AND had intent to commit a crime. These are separate elements. Consent limited in scope (time, purpose) does not extend beyond its terms."
+        },
+        {
+          "type": "application",
+          "text": "Rex's permission was explicitly limited to business hours for delivery purposes. Entering at 2 AM far exceeded the scope of that permission. Rex knew the business was closed and that his license to enter did not extend to nighttime entry."
+        },
+        {
+          "type": "application",
+          "text": "Rex used force (crowbar) to overcome a locked door, satisfying the breaking element. Per Eichman, his physical intrusion within the four walls satisfies entry. His intent to steal electronics establishes intent to commit a felony."
+        },
+        {
+          "type": "conclusion",
+          "text": "Rex is guilty of burglary. His limited daytime delivery permission was exhausted and does not negate the breaking, unauthorized entry at night, or felonious intent."
+        }
+      ],
+      "distractor_blocks": [
+        {
+          "type": "rule",
+          "text": "Under the MPC, self-defense is justified when the actor subjectively believes force is immediately necessary to protect against unlawful force."
+        },
+        {
+          "type": "application",
+          "text": "Rex acted under duress because he feared losing his delivery job if he did not meet his quota."
+        },
+        {
+          "type": "rule",
+          "text": "Larceny by trick requires obtaining possession through misrepresentation, which is distinguishable from obtaining title through fraud."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "fact_pattern": "While shopping at a department store, Dana grabbed a designer handbag off the display and walked toward the exit. A security guard stepped in front of Dana near the door. Dana pushed past the guard, shoulder-checking them, and ran to her car. The prosecution charges Dana with robbery, arguing the force used against the guard satisfies the violence element.",
+      "side": "Defense",
+      "charge": "Robbery",
+      "correct_blocks": [
+        {
+          "type": "issue",
+          "text": "Whether Dana's act of pushing past a security guard while fleeing with stolen merchandise constitutes robbery, which requires the taking of property through force or intimidation."
+        },
+        {
+          "type": "rule",
+          "text": "Robbery requires: (1) trespassory taking, (2) and carrying away, (3) of personal property of another, (4) with intent to permanently deprive, (5) accomplished through force, threat of force, or fear."
+        },
+        {
+          "type": "rule",
+          "text": "Under Crocker v. State, simply taking property without sufficient force, threat, or fear satisfies larceny but NOT robbery. The force must be integral to the taking, not merely incidental to escape."
+        },
+        {
+          "type": "application",
+          "text": "Dana's initial taking of the handbag involved no force — she simply picked it up off a display. The 'force' occurred only during escape, not during the actual taking of the property."
+        },
+        {
+          "type": "application",
+          "text": "However, under Miller v. Superior Court, the prosecution will argue that force during asportation satisfies the immediate presence requirement. Dana's best argument is that a shoulder-check while fleeing is minimal incidental contact, more akin to Crocker's snatching than a true use of force."
+        },
+        {
+          "type": "conclusion",
+          "text": "Dana should be convicted of larceny, not robbery. The minimal contact during escape does not rise to the level of force or intimidation required under Crocker, and the initial taking was completely non-violent."
+        }
+      ],
+      "distractor_blocks": [
+        {
+          "type": "rule",
+          "text": "Embezzlement requires intentional conversion of property by someone in a position of trust or fiduciary relationship."
+        },
+        {
+          "type": "application",
+          "text": "Dana was in fear for her safety when the guard confronted her, giving rise to a self-defense claim."
+        },
+        {
+          "type": "rule",
+          "text": "First-degree murder requires willfulness, deliberation, and premeditation in addition to malice aforethought."
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "fact_pattern": "After being stalked by her ex-boyfriend Kyle for weeks, Maria obtained a restraining order. One evening, Kyle showed up at Maria's apartment, pounding on the door and screaming threats. When Kyle kicked in the door and lunged toward her, Maria grabbed a kitchen knife and stabbed Kyle, killing him. Maria claims self-defense.",
+      "side": "Defense",
+      "charge": "Second-Degree Murder",
+      "correct_blocks": [
+        {
+          "type": "issue",
+          "text": "Whether Maria is justified in using deadly force in self-defense when her stalker ex-boyfriend forcibly entered her home and lunged at her after weeks of threatening behavior."
+        },
+        {
+          "type": "rule",
+          "text": "Self-defense justifies the use of deadly force when the actor reasonably believes it is necessary to prevent imminent and unlawful use of deadly force or force likely to cause serious bodily injury. The standard requires both subjective belief and objective reasonableness."
+        },
+        {
+          "type": "rule",
+          "text": "Under Goetz, the reasonableness inquiry is objective but the jury may consider the defendant's knowledge of the victim, physical attributes of all persons involved, and prior experiences that might be relevant."
+        },
+        {
+          "type": "application",
+          "text": "Maria's subjective belief in imminent danger is well-supported: Kyle had been stalking her for weeks, she had obtained a restraining order, Kyle violated it by coming to her apartment, he kicked in her door (a violent act), and he lunged at her."
+        },
+        {
+          "type": "application",
+          "text": "The objective reasonableness standard is satisfied: a reasonable person with Maria's knowledge of Kyle's pattern of stalking, violation of the restraining order, and violent forced entry would believe deadly force was necessary. Under Simon, prior dealings with the victim are relevant to the reasonable person analysis."
+        },
+        {
+          "type": "application",
+          "text": "The force was proportional (deadly force against someone who kicked in a door and lunged) and immediately necessary (Kyle was in the act of attacking, not making future threats). There was no duty to retreat in her own home under the castle doctrine."
+        },
+        {
+          "type": "conclusion",
+          "text": "Maria acted in justified self-defense. Her use of deadly force was objectively reasonable given Kyle's history of stalking, violation of the restraining order, forced entry, and physical lunge — satisfying all elements of the self-defense doctrine."
+        }
+      ],
+      "distractor_blocks": [
+        {
+          "type": "rule",
+          "text": "Voluntary manslaughter requires a killing in the heat of passion upon adequate provocation with no reasonable opportunity to cool off."
+        },
+        {
+          "type": "application",
+          "text": "Maria committed premeditated murder because she had time to think about using the knife before Kyle entered."
+        },
+        {
+          "type": "rule",
+          "text": "Under the felony murder rule, a killing that occurs during the commission of an inherently dangerous felony is automatically elevated to murder."
+        }
+      ]
+    }
+  ]
+}

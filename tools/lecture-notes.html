@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criminal Law (JD2960) - Condensed Lecture Notes - Prof. Arnaud, BU Law, Spring 2026</title>
+    <style>
+        :root, [data-theme] {
+            --tool-accent: #10b981;
+            --tool-accent-dark: #059669;
+            --tool-accent-light: #34d399;
+            --tool-accent-lighter: #6ee7b7;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 46px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+        }
+
+        .sidebar {
+            background: var(--color-bg-secondary);
+            border-right: 1px solid var(--color-border);
+            overflow-y: auto;
+            padding: 20px;
+            width: 260px;
+            min-width: 260px;
+            flex-shrink: 0;
+        }
+
+        .main {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            min-width: 0;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: var(--tool-accent);
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--color-text-secondary);
+            font-size: 14px;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            color: var(--color-text-primary);
+            width: 100%;
+        }
+
+        .sidebar-section {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-section h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--tool-accent);
+            margin-bottom: 10px;
+            padding: 0 5px;
+            letter-spacing: 1px;
+        }
+
+        .lecture-link {
+            display: block;
+            padding: 8px 10px;
+            margin-bottom: 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--color-text-primary);
+            transition: all 0.2s;
+        }
+
+        .lecture-link:hover {
+            background: var(--color-bg-tertiary, var(--color-bg-primary));
+            color: var(--tool-accent);
+        }
+
+        .lecture-link.active {
+            background: var(--tool-accent);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .lecture-content {
+            display: none;
+        }
+
+        .lecture-content.active {
+            display: block;
+        }
+
+        .unit-header {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--tool-accent);
+            margin-top: 20px;
+            margin-bottom: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .lecture-title {
+            font-size: 26px;
+            color: var(--tool-accent);
+            margin-bottom: 8px;
+        }
+
+        .lecture-meta {
+            color: var(--color-text-secondary);
+            font-size: 13px;
+            margin-bottom: 24px;
+        }
+
+        .section {
+            margin-bottom: 28px;
+            background: var(--color-bg-secondary);
+            border-left: 3px solid var(--tool-accent);
+            padding: 20px;
+            border-radius: 6px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            color: var(--tool-accent);
+            margin-bottom: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            user-select: none;
+        }
+
+        .section-title:hover {
+            color: var(--tool-accent-lighter);
+        }
+
+        .toggle-icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background: var(--tool-accent);
+            color: var(--color-text-primary);
+            text-align: center;
+            line-height: 18px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .section-content {
+            display: none;
+            margin-top: 12px;
+        }
+
+        .section-content.expanded {
+            display: block;
+        }
+
+        .content-item {
+            margin-bottom: 12px;
+            padding: 10px;
+            background: var(--color-bg-primary);
+            border-radius: 4px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .content-item strong {
+            color: var(--tool-accent);
+        }
+
+        .case-name {
+            color: var(--tool-accent);
+            font-weight: 500;
+        }
+
+        .rule-box {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--tool-accent);
+            padding: 14px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .quote {
+            border-left: 3px solid var(--tool-accent);
+            padding-left: 14px;
+            margin: 12px 0;
+            font-style: italic;
+            color: var(--color-text-primary);
+        }
+
+        .hypothetical {
+            background: rgba(106, 170, 100, 0.1);
+            border: 1px solid var(--tool-accent);
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .hypothetical-label {
+            font-weight: 600;
+            color: var(--tool-accent);
+            margin-bottom: 6px;
+        }
+
+        .exam-tip {
+            background: rgba(251, 191, 36, 0.15);
+            border-left: 3px solid var(--color-partial);
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .exam-tip strong {
+            color: var(--color-partial);
+        }
+
+        .quick-ref {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .quick-ref-card {
+            background: var(--color-bg-secondary);
+            padding: 14px;
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
+        }
+
+        .quick-ref-card h4 {
+            color: var(--tool-accent);
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .quick-ref-card p {
+            font-size: 12px;
+            color: var(--color-text-primary);
+        }
+
+        .exam-tips-section {
+            background: var(--color-bg-secondary);
+            border: 2px solid var(--color-partial);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .exam-tips-section h2 {
+            color: var(--color-partial);
+            margin-bottom: 16px;
+        }
+
+        .exam-tip-item {
+            margin-bottom: 12px;
+            padding-left: 12px;
+            border-left: 2px solid var(--color-partial);
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-width: 100%;
+                height: auto;
+                max-height: 300px;
+                border-right: none;
+                border-bottom: 1px solid var(--color-border);
+            }
+
+            .main {
+                padding: 24px;
+                overflow-y: visible;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .main {
+                padding: 16px;
+            }
+
+            .section {
+                padding: 14px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+        }
+
+        .case-list {
+            columns: 2;
+            column-gap: 20px;
+        }
+
+        .case-item {
+            font-size: 13px;
+            margin-bottom: 8px;
+            break-inside: avoid;
+        }
+
+        .topic-index {
+            background: var(--color-bg-secondary);
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .topic-index h3 {
+            color: var(--tool-accent);
+            margin-bottom: 12px;
+        }
+
+        .topic-badge {
+            display: inline-block;
+            background: var(--color-bg-tertiary, var(--color-bg-primary));
+            color: var(--tool-accent);
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin: 4px 4px 4px 0;
+        }
+    </style>
+    <link rel="stylesheet" href="../theme.css">
+    <style>
+        /* Override theme.css .container constraints for this sidebar layout */
+        .container {
+            display: flex !important;
+            max-width: 100% !important;
+            padding: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            height: calc(100vh - 46px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <input type="text" class="search-box" id="searchBox" placeholder="Search lectures...">
+
+            <div class="sidebar-section">
+                <h3>Unit I: Foundations</h3>
+                <div class="lecture-link active" onclick="showLecture(this,1)">Lecture 1: Course Intro</div>
+                <div class="lecture-link" onclick="showLecture(this,2)">Lecture 2: Actus Reus</div>
+                <div class="lecture-link" onclick="showLecture(this,3)">Lecture 3: Actus Reus Cont'd</div>
+                <div class="lecture-link" onclick="showLecture(this,4)">Lecture 4: Mens Rea I</div>
+                <div class="lecture-link" onclick="showLecture(this,5)">Lecture 5: Mens Rea II</div>
+                <div class="lecture-link" onclick="showLecture(this,6)">Lecture 6: Causation</div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Unit II: Defenses & Limits</h3>
+                <div class="lecture-link" onclick="showLecture(this,7)">Lecture 7: Omissions I</div>
+                <div class="lecture-link" onclick="showLecture(this,8)">Lecture 8: Omissions II</div>
+                <div class="lecture-link" onclick="showLecture(this,9)">Lecture 9: Strict Liability</div>
+                <div class="lecture-link" onclick="showLecture(this,10)">Lecture 10: Strict Liability II</div>
+                <div class="lecture-link" onclick="showLecture(this,11)">Lecture 11: Mistake</div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Unit III: Homicide</h3>
+                <div class="lecture-link" onclick="showLecture(this,13)">Lecture 13: 1st-Degree Murder</div>
+                <div class="lecture-link" onclick="showLecture(this,14)">Lecture 14: 1st-Degree Cont'd</div>
+                <div class="lecture-link" onclick="showLecture(this,15)">Lecture 15: Vol. Manslaughter</div>
+                <div class="lecture-link" onclick="showLecture(this,16)">Lecture 16: Vol. Manslaughter II</div>
+                <div class="lecture-link" onclick="showLecture(this,17)">Lecture 17: Depraved Heart</div>
+                <div class="lecture-link" onclick="showLecture(this,18)">Lecture 18: Felony Murder I</div>
+                <div class="lecture-link" onclick="showLecture(this,19)">Lecture 19: Felony Murder II</div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Unit IV: Property Crimes</h3>
+                <div class="lecture-link" onclick="showLecture(this,20)">Lecture 20: Larceny</div>
+                <div class="lecture-link" onclick="showLecture(this,21)">Lecture 21: Robbery</div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Study Tools</h3>
+                <div class="lecture-link" onclick="showExamTips()">Exam Tips & Strategy</div>
+                <div class="lecture-link" onclick="showTopicIndex()">Topic Index</div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="header">
+                <h1>Criminal Law Condensed Lecture Notes</h1>
+                <p>Professor Emmanuel H. Arnaud | Boston University School of Law | Spring 2026</p>
+            </div>
+
+            <div id="content"></div>
+        </div>
+    </div>
+
+    <script>
+        // Lecture data structure
+        const lectureData = {
+            1: {
+                title: "Course Introduction & Criminal Law Foundations",
+                topics: ["Actus Reus", "Mens Rea", "Causation", "Concurrence"],
+                emphasis: [
+                    "Criminal law builds on foundations - understand the basics before moving to substance offenses",
+                    "This is a formulaic subject - map everything out systematically"
+                ],
+                cases: [
+                    "Robinson v. California - cannot punish status, only acts",
+                    "Commonwealth v. Mercado - thought alone is not criminal"
+                ],
+                rules: [
+                    "Every crime requires actus reus (guilty act) + mens rea (guilty mind) + causation",
+                    "Temporal and motivational concurrence required between mens rea and actus reus"
+                ],
+                quotes: [
+                    "You need to understand the building blocks or you'll struggle with everything that comes next",
+                    "Criminal law is systematic - don't skip over foundations"
+                ]
+            },
+
+            2: {
+                title: "Actus Reus: The Voluntary Act Requirement",
+                topics: ["Actus Reus", "Voluntary Act", "Social Harm"],
+                emphasis: [
+                    "A voluntary act is the minimum requirement for criminal liability",
+                    "Reflex actions, convulsions, and movements during unconsciousness do not satisfy actus reus"
+                ],
+                cases: [
+                    "Martin v. State - defendant carried out while intoxicated; no voluntary act",
+                    "Decina - epileptic driving; voluntary act in deciding to get behind wheel",
+                    "People v. Mercer - sleeping movements that cause harm; analyze when voluntary act occurred"
+                ],
+                rules: [
+                    "Actus reus = voluntary act + social harm",
+                    "MPC § 2.01(2)(d): movements not product of effort or determination are involuntary",
+                    "Act must be conscious exercise of will or must be habitual"
+                ],
+                quotes: [
+                    "The key is whether the defendant had conscious control over the movement at some point",
+                    "Think about when the voluntary act actually occurred - sometimes it's not the movement itself"
+                ]
+            },
+
+            3: {
+                title: "Actus Reus (continued) & Introduction to Omissions",
+                topics: ["Actus Reus", "Omissions", "Legal Duty"],
+                emphasis: [
+                    "Omissions are exceptional - generally no duty to rescue a stranger",
+                    "When a legal duty exists, failure to act can constitute actus reus"
+                ],
+                cases: [
+                    "People v. Beardsley - no duty to rescue paramour from overdose",
+                    "Jones v. United States - special relationship created legal duty"
+                ],
+                rules: [
+                    "General rule: No criminal liability for failure to act (inaction)",
+                    "Exception: When legal duty to act exists, omission can satisfy actus reus requirement"
+                ],
+                quotes: [
+                    "The law does not generally require rescue of strangers",
+                    "Special relationships fundamentally change the analysis"
+                ]
+            },
+
+            4: {
+                title: "Mens Rea Foundations: Intent & Knowledge",
+                topics: ["Mens Rea", "Intent", "Knowledge", "MPC § 2.02"],
+                emphasis: [
+                    "MPC hierarchy is foundational to everything - memorize it",
+                    "Intent to kill is clearest form of mens rea; knowledge requires awareness of practical certainty"
+                ],
+                cases: [
+                    "State v. Cameron - specific intent to steal vs. general knowledge",
+                    "Guthrie - knowledge requires virtual certainty that result will occur"
+                ],
+                rules: [
+                    "MPC § 2.02 defines four levels: Purpose > Knowledge > Recklessness > Negligence",
+                    "Purpose (purposely): Conscious object to cause result",
+                    "Knowledge (knowingly): Aware that conduct is practically certain to cause result"
+                ],
+                quotes: [
+                    "The level of mens rea determines which crime applies - this is critical",
+                    "Know the difference between purpose and knowledge - courts often struggle with this distinction"
+                ]
+            },
+
+            5: {
+                title: "Mens Rea (continued): Recklessness & Negligence",
+                topics: ["Recklessness", "Negligence", "Conscious Disregard"],
+                emphasis: [
+                    "Recklessness is the boundary between murder and manslaughter - critical on every exam",
+                    "MPC recognizes negligence; many common law jurisdictions treat it differently"
+                ],
+                cases: [
+                    "United States v. Jewell - willful blindness satisfies 'knowingly'",
+                    "People v. Singleton - driving drunk evinces extreme recklessness"
+                ],
+                rules: [
+                    "Recklessness: Conscious awareness of substantial unjustifiable risk + conscious disregard",
+                    "Negligence: Should be aware of risk (objective reasonable person standard)",
+                    "Extreme recklessness (depraved heart) = murder; ordinary recklessness = manslaughter"
+                ],
+                quotes: [
+                    "The key question for recklessness: Did the defendant knowingly disregard a substantial risk?",
+                    "Recklessness separates murders from manslaughters in most jurisdictions"
+                ]
+            },
+
+            6: {
+                title: "Causation: Actual & Proximate Cause",
+                topics: ["Causation", "But-For", "Proximate Cause", "Intervening Cause"],
+                emphasis: [
+                    "Causation has two components and you must prove both",
+                    "Intervening causes are tested heavily - understand responsive vs. coincidental"
+                ],
+                cases: [
+                    "Kibbe v. Henderson - abandoned man hit by truck; intervening cause analysis",
+                    "People v. Kern - improper medical treatment; responsive intervening cause"
+                ],
+                rules: [
+                    "Actual cause (but-for test): Would harm have occurred but for defendant's conduct?",
+                    "Proximate cause: Is it fair to hold defendant liable? (Foreseeability framework)",
+                    "MPC § 2.03: Actual result must be within risk defendant was aware of"
+                ],
+                quotes: [
+                    "Just because something wouldn't have happened but for your act doesn't mean you caused it",
+                    "Proximate cause asks: was this foreseeable enough to be fair to hold you responsible?"
+                ]
+            },
+
+            7: {
+                title: "Omissions: Legal Duty to Act",
+                topics: ["Omissions", "Special Relationship", "Contractual Duty", "Creation of Risk"],
+                emphasis: [
+                    "Five categories of legal duty - know all of them cold",
+                    "Omissions are rare in criminal law but heavily tested on exams"
+                ],
+                cases: [
+                    "Pestinikas v. Pennsylvania - contractual duty to care for elderly parent",
+                    "Howard - voluntary assumption of care creates duty",
+                    "Beardsley - mere cohabitation does not create special relationship"
+                ],
+                rules: [
+                    "Five duties to act: (1) Special relationship (parent-child, spouse), (2) Contractual, (3) Statutory, (4) Creation of risk, (5) Voluntary assumption",
+                    "Omission satisfies actus reus but prosecution must still prove mens rea, causation, concurrence"
+                ],
+                quotes: [
+                    "Special relationships are where most omission liability arises",
+                    "If you voluntarily assume care of someone, you can't just abandon them"
+                ]
+            },
+
+            8: {
+                title: "Omissions (continued) & Strict Liability Introduction",
+                topics: ["Omissions", "Strict Liability", "No Mens Rea"],
+                emphasis: [
+                    "Strict liability crimes have no mens rea requirement - rare but important",
+                    "Morissette presumption favors mens rea - burden on government to prove strict liability"
+                ],
+                cases: [
+                    "Morissette v. United States - presumption in favor of mens rea requirement",
+                    "Regulatory crimes often strict liability; public welfare offenses"
+                ],
+                rules: [
+                    "Strict liability: No mens rea required for at least one element",
+                    "Typical for health/safety/welfare offenses with light penalties",
+                    "Mistake of fact is NOT a defense to strict liability crimes"
+                ],
+                quotes: [
+                    "The government must prove strict liability was intended - it doesn't arise by default",
+                    "Strict liability is the exception, not the rule"
+                ]
+            },
+
+            9: {
+                title: "Strict Liability & General vs. Specific Intent",
+                topics: ["Strict Liability", "General Intent", "Specific Intent", "Mistake of Fact"],
+                emphasis: [
+                    "Strict liability crimes are disfavored in criminal law",
+                    "Mistake of fact defense depends on crime classification: general vs. specific intent"
+                ],
+                cases: [
+                    "People v. Atkins - look for additional intent language to classify crime",
+                    "State v. Freeman - honest vs. reasonable mistake depends on intent type"
+                ],
+                rules: [
+                    "General intent: Mistake requires honest AND reasonable belief",
+                    "Specific intent: Mistake requires only honest belief (reasonableness irrelevant)",
+                    "Classify crime first; this determines mistake of fact analysis"
+                ],
+                quotes: [
+                    "The Atkins test: Look for language showing intent beyond the actus reus itself",
+                    "This classification affects the entire structure of your defense argument"
+                ]
+            },
+
+            10: {
+                title: "Strict Liability (continued) & Regulatory Offenses",
+                topics: ["Strict Liability", "Regulatory Crimes", "Public Welfare"],
+                emphasis: [
+                    "Regulatory crimes are the primary area for strict liability",
+                    "Understand the characteristics: light penalty, health/safety focus, defendant in position to prevent"
+                ],
+                cases: [],
+                rules: [
+                    "Regulatory offenses often impose strict liability on business owners",
+                    "Government bears burden to prove strict liability was intended (Morissette)"
+                ],
+                quotes: []
+            },
+
+            11: {
+                title: "Mistake of Fact & Mistake of Law",
+                topics: ["Mistake of Fact", "Mistake of Law", "Willfulness"],
+                emphasis: [
+                    "Mistake of law is generally no defense - ignorance of law is no excuse",
+                    "Mistake of fact defense depends on whether crime is general or specific intent"
+                ],
+                cases: [
+                    "Cheek v. United States - honest belief negates willfulness in tax crimes",
+                    "Marrero - official interpretation exception to mistake of law rule"
+                ],
+                rules: [
+                    "Mistake of law: General rule = no defense",
+                    "Exception for 'willfulness' crimes: Honest mistake about what conduct is illegal can negate knowledge",
+                    "Mistake of fact: Depends on specific/general intent classification"
+                ],
+                quotes: [
+                    "The exception to 'ignorance is no excuse' is narrow - only for willfulness crimes",
+                    "This is where general/specific intent classification becomes critical"
+                ]
+            },
+
+            13: {
+                title: "First-Degree Murder: Premeditation & Deliberation I",
+                topics: ["Murder", "First-Degree Murder", "Premeditation", "Deliberation"],
+                emphasis: [
+                    "This is the most heavily tested topic in the course - expect it on the exam",
+                    "You must master both the elements AND the factors courts use to prove them"
+                ],
+                cases: [
+                    "State v. Brown - defines deliberation and premeditation for first-degree murder",
+                    "State v. Bingham - having time to deliberate does NOT mean you in fact deliberated",
+                    "Gilbert v. State - factors supporting premeditation & deliberation"
+                ],
+                rules: [
+                    "First-degree murder: Willful, deliberate, and premeditated killing",
+                    "Deliberation: Measuring and evaluating major facets of a choice - weighing reasons",
+                    "Premeditation: Thinking about something beforehand - does not require long period of time"
+                ],
+                quotes: [
+                    "The Bingham principle is huge on exams: time to deliberate is NOT the same as actually deliberating",
+                    "Deliberation is about the quality of thought, not the quantity of time"
+                ]
+            },
+
+            14: {
+                title: "First-Degree Murder: Premeditation & Deliberation II",
+                topics: ["First-Degree Murder", "Premeditation", "Deliberation", "Inferential Method"],
+                emphasis: [
+                    "Exam will test your ability to apply Gilbert factors to specific facts",
+                    "Understand both the express malice and inferential approaches"
+                ],
+                cases: [
+                    "Gilbert v. State - nine factors supporting premeditation & deliberation",
+                    "State v. Fugate - intent to kill can be inferred from natural and probable consequences",
+                    "State v. Arrington - when second-degree murder instruction is required"
+                ],
+                rules: [
+                    "Nine Gilbert factors: prior dispute, weapon ready, considering alternatives, positioning for avoidance of detection, returning for additional weapon, use of extreme force, etc.",
+                    "No single factor is dispositive - holistic evaluation required",
+                    "Inferential approach: Intent to kill inferred from circumstances of killing"
+                ],
+                quotes: [
+                    "You can't just rely on one Gilbert factor - courts want to see pattern",
+                    "The inferential method allows for circumstantial evidence of premeditation"
+                ]
+            },
+
+            15: {
+                title: "Voluntary Manslaughter: Heat of Passion",
+                topics: ["Voluntary Manslaughter", "Heat of Passion", "Adequate Provocation"],
+                emphasis: [
+                    "Exam will likely present fact pattern where result differs between frameworks",
+                    "Three different frameworks with different results - be prepared for all"
+                ],
+                cases: [
+                    "People v. Berry - modern approach recognizes cumulative passion over 20 hours",
+                    "Common law cases establishing categorical adequacy of provocation"
+                ],
+                rules: [
+                    "Categorical approach (4 elements): Heat of passion + legally adequate provocation + no cooling off + causal link",
+                    "Legally adequate provocation (traditional): Battery, mutual combat, serious crime v. relative, illegal arrest, adultery",
+                    "Mere words NOT adequate (traditional approach)"
+                ],
+                quotes: [
+                    "The categorical approach is mechanical but rigid",
+                    "Mere words rule has real bite in traditional jurisdictions"
+                ]
+            },
+
+            16: {
+                title: "Voluntary Manslaughter: Modern Approach & Depraved Heart",
+                topics: ["Voluntary Manslaughter", "Reasonable Person", "EMED", "Depraved Heart"],
+                emphasis: [
+                    "Modern approach leaves heat of passion to jury - more flexible",
+                    "Depraved heart requires risk of DEATH, not just serious bodily injury"
+                ],
+                cases: [
+                    "People v. Knoller - Phillips test requires consciousness of risk of death",
+                    "State v. Dumlao - MPC EMED two-step test"
+                ],
+                rules: [
+                    "Modern reasonable person approach: Did reasonable person in defendant's position cool off?",
+                    "MPC EMED: Extreme mental/emotional disturbance + reasonable explanation, from viewpoint of person in actor's situation",
+                    "Depraved heart: Extreme recklessness evincing extreme indifference to human life; conscious disregard of risk of DEATH"
+                ],
+                quotes: [
+                    "The modern approach is more lenient - words CAN trigger passion",
+                    "EMED is defendant-centered but reasonableness is still required"
+                ]
+            },
+
+            17: {
+                title: "Depraved Heart Murder & Involuntary Manslaughter",
+                topics: ["Depraved Heart", "Involuntary Manslaughter", "Recklessness"],
+                emphasis: [
+                    "Depraved heart separates from ordinary recklessness by DEGREE of risk and disregard",
+                    "This is the critical boundary on many fact patterns"
+                ],
+                cases: [
+                    "People v. Knoller - consciousness of risk of DEATH is essential, not just SBI",
+                    "State v. Williams - ordinary negligence standard varies by jurisdiction"
+                ],
+                rules: [
+                    "Depraved heart = extreme recklessness (very high degree of risk + disregard)",
+                    "Involuntary manslaughter = ordinary recklessness (lower threshold)",
+                    "MPC § 210.3: Recklessness only; negligence is NEVER sufficient for MPC manslaughter"
+                ],
+                quotes: [
+                    "The line between depraved heart and involuntary manslaughter is one of degree",
+                    "Exam will test your ability to argue whether conduct crosses that threshold"
+                ]
+            },
+
+            18: {
+                title: "Felony Murder Rule & Its Limitations I",
+                topics: ["Felony Murder", "Inherently Dangerous", "Merger Doctrine"],
+                emphasis: [
+                    "Felony murder is heavily tested - understand all four limitations",
+                    "These limitations are often used to prevent overreach of the rule"
+                ],
+                cases: [
+                    "People v. James - inherently dangerous felony limitation",
+                    "Rose v. State - merger doctrine prevents using assault as predicate for FM"
+                ],
+                rules: [
+                    "Basic rule: Death resulting from conduct during felony = murder",
+                    "Limitation 1 - Inherently dangerous: Felony must be inherently dangerous in abstract (California approach)",
+                    "Limitation 2 - Res gestae: Temporal, geographical, and causal proximity required",
+                    "Limitation 3 - Merger: Cannot merge assaultive felonies into homicide"
+                ],
+                quotes: [
+                    "Felony murder is one of the most controversial rules in criminal law",
+                    "The limitations exist to prevent stretching it too far"
+                ]
+            },
+
+
+            19: {
+                title: "Aggravated Theft (March 31)",
+                topics: ["Embezzlement", "Burglary", "Robbery", "Property Crimes"],
+                emphasis: [
+                    "Embezzlement requires lawful possession + fiduciary duty - look at trust relationship, not just formal role",
+                    "Burglary elements are breaking, entry, dwelling, nighttime, intent - understand each separately",
+                    "Robbery is theft + force/threat - force can occur during asportation phase"
+                ],
+                cases: [
+                    "Mills v. State - false pretenses requires no trust relationship; embezzlement requires it",
+                    "Steele - fiduciary duty arises from special confidence, not just formal POA; look at depositor's intent",
+                    "Eichman - entry requires intrusion within four walls or beneath roof; curtilage concept",
+                    "Thibeault - consent is complete defense to burglary; knowing lack of license and felonious intent are separate",
+                    "Crocker - snatching without force = larceny, not robbery",
+                    "Miller - force during asportation phase satisfies immediate presence requirement"
+                ],
+                rules: [
+                    "Embezzlement: Intentional conversion by someone in lawful possession/fiduciary role",
+                    "Mills distinction: False pretenses requires purposely false statements with intent victim rely; embezzlement requires trust relationship",
+                    "Steele rule: Fiduciary duty can arise from special confidence, not just formal POA; analyze depositor's intent",
+                    "Burglary elements: Breaking + entry + dwelling + nighttime + intent to commit felony (common law)",
+                    "Eichman entry: Must intrude within four walls or beneath roof; breaking requires some force",
+                    "Curtilage: Area in close proximity to home; outbuildings within curtilage are part of dwelling",
+                    "Thibeault: Consent is absolute defense; knowing lack of license and felonious intent analyzed separately",
+                    "Robbery: Larceny + violence/threat of violence + taking/retention during confrontation",
+                    "Crocker: Snatching without threat/force = larceny only, not robbery",
+                    "Miller: Force during asportation (carrying away) satisfies immediate presence requirement for robbery"
+                ],
+                quotes: [
+                    "Embezzlement is about the relationship - did the owner trust this person with the property?",
+                    "Breaking and entry are separate elements - don't confuse them",
+                    "Force in robbery can happen after the initial taking - the whole transaction is the moment for immediacy",
+                    "Mills teaches you the critical distinction: false pretenses is about fraud in getting title; embezzlement is about betraying trust"
+                ]
+            },
+
+            20: {
+                title: "Defenses Introduction & Self-Defense (April 2)",
+                topics: ["Defenses", "Justification", "Excuse", "Self-Defense", "MPC § 3.04"],
+                emphasis: [
+                    "Two distinct types of defenses - justification vs excuse - different legal implications",
+                    "Self-defense elements are necessity, proportionality, reasonable belief",
+                    "Goetz is critical: objective test but jury considers defendant's knowledge and experiences"
+                ],
+                cases: [
+                    "Goetz - 'reasonably' modifies 'believes' = objective test; but jury considers D's knowledge, physical attributes, prior experiences",
+                    "Simon - belief must be reasonable to reasonable person; prior dealings and anxiety are factually relevant to subjective belief but tested objectively",
+                    "MPC § 3.04 - focuses on subjective belief standard; reckless/negligent belief = manslaughter per § 3.09(2)"
+                ],
+                rules: [
+                    "Two types of defenses: Case-in-chief (negates element) vs Affirmative (admits crime but excuses/justifies)",
+                    "Justifications: Conduct is socially acceptable/permissible (e.g., self-defense, necessity, law enforcement)",
+                    "Excuses: Conduct is wrongful but actor is not morally culpable (e.g., duress, insanity, mistake)",
+                    "Self-defense elements: (1) Reasonable belief that force is necessary, (2) To prevent imminent unlawful use of force, (3) Proportional response",
+                    "Necessity requirement: Limited to imminent threats; future threats do not justify preemptive force",
+                    "Proportionality: Force used must match threat; can't use deadly force against non-deadly threat",
+                    "Reasonable belief: Subjective + objective; defendant's perspective matters but tested against reasonable person standard",
+                    "MPC § 3.04: Focus on subjective belief (was force necessary in defendant's mind?); reckless/negligent belief = manslaughter under § 3.09(2)",
+                    "Goetz test: Objective standard ('reasonably') but jury considers D's actual knowledge, physical attributes, prior experiences with aggressor",
+                    "Simon rule: Belief must be reasonable to reasonable person; mental state and prior dealings relevant but objectively tested"
+                ],
+                quotes: [
+                    "Justification says 'I did the right thing'; excuse says 'I wasn't able to do the right thing'",
+                    "Self-defense is about the moment - was force necessary RIGHT THEN?",
+                    "Goetz teaches us that reasonableness has a subjective element - but it still must be objectively reasonable",
+                    "The key to self-defense is imminence - you can't defend against a threat that might happen someday"
+                ]
+            },
+
+            21: {
+                title: "Robbery & Burglary",
+                topics: ["Robbery", "Burglary", "Property Crimes"],
+                emphasis: [
+                    "Robbery adds force/threat element to theft - fundamentally different crime",
+                    "Burglary is dwelling-focused; breaking not always required"
+                ],
+                cases: [],
+                rules: [
+                    "Robbery: Theft + force or threat of force + taking immediate presence of property owner",
+                    "Burglary: Entry into building with intent to commit crime inside",
+                    "Force in robbery must be used to take property or retain possession"
+                ],
+                quotes: [
+                    "Robbery is more serious because it involves confrontation and threat to person",
+                    "Burglary focuses on the entry - completed when burglar enters with intent"
+                ]
+            }
+        };
+
+        const examTipsData = {
+            title: "Professor Arnaud's Exam Tips & Strategy",
+            content: [
+                {
+                    title: "Compare Common Law AND MPC",
+                    text: "The professor teaches every rule in both frameworks. Even if the question doesn't explicitly ask for both, demonstrating command of both will score higher. Be prepared to show both approaches."
+                },
+                {
+                    title: "Argue Both Sides",
+                    text: "For every issue, construct the prosecution's argument using specific facts, then the defense's counter-argument. The professor values this balanced analysis above 'right answers.'"
+                },
+                {
+                    title: "Use Specific Case Names",
+                    text: "Citing relevant cases shows mastery (e.g., 'Under the Bingham principle, merely having time to deliberate does not mean D in fact deliberated'). Memorize the key cases and their holdings."
+                },
+                {
+                    title: "Watch for Overlapping Charges",
+                    text: "A single set of facts can support multiple theories. Spot all viable charges and defenses. This is intentional in the professor's patterns."
+                },
+                {
+                    title: "Allocate Time Carefully",
+                    text: "With 3 hours and 6 questions, you have roughly 30 minutes per question. Outline before writing. Don't spend too much time on any one issue."
+                },
+                {
+                    title: "Foundation Elements Matter",
+                    text: "Even in a homicide question, address actus reus, mens rea, causation, and concurrence as threshold issues before reaching the substantive charge."
+                },
+                {
+                    title: "Key Emphasis from Lectures",
+                    text: "The professor repeatedly said: 'Criminal law builds on foundations - understand the basics.' This applies to your study and exam approach."
+                },
+                {
+                    title: "Use Gilbert Factors Systematically",
+                    text: "For premeditation/deliberation, apply all nine Gilbert factors. Don't rely on just one. Show the pattern that emerges from the facts."
+                },
+                {
+                    title: "Recognize Boundary Lines",
+                    text: "The professor emphasizes boundary issues: depraved heart vs. ordinary recklessness, voluntary vs. involuntary manslaughter, larceny vs. false pretenses."
+                },
+                {
+                    title: "Know Your Frameworks",
+                    text: "Three frameworks for voluntary manslaughter (categorical, modern reasonable person, EMED). Four limitations on felony murder. Be prepared for fact patterns where framework choice matters."
+                }
+            ]
+        };
+
+        const topicIndexData = {
+            "Actus Reus": [1, 2, 3],
+            "Mens Rea & MPC § 2.02": [4, 5],
+            "Causation": [6],
+            "Omissions & Duty to Act": [7, 8],
+            "Strict Liability": [8, 9, 10],
+            "Mistake of Fact/Law": [11],
+            "First-Degree Murder": [13, 14],
+            "Voluntary Manslaughter": [15, 16],
+            "Depraved Heart Murder": [16, 17],
+            "Involuntary Manslaughter": [17],
+            "Felony Murder & Limitations": [18],
+            "Embezzlement": [19],
+            "Burglary": [19],
+            "Robbery": [19],
+            "Defenses & Justifications": [20],
+            "Self-Defense": [20],
+            "Robbery & Burglary Advanced": [21]
+        };
+
+        function showLecture(clickedEl, num) {
+            const data = lectureData[num];
+            if (!data) return;
+
+            // Update sidebar
+            document.querySelectorAll('.lecture-link').forEach(el => {
+                el.classList.remove('active');
+            });
+            // Find and activate the correct sidebar link
+            if (clickedEl && clickedEl.classList && clickedEl.classList.contains('lecture-link')) {
+                clickedEl.classList.add('active');
+            } else {
+                // Called programmatically or from non-sidebar link — find by matching
+                document.querySelectorAll('.lecture-link').forEach(el => {
+                    if (el.getAttribute('onclick') && el.getAttribute('onclick').indexOf(`, ${num})`) !== -1) {
+                        el.classList.add('active');
+                    }
+                });
+            }
+
+            // Build lecture HTML
+            let html = `
+                <div class="lecture-title">Lecture ${num}: ${data.title}</div>
+                <div class="lecture-meta">From the classroom notes of Professor Emmanuel H. Arnaud</div>
+
+                <div class="section">
+                    <div class="section-title" onclick="toggleSection(this)">
+                        <span class="toggle-icon">+</span>
+                        Key Topics Covered
+                    </div>
+                    <div class="section-content">
+            `;
+
+            data.topics.forEach(topic => {
+                html += `<span class="topic-badge">${topic}</span>`;
+            });
+
+            html += `
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title" onclick="toggleSection(this)">
+                        <span class="toggle-icon">+</span>
+                        Core Rules
+                    </div>
+                    <div class="section-content">
+            `;
+
+            data.rules.forEach(rule => {
+                html += `<div class="rule-box">${rule}</div>`;
+            });
+
+            html += `
+                    </div>
+                </div>
+            `;
+
+            if (data.hypotheticals && data.hypotheticals.length > 0) {
+                html += `
+                    <div class="section">
+                        <div class="section-title" onclick="toggleSection(this)">
+                            <span class="toggle-icon">+</span>
+                            Professor's Hypotheticals
+                        </div>
+                        <div class="section-content">
+                `;
+
+                data.hypotheticals.forEach((hyp, idx) => {
+                    html += `
+                        <div class="hypothetical">
+                            <div class="hypothetical-label">Scenario ${idx + 1}:</div>
+                            ${hyp}
+                        </div>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (data.emphasis && data.emphasis.length > 0) {
+                html += `
+                    <div class="section">
+                        <div class="section-title" onclick="toggleSection(this)">
+                            <span class="toggle-icon">+</span>
+                            What Professor Emphasized
+                        </div>
+                        <div class="section-content">
+                `;
+
+                data.emphasis.forEach(emp => {
+                    html += `<div class="content-item">• ${emp}</div>`;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (data.quotes && data.quotes.length > 0) {
+                html += `
+                    <div class="section">
+                        <div class="section-title" onclick="toggleSection(this)">
+                            <span class="toggle-icon">+</span>
+                            Key Quotes from Prof. Arnaud
+                        </div>
+                        <div class="section-content">
+                `;
+
+                data.quotes.forEach(quote => {
+                    html += `<div class="quote">"${quote}"</div>`;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (data.cases && data.cases.length > 0) {
+                html += `
+                    <div class="section">
+                        <div class="section-title" onclick="toggleSection(this)">
+                            <span class="toggle-icon">+</span>
+                            Cases Discussed
+                        </div>
+                        <div class="section-content">
+                            <div class="case-list">
+                `;
+
+                data.cases.forEach(caseItem => {
+                    html += `<div class="case-item"><span class="case-name">${caseItem}</span></div>`;
+                });
+
+                html += `
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('content').innerHTML = html;
+        }
+
+        function showExamTips() {
+            document.querySelectorAll('.lecture-link').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            let html = `
+                <div class="lecture-title">${examTipsData.title}</div>
+                <div class="lecture-meta">Strategic approach to the final exam</div>
+
+                <div class="exam-tips-section">
+                    <h2>How the Professor Tests You</h2>
+                    <p>The final is 3 hours, in-person, closed-book with 2 fact patterns (3 questions each). The professor asks you to:</p>
+                    <ol style="margin: 12px 0 12px 20px; line-height: 1.8;">
+                        <li>Derive legal rules from case law and/or MPC</li>
+                        <li>Apply rules to facts from both prosecution AND defense perspectives</li>
+                        <li>Construct competing arguments grounded in specific facts</li>
+                    </ol>
+                    <p style="margin-top: 12px;">He says repeatedly: <em>"I need you to tell us facts from the case."</em> This is not about right answers. It's about demonstrating mastery and balanced argument.</p>
+                </div>
+            `;
+
+            examTipsData.content.forEach((tip, idx) => {
+                html += `
+                    <div class="section">
+                        <div class="section-title" onclick="toggleSection(this)">
+                            <span class="toggle-icon">+</span>
+                            ${idx + 1}. ${tip.title}
+                        </div>
+                        <div class="section-content">
+                            <div class="content-item">${tip.text}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('content').innerHTML = html;
+        }
+
+        function showTopicIndex() {
+            document.querySelectorAll('.lecture-link').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            let html = `
+                <div class="lecture-title">Topic Index</div>
+                <div class="lecture-meta">Where to find each topic in the course</div>
+            `;
+
+            Object.entries(topicIndexData).forEach(([topic, lectures]) => {
+                html += `
+                    <div class="section">
+                        <div class="section-title" onclick="toggleSection(this)">
+                            <span class="toggle-icon">+</span>
+                            ${topic}
+                        </div>
+                        <div class="section-content">
+                            <div class="content-item">
+                                Covered in: <strong>Lecture(s) ${lectures.join(', ')}</strong>
+                                <div style="margin-top: 8px;">
+                                    ${lectures.map(l => `<a href="#" onclick="showLecture(this,${l}); return false;" style="color: var(--tool-accent); margin-right: 10px;">→ Lecture ${l}</a>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('content').innerHTML = html;
+        }
+
+        function toggleSection(el) {
+            const content = el.nextElementSibling;
+            const icon = el.querySelector('.toggle-icon');
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.textContent = '+';
+            } else {
+                content.classList.add('expanded');
+                icon.textContent = '−';
+            }
+        }
+
+        // Initialize - show Lecture 1
+        showLecture(null, 1);
+    </script>
+    <script src="../shared.js"></script>
+    <script src="../navbar.js"></script>
+</body>
+</html>

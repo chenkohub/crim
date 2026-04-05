@@ -1,0 +1,184 @@
+{
+  "cases": [
+    {
+      "name": "State v. Bingham",
+      "holding": "Having time to deliberate ≠ actually deliberating; must prove defendant in fact deliberated",
+      "topic": "First-Degree Murder"
+    },
+    {
+      "name": "State v. Brown",
+      "holding": "Deliberation means measuring and evaluating major facets of a choice; weighing reasons for and against killing",
+      "topic": "First-Degree Murder"
+    },
+    {
+      "name": "Gilbert v. State",
+      "holding": "Factors supporting premeditation include having weapon ready, considering alternatives, positioning to avoid detection, returning for additional weapon",
+      "topic": "First-Degree Murder"
+    },
+    {
+      "name": "People v. Berry",
+      "holding": "Modern approach to voluntary manslaughter recognizes cumulative passion; 20 hours can still be 'heat of passion'",
+      "topic": "Voluntary Manslaughter"
+    },
+    {
+      "name": "State v. Dumlao",
+      "holding": "EMED two-step test: (1) view defendant's subjective situation and external circumstances as perceived; (2) assess whether explanation for disturbance was reasonable",
+      "topic": "Voluntary Manslaughter / EMED"
+    },
+    {
+      "name": "People v. Knoller",
+      "holding": "Depraved heart murder requires conscious disregard of risk of DEATH specifically; awareness of serious bodily injury is insufficient",
+      "topic": "Depraved Heart Murder"
+    },
+    {
+      "name": "State v. Williams",
+      "holding": "Legislature changed standard from gross negligence to ordinary negligence; reasonable person standard does not incorporate defendant's characteristics",
+      "topic": "Involuntary Manslaughter"
+    },
+    {
+      "name": "People v. James",
+      "holding": "'In the abstract' approach: look at statutory elements only to determine if felony is inherently dangerous; can felony be committed without creating substantial risk of death?",
+      "topic": "Felony Murder - Inherently Dangerous Limitation"
+    },
+    {
+      "name": "People v. Bodely",
+      "holding": "Temporary safety rule: felony not complete until robber reaches place of safety; temporal-spatial and causal link between felonious acts and homicide required",
+      "topic": "Felony Murder - Res Gestae Limitation"
+    },
+    {
+      "name": "Rose v. State",
+      "holding": "Merger doctrine: underlying felony must be independent of the homicide; assaultive felonies merge with the homicide",
+      "topic": "Felony Murder - Merger Limitation"
+    },
+    {
+      "name": "State v. Canola",
+      "holding": "Agency rule: felony murder does not extend to killings by third parties (non-co-felons); competing proximate cause theory applies FM to any proximately caused death",
+      "topic": "Felony Murder - Agency Rule Limitation"
+    },
+    {
+      "name": "People v. Atkins",
+      "holding": "General vs. specific intent classification: look for additional intent language beyond the actus reus to classify the crime",
+      "topic": "Mens Rea - General vs. Specific Intent"
+    },
+    {
+      "name": "State v. Freeman",
+      "holding": "Mistake of fact analysis framework: specific intent requires honest mistake; general intent requires honest AND reasonable mistake",
+      "topic": "Mistake of Fact"
+    },
+    {
+      "name": "Morissette v. United States",
+      "holding": "Presumption favoring mens rea in criminal offenses; government bears burden of showing strict liability was intended",
+      "topic": "Strict Liability"
+    },
+    {
+      "name": "United States v. Jewell",
+      "holding": "Willful blindness satisfies 'knowingly' when there is conscious purpose to avoid learning the truth",
+      "topic": "Mens Rea - Knowledge"
+    },
+    {
+      "name": "People v. Scott",
+      "holding": "Transferred intent applies to bad-aim killings where defendant intends to kill one person but kills another",
+      "topic": "Transferred Intent"
+    },
+    {
+      "name": "State v. Fugate",
+      "holding": "Intent to kill can be inferred from natural and probable consequences of defendant's act",
+      "topic": "Intent Inference"
+    },
+    {
+      "name": "Robinson v. California",
+      "holding": "Cannot punish status or condition; criminal law punishes only voluntary acts",
+      "topic": "Actus Reus - Voluntary Act"
+    },
+    {
+      "name": "Commonwealth v. Mercado",
+      "holding": "Involuntary acts (reflexes, convulsions, unconsciousness) do not satisfy actus reus requirement",
+      "topic": "Actus Reus - Involuntary Acts"
+    },
+    {
+      "name": "Cheek v. United States",
+      "holding": "Honest belief negates willfulness in 'willfulness' crimes; but disagreement with the law does not",
+      "topic": "Mistake of Law"
+    },
+    {
+      "name": "United States v. Yermian",
+      "holding": "Jurisdictional elements need not have mental state applied; MPC § 2.02 exceptions for jurisdictional facts",
+      "topic": "Mens Rea - Element-by-Element Application"
+    },
+    {
+      "name": "State v. Barbour",
+      "holding": "Larceny by trick: possession obtained through fraud/deception; owner retains title",
+      "topic": "Larceny by Trick"
+    },
+    {
+      "name": "State v. Pierce",
+      "holding": "False pretenses: both title AND possession obtained through fraud; victim transfers ownership",
+      "topic": "False Pretenses"
+    },
+    {
+      "name": "People v. Navarro",
+      "holding": "Theft classification depends on whether fraud obtains possession only (larceny by trick) or title+possession (false pretenses)",
+      "topic": "Theft Offenses - Distinctions"
+    },
+    {
+      "name": "Regina v. Dudley & Stephens",
+      "holding": "Necessity cannot justify killing an innocent person; starving sailors cannot kill a cabin boy to survive",
+      "topic": "Necessity Defense"
+    },
+    {
+      "name": "State v. Arrington",
+      "holding": "Second-degree murder instruction required when evidence supports premeditation but facts permit jury to find malice without P&D",
+      "topic": "Second-Degree Murder Instructions"
+    },
+    {
+      "name": "United States v. Bronstein",
+      "holding": "Void for vagueness: criminal statute unconstitutional if fails to give fair notice or encourages arbitrary enforcement",
+      "topic": "Void for Vagueness"
+    },
+    {
+      "name": "Commonwealth v. Mills",
+      "holding": "False pretenses: purposely made false statements, knew they were false, intended the city to rely on them, and city did rely — distinguishable from larceny (no trespassory taking) and embezzlement (no trust relationship)",
+      "topic": "False Pretenses"
+    },
+    {
+      "name": "State v. Steele",
+      "holding": "Embezzlement conviction upheld: fiduciary duty can arise from special confidence, not just formal power of attorney; must look at depositor's intent — money entrusted for management, not as gift",
+      "topic": "Embezzlement"
+    },
+    {
+      "name": "United States v. Eichman",
+      "holding": "Entry element of burglary requires intrusion within the four walls or beneath the roof; curtilage expands dwelling house concept to include nearby outbuildings",
+      "topic": "Burglary"
+    },
+    {
+      "name": "State v. Thibeault",
+      "holding": "Breaking element requires knowing lack of license/privilege to enter; consent is complete defense to burglary; intent to steal does not negate permission to enter — two separate elements",
+      "topic": "Burglary"
+    },
+    {
+      "name": "Crocker v. State",
+      "holding": "Snatching money without force, threat of force, or fear satisfies larceny but not robbery; must prove force or coercion to elevate theft to robbery",
+      "topic": "Robbery"
+    },
+    {
+      "name": "Miller v. Superior Court",
+      "holding": "Forcibly preventing victim from regaining control of property during asportation phase equals taking from immediate presence; robbery's 'immediate presence' satisfied during or after carrying away",
+      "topic": "Robbery"
+    },
+    {
+      "name": "People v. Goetz",
+      "holding": "Self-defense requires objectively reasonable belief in necessity of force; 'reasonably' modifies 'believes' making it objective standard; but jury may consider defendant's knowledge of victim and prior experiences",
+      "topic": "Self-Defense"
+    },
+    {
+      "name": "State v. Simon",
+      "holding": "Belief in necessity of self-defense must be reasonable to a reasonable person, not just the defendant; prior dealings with victim and mental health conditions relevant to subjective belief but tested objectively",
+      "topic": "Self-Defense"
+    },
+    {
+      "name": "United States v. Cole",
+      "holding": "Securities fraud prosecution of corporate insider who manipulated financial records — illustrates introductory concepts in criminal law and federal criminal jurisdiction",
+      "topic": "Introduction to Criminal Law"
+    }
+  ]
+}

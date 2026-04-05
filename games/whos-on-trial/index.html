@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who's on Trial? - LawGames</title>
+    <link rel="stylesheet" href="../../theme.css">
+    <style>
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-bg-secondary);
+            color: var(--color-text-primary);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px !important;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* ===== Menu Screen ===== */
+        .menu-screen {
+            padding: var(--spacing-lg) 0;
+        }
+
+        .menu-header {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .menu-header h2 {
+            font-size: var(--font-size-2xl);
+            margin: 0 0 var(--spacing-sm) 0;
+            font-weight: var(--font-weight-bold);
+        }
+
+        .menu-header p {
+            color: var(--color-text-secondary);
+            margin: 0;
+            font-size: var(--font-size-sm);
+        }
+
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .scenario-card {
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-subject-crim);
+        }
+
+        .scenario-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+        }
+
+        .scenario-card-title {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            margin: 0;
+            flex: 1;
+        }
+
+        .scenario-card-badge {
+            font-size: var(--font-size-sm);
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .stars {
+            font-size: var(--font-size-base);
+            letter-spacing: 2px;
+        }
+
+        /* ===== Game Screen ===== */
+        .game-screen {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .game-screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .game-header {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .game-title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-bold);
+            margin: 0 0 var(--spacing-sm) 0;
+            color: var(--color-subject-crim);
+        }
+
+        .clue-counter {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        /* Fact pattern area */
+        .fact-pattern-container {
+            background: linear-gradient(to bottom, rgba(255, 250, 235, 0.5), rgba(255, 250, 230, 0.3));
+            border-left: 4px solid var(--color-subject-crim);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            border-radius: var(--radius-md);
+            font-family: var(--font-serif);
+            line-height: var(--line-height-relaxed);
+        }
+
+        [data-theme="dark"] .fact-pattern-container {
+            background: linear-gradient(to bottom, rgba(100, 50, 40, 0.2), rgba(100, 40, 40, 0.15));
+        }
+        [data-theme="midnight"] .fact-pattern-container {
+            background: linear-gradient(to bottom, rgba(139, 92, 246, 0.12), rgba(139, 92, 246, 0.05));
+        }
+        [data-theme="forest"] .fact-pattern-container {
+            background: linear-gradient(to bottom, rgba(217, 170, 75, 0.12), rgba(217, 170, 75, 0.05));
+        }
+        [data-theme="ocean"] .fact-pattern-container {
+            background: linear-gradient(to bottom, rgba(34, 211, 238, 0.1), rgba(34, 211, 238, 0.04));
+        }
+        [data-theme="sunset"] .fact-pattern-container {
+            background: linear-gradient(to bottom, rgba(251, 146, 60, 0.12), rgba(251, 146, 60, 0.05));
+        }
+
+        .fact-sentence {
+            font-size: var(--font-size-base);
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text-primary);
+            animation: sentenceFadeIn 0.5s ease-in-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes sentenceFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fact-sentence:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Lock-in form */
+        .lock-in-form {
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            display: none;
+        }
+
+        .lock-in-form.active {
+            display: block;
+            animation: formSlideIn 0.3s ease-in-out;
+        }
+
+        @keyframes formSlideIn {
+            from {
+                opacity: 0;
+                max-height: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                max-height: 1000px;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-text-primary);
+        }
+
+        .custom-select {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            font-size: var(--font-size-base);
+            cursor: pointer;
+            transition: border-color var(--transition-fast);
+            appearance: none;
+            padding-right: 32px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23333' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+
+        [data-theme="dark"] .custom-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23f5f5f5' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+        }
+
+        .custom-select:hover {
+            border-color: var(--color-subject-crim);
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: var(--color-subject-crim);
+            box-shadow: 0 0 0 2px var(--shadow-sm);
+        }
+
+        /* Button styles */
+        .button-group {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+
+        button, .button {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .button-primary {
+            background-color: var(--color-subject-crim);
+            color: white;
+        }
+
+        .button-primary:hover {
+            background-color: var(--color-subject-crim);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            opacity: 0.85;
+        }
+
+        .button-primary:active {
+            transform: translateY(0);
+        }
+
+        .button-secondary {
+            background-color: var(--color-bg-tertiary);
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-border);
+        }
+
+        .button-secondary:hover {
+            background-color: var(--color-border);
+            transform: translateY(-2px);
+        }
+
+        .button-secondary:active {
+            transform: translateY(0);
+        }
+
+        .button-cancel {
+            background-color: transparent;
+            color: var(--color-text-secondary);
+            border: 1px solid var(--color-border);
+        }
+
+        .button-cancel:hover {
+            color: var(--color-text-primary);
+            border-color: var(--color-text-primary);
+        }
+
+        .button-large {
+            padding: var(--spacing-md) var(--spacing-2xl);
+            font-size: var(--font-size-lg);
+            width: 100%;
+        }
+
+        /* ===== Results Screen ===== */
+        .results-screen {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .results-screen.active {
+            display: block;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .results-title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-bold);
+            margin: 0 0 var(--spacing-xl) 0;
+        }
+
+        .star-display {
+            font-size: 3rem;
+            letter-spacing: 6px;
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .star-display .star {
+            display: inline-block;
+            animation: starPop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform-origin: center;
+        }
+
+        @keyframes starPop {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .comparison-item {
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+        }
+
+        .comparison-label {
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-md);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .comparison-answer {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .comparison-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: var(--font-size-sm);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .badge-correct {
+            background-color: rgba(106, 170, 100, 0.1);
+            color: var(--color-correct);
+        }
+
+        .badge-incorrect {
+            background-color: rgba(201, 69, 58, 0.1);
+            color: var(--color-wrong);
+        }
+
+        /* Analysis tabs */
+        .analysis-tabs {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 2px solid var(--color-border);
+            gap: 0;
+            margin-bottom: 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-lg);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            color: var(--color-text-secondary);
+            border-bottom: 3px solid transparent;
+            transition: all var(--transition-fast);
+            margin: 0;
+            margin-bottom: -2px;
+        }
+
+        .tab-button:hover {
+            color: var(--color-text-primary);
+        }
+
+        .tab-button.active {
+            color: var(--color-subject-crim);
+            border-bottom-color: var(--color-subject-crim);
+        }
+
+        .tab-content {
+            display: none;
+            padding: var(--spacing-lg);
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            border-top: none;
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h4 {
+            margin-top: 0;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .tab-content p {
+            line-height: var(--line-height-relaxed);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .tab-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .case-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .case-list li {
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--color-border-subtle);
+            font-family: var(--font-serif);
+            font-style: italic;
+        }
+
+        .case-list li:last-child {
+            border-bottom: none;
+        }
+
+        .issue-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .issue-list li {
+            padding: var(--spacing-sm) 0;
+            padding-left: var(--spacing-lg);
+            position: relative;
+        }
+
+        .issue-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--color-subject-crim);
+            font-weight: bold;
+        }
+
+        /* Full fact pattern */
+        .full-fact-pattern {
+            background: linear-gradient(to bottom, rgba(255, 250, 235, 0.5), rgba(255, 250, 230, 0.3));
+            border-left: 4px solid var(--color-subject-crim);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            border-radius: var(--radius-md);
+            font-family: var(--font-serif);
+            line-height: var(--line-height-relaxed);
+        }
+
+        [data-theme="dark"] .full-fact-pattern {
+            background: linear-gradient(to bottom, rgba(100, 50, 40, 0.2), rgba(100, 40, 40, 0.15));
+        }
+        [data-theme="midnight"] .full-fact-pattern {
+            background: linear-gradient(to bottom, rgba(139, 92, 246, 0.12), rgba(139, 92, 246, 0.05));
+        }
+        [data-theme="forest"] .full-fact-pattern {
+            background: linear-gradient(to bottom, rgba(217, 170, 75, 0.12), rgba(217, 170, 75, 0.05));
+        }
+        [data-theme="ocean"] .full-fact-pattern {
+            background: linear-gradient(to bottom, rgba(34, 211, 238, 0.1), rgba(34, 211, 238, 0.04));
+        }
+        [data-theme="sunset"] .full-fact-pattern {
+            background: linear-gradient(to bottom, rgba(251, 146, 60, 0.12), rgba(251, 146, 60, 0.05));
+        }
+
+        .full-fact-pattern p {
+            margin: var(--spacing-md) 0;
+        }
+
+        .full-fact-pattern p:first-child {
+            margin-top: 0;
+        }
+
+        .full-fact-pattern p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Share button */
+        .share-button {
+            background-color: var(--color-bg-tertiary);
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-border);
+        }
+
+        .share-button:hover {
+            background-color: var(--color-border);
+        }
+
+        .share-icon {
+            margin-right: var(--spacing-xs);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .scenario-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button, .button {
+                width: 100%;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs-header {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                border-bottom: none;
+                border-left: 3px solid transparent;
+                padding-left: var(--spacing-lg);
+            }
+
+            .tab-button.active {
+                border-left-color: var(--color-subject-crim);
+                border-bottom-color: transparent;
+            }
+
+            .tab-content {
+                border-radius: var(--radius-md);
+                border: 1px solid var(--color-border);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header inserted here -->
+        <div id="header"></div>
+
+        <!-- Menu Screen -->
+        <div id="menuScreen" class="menu-screen active">
+            <div class="menu-header">
+                <h2>⚖️ Who's on Trial?</h2>
+                <p>Read the facts, lock in your verdict, and learn criminal law</p>
+            </div>
+            <div id="scenarioGrid" class="scenario-grid"></div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="game-screen">
+            <div class="game-header">
+                <h2 class="game-title" id="gameTitle"></h2>
+                <div class="clue-counter" id="clueCounter"></div>
+            </div>
+
+            <div class="fact-pattern-container" id="factPattern"></div>
+
+            <div class="lock-in-form" id="lockInForm">
+                <div class="form-group">
+                    <label class="form-label">Best Charge:</label>
+                    <select class="custom-select" id="chargeSelect"></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Strongest Defense:</label>
+                    <select class="custom-select" id="defenseSelect"></select>
+                </div>
+                <div class="button-group">
+                    <button class="button button-primary button-large" id="confirmButton">Confirm</button>
+                    <button class="button button-cancel button-large" id="cancelButton">Cancel</button>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="button button-primary button-large" id="revealButton">Reveal Next Clue</button>
+                <button class="button button-secondary button-large" id="lockInButton" style="display: none;">Lock In Answer</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="results-screen">
+            <div class="results-header">
+                <h2 class="results-title" id="resultsTitle"></h2>
+                <div class="star-display" id="starDisplay"></div>
+            </div>
+
+            <div class="full-fact-pattern" id="fullFactPattern"></div>
+
+            <h3 style="margin-top: var(--spacing-xl); margin-bottom: var(--spacing-lg); font-size: var(--font-size-lg);">Your Answer</h3>
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <div class="comparison-label">Charge</div>
+                    <div class="comparison-answer" id="yourCharge"></div>
+                    <div class="comparison-badge" id="chargeBadge"></div>
+                </div>
+                <div class="comparison-item">
+                    <div class="comparison-label">Defense</div>
+                    <div class="comparison-answer" id="yourDefense"></div>
+                    <div class="comparison-badge" id="defenseBadge"></div>
+                </div>
+            </div>
+
+            <div class="analysis-tabs">
+                <div class="tabs-header">
+                    <button class="tab-button active" data-tab="prosecution">Prosecution</button>
+                    <button class="tab-button" data-tab="defense">Defense</button>
+                    <button class="tab-button" data-tab="cases">Key Cases</button>
+                    <button class="tab-button" data-tab="issues">Other Issues</button>
+                </div>
+
+                <div class="tab-content active" id="tab-prosecution"></div>
+                <div class="tab-content" id="tab-defense"></div>
+                <div class="tab-content" id="tab-cases"></div>
+                <div class="tab-content" id="tab-issues"></div>
+            </div>
+
+            <div class="button-group" style="margin-top: var(--spacing-2xl);">
+                <button class="button button-primary button-large" id="nextScenarioButton">Next Scenario</button>
+                <button class="button button-secondary button-large" id="backToMenuButton">Back to Menu</button>
+                <button class="button share-button button-large" id="shareButton"><span class="share-icon">⚖️</span>Share Result</button>
+            </div>
+        </div>
+    </div>
+    <script src="../../shared.js"></script>
+    <script src="../../navbar.js"></script>
+    <script>
+        // Who's on Trial - Criminal Law Game
+        (function() {
+            'use strict';
+
+            // ===== STATE =====
+            const state = {
+                currentScenario: null,
+                currentSentenceIndex: 0,
+                selectedCharge: null,
+                selectedDefense: null,
+                locked: false,
+                scenarios: [],
+                completed: {} // map of scenario id -> { charge, defense, stars }
+            };
+
+            // ===== EMBEDDED GAME DATA =====
+            var TRIAL_DATA = {
+  "scenarios": [
+    {
+      "id": 1,
+      "title": "The Bar Fight",
+      "sentences": [
+        "Dave and Victor get into a heated argument at a bar after Victor insults Dave's wife.",
+        "Victor shoves Dave hard against the bar.",
+        "Dave, visibly enraged, reaches under his jacket and pulls out a knife he carries daily.",
+        "Dave stabs Victor once in the chest with the blade.",
+        "Victor dies on the way to the hospital.",
+        "Medical evidence shows Victor would have survived if the ambulance had not been delayed 40 minutes due to a highway traffic accident."
+      ],
+      "best_charge": "Voluntary Manslaughter",
+      "charge_options": ["First-Degree Murder", "Second-Degree Murder", "Voluntary Manslaughter", "Involuntary Manslaughter", "Negligent Homicide", "No Crime"],
+      "best_defense": "Heat of Passion / Provocation",
+      "defense_options": ["Self-Defense", "Heat of Passion / Provocation", "Lack of Premeditation", "EMED (MPC)", "Causation Defense", "No Voluntary Act"],
+      "analysis": {
+        "prosecution": "Dave's actions demonstrate at minimum second-degree murder. While premeditation is questionable (the stabbing occurred immediately after the shove), Dave's carrying of the knife daily suggests preparation for violence. He consciously chose to use a weapon targeting a vital area (chest), showing he weighed the consequences. If deliberation can be established through the positioning and targeting, first-degree murder is supportable. The 40-minute ambulance delay does not break the chain of causation; medical complications are foreseeable consequences of inflicting a serious chest wound.",
+        "defense": "Dave acted in the immediate heat of passion triggered by a battery (the shove) after insulting words about his wife. Under the categorical approach, battery is legally adequate provocation. The stabbing occurred with no reasonable opportunity to cool off—it was instantaneous. Under Bingham, merely having time to deliberate does not mean he actually deliberated; the brief seconds between provocation and response are insufficient for premeditation. Under the modern approach, a jury could find a reasonable person would not have cooled off. Under MPC EMED, Dave's extreme emotional disturbance following spousal insult + physical assault has a reasonable explanation.",
+        "key_cases": ["State v. Brown", "State v. Bingham", "People v. Berry", "State v. Dumlao", "People v. Scott"],
+        "secondary_issues": ["Causation (ambulance delay as intervening cause)", "Temporal proximity of provocation to killing", "Carrying a weapon as evidence of premeditation vs. habit"]
+      }
+    },
+    {
+      "id": 2,
+      "title": "The Pawn Shop Scheme",
+      "sentences": [
+        "Mia borrows her neighbor Tom's expensive watch, telling him she needs it for a formal event.",
+        "Instead of attending the event, Mia takes the watch to a pawn shop and sells it, pocketing the cash.",
+        "Separately, Mia's coworker Jake knows that Mia has been pawning stolen items.",
+        "When Mia asks Jake to drive her to the pawn shop 'to sell some stuff,' Jake agrees despite suspecting the items are stolen.",
+        "Jake drives Mia to the pawn shop without confirming what items are involved.",
+        "Meanwhile, Mia's friend Carol, a bank teller, has been skimming small amounts from dormant accounts over six months, totaling $12,000."
+      ],
+      "best_charge": "Larceny by Trick (Mia); Embezzlement (Carol); Accomplice Liability (Jake)",
+      "charge_options": ["Larceny", "Larceny by Trick", "False Pretenses", "Embezzlement", "Theft by Deception", "No Crime", "Accomplice Liability"],
+      "best_defense": "Mistake of Fact (all defendants)",
+      "defense_options": ["Mistake of Fact", "No Intent to Permanently Deprive", "Lawful Possession", "Lack of Knowledge", "Duress", "Lack of Assistance"],
+      "analysis": {
+        "prosecution": "Mia committed larceny by trick. She fraudulently obtained possession of Tom's watch by lying about needing it for an event (State v. Barbour framework). Tom never intended to transfer title—he lent the watch expecting return. Her conversion by selling it completes larceny by trick. Carol committed embezzlement—she had lawful possession of funds through her employment as a bank teller and converted them to her own use over six months. This shows purpose and knowledge (MPC § 2.02 levels). Jake aided and abetted Mia's theft. Under willful blindness doctrine (United States v. Jewell), Jake's conscious purpose to avoid learning whether items were stolen, combined with his knowledge that Mia deals in stolen goods, satisfies 'knowingly' for accomplice liability.",
+        "defense": "Mia could argue no intent to permanently deprive (though she pawned the watch, undercutting this). More realistically, she might claim the watch was collateral against a loan she never repaid (embezzlement theory), though the facts suggest fraud. Carol could argue the money was a 'loan' she intended to repay, but the six-month pattern undermines this. Jake's strongest defense is lack of knowledge—he suspected but did not confirm. Under the MPC, 'knowingly' requires awareness of a high probability, and Jewell's willful blindness doctrine is not universally accepted. However, Jake's pattern of driving Mia to pawn shops knowing her pattern of behavior is likely sufficient.",
+        "key_cases": ["State v. Barbour", "State v. Pierce", "United States v. Jewell", "People v. Navarro", "Embezzlement standards"],
+        "secondary_issues": ["Distinction between larceny by trick (Mia), false pretenses (Carol if she misrepresented), and embezzlement (Carol's fiduciary duty)", "Accomplice liability mental state for Jake", "Willful blindness as knowledge"]
+      }
+    },
+    {
+      "id": 3,
+      "title": "The House Party",
+      "sentences": [
+        "Alex hosts a house party where guests are using drugs and alcohol.",
+        "Alex's friend Ben, heavily intoxicated, gets into a fight with another guest, Chris.",
+        "Alex sees Ben beating Chris severely but does nothing to intervene.",
+        "Chris later dies from his injuries.",
+        "A toxicology report shows Chris had a rare, undiagnosed heart condition that made the injuries fatal; an otherwise healthy person would have survived.",
+        "During the same party, Alex's roommate Dana decides to rob a guest named Eddie at knifepoint in an upstairs bedroom.",
+        "As Dana flees the house with Eddie's wallet, Eddie chases Dana into the street.",
+        "Eddie is struck and killed by a passing car."
+      ],
+      "best_charge": "Involuntary Manslaughter (Alex); Felony Murder or MPC Murder (Dana)",
+      "charge_options": ["Murder", "Voluntary Manslaughter", "Involuntary Manslaughter", "Negligent Homicide", "No Crime", "Felony Murder", "Reckless Endangerment"],
+      "best_defense": "No Legal Duty (Alex); Agency Rule or Proximate Cause Theory (Dana)",
+      "defense_options": ["No Legal Duty", "No Causation", "Lack of Mens Rea", "Intervening Cause", "Proximate Cause Theory", "Agency Rule", "Insanity"],
+      "analysis": {
+        "prosecution": "Alex had a legal duty to act. As the host who created dangerous conditions (drugs and alcohol present), or under a duty arising from control over premises (analogous to a business owner's duty to patrons), Alex failed to intervene when he saw Chris being beaten. Alex's inaction while aware of substantial risk of death constitutes recklessness (conscious disregard). Under MPC, involuntary manslaughter requires recklessness; under CL, recklessness or gross negligence. The rare heart condition does not break causation—under the 'thin skull' rule, D takes victim as found. For Dana: felony murder applies when death results from robbery. Robbery is inherently dangerous felony; Eddie's death occurred during flight from robbery (within res gestae); the underlying felony has independent purpose (theft). Under FM doctrine, all elements likely satisfied. Under MPC, the presumption of extreme recklessness applies to FM enumerated felonies like robbery.",
+        "defense": "Alex had no legal duty under Beardsley—a mere social relationship as host does not create a legal duty to intervene in a fight between two adult guests. Alex did not start the fight, did not create the specific risk of Ben beating Chris, and lacked a 'protector' relationship. Even if duty existed, Chris's rare heart condition was unforeseeable and breaks the chain of proximate causation. For Dana: Under the agency rule (State v. Canola), FM does not apply to killings by third parties (the car driver) not co-felons with Dana. The driver is not Dana's agent or associate. Alternatively, under the temporary safety rule (People v. Bodely), Dana may have reached temporary safety when fleeing into the street, ending the res gestae of the robbery. Under MPC, the recklessness presumption is rebuttable—Dana did not act with extreme indifference to life; the car strike was unforeseeable.",
+        "key_cases": ["Beardsley (omission doctrine)", "People v. Bodely (res gestae)", "State v. Canola (agency rule)", "People v. James (inherently dangerous)", "Thin Skull Rule (causation)", "State v. Dumlao (MPC analysis)"],
+        "secondary_issues": ["Whether host's duty arises from creation of risk or control of premises", "Causation and 'thin skull' doctrine", "FM limitations: agency rule vs. proximate cause theory (jurisdictional variation)"]
+      }
+    },
+    {
+      "id": 4,
+      "title": "The Reckless Driver",
+      "sentences": [
+        "Marcus is driving 65 mph in a residential school zone posted at 25 mph, despite seeing children playing on a nearby lawn.",
+        "A child, Tommy, suddenly runs into the street chasing a ball.",
+        "Marcus swerves but is unable to avoid the collision.",
+        "Tommy suffers severe injuries and dies three days later in the hospital from internal bleeding.",
+        "An expert toxicologist testifies that Marcus had a minor amount of marijuana in his bloodstream, though he was not visibly impaired and his reaction time was normal."
+      ],
+      "best_charge": "Involuntary Manslaughter or Negligent Homicide",
+      "charge_options": ["First-Degree Murder", "Second-Degree Murder", "Voluntary Manslaughter", "Involuntary Manslaughter", "Negligent Homicide", "No Crime"],
+      "best_defense": "Intervening Cause; Lack of Recklessness",
+      "defense_options": ["Child Suddenly Entered Roadway", "Unforeseeable Intervening Cause", "No Conscious Disregard", "Negligence Only", "No Duty", "Act of God"],
+      "analysis": {
+        "prosecution": "Marcus consciously disregarded a substantial and unjustifiable risk by driving 2.6 times the posted speed in a school zone where children were visibly playing. The risk of death was obvious; the justification (speed) was minimal. This establishes recklessness. Under CL, involuntary manslaughter is based on recklessness. Under MPC § 210.3(1)(a), involuntary manslaughter requires recklessness. The minor marijuana presence supports awareness of risk (though normal reaction time may undercut this). Tommy's death resulted from the collision directly; causation is clear. The three-day delay and hospitalization do not break the chain—medical complications are foreseeable consequences of vehicular injuries.",
+        "defense": "Tommy's sudden entry into the street is a responsive intervening cause—Tommy reacted to the ball. Under the responsive IC rule, Marcus remains the proximate cause UNLESS the IC was extremely bizarre or unforeseeable. Children running into streets in residential zones are foreseeable; Marcus's presence in the zone created the risk. However, defense might argue Marcus's consciously disregarding the risk was not at the extreme level of 'depraved heart' but mere negligence or gross negligence (depending on jurisdiction). Under MPC, if Marcus's conduct was only negligent (should have been aware, not consciously aware), he is not guilty of involuntary manslaughter (which requires recklessness). The marijuana may support lack of conscious awareness—if the amount was minimal and reaction time normal, was Marcus actually consciously aware of the risk?",
+        "key_cases": ["State v. Williams (gross negligence standard)", "Intervening cause analysis", "Recklessness vs. Negligence (MPC)", "Vehicular homicide statutes (vary by jurisdiction)"],
+        "secondary_issues": ["Whether marijuana use constitutes conscious disregard or merely impairs judgment (negligence)", "Temporal and geographical proximity of school zone to residential area", "Foreseeability of children entering street"]
+      }
+    },
+    {
+      "id": 5,
+      "title": "The Self-Defense Shooting",
+      "sentences": [
+        "Derek is home alone when he hears glass breaking and sees an intruder, Robbie, climbing through his bedroom window at 2 a.m.",
+        "Derek grabs a handgun from his nightstand drawer, which he keeps loaded for home protection.",
+        "Derek shouts 'Stop! I have a gun!' to warn Robbie.",
+        "Robbie continues toward Derek, saying 'I'm going to hurt you.'",
+        "Derek fires once, hitting Robbie in the shoulder.",
+        "Robbie falls but is not seriously injured; the bullet grazed an artery but paramedics stop the bleeding.",
+        "Later, police discover Robbie had no weapon and was attempting a burglary, not a violent crime."
+      ],
+      "best_charge": "No Crime (justifiable homicide)",
+      "charge_options": ["Murder", "Assault", "Attempted Murder", "No Crime", "Negligent Assault"],
+      "best_defense": "Self-Defense",
+      "defense_options": ["Self-Defense", "Defense of Property", "Proportional Force", "Imperfect Self-Defense", "Necessity"],
+      "analysis": {
+        "prosecution": "The prosecution would struggle here. Derek used force only after an explicit threat and warning. Derek was in his own home (castle doctrine—no duty to retreat). Robbie was an intruder who threatened harm. The force used (gunshot) was proportional to the threat (intruder saying he would hurt Derek). Derek did not fire to kill but to stop the threat; the injury was minor. This is a classic self-defense case. Prosecution might argue Derek should have known Robbie had no weapon once confronted, but the dark, surprise element cuts against this.",
+        "defense": "Self-defense is straightforward here. Elements: (1) Imminent threat—Robbie was advancing toward Derek with explicit threat. (2) Proportional force—Derek used a firearm to stop the threat, proportional to the intruder threat. (3) Reasonable belief—Derek reasonably believed Robbie posed danger. (4) No initial aggression—Derek did not start the confrontation. Under both CL and MPC, Derek is justified. Imperfect self-defense (unreasonable belief) does not apply here because Derek's belief was reasonable. This is a weak prosecution case.",
+        "key_cases": ["Self-defense doctrine", "Castle Doctrine", "Proportional force requirement", "Imminent threat analysis"],
+        "secondary_issues": ["Whether property defense applies (burglary)", "Duty to retreat (castle doctrine vs. stand-your-ground)", "Reasonable belief of threat (Robbie's weapon status)"]
+      }
+    },
+    {
+      "id": 6,
+      "title": "The Poison Plot",
+      "sentences": [
+        "Lisa is married to Tom, who has a terminal illness with six months to live.",
+        "Lisa fears that Tom's medical bills will bankrupt the family.",
+        "Lisa researches arsenic poisoning online, watching multiple videos on 'untraceable poisons.'",
+        "Lisa buys arsenic from an online supplier under a false name, paying with an anonymous cryptocurrency account.",
+        "Over two weeks, Lisa adds small amounts of arsenic to Tom's daily coffee.",
+        "Tom becomes violently ill and is rushed to the hospital.",
+        "Doctors diagnose arsenic poisoning and begin chelation therapy, which successfully removes the arsenic from Tom's body.",
+        "Tom survives, but suffers permanent neurological damage (tremors, memory loss).",
+        "During the investigation, police find the online search history, purchase records, and a diary where Lisa describes her plan."
+      ],
+      "best_charge": "Attempted Murder or Assault",
+      "charge_options": ["First-Degree Murder", "Second-Degree Murder", "Attempted Murder", "Assault", "Conspiracy", "Aggravated Battery", "No Crime"],
+      "best_defense": "Lack of Intent; Duress (very weak)",
+      "defense_options": ["Lack of Intent to Kill", "Heat of Passion", "Necessity", "Duress", "Insanity", "Entrapment"],
+      "analysis": {
+        "prosecution": "This is straightforward attempted first-degree murder. Lisa's deliberation and premeditation are evident: extensive research, calculated purchases using anonymity, systematic poisoning over two weeks. Her diary documents intent. She used a deadly substance (arsenic) in a method designed to be 'untraceable,' showing consciousness of guilt and intent to kill. Tom's recovery does not matter—attempted murder is complete when the substantial step is taken with intent to kill, regardless of outcome. The medical intervention does not negate her conduct. First-degree murder is appropriate because of the planning, preparation, and deliberation.",
+        "defense": "Lisa has almost no defense. She cannot claim lack of intent—the diary and research prove intent to kill. She cannot claim heat of passion—her actions were cold, calculated, and spread over weeks. She cannot claim necessity—Tom's illness does not justify murder (and even valid necessity cannot justify killing an innocent). She could attempt insanity (temporary psychosis due to stress), but the methodical planning undermines this. Her best argument might be duress (medical debt threatening the family), but duress does not justify attempted murder and does not apply to threat-of-debt.",
+        "key_cases": ["Premeditation and deliberation elements", "Attempted murder (substantial step test vs. dangerous proximity test)", "State v. Brown (deliberation definition)", "State v. Bingham (premeditation vs. time)"],
+        "secondary_issues": ["Substantial step requirement for attempt (MPC vs. CL)", "Merger of conspiracy and murder charges", "Medical intervention as intervening cause (but irrelevant for attempt)"]
+      }
+    },
+    {
+      "id": 7,
+      "title": "The Traffic Accident",
+      "sentences": [
+        "Officer Patterson, while on duty driving to an emergency call, is traveling at 55 mph in a 45 mph zone.",
+        "An off-duty officer, Kelly, is driving normally in the same direction when Patterson, distracted by radio dispatch communications, rear-ends Kelly's car.",
+        "The collision causes Kelly's car to veer into an oncoming lane.",
+        "An innocent third party, Samuel, driving in the opposite direction, collides head-on with Kelly's car.",
+        "Kelly is killed instantly.",
+        "Samuel is severely injured but survives."
+      ],
+      "best_charge": "Involuntary Manslaughter or Negligent Homicide",
+      "charge_options": ["Murder", "Voluntary Manslaughter", "Involuntary Manslaughter", "Negligent Homicide", "No Crime", "Reckless Endangerment"],
+      "best_defense": "No Gross Negligence; Emergency Driver Exception",
+      "defense_options": ["Lawful Pursuit Exception", "Dispatch Communications Distraction", "Intervening Cause (Samuel's driving)", "No Conscious Disregard", "Emergency Response Privilege"],
+      "analysis": {
+        "prosecution": "Patterson was driving 10 mph over the posted limit while distracted by radio dispatch. This exceeds ordinary negligence—it is at minimum gross negligence. Patterson consciously disregarded the risk of collision by not focusing on the road while responding to dispatch. The rear-end collision was foreseeable; the subsequent veer into oncoming traffic and Samuel's collision were responsive intervening causes that Patterson set in motion. Patterson's distraction caused the initial collision, which directly caused Kelly's death. Under both CL and MPC, Patterson is liable for involuntary manslaughter at minimum.",
+        "defense": "Patterson could argue he was responding to an emergency (lawful police pursuit exception), which may reduce standard of care in some jurisdictions. However, merely traveling slightly over the limit to an emergency call is not sufficient to eliminate duty of care—Patterson was distracted, which is independent negligence. The intervening cause (Samuel's collision) is responsive—it would not have occurred but for Patterson's rear-ending Kelly. Samuel's own driving does not break the chain because Samuel was driving lawfully in the opposite direction. Patterson's negligence was the proximate cause of Kelly's death.",
+        "key_cases": ["Police pursuit exception (varies by jurisdiction)", "Involuntary manslaughter standard", "Intervening cause analysis", "Gross negligence vs. negligence"],
+        "secondary_issues": ["Whether dispatch communications create special duty exception", "Responsive vs. independent intervening causes", "Duty of care for officers responding to emergencies"]
+      }
+    },
+    {
+      "id": 8,
+      "title": "The Art Heist",
+      "sentences": [
+        "Victor, a museum security guard, plans a theft of a valuable painting with accomplice Marcus.",
+        "Victor disables the alarm system and leaves a window unlocked, knowing Marcus will enter through it.",
+        "Marcus enters the museum at night and steals the painting, worth $2 million.",
+        "While fleeing, Marcus is spotted by a night watchman, Gary.",
+        "Marcus brandishes a gun at Gary and says 'I will shoot you if you follow me.'",
+        "Gary, frightened, does not follow but does call police.",
+        "Marcus escapes the building and is later caught by police at the airport with the painting.",
+        "Victor is identified as the accomplice through security footage analysis showing him disabling the alarm."
+      ],
+      "best_charge": "Robbery (Marcus); Accomplice to Robbery (Victor)",
+      "charge_options": ["Theft", "Larceny", "Burglary", "Robbery", "Conspiracy", "Attempted Robbery", "No Crime"],
+      "best_defense": "No Force Actually Applied; Threat Not Carried Out",
+      "defense_options": ["No Actual Force", "Threat Only (Not Robbery)", "Possession Obtained Before Threat", "Larceny Not Robbery"],
+      "analysis": {
+        "prosecution": "Marcus committed robbery. Robbery requires theft (taking of property of another with intent to permanently deprive) PLUS force or threat of force against the person. Marcus threatened Gary with a gun, satisfying the threat element. The threat occurred during the theft (while fleeing with the painting), making it part of the transaction. The fact that Marcus did not actually shoot Gary or seriously harm him is irrelevant—robbery is complete upon the threat. Victor aided and abetted Marcus by disabling the alarm and unlocking the window, with intent to help Marcus commit theft. Victor's conduct directly enabled the robbery. Both are guilty.",
+        "defense": "Marcus could argue the threat came after the theft was complete—the painting was already taken from the museum when he threatened Gary. Under some jurisdictions' 'force against the person' requirement, if the theft was consummated before the threat, Marcus committed larceny, not robbery. However, the threat occurred during Marcus's flight with the stolen property, still within the res gestae of the theft. Most jurisdictions view the entire transaction (taking + leaving with property + resisting/threatening) as one continuous crime. Victor's defense is weak—he clearly intended to facilitate the theft. His 'accomplice to accomplice' liability is established.",
+        "key_cases": ["Robbery elements (theft + force/threat)", "Timing of force for robbery classification", "Accomplice liability (aiding and abetting)", "Flight as part of theft transaction"],
+        "secondary_issues": ["Whether threat of future force (if you follow) differs from threat during flight", "Timing of force relative to property transfer in robbery", "Accomplice liability for Victor despite not being present at crime scene"]
+      }
+    }
+  ]
+};
+
+            // ===== INITIALIZATION =====
+            function init() {
+                try {
+                    // Create header (skip if LawGames not available)
+                    if (window.LawGames && LawGames.createHeader) {
+                        document.getElementById('header').appendChild(
+                            LawGames.createHeader("Who's on Trial?", false)
+                        );
+                    }
+                } catch(e) {
+                    console.error('Header creation failed:', e);
+                }
+
+                // Load completed scenarios from localStorage
+                try { loadCompleted(); } catch(e) { console.error('loadCompleted failed:', e); }
+
+                // Load scenarios data directly from inline variable
+                try {
+                    var data = TRIAL_DATA;
+                    if (data && data.scenarios) {
+                        state.scenarios = data.scenarios;
+                        renderMenu();
+                    } else {
+                        console.error('No inline trial data found');
+                        document.getElementById('scenarioGrid').innerHTML = '<p style="color:red;text-align:center;padding:20px;">Error: Game data not found. Please reload.</p>';
+                    }
+                } catch(e) {
+                    console.error('Data loading failed:', e);
+                    document.getElementById('scenarioGrid').innerHTML = '<p style="color:red;text-align:center;padding:20px;">Error loading game: ' + e.message + '</p>';
+                }
+
+                // Setup event listeners
+                try { setupEventListeners(); } catch(e) { console.error('setupEventListeners failed:', e); }
+            }
+
+            function setupEventListeners() {
+                // Game screen buttons
+                document.getElementById('revealButton').addEventListener('click', revealNextSentence);
+                document.getElementById('lockInButton').addEventListener('click', showLockInForm);
+                document.getElementById('confirmButton').addEventListener('click', confirmAnswer);
+                document.getElementById('cancelButton').addEventListener('click', hideLockInForm);
+
+                // Dropdown listeners - only add once
+                const chargeSelect = document.getElementById('chargeSelect');
+                const defenseSelect = document.getElementById('defenseSelect');
+                chargeSelect.addEventListener('change', function() {
+                    state.selectedCharge = this.value;
+                });
+                defenseSelect.addEventListener('change', function() {
+                    state.selectedDefense = this.value;
+                });
+
+                // Results screen buttons
+                document.getElementById('nextScenarioButton').addEventListener('click', nextScenario);
+                document.getElementById('backToMenuButton').addEventListener('click', backToMenu);
+                document.getElementById('shareButton').addEventListener('click', shareResult);
+
+                // Tab buttons
+                document.querySelectorAll('.tab-button').forEach(function(btn) {
+                    btn.addEventListener('click', switchTab);
+                });
+            }
+
+            // ===== MENU =====
+            function renderMenu() {
+                const grid = document.getElementById('scenarioGrid');
+                grid.innerHTML = '';
+
+                state.scenarios.forEach(function(scenario) {
+                    const card = document.createElement('div');
+                    card.className = 'scenario-card';
+                    card.style.cursor = 'pointer';
+
+                    const completed = state.completed[scenario.id];
+                    const hasCheckmark = completed ? '✓' : '';
+                    const starsDisplay = completed ? formatStars(completed.stars) : '';
+
+                    card.innerHTML = `
+                        <div class="scenario-card-header">
+                            <h3 class="scenario-card-title">${scenario.title}</h3>
+                            ${hasCheckmark ? `<span class="scenario-card-badge">${hasCheckmark}</span>` : ''}
+                        </div>
+                        ${starsDisplay ? `<div class="stars">${starsDisplay}</div>` : ''}
+                    `;
+
+                    card.addEventListener('click', function() {
+                        startScenario(scenario.id);
+                    });
+
+                    grid.appendChild(card);
+                });
+            }
+
+            // ===== GAME FLOW =====
+            function startScenario(scenarioId) {
+                const scenario = state.scenarios.find(function(s) {
+                    return s.id === scenarioId;
+                });
+
+                if (!scenario) return;
+
+                state.currentScenario = scenario;
+                state.currentSentenceIndex = 0;
+                state.selectedCharge = null;
+                state.selectedDefense = null;
+                state.locked = false;
+
+                document.getElementById('menuScreen').classList.remove('active');
+                document.getElementById('resultsScreen').classList.remove('active');
+                document.getElementById('gameScreen').classList.add('active');
+
+                document.getElementById('gameTitle').textContent = scenario.title;
+
+                // Populate dropdowns
+                populateDropdowns();
+
+                // Show first sentence with small delay for better UX
+                setTimeout(revealNextSentence, 100);
+            }
+
+            function populateDropdowns() {
+                const scenario = state.currentScenario;
+                const chargeSelect = document.getElementById('chargeSelect');
+                const defenseSelect = document.getElementById('defenseSelect');
+
+                chargeSelect.innerHTML = '<option value="">-- Select a charge --</option>';
+                scenario.charge_options.forEach(function(option) {
+                    const opt = document.createElement('option');
+                    opt.value = option;
+                    opt.textContent = option;
+                    chargeSelect.appendChild(opt);
+                });
+
+                defenseSelect.innerHTML = '<option value="">-- Select a defense --</option>';
+                scenario.defense_options.forEach(function(option) {
+                    const opt = document.createElement('option');
+                    opt.value = option;
+                    opt.textContent = option;
+                    defenseSelect.appendChild(opt);
+                });
+            }
+
+            function revealNextSentence() {
+                const scenario = state.currentScenario;
+
+                if (state.currentSentenceIndex < scenario.sentences.length) {
+                    const factPattern = document.getElementById('factPattern');
+                    const sentence = scenario.sentences[state.currentSentenceIndex];
+
+                    const sentenceEl = document.createElement('div');
+                    sentenceEl.className = 'fact-sentence';
+                    sentenceEl.textContent = sentence;
+
+                    // Stagger animation timing for visual effect
+                    sentenceEl.style.animationDelay = (state.currentSentenceIndex * 0.1) + 's';
+
+                    factPattern.appendChild(sentenceEl);
+
+                    state.currentSentenceIndex++;
+
+                    // Update counter
+                    updateClueCounter();
+
+                    // Show lock-in button after 2 sentences
+                    if (state.currentSentenceIndex >= 2) {
+                        document.getElementById('lockInButton').style.display = 'block';
+                    }
+
+                    // Hide reveal button if all sentences shown
+                    if (state.currentSentenceIndex >= scenario.sentences.length) {
+                        document.getElementById('revealButton').style.display = 'none';
+                    }
+                }
+            }
+
+            function updateClueCounter() {
+                const scenario = state.currentScenario;
+                const counter = document.getElementById('clueCounter');
+                counter.textContent = `Clue ${state.currentSentenceIndex} of ${scenario.sentences.length}`;
+            }
+
+            function showLockInForm() {
+                document.getElementById('lockInForm').classList.add('active');
+                // Reset selections
+                state.selectedCharge = null;
+                state.selectedDefense = null;
+                document.getElementById('chargeSelect').value = '';
+                document.getElementById('defenseSelect').value = '';
+            }
+
+            function hideLockInForm() {
+                document.getElementById('lockInForm').classList.remove('active');
+            }
+
+            function confirmAnswer() {
+                if (!state.selectedCharge || !state.selectedDefense) {
+                    alert('Please select both a charge and a defense.');
+                    return;
+                }
+
+                state.locked = true;
+                showResults();
+            }
+
+            // ===== RESULTS =====
+            function showResults() {
+                const scenario = state.currentScenario;
+
+                // Calculate stars
+                let stars = calculateStars();
+
+                // Save result
+                const result = {
+                    charge: state.selectedCharge,
+                    defense: state.selectedDefense,
+                    stars: stars,
+                    sentencesRevealed: state.currentSentenceIndex
+                };
+                state.completed[scenario.id] = result;
+                saveCompleted();
+
+                // Record in stats system
+                const chargeCorrect = state.selectedCharge === scenario.best_charge ? 1 : 0;
+                const defenseCorrect = state.selectedDefense === scenario.best_defense ? 1 : 0;
+                LawGames.recordGame('trial', {
+                    won: chargeCorrect && defenseCorrect,
+                    attempts: state.currentSentenceIndex,
+                    score: stars,
+                    topics: [scenario.id.toString()]
+                });
+
+                // Hide game screen, show results
+                document.getElementById('gameScreen').classList.remove('active');
+                document.getElementById('resultsScreen').classList.add('active');
+
+                // Populate results
+                document.getElementById('resultsTitle').textContent = scenario.title;
+
+                // Full fact pattern
+                const fullFactPattern = document.getElementById('fullFactPattern');
+                fullFactPattern.innerHTML = scenario.sentences.map(function(s) {
+                    return '<p>' + s + '</p>';
+                }).join('');
+
+                // Your answers
+                document.getElementById('yourCharge').textContent = state.selectedCharge || 'Not selected';
+                document.getElementById('yourDefense').textContent = state.selectedDefense || 'Not selected';
+
+                // Charge badge
+                const chargeIsCorrect = state.selectedCharge === scenario.best_charge;
+                const chargeBadge = document.getElementById('chargeBadge');
+                chargeBadge.innerHTML = chargeIsCorrect
+                    ? '<span style="color: var(--color-correct);">✓ Correct</span>'
+                    : '<span style="color: var(--color-wrong);">✗ Incorrect</span>';
+                chargeBadge.className = 'comparison-badge ' + (chargeIsCorrect ? 'badge-correct' : 'badge-incorrect');
+
+                // Defense badge
+                const defenseIsCorrect = state.selectedDefense === scenario.best_defense;
+                const defenseBadge = document.getElementById('defenseBadge');
+                defenseBadge.innerHTML = defenseIsCorrect
+                    ? '<span style="color: var(--color-correct);">✓ Correct</span>'
+                    : '<span style="color: var(--color-wrong);">✗ Incorrect</span>';
+                defenseBadge.className = 'comparison-badge ' + (defenseIsCorrect ? 'badge-correct' : 'badge-incorrect');
+
+                // Populate analysis tabs
+                populateAnalysisTabs();
+
+                // Display stars with animation
+                displayStars(stars);
+            }
+
+            function calculateStars() {
+                const scenario = state.currentScenario;
+                const totalSentences = scenario.sentences.length;
+                let stars = 1; // minimum 1 star
+
+                // Base stars on when they locked in
+                if (state.currentSentenceIndex <= 2) {
+                    stars = 5;
+                } else if (state.currentSentenceIndex === 3) {
+                    stars = 4;
+                } else if (state.currentSentenceIndex === 4) {
+                    stars = 3;
+                } else if (state.currentSentenceIndex === 5) {
+                    stars = 2;
+                } else {
+                    stars = 1;
+                }
+
+                // Bonus stars for correct answers
+                if (state.selectedCharge === scenario.best_charge) {
+                    stars++;
+                }
+                if (state.selectedDefense === scenario.best_defense) {
+                    stars++;
+                }
+
+                // Cap at 7 stars
+                return Math.min(stars, 7);
+            }
+
+            function displayStars(stars) {
+                const starDisplay = document.getElementById('starDisplay');
+                starDisplay.innerHTML = '';
+
+                for (let i = 0; i < 7; i++) {
+                    const star = document.createElement('span');
+                    star.className = 'star';
+                    star.textContent = i < stars ? '★' : '☆';
+                    star.style.animationDelay = (i * 0.1) + 's';
+                    starDisplay.appendChild(star);
+                }
+            }
+
+            function populateAnalysisTabs() {
+                const scenario = state.currentScenario;
+
+                // Prosecution
+                document.getElementById('tab-prosecution').innerHTML =
+                    '<h4>Prosecution Argument</h4><p>' + scenario.analysis.prosecution + '</p>';
+
+                // Defense
+                document.getElementById('tab-defense').innerHTML =
+                    '<h4>Defense Argument</h4><p>' + scenario.analysis.defense + '</p>';
+
+                // Key Cases
+                let casesHtml = '<h4>Key Cases</h4><ul class="case-list">';
+                scenario.analysis.key_cases.forEach(function(caseTitle) {
+                    casesHtml += '<li>' + caseTitle + '</li>';
+                });
+                casesHtml += '</ul>';
+                document.getElementById('tab-cases').innerHTML = casesHtml;
+
+                // Other Issues
+                let issuesHtml = '<h4>Secondary Issues</h4><ul class="issue-list">';
+                scenario.analysis.secondary_issues.forEach(function(issue) {
+                    issuesHtml += '<li>' + issue + '</li>';
+                });
+                issuesHtml += '</ul>';
+                document.getElementById('tab-issues').innerHTML = issuesHtml;
+            }
+
+            function switchTab(e) {
+                const tabName = e.target.getAttribute('data-tab');
+
+                // Deactivate all tabs and buttons
+                document.querySelectorAll('.tab-button').forEach(function(btn) {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(function(content) {
+                    content.classList.remove('active');
+                });
+
+                // Activate selected tab
+                e.target.classList.add('active');
+                document.getElementById('tab-' + tabName).classList.add('active');
+            }
+
+            function shareResult() {
+                const scenario = state.currentScenario;
+                const stars = state.completed[scenario.id].stars;
+                const chargeCorrect = state.selectedCharge === scenario.best_charge ? '✓' : '✗';
+                const defenseCorrect = state.selectedDefense === scenario.best_defense ? '✓' : '✗';
+                const starsDisplay = formatStars(stars);
+
+                const text = `⚖️ Who's on Trial? — ${scenario.title}\n${starsDisplay}\nCharge: ${chargeCorrect} | Defense: ${defenseCorrect}\nlawgames.github.io`;
+
+                LawGames.copyShareText(text, 'Result copied to clipboard!');
+            }
+
+            function nextScenario() {
+                document.getElementById('resultsScreen').classList.remove('active');
+                document.getElementById('menuScreen').classList.add('active');
+                renderMenu();
+            }
+
+            function backToMenu() {
+                nextScenario();
+            }
+
+            // ===== UTILITIES =====
+            function formatStars(count) {
+                let stars = '';
+                for (let i = 0; i < 7; i++) {
+                    stars += i < count ? '★' : '☆';
+                }
+                return stars;
+            }
+
+            function loadCompleted() {
+                const saved = localStorage.getItem('trial-completed');
+                if (saved) {
+                    try {
+                        state.completed = JSON.parse(saved);
+                    } catch (e) {
+                        console.warn('Failed to load completed scenarios:', e);
+                    }
+                }
+            }
+
+            function saveCompleted() {
+                localStorage.setItem('trial-completed', JSON.stringify(state.completed));
+            }
+
+            // ===== START =====
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+</body>
+</html>

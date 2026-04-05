@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Match - LawGames</title>
+  <link rel="stylesheet" href="../../theme.css">
+  <style>
+    /* ============================================================================
+       CASE MATCH GAME STYLES
+       ============================================================================ */
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      font-family: var(--font-sans);
+      transition: background-color 0.3s ease;
+    }
+
+    /* Dark theme variables handled by theme.css for all themes */
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ============================================================================
+       DIFFICULTY SELECTOR SCREEN
+       ============================================================================ */
+
+    #difficulty-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: var(--spacing-lg);
+      gap: var(--spacing-xl);
+    }
+
+    #difficulty-screen.hidden {
+      display: none;
+    }
+
+    .difficulty-heading {
+      text-align: center;
+      font-size: var(--font-size-3xl);
+      font-weight: var(--font-weight-bold);
+      margin: 0;
+      color: var(--color-text-primary);
+    }
+
+    .difficulty-subtitle {
+      text-align: center;
+      font-size: var(--font-size-lg);
+      color: var(--color-text-secondary);
+      margin: 0;
+    }
+
+    .difficulty-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-lg);
+      padding: var(--spacing-xl);
+      max-width: 800px;
+    }
+
+    .difficulty-button {
+      padding: var(--spacing-lg);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background-color: var(--color-bg-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      text-align: center;
+    }
+
+    .difficulty-button:hover {
+      border-color: var(--color-subject-crim);
+      background-color: var(--color-bg-tertiary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .difficulty-button:active {
+      transform: translateY(0);
+    }
+
+    .difficulty-button .label {
+      display: block;
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .difficulty-button .details {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-normal);
+    }
+
+    /* ============================================================================
+       GAME SCREEN
+       ============================================================================ */
+
+    #game-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: var(--spacing-lg);
+    }
+
+    #game-screen.hidden {
+      display: none;
+    }
+
+    .game-info-bar {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: clamp(8px, 2vw, 16px) clamp(12px, 3vw, 20px);
+      background-color: var(--color-bg-secondary);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--spacing-lg);
+      gap: clamp(8px, 1.5vw, 20px);
+      flex-wrap: wrap;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+
+    .info-label {
+      font-size: clamp(0.65rem, 1.3vw, 0.875rem);
+      color: var(--color-text-tertiary);
+      font-weight: var(--font-weight-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .info-value {
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ============================================================================
+       GAME BOARD & CARDS
+       ============================================================================ */
+
+    .game-board-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: auto;
+      padding: var(--spacing-md);
+    }
+
+    .game-board {
+      display: grid;
+      gap: clamp(4px, 1vw, 8px);
+      perspective: 1000px;
+      auto-fit: 100%;
+    }
+
+    /* Difficulty-specific grid layouts */
+    .game-board.easy-4x4 {
+      grid-template-columns: repeat(4, 1fr);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .game-board.medium-6x4 {
+      grid-template-columns: repeat(6, 1fr);
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .game-board.hard-8x4 {
+      grid-template-columns: repeat(8, 1fr);
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    /* Mobile responsive - tablet (480px to 768px) */
+    @media (max-width: 768px) {
+      .game-board.easy-4x4 {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: none;
+      }
+
+      .game-board.medium-6x4 {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: none;
+      }
+
+      .game-board.hard-8x4 {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: none;
+      }
+    }
+
+    /* Small phones (< 480px) */
+    @media (max-width: 480px) {
+      .game-board.easy-4x4 {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 100%;
+      }
+
+      .game-board.medium-6x4 {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 100%;
+      }
+
+      .game-board.hard-8x4 {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 100%;
+      }
+
+      .card {
+        min-height: 70px;
+      }
+
+      .card-face {
+        min-height: 70px;
+        padding: clamp(4px, 1vw, 8px);
+        font-size: clamp(0.55rem, 1.2vw, 0.75rem);
+      }
+
+      .card-back {
+        padding: clamp(4px, 1vw, 8px);
+      }
+    }
+
+    /* Extra small phones (< 360px) */
+    @media (max-width: 360px) {
+      .game-board.easy-4x4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .game-board.medium-6x4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .game-board.hard-8x4 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .card {
+        min-height: 60px;
+      }
+
+      .card-face {
+        min-height: 60px;
+      }
+    }
+
+    .card {
+      width: 100%;
+      min-height: clamp(60px, 12vw, 130px);
+      cursor: pointer;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      aspect-ratio: 1;
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card.matched {
+      cursor: default;
+      opacity: 0.7;
+    }
+
+    .card-face {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      backface-visibility: hidden;
+      font-weight: var(--font-weight-medium);
+      padding: clamp(6px, 1.5vw, 12px);
+      box-sizing: border-box;
+      text-align: center;
+      line-height: 1.4;
+      min-height: clamp(60px, 12vw, 130px);
+      overflow: hidden;
+    }
+
+    .card-back {
+      position: relative;
+      background: linear-gradient(135deg, var(--color-bg-tertiary) 0%, var(--color-bg-secondary) 100%);
+      border: 2px solid var(--color-border);
+      font-size: var(--font-size-2xl);
+      color: var(--color-text-tertiary);
+    }
+
+    .card-front {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      transform: rotateY(180deg);
+      background-color: var(--color-bg-secondary);
+      border: 2px solid var(--color-border);
+      font-size: clamp(0.55rem, 1.2vw, 0.875rem);
+      color: var(--color-text-primary);
+      overflow-y: auto;
+      padding: clamp(6px, 1.5vw, 12px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card.case-card .card-front {
+      border-color: var(--color-subject-crim);
+      border-width: 2px;
+      border-top: 3px solid var(--color-subject-crim);
+    }
+
+    .card.holding-card .card-front {
+      border-color: var(--color-subject-conlaw);
+      border-width: 2px;
+      border-top: 3px solid var(--color-subject-conlaw);
+    }
+
+    .card.case-card .card-back {
+      border-bottom: 3px solid var(--color-subject-crim);
+    }
+
+    .card.holding-card .card-back {
+      border-bottom: 3px solid var(--color-subject-conlaw);
+    }
+
+    .card-case-name {
+      font-size: clamp(0.6rem, 1.5vw, 0.85rem);
+      font-weight: var(--font-weight-bold);
+      line-height: 1.3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .card-holding {
+      font-size: clamp(0.55rem, 1.2vw, 0.75rem);
+      font-style: italic;
+      line-height: 1.4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .card.correct {
+      animation: correctMatch 0.6s ease;
+    }
+
+    @keyframes correctMatch {
+      0%, 100% {
+        transform: rotateY(180deg) scale(1);
+      }
+      25%, 75% {
+        transform: rotateY(180deg) scale(1.05);
+      }
+    }
+
+    .card.incorrect {
+      animation: incorrectMatch 0.6s ease;
+    }
+
+    @keyframes incorrectMatch {
+      0%, 100% {
+        transform: rotateY(180deg);
+      }
+      25%, 50%, 75% {
+        transform: rotateY(180deg) rotateZ(3deg);
+      }
+      50%, 100% {
+        transform: rotateY(180deg) rotateZ(-3deg);
+      }
+    }
+
+    .card.matched .card-front {
+      background: linear-gradient(135deg, var(--color-correct) 0%, var(--color-correct) 100%);
+      color: #ffffff;
+      border-color: var(--color-correct);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card.matched .card-case-name,
+    .card.matched .card-holding {
+      color: #ffffff;
+    }
+
+    /* ============================================================================
+       END SCREEN
+       ============================================================================ */
+
+    #end-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: var(--spacing-xl);
+      gap: var(--spacing-lg);
+    }
+
+    #end-screen.hidden {
+      display: none;
+    }
+
+    .end-heading {
+      font-size: var(--font-size-4xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-correct);
+      margin: 0;
+      text-align: center;
+    }
+
+    .end-stats {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-2xl);
+      flex-wrap: wrap;
+      margin: var(--spacing-lg) 0;
+    }
+
+    .end-stat {
+      text-align: center;
+    }
+
+    .end-stat-value {
+      font-size: var(--font-size-3xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+    }
+
+    .end-stat-label {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      margin-top: var(--spacing-xs);
+    }
+
+    .star-rating {
+      font-size: var(--font-size-4xl);
+      text-align: center;
+      margin: var(--spacing-lg) 0;
+    }
+
+    .review-section {
+      width: 100%;
+      max-width: 800px;
+      background-color: var(--color-bg-secondary);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      margin: var(--spacing-lg) 0;
+    }
+
+    .review-heading {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      margin: 0 0 var(--spacing-md) 0;
+      color: var(--color-text-primary);
+    }
+
+    .topic-group {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .topic-name {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .case-pair {
+      display: flex;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-sm);
+      font-size: var(--font-size-sm);
+      padding: var(--spacing-sm);
+      background-color: var(--color-bg-primary);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--color-subject-crim);
+    }
+
+    .case-pair-name {
+      font-weight: var(--font-weight-bold);
+      min-width: 180px;
+      color: var(--color-subject-crim);
+    }
+
+    .case-pair-arrow {
+      color: var(--color-text-tertiary);
+      flex-shrink: 0;
+    }
+
+    .case-pair-holding {
+      flex: 1;
+      font-style: italic;
+      color: var(--color-text-secondary);
+      line-height: 1.4;
+    }
+
+    .end-buttons {
+      display: flex;
+      gap: var(--spacing-lg);
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: var(--spacing-xl);
+    }
+
+    .btn {
+      padding: var(--spacing-md) var(--spacing-lg);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background-color: var(--color-bg-secondary);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: var(--color-subject-crim);
+      color: #ffffff;
+      border-color: var(--color-subject-crim);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary {
+      background-color: var(--color-subject-crim);
+      color: #ffffff;
+      border-color: var(--color-subject-crim);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.85;
+    }
+
+    .share-button {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* ============================================================================
+       RESPONSIVE DESIGN
+       ============================================================================ */
+
+    @media (max-width: 768px) {
+      #difficulty-screen {
+        padding: var(--spacing-md);
+      }
+
+      .difficulty-buttons {
+        grid-template-columns: 1fr;
+        padding: var(--spacing-md);
+      }
+
+      .game-info-bar {
+        padding: var(--spacing-md);
+        gap: var(--spacing-md);
+      }
+
+      .info-value {
+        font-size: var(--font-size-xl);
+      }
+
+      .end-stats {
+        gap: var(--spacing-lg);
+      }
+
+      .end-buttons {
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-lg);
+      }
+
+      .btn {
+        padding: var(--spacing-md);
+        font-size: var(--font-size-sm);
+        flex: 1;
+        min-width: 150px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .difficulty-heading {
+        font-size: var(--font-size-2xl);
+      }
+
+      .end-heading {
+        font-size: var(--font-size-2xl);
+      }
+
+      .star-rating {
+        font-size: var(--font-size-3xl);
+      }
+
+      .review-section {
+        padding: var(--spacing-md);
+        margin: var(--spacing-md) 0;
+      }
+
+      .case-pair {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+      }
+
+      .case-pair-name {
+        min-width: auto;
+      }
+
+      .case-pair-arrow {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script src="../../shared.js"></script>
+    <script src="../../navbar.js"></script>
+
+  <main>
+    <!-- HEADER -->
+    <header id="header-container"></header>
+
+    <!-- DIFFICULTY SELECTOR SCREEN -->
+    <div id="difficulty-screen">
+      <h2 class="difficulty-heading">Case Match</h2>
+      <p class="difficulty-subtitle">Match each case name to its legal holding</p>
+      <div class="difficulty-buttons">
+        <button class="difficulty-button" data-difficulty="easy">
+          <span class="label">Easy</span>
+          <span class="details">8 pairs • 4×4</span>
+        </button>
+        <button class="difficulty-button" data-difficulty="medium">
+          <span class="label">Medium</span>
+          <span class="details">12 pairs • 6×4</span>
+        </button>
+        <button class="difficulty-button" data-difficulty="hard">
+          <span class="label">Hard</span>
+          <span class="details">16 pairs • 8×4</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- GAME SCREEN -->
+    <div id="game-screen" class="hidden">
+      <div class="game-info-bar">
+        <div class="info-item">
+          <span class="info-label">Moves</span>
+          <span class="info-value" id="moves-count">0</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Time</span>
+          <span class="info-value" id="timer">0:00</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Matched</span>
+          <span class="info-value" id="matched-count">0/0</span>
+        </div>
+      </div>
+
+      <div class="game-board-container">
+        <div class="game-board" id="game-board"></div>
+      </div>
+    </div>
+
+    <!-- END SCREEN -->
+    <div id="end-screen" class="hidden">
+      <h2 class="end-heading">All Pairs Found!</h2>
+      <div class="end-stats">
+        <div class="end-stat">
+          <div class="end-stat-value" id="final-moves">0</div>
+          <div class="end-stat-label">Moves</div>
+        </div>
+        <div class="end-stat">
+          <div class="end-stat-value" id="final-time">0:00</div>
+          <div class="end-stat-label">Time</div>
+        </div>
+      </div>
+      <div class="star-rating" id="star-rating"></div>
+      <div class="review-section">
+        <h3 class="review-heading">Review All Pairs</h3>
+        <div id="review-list"></div>
+      </div>
+      <div class="end-buttons">
+        <button class="btn btn-primary" id="play-again-btn">Play Again</button>
+        <button class="btn" id="change-difficulty-btn">Change Difficulty</button>
+        <button class="btn share-button" id="share-btn">⚖️ Share</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+        var CASES_DATA = {
+  "cases": [
+    {
+      "name": "State v. Bingham",
+      "holding": "Having time to deliberate ≠ actually deliberating; must prove defendant in fact deliberated",
+      "topic": "First-Degree Murder"
+    },
+    {
+      "name": "State v. Brown",
+      "holding": "Deliberation means measuring and evaluating major facets of a choice; weighing reasons for and against killing",
+      "topic": "First-Degree Murder"
+    },
+    {
+      "name": "Gilbert v. State",
+      "holding": "Factors supporting premeditation include having weapon ready, considering alternatives, positioning to avoid detection, returning for additional weapon",
+      "topic": "First-Degree Murder"
+    },
+    {
+      "name": "People v. Berry",
+      "holding": "Modern approach to voluntary manslaughter recognizes cumulative passion; 20 hours can still be 'heat of passion'",
+      "topic": "Voluntary Manslaughter"
+    },
+    {
+      "name": "State v. Dumlao",
+      "holding": "EMED two-step test: (1) view defendant's subjective situation and external circumstances as perceived; (2) assess whether explanation for disturbance was reasonable",
+      "topic": "Voluntary Manslaughter / EMED"
+    },
+    {
+      "name": "People v. Knoller",
+      "holding": "Depraved heart murder requires conscious disregard of risk of DEATH specifically; awareness of serious bodily injury is insufficient",
+      "topic": "Depraved Heart Murder"
+    },
+    {
+      "name": "State v. Williams",
+      "holding": "Legislature changed standard from gross negligence to ordinary negligence; reasonable person standard does not incorporate defendant's characteristics",
+      "topic": "Involuntary Manslaughter"
+    },
+    {
+      "name": "People v. James",
+      "holding": "'In the abstract' approach: look at statutory elements only to determine if felony is inherently dangerous; can felony be committed without creating substantial risk of death?",
+      "topic": "Felony Murder - Inherently Dangerous Limitation"
+    },
+    {
+      "name": "People v. Bodely",
+      "holding": "Temporary safety rule: felony not complete until robber reaches place of safety; temporal-spatial and causal link between felonious acts and homicide required",
+      "topic": "Felony Murder - Res Gestae Limitation"
+    },
+    {
+      "name": "Rose v. State",
+      "holding": "Merger doctrine: underlying felony must be independent of the homicide; assaultive felonies merge with the homicide",
+      "topic": "Felony Murder - Merger Limitation"
+    },
+    {
+      "name": "State v. Canola",
+      "holding": "Agency rule: felony murder does not extend to killings by third parties (non-co-felons); competing proximate cause theory applies FM to any proximately caused death",
+      "topic": "Felony Murder - Agency Rule Limitation"
+    },
+    {
+      "name": "People v. Atkins",
+      "holding": "General vs. specific intent classification: look for additional intent language beyond the actus reus to classify the crime",
+      "topic": "Mens Rea - General vs. Specific Intent"
+    },
+    {
+      "name": "State v. Freeman",
+      "holding": "Mistake of fact analysis framework: specific intent requires honest mistake; general intent requires honest AND reasonable mistake",
+      "topic": "Mistake of Fact"
+    },
+    {
+      "name": "Morissette v. United States",
+      "holding": "Presumption favoring mens rea in criminal offenses; government bears burden of showing strict liability was intended",
+      "topic": "Strict Liability"
+    },
+    {
+      "name": "United States v. Jewell",
+      "holding": "Willful blindness satisfies 'knowingly' when there is conscious purpose to avoid learning the truth",
+      "topic": "Mens Rea - Knowledge"
+    },
+    {
+      "name": "People v. Scott",
+      "holding": "Transferred intent applies to bad-aim killings where defendant intends to kill one person but kills another",
+      "topic": "Transferred Intent"
+    },
+    {
+      "name": "State v. Fugate",
+      "holding": "Intent to kill can be inferred from natural and probable consequences of defendant's act",
+      "topic": "Intent Inference"
+    },
+    {
+      "name": "Robinson v. California",
+      "holding": "Cannot punish status or condition; criminal law punishes only voluntary acts",
+      "topic": "Actus Reus - Voluntary Act"
+    },
+    {
+      "name": "Commonwealth v. Mercado",
+      "holding": "Involuntary acts (reflexes, convulsions, unconsciousness) do not satisfy actus reus requirement",
+      "topic": "Actus Reus - Involuntary Acts"
+    },
+    {
+      "name": "Cheek v. United States",
+      "holding": "Honest belief negates willfulness in 'willfulness' crimes; but disagreement with the law does not",
+      "topic": "Mistake of Law"
+    },
+    {
+      "name": "United States v. Yermian",
+      "holding": "Jurisdictional elements need not have mental state applied; MPC § 2.02 exceptions for jurisdictional facts",
+      "topic": "Mens Rea - Element-by-Element Application"
+    },
+    {
+      "name": "State v. Barbour",
+      "holding": "Larceny by trick: possession obtained through fraud/deception; owner retains title",
+      "topic": "Larceny by Trick"
+    },
+    {
+      "name": "State v. Pierce",
+      "holding": "False pretenses: both title AND possession obtained through fraud; victim transfers ownership",
+      "topic": "False Pretenses"
+    },
+    {
+      "name": "People v. Navarro",
+      "holding": "Theft classification depends on whether fraud obtains possession only (larceny by trick) or title+possession (false pretenses)",
+      "topic": "Theft Offenses - Distinctions"
+    },
+    {
+      "name": "Regina v. Dudley & Stephens",
+      "holding": "Necessity cannot justify killing an innocent person; starving sailors cannot kill a cabin boy to survive",
+      "topic": "Necessity Defense"
+    },
+    {
+      "name": "State v. Arrington",
+      "holding": "Second-degree murder instruction required when evidence supports premeditation but facts permit jury to find malice without P&D",
+      "topic": "Second-Degree Murder Instructions"
+    },
+    {
+      "name": "United States v. Bronstein",
+      "holding": "Void for vagueness: criminal statute unconstitutional if fails to give fair notice or encourages arbitrary enforcement",
+      "topic": "Void for Vagueness"
+    }
+  ]
+};
+
+    // ============================================================================
+    // CASE MATCH GAME - MAIN LOGIC
+    // ============================================================================
+
+    (function() {
+      'use strict';
+
+      // Initialize theme first
+      LawGames.initTheme();
+
+      // Game state
+      let gameState = {
+        difficulty: null,
+        cards: [],
+        flipped: [],
+        matched: [],
+        moves: 0,
+        startTime: null,
+        timerInterval: null,
+        isProcessing: false,
+        allCases: [],
+        selectedCases: []
+      };
+
+      // Difficulty configuration
+      const DIFFICULTIES = {
+        easy: { pairs: 8, cols: 4, label: 'Easy' },
+        medium: { pairs: 12, cols: 6, label: 'Medium' },
+        hard: { pairs: 16, cols: 8, label: 'Hard' }
+      };
+
+      // ============================================================================
+      // INITIALIZATION
+      // ============================================================================
+
+      function init() {
+        // Create header
+        const headerContainer = document.getElementById('header-container');
+        headerContainer.appendChild(LawGames.createHeader('Case Match', true));
+
+        // Load data and setup event listeners
+        loadCasesData();
+        setupDifficultyButtons();
+        setupEndScreenButtons();
+      }
+
+      function loadCasesData() {
+        Promise.resolve(CASES_DATA).then(data => {
+            gameState.allCases = data.cases || [];
+          })
+          .catch(error => {
+            console.error('Error loading cases data:', error);
+            gameState.allCases = [];
+          });
+      }
+
+      function setupDifficultyButtons() {
+        const buttons = document.querySelectorAll('.difficulty-button');
+        buttons.forEach(button => {
+          button.addEventListener('click', function() {
+            const difficulty = this.getAttribute('data-difficulty');
+            startGame(difficulty);
+          });
+        });
+      }
+
+      function setupEndScreenButtons() {
+        document.getElementById('play-again-btn').addEventListener('click', function() {
+          startGame(gameState.difficulty);
+        });
+
+        document.getElementById('change-difficulty-btn').addEventListener('click', function() {
+          resetToMenu();
+        });
+
+        document.getElementById('share-btn').addEventListener('click', shareScore);
+      }
+
+      // ============================================================================
+      // GAME FLOW
+      // ============================================================================
+
+      function startGame(difficulty) {
+        gameState.difficulty = difficulty;
+        gameState.moves = 0;
+        gameState.flipped = [];
+        gameState.matched = [];
+        gameState.isProcessing = false;
+
+        // Select random cases
+        const numPairs = DIFFICULTIES[difficulty].pairs;
+        gameState.selectedCases = gameState.allCases
+          .sort(() => Math.random() - 0.5)
+          .slice(0, numPairs);
+
+        // Create card data
+        createCardData();
+
+        // Setup UI
+        document.getElementById('difficulty-screen').classList.add('hidden');
+        document.getElementById('end-screen').classList.add('hidden');
+        document.getElementById('game-screen').classList.remove('hidden');
+
+        // Render board
+        renderGameBoard();
+
+        // Start timer
+        gameState.startTime = Date.now();
+        startTimer();
+
+        // Update matched counter
+        updateMatchedCounter();
+      }
+
+      function createCardData() {
+        gameState.cards = [];
+
+        gameState.selectedCases.forEach(caseItem => {
+          gameState.cards.push({
+            id: 'case-' + gameState.cards.length,
+            type: 'case',
+            text: caseItem.name,
+            pairedWith: 'holding-' + gameState.cards.length,
+            topic: caseItem.topic,
+            fullData: caseItem
+          });
+
+          gameState.cards.push({
+            id: 'holding-' + gameState.cards.length,
+            type: 'holding',
+            text: caseItem.holding,
+            pairedWith: 'case-' + (gameState.cards.length - 1),
+            topic: caseItem.topic,
+            fullData: caseItem
+          });
+        });
+
+        // Shuffle cards
+        gameState.cards = gameState.cards.sort(() => Math.random() - 0.5);
+      }
+
+      function renderGameBoard() {
+        const board = document.getElementById('game-board');
+        board.innerHTML = '';
+
+        const config = DIFFICULTIES[gameState.difficulty];
+        const rows = Math.ceil(gameState.cards.length / config.cols);
+        board.className = 'game-board ' + gameState.difficulty + '-' + config.cols + 'x' + rows;
+
+        gameState.cards.forEach(card => {
+          const cardEl = document.createElement('div');
+          cardEl.className = 'card ' + card.type + '-card';
+          cardEl.setAttribute('data-card-id', card.id);
+
+          // Back face
+          const back = document.createElement('div');
+          back.className = 'card-face card-back';
+          back.textContent = '⚖️';
+
+          // Front face
+          const front = document.createElement('div');
+          front.className = 'card-face card-front';
+
+          if (card.type === 'case') {
+            const caseName = document.createElement('div');
+            caseName.className = 'card-case-name';
+            caseName.textContent = card.text;
+            front.appendChild(caseName);
+          } else {
+            const holding = document.createElement('div');
+            holding.className = 'card-holding';
+            holding.textContent = card.text;
+            front.appendChild(holding);
+          }
+
+          cardEl.appendChild(back);
+          cardEl.appendChild(front);
+
+          cardEl.addEventListener('click', function() {
+            handleCardClick(card.id);
+          });
+
+          board.appendChild(cardEl);
+        });
+      }
+
+      // ============================================================================
+      // CARD INTERACTIONS
+      // ============================================================================
+
+      function handleCardClick(cardId) {
+        // Validation
+        if (gameState.isProcessing) return;
+        if (gameState.flipped.includes(cardId)) return;
+        if (gameState.matched.includes(cardId)) return;
+        if (gameState.flipped.length >= 2) return;
+
+        // Flip card
+        flipCard(cardId);
+        gameState.flipped.push(cardId);
+
+        // Check for match
+        if (gameState.flipped.length === 2) {
+          gameState.isProcessing = true;
+          gameState.moves += 1;
+          updateMovesCounter();
+          checkMatch();
+        }
+      }
+
+      function flipCard(cardId) {
+        const cardEl = document.querySelector('[data-card-id="' + cardId + '"]');
+        if (cardEl) {
+          cardEl.classList.add('flipped');
+        }
+      }
+
+      function unflipCard(cardId) {
+        const cardEl = document.querySelector('[data-card-id="' + cardId + '"]');
+        if (cardEl) {
+          cardEl.classList.remove('flipped');
+        }
+      }
+
+      function checkMatch() {
+        const card1Id = gameState.flipped[0];
+        const card2Id = gameState.flipped[1];
+
+        const card1 = gameState.cards.find(c => c.id === card1Id);
+        const card2 = gameState.cards.find(c => c.id === card2Id);
+
+        // Check if they match (are paired)
+        const isMatch = card1 && card2 && card1.pairedWith === card2Id;
+
+        setTimeout(() => {
+          if (isMatch) {
+            // Correct match
+            const card1El = document.querySelector('[data-card-id="' + card1Id + '"]');
+            const card2El = document.querySelector('[data-card-id="' + card2Id + '"]');
+
+            card1El.classList.add('correct');
+            card2El.classList.add('correct');
+
+            setTimeout(() => {
+              card1El.classList.remove('correct');
+              card2El.classList.remove('correct');
+              card1El.classList.add('matched');
+              card2El.classList.add('matched');
+
+              gameState.matched.push(card1Id, card2Id);
+              updateMatchedCounter();
+
+              gameState.flipped = [];
+              gameState.isProcessing = false;
+
+              // Check if game is complete
+              if (gameState.matched.length === gameState.cards.length) {
+                endGame();
+              }
+            }, 400);
+          } else {
+            // Incorrect match
+            const card1El = document.querySelector('[data-card-id="' + card1Id + '"]');
+            const card2El = document.querySelector('[data-card-id="' + card2Id + '"]');
+
+            card1El.classList.add('incorrect');
+            card2El.classList.add('incorrect');
+
+            setTimeout(() => {
+              card1El.classList.remove('incorrect');
+              card2El.classList.remove('incorrect');
+              unflipCard(card1Id);
+              unflipCard(card2Id);
+
+              gameState.flipped = [];
+              gameState.isProcessing = false;
+            }, 800);
+          }
+        }, 600);
+      }
+
+      // ============================================================================
+      // UI UPDATES
+      // ============================================================================
+
+      function updateMovesCounter() {
+        document.getElementById('moves-count').textContent = gameState.moves;
+      }
+
+      function updateMatchedCounter() {
+        const total = gameState.cards.length / 2;
+        const matched = gameState.matched.length / 2;
+        document.getElementById('matched-count').textContent = matched + '/' + total;
+      }
+
+      function startTimer() {
+        if (gameState.timerInterval) {
+          clearInterval(gameState.timerInterval);
+        }
+
+        gameState.timerInterval = setInterval(() => {
+          const elapsed = Math.floor((Date.now() - gameState.startTime) / 1000);
+          const minutes = Math.floor(elapsed / 60);
+          const seconds = elapsed % 60;
+          document.getElementById('timer').textContent =
+            minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+        }, 100);
+      }
+
+      function stopTimer() {
+        if (gameState.timerInterval) {
+          clearInterval(gameState.timerInterval);
+          gameState.timerInterval = null;
+        }
+      }
+
+      // ============================================================================
+      // GAME END
+      // ============================================================================
+
+      function endGame() {
+        stopTimer();
+
+        const elapsed = Math.floor((Date.now() - gameState.startTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        const timeStr = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+        // Calculate star rating
+        const numPairs = DIFFICULTIES[gameState.difficulty].pairs;
+        const optimal = numPairs;
+        let stars = 5;
+        if (gameState.moves >= optimal * 2.5) stars = 3;
+        else if (gameState.moves >= optimal * 2.25) stars = 4;
+        else if (gameState.moves >= optimal * 2) stars = 4;
+
+        // Show end screen
+        document.getElementById('game-screen').classList.add('hidden');
+        document.getElementById('end-screen').classList.remove('hidden');
+
+        document.getElementById('final-moves').textContent = gameState.moves;
+        document.getElementById('final-time').textContent = timeStr;
+
+        const starStr = '★'.repeat(stars) + '☆'.repeat(5 - stars);
+        document.getElementById('star-rating').textContent = starStr;
+
+        // Generate review list
+        generateReviewList();
+
+        // Record game stats
+        LawGames.recordGame('match', {
+          won: true,
+          attempts: Math.ceil(gameState.moves / DIFFICULTIES[gameState.difficulty].pairs),
+          score: Math.max(0, 1000 - gameState.moves * 10 - elapsed),
+          topics: gameState.selectedCases.map(c => c.topic)
+        });
+
+        // Store for sharing
+        gameState.finalStats = {
+          moves: gameState.moves,
+          time: timeStr,
+          stars: stars,
+          pairs: numPairs
+        };
+      }
+
+      function generateReviewList() {
+        const reviewList = document.getElementById('review-list');
+        reviewList.innerHTML = '';
+
+        // Group by topic
+        const byTopic = {};
+        gameState.selectedCases.forEach(caseItem => {
+          if (!byTopic[caseItem.topic]) {
+            byTopic[caseItem.topic] = [];
+          }
+          byTopic[caseItem.topic].push(caseItem);
+        });
+
+        // Render by topic
+        Object.keys(byTopic).sort().forEach(topic => {
+          const topicGroup = document.createElement('div');
+          topicGroup.className = 'topic-group';
+
+          const topicName = document.createElement('div');
+          topicName.className = 'topic-name';
+          topicName.textContent = topic;
+          topicGroup.appendChild(topicName);
+
+          byTopic[topic].forEach(caseItem => {
+            const pair = document.createElement('div');
+            pair.className = 'case-pair';
+
+            const name = document.createElement('div');
+            name.className = 'case-pair-name';
+            name.textContent = caseItem.name;
+            pair.appendChild(name);
+
+            const arrow = document.createElement('div');
+            arrow.className = 'case-pair-arrow';
+            arrow.textContent = '→';
+            pair.appendChild(arrow);
+
+            const holding = document.createElement('div');
+            holding.className = 'case-pair-holding';
+            holding.textContent = caseItem.holding;
+            pair.appendChild(holding);
+
+            topicGroup.appendChild(pair);
+          });
+
+          reviewList.appendChild(topicGroup);
+        });
+      }
+
+      function resetToMenu() {
+        document.getElementById('game-screen').classList.add('hidden');
+        document.getElementById('end-screen').classList.add('hidden');
+        document.getElementById('difficulty-screen').classList.remove('hidden');
+        stopTimer();
+      }
+
+      function shareScore() {
+        const stats = gameState.finalStats;
+        const difficulty = DIFFICULTIES[gameState.difficulty].label;
+        const text = '⚖️ Case Match (' + difficulty + ')\n' +
+          stats.pairs + '/' + stats.pairs + ' pairs in ' + stats.moves + ' moves | ⏱️ ' + stats.time + '\n' +
+          '★'.repeat(stats.stars) + '☆'.repeat(5 - stats.stars) + '\n' +
+          'lawgames.github.io';
+
+        if (navigator.share) {
+          navigator.share({
+            title: 'Case Match',
+            text: text
+          }).catch(err => console.log('Share error:', err));
+        } else {
+          // Fallback: copy to clipboard
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+          alert('Score copied to clipboard!');
+        }
+      }
+
+      // ============================================================================
+      // START
+      // ============================================================================
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+</body>
+</html>

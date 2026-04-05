@@ -1,358 +1,519 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="CrimLaw">
-<meta name="theme-color" content="#0f172a">
-<title>Criminal Law Study Tool</title>
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230f172a' width='100' height='100' rx='20'/><text x='50' y='68' text-anchor='middle' font-size='50'>&#9878;</text></svg>">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;min-height:100dvh;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);overscroll-behavior:none}
-.app{max-width:640px;margin:0 auto;padding:16px 16px 100px}
-h1{font-size:22px;font-weight:700;color:#fff;text-align:center;margin-bottom:2px}
-.subtitle{font-size:12px;color:#64748b;text-align:center;margin-bottom:20px}
-.modes{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:16px}
-.mode-btn{padding:8px 14px;border-radius:10px;font-size:13px;font-weight:600;border:none;cursor:pointer;background:#1e293b;color:#94a3b8;transition:all .15s}
-.mode-btn.active{background:#2563eb;color:#fff;box-shadow:0 4px 12px rgba(37,99,235,.3)}
-.units{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
-.unit-btn{padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;border:none;cursor:pointer;background:#1e293b;color:#64748b}
-.unit-btn.active{background:#475569;color:#fff}
-.panel{background:#111827;border:1px solid #1f2937;border-radius:16px;padding:20px;margin-bottom:16px}
-.card{border-radius:14px;padding:24px;min-height:200px;display:flex;flex-direction:column;justify-content:center;cursor:pointer;transition:all .2s;border:2px solid #334155;background:#1e293b;user-select:none;-webkit-user-select:none}
-.card.flipped{background:#1a2744;border-color:#3b82f6}
-.card-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#64748b;margin-bottom:10px}
-.card-label .hint{color:#3b82f6;margin-left:8px;font-size:10px}
-.card-text{font-size:16px;line-height:1.6;color:#f1f5f9;white-space:pre-line}
-.conf-btns{display:flex;gap:8px;justify-content:center;margin-top:14px}
-.conf-btn{padding:10px 18px;border-radius:10px;border:none;color:#fff;font-size:13px;font-weight:600;cursor:pointer}
-.conf-got{background:#047857}.conf-shaky{background:#a16207}.conf-missed{background:#b91c1c}
-.nav{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
-.nav-btn{padding:10px 18px;border-radius:10px;background:#334155;color:#cbd5e1;border:none;font-size:13px;font-weight:600;cursor:pointer}
-.nav-btn:disabled{opacity:.25}
-.score-bar{display:flex;gap:12px;font-size:13px}
-.score-got{color:#34d399}.score-shaky{color:#fbbf24}.score-missed{color:#f87171}
-.meta{font-size:12px;color:#64748b;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-textarea{width:100%;padding:14px;border-radius:12px;background:#1e293b;color:#e2e8f0;border:1px solid #334155;font-size:14px;line-height:1.5;font-family:inherit;resize:none;-webkit-appearance:none}
-textarea:focus{outline:none;border-color:#3b82f6}
-.action-btn{display:inline-block;padding:10px 22px;border-radius:10px;border:none;color:#fff;font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}
-.btn-blue{background:#2563eb}.btn-purple{background:#7c3aed}.btn-green{background:#047857}.btn-red{background:#b91c1c}
-.model-answer{border-radius:12px;padding:18px;margin-top:14px;border:1px solid #166534;background:#0f2a1a}
-.model-answer .label{font-size:11px;color:#34d399;font-weight:600;margin-bottom:6px}
-.model-answer .text{font-size:13px;color:#e2e8f0;white-space:pre-line;line-height:1.6}
-.your-answer{border-radius:12px;padding:18px;margin-bottom:10px;border:1px solid #4a4a6a;background:#1a1a2e}
-.your-answer .label{font-size:11px;color:#94a3b8;margin-bottom:4px}
-.your-answer .text{font-size:13px;color:#cbd5e1;white-space:pre-line}
-.fact-box{border-radius:14px;padding:18px;margin-bottom:14px;border:1px solid #3b3b5c;background:#1a1a2e}
-.fact-box .title{font-size:11px;color:#a78bfa;font-weight:600;margin-bottom:6px}
-.fact-box .text{font-size:13px;color:#e2e8f0;line-height:1.6}
-.hypo-tabs,.drill-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-.tab{padding:6px 12px;border-radius:8px;font-size:12px;font-weight:600;border:none;cursor:pointer;background:#1e293b;color:#94a3b8}
-.tab.active{background:#2563eb;color:#fff}
-.tab.purple.active{background:#7c3aed}
-.mnemonic-card{border-radius:12px;padding:18px;margin-bottom:10px;border:1px solid #334155;background:#1e293b}
-.mnemonic-topic{font-size:11px;color:#64748b;margin-bottom:4px}
-.mnemonic-text{font-size:22px;font-weight:700;color:#60a5fa;margin-bottom:6px}
-.mnemonic-meaning{font-size:13px;color:#cbd5e1}
-.mnemonic-toggle{float:right;padding:4px 10px;border-radius:6px;font-size:11px;background:#334155;color:#94a3b8;border:none;cursor:pointer}
-.tips{border-radius:12px;padding:18px;border:1px solid #1f2937;background:#111827;margin-top:16px}
-.tips h4{font-size:13px;color:#cbd5e1;margin-bottom:8px;font-weight:600}
-.tips p{font-size:11px;color:#64748b;margin-bottom:4px;line-height:1.5}
-.tips .hl{color:#60a5fa;font-weight:600}
-.quiz-center{text-align:center;padding:40px 0}
-.quiz-center h3{font-size:20px;color:#e2e8f0;margin-bottom:12px}
-.quiz-center p{color:#64748b;margin-bottom:4px;font-size:13px}
-.big-score{font-size:48px;font-weight:700;margin-bottom:8px}
-.shuffle-btn{padding:6px 12px;border-radius:8px;font-size:12px;background:#334155;color:#94a3b8;border:none;cursor:pointer}
-.q-box{border-radius:12px;padding:16px;margin-bottom:14px;border:1px solid #334155;background:#1e293b}
-.q-box .text{font-size:15px;color:#f1f5f9;font-weight:500}
-.desc{font-size:13px;color:#94a3b8;margin-bottom:14px;line-height:1.5}
-.purple-model{border-radius:12px;padding:18px;margin-top:14px;border:1px solid #7c3aed;background:#1a0f2a}
-.purple-model .label{font-size:11px;color:#a78bfa;font-weight:600;margin-bottom:6px}
-.purple-model .text{font-size:13px;color:#e2e8f0;white-space:pre-line;line-height:1.6}
-.topbar{position:sticky;top:0;background:#0f172aee;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:12px 0 8px;z-index:10;margin-bottom:8px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criminal Law Study Hub — BU Law JD2960</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#C4302B">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="stylesheet" href="theme.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-sans);
+            background-color: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        /* Hero */
+        .hero {
+            padding: var(--spacing-2xl) var(--spacing-lg) var(--spacing-xl);
+            text-align: center;
+            border-bottom: 1px solid var(--color-border);
+            position: relative;
+            background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
+        }
+        .hero-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: var(--spacing-sm); }
+        .hero-title { margin: 0; font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); letter-spacing: 1px; color: var(--color-text-primary); }
+        .hero-title-emoji { font-size: 2.5rem; display: inline-block; }
+        .hero-subtitle { margin: 0; font-size: var(--font-size-lg); color: var(--color-text-secondary); font-weight: var(--font-weight-medium); }
+        .hero-course { display: inline-block; margin-top: var(--spacing-sm); padding: var(--spacing-xs) var(--spacing-md); border-radius: 20px; background: var(--color-bg-tertiary); border: 1px solid var(--color-border); font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); letter-spacing: 0.5px; }
+        .hero-controls { position: absolute; top: var(--spacing-lg); right: var(--spacing-lg); }
+        .theme-toggle { background: var(--color-bg-secondary); border: 1px solid var(--color-border); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-md); cursor: pointer; font-size: var(--font-size-lg); display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; transition: all 0.2s ease; color: var(--color-text-primary); }
+        .theme-toggle:hover { background: var(--color-bg-tertiary); box-shadow: var(--shadow-sm); }
+
+        /* Nav Tabs */
+        .nav-tabs { display: flex; justify-content: center; gap: var(--spacing-xs); padding: var(--spacing-md) var(--spacing-lg); background: var(--color-bg-secondary); border-bottom: 1px solid var(--color-border); position: sticky; top: 46px; z-index: 100; }
+        .nav-tab { padding: var(--spacing-sm) var(--spacing-lg); border-radius: 24px; border: 2px solid transparent; background: transparent; font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); cursor: pointer; color: var(--color-text-secondary); transition: all 0.2s ease; font-family: var(--font-sans); display: flex; align-items: center; gap: var(--spacing-sm); }
+        .nav-tab:hover { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
+        .nav-tab.active { border-color: var(--color-subject-crim); background: var(--color-subject-crim); color: white; }
+        .nav-tab-count { font-size: var(--font-size-xs); opacity: 0.8; }
+
+        /* Main */
+        .main-container { max-width: 1200px; margin: 0 auto; padding: var(--spacing-xl) var(--spacing-lg); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Section Title */
+        .section-title { margin: 0 0 var(--spacing-md) 0; font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 1px; }
+        .section-desc { margin: 0 0 var(--spacing-xl) 0; font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: var(--line-height-normal); max-width: 700px; }
+
+        /* Tool Grid */
+        .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-3xl); }
+
+        /* Tool Card */
+        .tool-card {
+            display: flex; flex-direction: column; gap: var(--spacing-md);
+            padding: var(--spacing-lg);
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            color: var(--color-text-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .tool-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+        .tool-card:hover {
+            border-color: var(--color-border);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+            background: var(--color-bg-secondary);
+        }
+        .tool-card-top { display: flex; align-items: flex-start; gap: var(--spacing-md); }
+        .tool-card-icon { font-size: 1.75rem; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-md); flex-shrink: 0; background: var(--color-bg-tertiary); }
+        .tool-card-info { flex: 1; }
+        .tool-card-name { margin: 0; font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); }
+        .tool-card-principle { margin: var(--spacing-xs) 0 0; font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: 0.5px; }
+        .tool-card-desc { margin: 0; font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: var(--line-height-normal); }
+        .tool-card-tags { display: flex; gap: var(--spacing-sm); flex-wrap: wrap; }
+        .tool-tag { font-size: var(--font-size-xs); padding: 2px 8px; border-radius: var(--radius-sm); background: var(--color-bg-tertiary); color: var(--color-text-tertiary); font-weight: var(--font-weight-medium); }
+        .tool-card-arrow { position: absolute; right: var(--spacing-lg); top: 50%; transform: translateY(-50%); color: var(--color-text-tertiary); font-size: var(--font-size-lg); transition: all 0.2s; }
+        .tool-card:hover .tool-card-arrow { color: var(--color-text-primary); transform: translateY(-50%) translateX(3px); }
+
+        /* Color accents */
+        .accent-blue .tool-card-principle { color: var(--color-accent-blue); }
+        .accent-blue::before { background: var(--color-accent-blue); }
+        .accent-cyan .tool-card-principle { color: var(--color-accent-cyan); }
+        .accent-cyan::before { background: var(--color-accent-cyan); }
+        .accent-green .tool-card-principle { color: var(--color-accent-green); }
+        .accent-green::before { background: var(--color-accent-green); }
+        .accent-amber .tool-card-principle { color: var(--color-accent-amber); }
+        .accent-amber::before { background: var(--color-accent-amber-bg); }
+        .accent-red .tool-card-principle { color: var(--color-accent-red); }
+        .accent-red::before { background: var(--color-accent-red); }
+        .accent-purple .tool-card-principle { color: var(--color-accent-purple); }
+        .accent-purple::before { background: var(--color-accent-purple); }
+        .accent-pink .tool-card-principle { color: var(--color-accent-pink); }
+        .accent-pink::before { background: var(--color-accent-pink); }
+        .accent-orange .tool-card-principle { color: var(--color-accent-orange); }
+        .accent-orange::before { background: var(--color-accent-orange); }
+        .accent-indigo .tool-card-principle { color: var(--color-accent-indigo); }
+        .accent-indigo::before { background: var(--color-accent-indigo); }
+        .accent-teal .tool-card-principle { color: var(--color-accent-teal); }
+        .accent-teal::before { background: var(--color-accent-teal); }
+        .accent-crim .tool-card-principle { color: var(--color-subject-crim); }
+        .accent-crim::before { background: var(--color-subject-crim); }
+
+        /* Games Grid (simpler cards) */
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-3xl); }
+        .game-card {
+            display: flex; flex-direction: column; align-items: center;
+            padding: var(--spacing-xl) var(--spacing-lg);
+            background: var(--color-bg-primary); border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg); text-decoration: none;
+            color: var(--color-text-primary); cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .game-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-6px); background: var(--color-bg-secondary); }
+        .game-card-icon { font-size: 2.5rem; margin-bottom: var(--spacing-md); }
+        .game-card-title { margin: 0 0 var(--spacing-xs); font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); }
+        .game-card-description { margin: 0; font-size: var(--font-size-sm); color: var(--color-text-secondary); text-align: center; }
+
+        /* Study Plan */
+        .plan-card { background: var(--color-bg-primary); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--spacing-xl); margin-bottom: var(--spacing-3xl); }
+        .plan-title { margin: 0 0 var(--spacing-lg); font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); color: var(--color-text-primary); }
+        .plan-steps { display: flex; flex-direction: column; gap: var(--spacing-md); }
+        .plan-step { display: flex; gap: var(--spacing-md); align-items: flex-start; }
+        .plan-num { width: 28px; height: 28px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); flex-shrink: 0; color: white; }
+        .plan-step-title { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); }
+        .plan-step-desc { font-size: var(--font-size-xs); color: var(--color-text-tertiary); margin-top: 2px; line-height: var(--line-height-normal); }
+
+        /* Stats Section */
+        .stats-section { margin-bottom: var(--spacing-3xl); }
+        .stats-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: var(--spacing-lg); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-lg); user-select: none; transition: all 0.2s ease; }
+        .stats-header:hover { background: var(--color-bg-tertiary); }
+        .stats-header-title { margin: 0; font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); }
+        .stats-toggle-icon { font-size: var(--font-size-lg); transition: transform 0.3s ease; color: var(--color-text-secondary); }
+        .stats-toggle-icon.expanded { transform: rotate(180deg); }
+        .stats-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-lg); padding: var(--spacing-lg); background: var(--color-bg-primary); border: 1px solid var(--color-border); border-top: none; border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+        .stats-content.collapsed { display: none; }
+        .stat-box { padding: var(--spacing-md); background: var(--color-bg-secondary); border-radius: var(--radius-md); text-align: center; }
+        .stat-label { margin: 0 0 var(--spacing-sm); font-size: var(--font-size-xs); color: var(--color-text-tertiary); text-transform: uppercase; font-weight: var(--font-weight-semibold); letter-spacing: 0.5px; }
+        .stat-value { margin: 0; font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); color: var(--color-text-primary); }
+        .weak-topics-list { padding: var(--spacing-lg); background: var(--color-bg-primary); border: 1px solid var(--color-border); border-top: none; border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+        .weak-topics-list.collapsed { display: none; }
+        .topic-item { display: flex; justify-content: space-between; align-items: center; padding: var(--spacing-md); border-bottom: 1px solid var(--color-border-subtle); }
+        .topic-item:last-child { border-bottom: none; }
+        .topic-name { font-weight: var(--font-weight-medium); }
+        .topic-errors { background: var(--color-wrong); color: white; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-sm); font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); }
+
+        /* Footer */
+        footer { padding: var(--spacing-xl) var(--spacing-lg); text-align: center; border-top: 1px solid var(--color-border); color: var(--color-text-tertiary); font-size: var(--font-size-sm); background: var(--color-bg-secondary); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero { padding: var(--spacing-xl) var(--spacing-md); }
+            .hero-title { font-size: var(--font-size-3xl); }
+            .hero-controls { position: static; margin-top: var(--spacing-md); }
+            .tool-grid, .games-grid { grid-template-columns: 1fr; }
+            .main-container { padding: var(--spacing-lg) var(--spacing-md); }
+            .nav-tabs { gap: 2px; padding: var(--spacing-sm) var(--spacing-sm); }
+            .nav-tab { padding: var(--spacing-sm) var(--spacing-md); font-size: var(--font-size-xs); }
+        }
+
+        /* Dark mode tweaks */
+        [data-theme="dark"] .hero { background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%); }
+        [data-theme="dark"] .tool-card:hover, [data-theme="dark"] .game-card:hover { background: var(--color-bg-tertiary); }
+
+        /* Animations */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .tool-card, .game-card { animation: fadeUp 0.4s ease both; }
+        .tool-card:nth-child(1), .game-card:nth-child(1) { animation-delay: .05s; }
+        .tool-card:nth-child(2), .game-card:nth-child(2) { animation-delay: .1s; }
+        .tool-card:nth-child(3), .game-card:nth-child(3) { animation-delay: .15s; }
+        .tool-card:nth-child(4), .game-card:nth-child(4) { animation-delay: .2s; }
+        .tool-card:nth-child(5), .game-card:nth-child(5) { animation-delay: .25s; }
+        .tool-card:nth-child(6), .game-card:nth-child(6) { animation-delay: .3s; }
+        .tool-card:nth-child(7) { animation-delay: .35s; }
+        .tool-card:nth-child(8) { animation-delay: .4s; }
+        .tool-card:nth-child(9) { animation-delay: .45s; }
+        .tool-card:nth-child(10) { animation-delay: .5s; }
+    </style>
 </head>
 <body>
-<div class="app" id="root"></div>
-<script>
-// ==============================================
-// DATA
-// ==============================================
-const FC=[
-{id:1,u:"I",t:"Theories of Punishment",f:"What are the two major categories of punishment theory?",b:"Non-consequentialist (Retribution / just deserts) and Consequentialist (Utilitarianism: deterrence [specific & general], rehabilitation, incapacitation)."},
-{id:2,u:"I",t:"Theories of Punishment",f:"What is retribution?",b:"Punishment is justified because the offender deserves it ('just deserts'). Backward-looking \u2014 focuses on the wrong committed, not future outcomes."},
-{id:3,u:"I",t:"Theories of Punishment",f:"What are the three forms of consequentialist punishment?",b:"1) Deterrence (specific: deter this offender; general: deter society)\n2) Rehabilitation (reform the offender)\n3) Incapacitation (prevent future crime by confining offender)"},
-{id:4,u:"I",t:"Hart / Criminal Law",f:"What differentiates criminal law from civil law according to Hart?",b:"Community condemnation of the offender. Criminal law offers direction on conduct, expresses community norms (social contract), and subjects violators to sanctions carrying moral stigma."},
-{id:5,u:"I",t:"Void for Vagueness",f:"What is the void for vagueness doctrine?",b:"Under the 14th Amendment, a criminal statute is unconstitutionally vague if it fails to give ordinary people fair notice of what conduct is prohibited and/or encourages arbitrary enforcement. (United States v. Bronstein)"},
-{id:6,u:"I",t:"Rule of Lenity",f:"What is the rule of lenity?",b:"When a criminal statute is ambiguous, it must be construed in favor of the defendant (against the government)."},
-{id:7,u:"I",t:"Jury Nullification",f:"What is jury nullification?",b:"The power of a jury to acquit a defendant despite evidence proving guilt beyond a reasonable doubt, effectively 'nullifying' the law. Juries are generally not informed of this power."},
-{id:8,u:"II",t:"Actus Reus",f:"What are the three components of actus reus?",b:"1) A voluntary act (or qualifying omission)\n2) That causes\n3) Social harm"},
-{id:9,u:"II",t:"Voluntary Act",f:"What constitutes an involuntary act under MPC \u00a7 2.01?",b:"Reflexes, convulsions, bodily movements during unconsciousness or sleep, conduct during hypnosis, and any bodily movement that is NOT a product of the effort or determination of the actor, either conscious or habitual."},
-{id:10,u:"II",t:"Voluntary Act",f:"Martin v. State \u2014 What is the rule?",b:"No voluntary act where police carried an intoxicated man onto a public highway and then arrested him for public drunkenness. The 'appearance in public' was not voluntary."},
-{id:11,u:"II",t:"Voluntary Act",f:"State v. Decina \u2014 How can an involuntary act still lead to liability?",b:"The voluntary act occurred EARLIER \u2014 when the epileptic defendant chose to drive knowing he was subject to seizures. Culpability attaches to the voluntary decision to put oneself in a dangerous position."},
-{id:12,u:"II",t:"Status Crimes",f:"Robinson v. California \u2014 What is the rule on status crimes?",b:"It is unconstitutional to punish a person for their status or condition (e.g., being addicted to narcotics). Criminal punishment must be for ACTS, not conditions. (8th/14th Amendments)"},
-{id:13,u:"II",t:"Status Crimes",f:"Powell v. Texas \u2014 How does it limit Robinson?",b:"Being drunk in public is an ACT (appearing in public after drinking), not a status. The statute punished conduct, not the condition of alcoholism. Robinson limited to pure status offenses."},
-{id:14,u:"II",t:"Omissions",f:"What are the FIVE categories of legal duty that make an omission satisfy actus reus?",b:"1) Special relationship (parent-child, spouse)\n2) Contractual duty\n3) Statutory duty\n4) Creation of the risk\n5) Voluntary assumption of care\n\nMnemonic: 'S-C-S-C-V'"},
-{id:15,u:"II",t:"Omissions",f:"People v. Beardsley \u2014 What limits the 'special relationship' duty?",b:"A romantic/social relationship (mistress/lover) is NOT sufficient. Must have a legal relation of 'protector' \u2014 like parent-child or husband-wife."},
-{id:16,u:"II",t:"Omissions",f:"Commonwealth v. Pestinikas \u2014 What type of duty was at issue?",b:"Contractual duty. Defendants agreed to provide food and medical care to the victim. A contractual duty to act creates criminal liability for omission even if services are outsourced."},
-{id:17,u:"II",t:"MPC \u00a7 2.02",f:"List the MPC mens rea hierarchy from most to least culpable.",b:"1) PURPOSELY \u2014 conscious object to cause the result\n2) KNOWINGLY \u2014 aware conduct is practically certain to cause result\n3) RECKLESSLY \u2014 consciously disregards substantial and unjustifiable risk\n4) NEGLIGENTLY \u2014 should be aware of substantial and unjustifiable risk (objective)\n\nMnemonic: 'People Kill Rats Nightly'"},
-{id:18,u:"II",t:"MPC \u00a7 2.02",f:"What is the DEFAULT mens rea under the MPC when a statute is silent?",b:"RECKLESSNESS. Under MPC \u00a7 2.02, when no culpability level is prescribed, recklessness is sufficient."},
-{id:19,u:"II",t:"MPC \u00a7 2.02",f:"MPC \u00a7 2.02(3)\u2013(4): How does a stated mental state apply to elements?",b:"A stated mental state modifies ALL material elements of actus reus, unless contrary purpose plainly appears. Exception: Jurisdictional elements need not have mens rea applied (United States v. Yermian)."},
-{id:20,u:"II",t:"Knowledge",f:"What is willful blindness? (United States v. Jewell)",b:"Knowledge satisfied even without positive awareness if D's ignorance was SOLELY the result of a CONSCIOUS EFFORT to disregard the nature of a fact, with a CONSCIOUS PURPOSE to avoid learning the truth. Proxy for positive knowledge."},
-{id:21,u:"II",t:"Intent",f:"What is transferred intent? (People v. Scott)",b:"When D intends to harm A but harms B instead, intent 'transfers' to B. D prosecuted for killing of B using intent directed at A. D may ALSO be charged with attempted murder of A."},
-{id:22,u:"II",t:"Intent",f:"State v. Fugate \u2014 How can intent to kill be inferred?",b:"Intent to kill may be PRESUMED where the natural and probable consequence of a wrongful act is to produce death. Intent may be deduced from all surrounding circumstances."},
-{id:23,u:"II",t:"Gen/Spec Intent",f:"What distinguishes general intent from specific intent crimes? (People v. Atkins)",b:"GENERAL INTENT: Only mental state required is intent to do the actus reus.\nSPECIFIC INTENT: Requires intent to do something BEYOND the actus reus (look for 'with intent to...').\n\nKey test: Does statute require intent language beyond the act itself?"},
-{id:24,u:"II",t:"Gen/Spec Intent",f:"How does the gen/spec intent distinction affect mistake of fact defenses?",b:"SPECIFIC INTENT: Honest mistake (even if unreasonable) IF it negates specific intent.\nGENERAL INTENT: Honest AND reasonable mistake.\nSTRICT LIABILITY: Mistake is NEVER a defense."},
-{id:25,u:"II",t:"Strict Liability",f:"What are the characteristics of strict liability crimes?",b:"No mens rea for at least one element; health/safety/welfare; punish omissions; risk of significant injury; D in position to prevent harm; light penalties; often regulatory.\n\nMorissette v. United States: Criminal law PRESUMES mens rea. Government bears burden of showing SL intended."},
-{id:26,u:"II",t:"Strict Liability",f:"Malum prohibitum vs. malum in se \u2014 relation to strict liability?",b:"SL more readily inferred for MALUM PROHIBITUM (wrong only because prohibited by statute). DISFAVORED for MALUM IN SE (inherently wrong), especially with heavy punishment and moral stigma."},
-{id:27,u:"III",t:"Mistake of Fact",f:"State the complete mistake of fact framework.",b:"SPECIFIC INTENT: Honest mistake negates intent (even if unreasonable)\nGENERAL INTENT: Honest AND reasonable mistake required\nSTRICT LIABILITY: No defense at all\n\nMPC \u00a7 2.04: Mistake is defense if it negates the purpose, knowledge, belief, recklessness, or negligence required for a material element."},
-{id:28,u:"III",t:"Mistake of Law",f:"General rule on mistake of law + exceptions?",b:"RULE: Ignorance of law is no excuse.\n\nEXCEPTIONS:\n1) Official interpretation reliance (Marrero)\n2) Negates specific mens rea in 'willfulness' crimes (Cheek v. US): honest belief that law doesn't impose duty negates willfulness. BUT disagreement with law does NOT.\n3) Lambert exception (due process)"},
-{id:29,u:"III",t:"Causation",f:"What two types of causation must the prosecution prove?",b:"1) ACTUAL CAUSE ('but-for'): But for D's conduct, would harm have occurred?\n2) PROXIMATE CAUSE (legal cause): Is it fair and just to hold D liable? Central inquiry: intervening cause analysis."},
-{id:30,u:"III",t:"Causation",f:"Explain the intervening cause framework.",b:"RESPONSIVE (dependent) IC: Reaction to D's act. D liable UNLESS IC was extremely bizarre.\n\u2022 Ex: Shot victim \u2192 pneumonia \u2192 dies = D is proximate cause\n\nCOINCIDENTAL (independent) IC: Would happen regardless. D NOT liable UNLESS IC was foreseeable.\n\u2022 Ex: D leaves victim on road \u2192 hit by truck = D is proximate cause (foreseeable)"},
-{id:31,u:"III",t:"Causation",f:"MPC \u00a7 2.03 \u2014 Causation for recklessness crimes?",b:"Not established if actual result NOT within the risk D was aware of, UNLESS:\n(a) Result differs only in different person/property or more serious harm; OR\n(b) Same kind of injury and not too remote/accidental to have just bearing on D's liability."},
-{id:32,u:"III",t:"Concurrence",f:"What two forms of concurrence are required?",b:"1) TEMPORAL: Mens rea must exist at the TIME of actus reus.\n2) MOTIVATIONAL: Culpable mental state must MOTIVATE the act.\n\nCourts may 'roll together' a series of acts into one continuous transaction."},
-{id:33,u:"IV",t:"Murder",f:"What are the four forms of malice aforethought?",b:"1) Intent to kill (express malice)\n2) Intent to inflict grievous bodily injury\n3) Depraved heart murder (extreme recklessness)\n4) Felony murder rule\n\nMnemonic: 'I-I-D-F'"},
-{id:34,u:"IV",t:"First Degree Murder",f:"What is required for first-degree murder (Pennsylvania model)?",b:"Willful, deliberate, and premeditated killing; OR statutorily prescribed manner; OR felony murder.\n\nDELIBERATION: Measuring and evaluating major facets of choice \u2014 weighing reasons for/against, considering consequences (State v. Brown)\nPREMEDITATION: Thinking about it beforehand\n\nCRITICAL: Having TIME to deliberate \u2260 actually deliberating (Bingham)"},
-{id:35,u:"IV",t:"First Degree Murder",f:"Gilbert v. State \u2014 Factors supporting P&D?",b:"1) Having gun with bullets nearby\n2) Thinking about different ways to kill\n3) Thinking about alternatives (doctor, nursing home)\n4) Positioning to avoid being seen\n5) Going back for another bullet"},
-{id:36,u:"IV",t:"Depraved Heart",f:"Define depraved heart murder and the Knoller standard.",b:"Extreme recklessness evincing extreme indifference to human life.\n\nKnoller (Phillips Test): Malice implied when killing caused by act whose natural consequences are dangerous to life, deliberately performed by person who KNOWS conduct endangers life and acts with CONSCIOUS DISREGARD FOR LIFE.\n\nKEY: Must be risk of DEATH (risk of SBI alone is INSUFFICIENT)."},
-{id:37,u:"IV",t:"Murder (MPC)",f:"MPC \u00a7 210.2 \u2014 How does the MPC define murder?",b:"Killing committed:\n(a) PURPOSELY or KNOWINGLY; OR\n(b) RECKLESSLY under circumstances manifesting EXTREME INDIFFERENCE to human life.\n\nMPC does NOT use degrees of murder."},
-{id:38,u:"IV",t:"Vol. Manslaughter",f:"Four elements of VM under CATEGORICAL approach?",b:"1) Heat of passion\n2) Legally adequate provocation\n3) No reasonable opportunity to cool off\n4) Causal link: provocation \u2192 passion \u2192 killing\n\nAdequate provocation (judge decides): battery/assault, mutual combat, crime against relative, illegal arrest, spousal adultery.\nMERE WORDS = NOT sufficient."},
-{id:39,u:"IV",t:"Vol. Manslaughter",f:"Four elements under MODERN reasonable person approach?",b:"1) Heat of passion\n2) REASONABLY provoked\n3) No time to cool off\n4) REASONABLE PERSON in D's position would not have cooled off\n\nJury decides. Cumulative passion recognized (Berry \u2014 20 hrs). Mere words rule may have exceptions."},
-{id:40,u:"IV",t:"Vol. Manslaughter",f:"MPC \u00a7 210.3 EMED standard + Dumlao test?",b:"Manslaughter if D kills under circumstances that would be murder, but committed as result of EMED for which there is reasonable explanation or excuse.\n\nDUMLAO TWO-STEP:\n1) View D's SUBJECTIVE situation + circumstances as D perceived them\n2) Assess whether EXPLANATION for disturbance was reasonable (NOT reasonableness of action)\n\nNo single provocative act needed. Words alone qualify. Jury decides."},
-{id:41,u:"IV",t:"Invol. Manslaughter",f:"Mental states for involuntary manslaughter?",b:"COMMON LAW:\n1) Recklessness (aware of risk + conscious disregard)\n2) Gross negligence (gross deviation from reasonable care)\n3) Ordinary negligence (rarely \u2014 Williams)\n\nMPC \u00a7 210.3(1)(a): RECKLESSNESS only. Negligence is NEVER enough."},
-{id:42,u:"IV",t:"Felony Murder",f:"Felony murder rule + four limitations?",b:"RULE: Murder if death during commission/attempted commission of felony.\n\nLIMITATIONS (I-R-M-A):\n1) INHERENTLY DANGEROUS (James) \u2014 abstract vs. fact-specific\n2) RES GESTAE (Bodely) \u2014 temporal/spatial + temporary safety rule\n3) MERGER (Rose) \u2014 must be independent felony; assaultive merge. Exception: independent felonious purpose\n4) AGENCY (Canola) \u2014 no third-party kills. Exception: shield case"},
-{id:43,u:"IV",t:"Felony Murder",f:"MPC approach to felony murder?",b:"MPC ELIMINATES felony murder.\n\n\u00a7 210.2(1)(b): Recklessness + extreme indifference PRESUMED if D engaged in commission of, attempt to commit, or flight after certain enumerated felonies. Presumption is rebuttable."},
-{id:44,u:"V",t:"Larceny",f:"Elements of larceny?",b:"1) TRESPASSORY TAKING\n2) CARRYING AWAY (asportation)\n3) PERSONAL PROPERTY OF ANOTHER\n4) WITHOUT CONSENT\n5) INTENT TO PERMANENTLY DEPRIVE (specific intent)\n\nConcurrence: taking + intent must be SIMULTANEOUS.\nMnemonic: 'TACP-I'"},
-{id:45,u:"V",t:"Theft Distinctions",f:"Distinguish larceny, larceny by trick, false pretenses, embezzlement.",b:"LARCENY: Trespassory taking + carrying away + intent to deprive\nLARCENY BY TRICK (Barbour): POSSESSION obtained through fraud\nFALSE PRETENSES (Pierce): TITLE + possession through fraud\nEMBEZZLEMENT: Conversion by someone in LAWFUL POSSESSION (fiduciary)\n\nKey Q: Did D get possession, title, or was D already entrusted?"},
-{id:46,u:"V",t:"Theft Concepts",f:"Possession vs. custody vs. constructive possession?",b:"POSSESSION: Sufficient control + unrestricted use\nCUSTODY: Physical control but restricted use (mechanic, valet)\nCONSTRUCTIVE POSSESSION: Owner retains legal possession when not in physical control\n\n'BREAKING THE BULK': Bailee opens package + takes goods = larceny"},
-{id:47,u:"VI",t:"Self-Defense",f:"Key requirements for self-defense?",b:"1) REASONABLE BELIEF of imminent unlawful force\n2) PROPORTIONAL force\n3) Some jurisdictions: DUTY TO RETREAT (exception: castle doctrine)\n\nIMPERFECT SELF-DEFENSE: Honest but UNREASONABLE belief \u2192 mitigates murder to VM.\nDEFENSE OF OTHERS: Same principles."},
-{id:48,u:"VI",t:"Necessity",f:"Necessity defense? (Dudley and Stephens)",b:"D chose 'lesser evil' between two harms.\n\nElements: (1) Imminent threat; (2) No lawful alternative; (3) Harm avoided > harm caused; (4) D didn't create situation.\n\nKEY (Dudley): Necessity CANNOT justify killing an innocent person to save your own life."},
-{id:49,u:"VI",t:"Duress",f:"Duress defense + how it differs from necessity?",b:"DURESS: Crime committed because of HUMAN THREAT of imminent death/SBI.\nElements: (1) Threat of death/SBI; (2) Well-grounded fear; (3) No escape.\n\nNecessity = natural pressure (lesser evil). Duress = human coercion.\nLIMITATION: Duress is NOT a defense to murder."},
-{id:50,u:"VI",t:"Justification vs. Excuse",f:"Justification vs. excuse defenses?",b:"JUSTIFICATION: Conduct was RIGHT/permissible. Society approves. (self-defense, necessity)\n\nEXCUSE: Conduct was WRONG but D not blameworthy. Society doesn't approve but doesn't blame. (duress, insanity)"},
-{id:51,u:"VII",t:"Attempt",f:"Elements of criminal attempt + key tests?",b:"(1) Specific intent to commit crime; (2) Act beyond mere preparation.\n\nTESTS:\n\u2022 LAST ACT: D did everything needed (rarely used)\n\u2022 DANGEROUS PROXIMITY: How close D came (common law)\n\u2022 SUBSTANTIAL STEP (MPC): Strongly corroborative of criminal purpose"},
-{id:52,u:"VII",t:"Conspiracy",f:"Elements of conspiracy?",b:"1) AGREEMENT to commit a crime\n2) INTENT to agree + intent to commit crime\n3) OVERT ACT in furtherance (most jurisdictions)\n\nPINKERTON: Each conspirator liable for foreseeable co-conspirator crimes.\nBILATERAL (CL): Two+ guilty minds.\nUNILATERAL (MPC): Only D's agreement matters."},
-{id:53,u:"VII",t:"Accomplice Liability",f:"What is accomplice liability?",b:"AIDING AND ABETTING: D assisted/encouraged the principal.\n\nElements: (1) Act of assistance; (2) Intent to assist; (3) Intent that crime be committed.\n\nAccessory Before Fact: Planned but absent.\nAccessory After Fact: Helped after (lesser offense).\nPrincipal: Actually committed it."}
-];
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-controls" style="display:none;">
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button>
+        </div>
+        <div class="hero-container">
+            <h1 class="hero-title">
+                <span class="hero-title-emoji">⚖️</span>
+                CRIMINAL LAW STUDY HUB
+            </h1>
+            <p class="hero-subtitle">Study smarter. Every tool targets a research-backed learning principle.</p>
+            <span class="hero-course">JD2960 · Prof. Arnaud · BU Law · Spring 2026</span>
+        </div>
+    </section>
 
-const MN=[
-{t:"MPC Mens Rea",m:"People Kill Rats Nightly",x:"Purpose \u2192 Knowledge \u2192 Recklessness \u2192 Negligence"},
-{t:"Malice Aforethought",m:"I-I-D-F",x:"Intent to kill, Intent GBI, Depraved heart, Felony murder"},
-{t:"Omission Duties",m:"S-C-S-C-V",x:"Special relationship, Contract, Statute, Created risk, Voluntary assumption"},
-{t:"FM Limitations",m:"I-R-M-A",x:"Inherently dangerous, Res gestae, Merger, Agency"},
-{t:"VM (Categorical)",m:"H-A-C-C",x:"Heat of passion, Adequate provocation, Cooling time, Causal link"},
-{t:"Larceny",m:"TACP-I",x:"Trespassory taking, Asportation, Consent (none), Property of another, Intent to permanently deprive"},
-{t:"Causation",m:"But-Prox",x:"But-for (actual) + Proximate (legal) cause"},
-{t:"Intervening Cause",m:"R-not-B, C-if-F",x:"Responsive \u2192 liable unless Bizarre; Coincidental \u2192 NOT liable unless Foreseeable"}
-];
+    <!-- Nav Tabs -->
+    <nav class="nav-tabs">
+        <button class="nav-tab active" data-tab="tools">🧠 Study Tools <span class="nav-tab-count">(10)</span></button>
+        <button class="nav-tab" data-tab="games">🎮 Games <span class="nav-tab-count">(6)</span></button>
+        <button class="nav-tab" data-tab="plan">📋 Study Plan</button>
+        <button class="nav-tab" data-tab="stats">📊 Stats</button>
+    </nav>
 
-const RD=[
-{id:1,p:"Write the MPC \u00a7 2.02 mens rea hierarchy with definitions.",a:"1) PURPOSELY: Conscious object to engage in conduct or cause a result.\n2) KNOWINGLY: Awareness that conduct is practically certain to cause the result.\n3) RECKLESSLY: Conscious disregard of a substantial and unjustifiable risk. Gross deviation from standard of care a law-abiding person would observe.\n4) NEGLIGENTLY: Should be aware of a substantial and unjustifiable risk. Failure to perceive is a gross deviation from care a reasonable person would observe."},
-{id:2,p:"Write the four forms of common law malice aforethought.",a:"1) Intent to kill another human being (express malice)\n2) Intent to inflict grievous bodily injury\n3) Depraved heart murder \u2014 extreme recklessness evincing extreme indifference to human life\n4) Felony murder rule \u2014 death during commission of a felony"},
-{id:3,p:"Write all four elements of voluntary manslaughter (categorical) + legally adequate provocations.",a:"Elements: (1) Heat of passion; (2) Legally adequate provocation; (3) No reasonable opportunity to cool off; (4) Causal link: provocation \u2192 passion \u2192 killing.\n\nAdequate provocation: Battery/assault, mutual combat, serious crime against close relative, illegal arrest, spousal adultery. Mere words are NOT sufficient."},
-{id:4,p:"Write the EMED standard (MPC \u00a7 210.3) and the Dumlao two-step test.",a:"Manslaughter if D kills under circumstances that would ordinarily be murder, but committed as result of EMED for which there is reasonable explanation or excuse.\n\nDumlao:\n1) View D's subjective internal situation and external circumstances as perceived (however inaccurate).\n2) Assess whether the explanation for the disturbance was reasonable (NOT reasonableness of the action).\n\nNo single act needed. Words alone qualify. Jury decides."},
-{id:5,p:"Write the four felony murder limitations with case names.",a:"1) INHERENTLY DANGEROUS (People v. James): Abstract (elements only) vs. fact-specific approach.\n2) RES GESTAE (People v. Bodely): Temporal/spatial proximity + causal link. Temporary safety rule.\n3) MERGER (Rose v. State): Must be independent of homicide. Assaultive felonies merge. Exception: independent felonious purpose.\n4) AGENCY (State v. Canola): No third-party kills. Exception: shield case."},
-{id:6,p:"Write larceny elements + distinguish from larceny by trick, false pretenses, embezzlement.",a:"LARCENY: (1) Trespassory taking, (2) asportation, (3) personal property of another, (4) without consent, (5) intent to permanently deprive.\n\nLARCENY BY TRICK: POSSESSION (not title) obtained through fraud.\nFALSE PRETENSES: TITLE + possession through false representation.\nEMBEZZLEMENT: Conversion by someone already in lawful possession (fiduciary)."},
-{id:7,p:"Write the intervening cause framework for proximate causation.",a:"RESPONSIVE/DEPENDENT IC: Reaction to D's act. D liable UNLESS IC was extremely bizarre.\n\nCOINCIDENTAL/INDEPENDENT IC: Would occur regardless. D NOT liable UNLESS IC was foreseeable.\n\nMPC \u00a7 2.03: Result must be within risk D was aware of, unless differs only in person/property or same kind of harm and not too remote/accidental."},
-{id:8,p:"Write the five categories of legal duty for omission liability.",a:"1) SPECIAL RELATIONSHIP (parent-child, spouse; Beardsley limits to legal 'protector')\n2) CONTRACTUAL DUTY (Pestinikas)\n3) STATUTORY DUTY\n4) CREATION OF RISK\n5) VOLUNTARY ASSUMPTION OF CARE (Howard)"}
-];
+    <div class="main-container">
 
-const HY=[
-{id:1,title:"The Bar Fight",facts:"Dave and Victor get into a heated argument at a bar after Victor insults Dave's wife. Victor shoves Dave. Dave, enraged, pulls out a knife he always carries and stabs Victor once in the chest. Victor dies on the way to the hospital. Medical evidence shows Victor would have survived if the ambulance hadn't been delayed 40 minutes due to a traffic accident.",
-qs:[
-{q:"Q1: Is Dave guilty of first-degree murder?",m:"ISSUE: Whether Dave's killing was willful, deliberate, and premeditated.\n\nRULE: First-degree murder requires willful, deliberate, premeditated killing. Deliberation = measuring and evaluating major facets of choice (Brown). Premeditation = thinking beforehand. Having TIME to deliberate \u2260 actually deliberating (Bingham).\n\nPROSECUTION: Dave carried a knife daily (preparedness). Drew weapon and targeted vital area (chest) \u2014 shows weighing of consequences. Choice to use lethal force suggests deliberation.\n\nDEFENSE: Dave reacted in the moment after being shoved. No 'cool head capable of reflection.' Carrying knife is habit, not premeditation. Seconds between shove and stab insufficient under Bingham.\n\nCONCLUSION: First-degree murder unlikely \u2014 facts suggest reactive killing."},
-{q:"Q2: Analyze VM under all three frameworks.",m:"CATEGORICAL: (1) Heat of passion: Yes \u2014 'enraged.' (2) Adequate provocation: SHOVE = battery = legally adequate. Verbal insults alone wouldn't qualify, but battery does. (3) Cooling: None \u2014 immediate. (4) Causal link: Shove triggered rage that caused stabbing. All elements satisfied.\n\nMODERN: Would reasonable person be provoked by insults to spouse + physical shove? Likely yes. Immediate response = no cooling. Jury decides.\n\nMPC EMED: Extreme emotional disturbance from insults + battery. Dumlao step 1: D's subjective situation \u2014 wife insulted, physically attacked. Step 2: Reasonable explanation for disturbance? Yes. EMED likely satisfied.\n\nStrongest argument: MPC/EMED (most expansive, focuses on reasonableness of disturbance, not action)."},
-{q:"Q3: Analyze the ambulance delay causation issue.",m:"ACTUAL CAUSE: But for Dave's stabbing, Victor wouldn't have needed ambulance or died. Satisfied.\n\nPROXIMATE CAUSE \u2014 Intervening Cause Analysis:\nThe traffic accident causing the delay is a COINCIDENTAL/INDEPENDENT IC (would have happened regardless).\n\nPROSECUTION: Foreseeable that emergency response may be delayed. When you stab someone, you accept risk of imperfect medical care. Under Henderson, foreseeable independent ICs don't break the chain.\n\nDEFENSE: Pure coincidence \u2014 unrelated event. Victor WOULD HAVE SURVIVED. The delay, not the stabbing, caused death. Unforeseeable independent IC breaks proximate causation.\n\nCONCLUSION: Prosecution likely prevails. Courts generally hold delays in treatment are foreseeable consequences of inflicting serious injury."}
-]},
-{id:2,title:"The Pawn Shop",facts:"Mia borrows Tom's expensive watch, telling him she needs it for a formal event. Instead, she pawns it. Separately, coworker Jake knows Mia pawns stolen items. When Mia asks Jake to drive her to the pawn shop, Jake agrees, suspecting but not confirming the items are stolen. Meanwhile, Mia's friend Carol, a bank teller, has been skimming small amounts from dormant accounts over six months, totaling $12,000.",
-qs:[
-{q:"Q1: What theft offense did Mia commit regarding the watch?",m:"LARCENY BY TRICK (most likely):\nMia lied about needing watch for formal event. Tom consented to transfer POSSESSION (a loan), not title. Mia obtained possession through fraud. Conversion by selling it. All elements satisfied.\n\nNOT standard larceny: Tom voluntarily handed it over (no trespassory taking).\nNOT false pretenses: Tom didn't transfer TITLE. He lent it expecting return.\nNOT embezzlement: Mia wasn't in position of trust/fiduciary relationship.\n\nCONCLUSION: Larceny by trick (State v. Barbour)."},
-{q:"Q2: Analyze Jake's criminal liability and mental state.",m:"ACCOMPLICE LIABILITY: Requires (1) act of assistance, (2) intent to assist, (3) intent that crime be committed. Jake drove Mia (assistance). He SUSPECTED items were stolen.\n\nWILLFUL BLINDNESS (Jewell):\nPROSECUTION: Jake KNEW Mia's pattern. Failure to confirm = conscious avoidance of truth. Satisfies 'knowingly.'\n\nDEFENSE: Mere suspicion \u2248 recklessness, not knowledge. Jake didn't deliberately avoid learning \u2014 he just didn't ask. Jewell requires CONSCIOUS PURPOSE to avoid truth.\n\nMPC: 'Knowingly' = awareness of high probability. Jake knew pattern + willingly drove. Jury could find knowledge.\n\nCONCLUSION: Jake likely liable under willful blindness."},
-{q:"Q3: Classify Carol's crime + MPC analysis.",m:"EMBEZZLEMENT: Carol is bank teller (fiduciary, position of trust). Has LAWFUL POSSESSION through employment. 'Skimming' = CONVERSION (adverse to owner). Systematic over 6 months = deliberate.\n\nMPC \u00a7 2.02: PURPOSELY (conscious object to take money). KNOWINGLY (aware conduct practically certain to deprive bank). Systematic nature shows both.\n\nNOT larceny (already had lawful possession). NOT false pretenses (no misrepresentation to obtain title).\n\nCONCLUSION: Embezzlement with purposeful mens rea."}
-]},
-{id:3,title:"The House Party",facts:"Alex hosts a party where guests use drugs. Ben (heavily intoxicated) beats Chris severely. Alex sees it but does nothing. Chris dies from injuries. Toxicology shows Chris had a rare undiagnosed heart condition \u2014 an otherwise healthy person would have survived. Meanwhile, roommate Dana robs Eddie at knifepoint upstairs. As Dana flees, Eddie chases her into the street where Eddie is struck and killed by a passing car.",
-qs:[
-{q:"Q1: Analyze Alex's liability for Chris's death (omission).",m:"OMISSION \u2014 DUTY TO ACT:\nPROSECUTION: Alex has duty based on CREATION OF RISK (hosted party with drugs/alcohol, creating dangerous conditions). As host, had control over premises.\n\nDEFENSE: Under Beardsley, social relationship doesn't create legal duty. Host-guest is not a 'protector' relationship. Alex didn't start the fight.\n\nMENS REA: Alex SAW the beating = aware of risk + consciously disregarded it = recklessness.\n\nHEART CONDITION: Responsive factor. 'Thin skull' / take victim as you find them. Doesn't break proximate causation.\n\nCONCLUSION: Depends on whether jurisdiction recognizes host's duty. If yes, involuntary manslaughter (recklessness)."},
-{q:"Q2: Dana's felony murder liability \u2014 apply all four limitations.",m:"BASIC: Dana committed robbery. Eddie died during flight. FM applies if limitations met.\n\n1) INHERENTLY DANGEROUS: Knifepoint robbery = inherently dangerous under both approaches. \u2713\n2) RES GESTAE: Eddie killed during Dana's flight. Temporary safety rule: robbery not complete until safe. Still in res gestae. \u2713\n3) MERGER: Robbery has INDEPENDENT FELONIOUS PURPOSE (taking wallet). Not an assaultive felony aimed at killing. No merger. \u2713\n4) AGENCY: Car driver = THIRD PARTY (not co-felon). Under AGENCY RULE: no FM liability. Under PROXIMATE CAUSE THEORY: yes (foreseeable that fleeing victim may be hit).\n\nCONCLUSION: Agency rule jurisdictions = no FM. Proximate cause jurisdictions = FM applies."},
-{q:"Q3: How does MPC change the analysis for Dana?",m:"MPC eliminates FM. Instead, \u00a7 210.2(1)(b) PRESUMES extreme recklessness during enumerated felonies (including robbery).\n\nPROSECUTION: Presumption applies \u2014 armed robbery + flight. Jury may infer extreme recklessness.\n\nDEFENSE: Presumption rebuttable. Dana was fleeing, not creating danger directly. Death by car \u2014 not Dana's act. Subjective intent was to escape, not endanger.\n\nALTERNATIVE: MPC manslaughter (\u00a7 210.3) if extreme recklessness not shown \u2014 recklessness alone (aware of risk during knifepoint robbery flight).\n\nCONCLUSION: Murder via presumption (rebuttable) or manslaughter for recklessness."}
-]}
-];
+        <!-- ===== STUDY TOOLS TAB ===== -->
+        <div class="tab-content active" id="tab-tools">
+            <h2 class="section-title">🧠 Science-Backed Study Tools</h2>
+            <p class="section-desc">Each tool is designed around a specific cognitive science finding. Used together, they form a complete study system optimized for deep retention and exam performance.</p>
+            <div class="tool-grid" id="tool-grid"></div>
+        </div>
 
-// ==============================================
-// APP STATE + RENDERING (vanilla JS)
-// ==============================================
-let S={mode:"flashcards",unit:"All",cardIdx:0,flipped:false,conf:{},deck:null,
-quiz:{started:false,deck:[],idx:0,ans:"",show:false,score:{c:0,t:0}},
-drill:{idx:0,txt:"",show:false},
-hypo:{hi:0,qi:0,txt:"",show:false},
-mnReveal:{}};
+        <!-- ===== GAMES TAB ===== -->
+        <div class="tab-content" id="tab-games">
+            <h2 class="section-title">🎮 Daily Games</h2>
+            <p class="section-desc">NYT Games-style interactive drills. Quick, engaging practice sessions to reinforce key concepts.</p>
+            <div class="games-grid" id="games-grid"></div>
+        </div>
 
-function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
-function filtered(){return S.unit==="All"?FC:FC.filter(c=>c.u===S.unit)}
-function getDeck(){if(!S.deck)S.deck=filtered();return S.deck}
+        <!-- ===== STUDY PLAN TAB ===== -->
+        <div class="tab-content" id="tab-plan">
+            <h2 class="section-title">📋 Recommended Study Flow</h2>
+            <p class="section-desc">A daily routine built on cognitive science research. Each step targets a different learning principle for maximum retention.</p>
+            <div class="plan-card">
+                <div class="plan-title">Daily Study Session (~65 min)</div>
+                <div class="plan-steps">
+                    <div class="plan-step">
+                        <div class="plan-num" style="background:var(--color-accent-purple)">1</div>
+                        <div>
+                            <div class="plan-step-title">Pre-Test: Prime Your Brain (5 min)</div>
+                            <div class="plan-step-desc">Take a diagnostic quiz on today's topic BEFORE reviewing. Getting answers wrong primes deeper encoding through the forward testing effect.</div>
+                        </div>
+                    </div>
+                    <div class="plan-step">
+                        <div class="plan-num" style="background:var(--color-accent-green)">2</div>
+                        <div>
+                            <div class="plan-step-title">Review: Lecture Notes & Why Guides (20 min)</div>
+                            <div class="plan-step-desc">Read the condensed notes, then explore policy rationale. Understanding "why" activates elaborative interrogation — making rules 2-3x more memorable.</div>
+                        </div>
+                    </div>
+                    <div class="plan-step">
+                        <div class="plan-num" style="background:var(--color-accent-cyan)">3</div>
+                        <div>
+                            <div class="plan-step-title">Recall: SRS Flashcards & Rule Drills (15 min)</div>
+                            <div class="plan-step-desc">Daily SRS review (cards due today), then write key rules from memory. Active recall produces 50-80% retention vs 10-15% for passive reading.</div>
+                        </div>
+                    </div>
+                    <div class="plan-step">
+                        <div class="plan-num" style="background:var(--color-accent-amber-bg)">4</div>
+                        <div>
+                            <div class="plan-step-title">Apply: Issue Spotters & Flowcharts (15 min)</div>
+                            <div class="plan-step-desc">Work mixed-topic fact patterns. Interleaving produces 25-76% better transfer than blocked practice. Use flowcharts to verify your analysis.</div>
+                        </div>
+                    </div>
+                    <div class="plan-step">
+                        <div class="plan-num" style="background:var(--color-accent-pink)">5</div>
+                        <div>
+                            <div class="plan-step-title">Teach: Feynman Prompts (10 min)</div>
+                            <div class="plan-step-desc">Explain one concept in plain language. The Feynman Technique exposes the illusion of competence — if you can't explain it simply, you don't know it yet.</div>
+                        </div>
+                    </div>
+                    <div class="plan-step">
+                        <div class="plan-num" style="background:var(--color-accent-red)">6</div>
+                        <div>
+                            <div class="plan-step-title">Weekly: Full Practice Exam (3 hours)</div>
+                            <div class="plan-step-desc">Once a week, do a full timed exam under realistic conditions. Compare your answers against model answers and self-grade with the rubric.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-function render(){
-const root=document.getElementById("root");
-let h=`<div class="topbar"><h1>\u2696\uFE0F Criminal Law Study Tool</h1><p class="subtitle">JD2960 \u00b7 Prof. Arnaud \u00b7 Closed-Book Exam Prep</p>`;
-h+=`<div class="modes">`;
-[["flashcards","\uD83C\uDCCF Cards"],["quiz","\u2705 Quiz"],["rules","\u270D\uFE0F Rules"],["hypos","\uD83D\uDCCB Hypos"],["mnemonics","\uD83E\uDDE0 Mnemonics"]].forEach(([k,l])=>{
-h+=`<button class="mode-btn ${S.mode===k?"active":""}" onclick="setMode('${k}')">${l}</button>`;
-});
-h+=`</div>`;
-if(S.mode==="flashcards"||S.mode==="quiz"){
-h+=`<div class="units">`;
-["All","I","II","III","IV","V","VI","VII"].forEach(u=>{
-h+=`<button class="unit-btn ${S.unit===u?"active":""}" onclick="setUnit('${u}')">${u==="All"?"All":u}</button>`;
-});
-h+=`</div>`;
-}
-h+=`</div>`;
+        <!-- ===== STATS TAB ===== -->
+        <div class="tab-content" id="tab-stats">
+            <section class="stats-section">
+                <div class="stats-header" id="stats-header">
+                    <h2 class="stats-header-title">Your Game Stats</h2>
+                    <span class="stats-toggle-icon expanded" id="stats-toggle-icon">▼</span>
+                </div>
+                <div class="stats-content" id="stats-content"></div>
+                <div class="weak-topics-list" id="weak-topics-list"></div>
+            </section>
+        </div>
+    </div>
 
-h+=`<div class="panel">`;
-if(S.mode==="flashcards")h+=renderFlashcards();
-else if(S.mode==="quiz")h+=renderQuiz();
-else if(S.mode==="rules")h+=renderRules();
-else if(S.mode==="hypos")h+=renderHypos();
-else if(S.mode==="mnemonics")h+=renderMnemonics();
-h+=`</div>`;
+    <footer>
+        Criminal Law Study Hub — Built for BU Law JD2960 · Powered by cognitive science research
+    </footer>
 
-h+=`<div class="tips"><h4>Study Strategy (Evidence-Based)</h4>`;
-h+=`<p><span class="hl">Active Recall:</span> Answer from memory BEFORE flipping. Doubles retention vs. re-reading.</p>`;
-h+=`<p><span class="hl">Spaced Repetition:</span> Short sessions over 2\u20134 weeks. Missed cards daily, mastered cards every 3\u20135 days.</p>`;
-h+=`<p><span class="hl">Rule Writing:</span> Write rules from memory \u2014 #1 technique for closed-book exams.</p>`;
-h+=`<p><span class="hl">Both Sides:</span> Always argue prosecution AND defense using specific facts.</p></div>`;
+    <script src="shared.js"></script>
+    <script src="navbar.js"></script>
+    <script>
+    (function() {
+        'use strict';
 
-root.innerHTML=h;
-// Restore textarea values
-if(S.mode==="quiz"&&S.quiz.started&&!S.quiz.show){let ta=document.getElementById("quizTA");if(ta)ta.value=S.quiz.ans;}
-if(S.mode==="rules"){let ta=document.getElementById("ruleTA");if(ta)ta.value=S.drill.txt;}
-if(S.mode==="hypos"){let ta=document.getElementById("hypoTA");if(ta)ta.value=S.hypo.txt;}
-}
+        // ===== STUDY TOOLS DATA =====
+        const TOOLS = [
+            {
+                id:'srs', name:'Spaced Repetition System', path:'tools/spaced-repetition.html',
+                icon:'🔄', accent:'cyan', principle:'Spaced Repetition',
+                desc:'122 flashcards with Leitner box algorithm. Cards you miss return sooner, mastered cards fade to longer intervals.',
+                tags:['122 cards','5 box levels','session tracking','cram mode']
+            },
+            {
+                id:'flowcharts', name:'Interactive Flowcharts', path:'tools/flowcharts.html',
+                icon:'🌊', accent:'blue', principle:'Dual Coding (Visual + Verbal)',
+                desc:'Six clickable decision trees for homicide, mens rea, theft, mistakes, causation, and omissions with case citations.',
+                tags:['6 flowcharts','click-through','case citations']
+            },
+            {
+                id:'essays', name:'Practice Essay Exams', path:'tools/practice-exams.html',
+                icon:'📝', accent:'indigo', principle:'Realistic Testing Effect',
+                desc:'Three full-length exams (18 questions total) with built-in timer, model answers, and self-grading rubrics.',
+                tags:['3 full exams','3-hour timer','model answers','rubrics']
+            },
+            {
+                id:'issue', name:'Interleaved Issue Spotter', path:'tools/issue-spotter.html',
+                icon:'🔀', accent:'amber', principle:'Interleaving Practice',
+                desc:'36 mixed-topic fact patterns. First identify the doctrine, then analyze. Simulates real exam unpredictability.',
+                tags:['36 patterns','shuffle mode','topic breakdown']
+            },
+            {
+                id:'rules', name:'Rule Writing Drills', path:'tools/rule-drills.html',
+                icon:'✍️', accent:'red', principle:'Generation Effect',
+                desc:'Write all 25 critical rules from memory, then compare side-by-side with highlighted matches and gaps.',
+                tags:['25 rules','timed mode','fill-in-blank','diff view']
+            },
+            {
+                id:'why', name:'Elaborative Why Guides', path:'tools/why-guides.html',
+                icon:'💡', accent:'purple', principle:'Elaborative Interrogation',
+                desc:'Deep policy rationale for every doctrine — why it exists, what problem it solves, and the counterarguments.',
+                tags:['28+ doctrines','policy rationale','connection Qs']
+            },
+            {
+                id:'feynman', name:'Teach It Back (Feynman)', path:'tools/feynman.html',
+                icon:'🎓', accent:'pink', principle:'Feynman Technique',
+                desc:'40+ prompts to explain concepts in plain language with model explanations and key-point checklists.',
+                tags:['40+ prompts','model answers','key points']
+            },
+            {
+                id:'pretest', name:'Pre-Test Diagnostic Quizzes', path:'tools/pre-test.html',
+                icon:'🧪', accent:'purple', principle:'Forward Testing Effect',
+                desc:'62 questions across 8 units designed to be taken BEFORE studying. Getting answers wrong primes deeper learning.',
+                tags:['62 questions','8 units','knowledge gaps']
+            },
+            {
+                id:'cases', name:'Case Brief Comparison Bank', path:'tools/case-briefs.html',
+                icon:'⚖️', accent:'orange', principle:'Analogical Encoding',
+                desc:'27 full case briefs with side-by-side comparison tool, pre-built groups, and quiz mode.',
+                tags:['27 cases','side-by-side','quiz mode']
+            },
+            {
+                id:'lectures', name:'Condensed Lecture Notes', path:'tools/lecture-notes.html',
+                icon:'📖', accent:'green', principle:"Professor's Emphasis Mapping",
+                desc:"All 20 lectures distilled: key rules, professor's hypotheticals, emphasis patterns, exam tips, and critical quotes.",
+                tags:['20 lectures','hypotheticals','exam signals']
+            }
+        ];
 
-// ---- FLASHCARDS ----
-function renderFlashcards(){
-const dk=getDeck();
-if(!dk.length)return`<div style="text-align:center;color:#64748b;padding:40px">No cards in this unit.</div>`;
-const c=dk[S.cardIdx];if(!c)return"";
-const cv=Object.values(S.conf);
-const got=cv.filter(x=>x==="got").length,shaky=cv.filter(x=>x==="shaky").length,missed=cv.filter(x=>x==="missed").length;
-let h=`<div class="meta"><span>Card ${S.cardIdx+1} of ${dk.length} \u00b7 Unit ${c.u} \u00b7 ${c.t}</span><button class="shuffle-btn" onclick="shuffleDeck()">Shuffle</button></div>`;
-h+=`<div class="card ${S.flipped?"flipped":""}" onclick="flipCard()">`;
-h+=`<div class="card-label">${S.flipped?"Answer":"Question"}${S.flipped?"":'<span class="hint">(tap to flip)</span>'}</div>`;
-h+=`<div class="card-text">${S.flipped?c.b:c.f}</div></div>`;
-if(S.flipped){
-h+=`<div class="conf-btns">`;
-h+=`<button class="conf-btn conf-got" onclick="markConf('got')">Got It \u2713</button>`;
-h+=`<button class="conf-btn conf-shaky" onclick="markConf('shaky')">Shaky ~</button>`;
-h+=`<button class="conf-btn conf-missed" onclick="markConf('missed')">Missed \u2717</button></div>`;
-}
-h+=`<div class="nav"><button class="nav-btn" onclick="prevCard()" ${S.cardIdx===0?"disabled":""}>← Prev</button>`;
-h+=`<div class="score-bar"><span class="score-got">\u2713 ${got}</span><span class="score-shaky">~ ${shaky}</span><span class="score-missed">\u2717 ${missed}</span></div>`;
-h+=`<button class="nav-btn" onclick="nextCard()" ${S.cardIdx>=dk.length-1?"disabled":""}>Next →</button></div>`;
-return h;
-}
+        const GAMES = [
+            { id:'connections', name:'Connections', description:'Find the four groups', icon:'🔲', path:'games/connections/' },
+            { id:'trial', name:"Who's on Trial?", description:'Spot the charge', icon:'⚒️', path:'games/whos-on-trial/' },
+            { id:'sort', name:'Sort It Out', description:'Classify legal rules', icon:'⇄', path:'games/sort-it-out/' },
+            { id:'match', name:'Case Match', description:'Match cases to holdings', icon:'🃏', path:'games/case-match/' },
+            { id:'crossword', name:'Mini Crossword', description:'Legal vocabulary', icon:'⊞', path:'games/crossword/' },
+            { id:'argument', name:'Build the Argument', description:'Construct IRAC arguments', icon:'🧩', path:'games/build-the-argument/' }
+        ];
 
-// ---- QUIZ ----
-function renderQuiz(){
-if(!S.quiz.started){
-const n=Math.min(15,filtered().length);
-return`<div class="quiz-center"><h3>Active Recall Self-Test</h3><p>Type your answer from memory BEFORE seeing the correct answer.</p><p style="font-size:11px;color:#475569;margin-bottom:20px">Research shows retrieval practice doubles long-term retention.</p><button class="action-btn btn-blue" onclick="startQuiz()">Start Quiz (${n} questions)</button></div>`;
-}
-const dk=S.quiz.deck,c=dk[S.quiz.idx];
-if(!c){
-const pct=S.quiz.score.t?S.quiz.score.c/S.quiz.score.t:0;
-return`<div class="quiz-center"><h3>Quiz Complete!</h3><div class="big-score" style="color:${pct>=.7?"#34d399":"#f87171"}">${S.quiz.score.c} / ${S.quiz.score.t}</div><p>${pct>=.7?"Strong! Review shaky cards.":"Keep drilling \u2014 focus on missed rules."}</p><br><button class="action-btn btn-blue" onclick="startQuiz()">Try Again</button></div>`;
-}
-let h=`<div class="meta"><span>Q ${S.quiz.idx+1} of ${dk.length}</span><span>Score: ${S.quiz.score.c}/${S.quiz.score.t}</span></div>`;
-h+=`<div class="q-box"><div style="font-size:11px;color:#64748b;margin-bottom:4px">Unit ${c.u} \u00b7 ${c.t}</div><div class="text">${c.f}</div></div>`;
-if(!S.quiz.show){
-h+=`<textarea id="quizTA" rows="5" placeholder="Type your answer from memory..." oninput="S.quiz.ans=this.value"></textarea>`;
-h+=`<button class="action-btn btn-blue" onclick="revealQuiz()">Reveal Answer</button>`;
-}else{
-if(S.quiz.ans)h+=`<div class="your-answer"><div class="label">Your Answer:</div><div class="text">${esc(S.quiz.ans)}</div></div>`;
-h+=`<div class="model-answer"><div class="label">Correct Answer:</div><div class="text">${c.b}</div></div>`;
-h+=`<div class="conf-btns"><button class="conf-btn conf-got" onclick="quizNext(true)">Got It \u2713</button><button class="conf-btn conf-missed" onclick="quizNext(false)">Missed \u2717</button></div>`;
-}
-return h;
-}
+        // ===== INIT =====
+        function init() {
+            updateThemeToggle();
+            renderToolGrid();
+            renderGamesGrid();
+            renderStats();
+            setupTabs();
+            setupThemeToggle();
+        }
 
-// ---- RULES ----
-function renderRules(){
-const d=RD[S.drill.idx];
-let h=`<h3 style="font-size:17px;color:#e2e8f0;margin-bottom:6px">Rule Writing Drill</h3>`;
-h+=`<p class="desc">Write the complete rule from memory. The most effective closed-book memorization technique.</p>`;
-h+=`<div class="drill-tabs">`;
-RD.forEach((r,i)=>{h+=`<button class="tab ${i===S.drill.idx?"active":""}" onclick="setDrill(${i})">Drill ${i+1}</button>`;});
-h+=`</div>`;
-h+=`<div class="q-box"><div class="text">${d.p}</div></div>`;
-h+=`<textarea id="ruleTA" rows="8" placeholder="Write the complete rule from memory..." oninput="S.drill.txt=this.value"></textarea>`;
-h+=`<button class="action-btn btn-blue" onclick="S.drill.show=true;render()">Check Against Model</button>`;
-if(S.drill.show)h+=`<div class="model-answer"><div class="label">Model Answer:</div><div class="text">${d.a}</div></div>`;
-return h;
-}
+        // ===== THEME =====
+        var THEME_ICONS = { clean: '☀️', midnight: '🌙', neon: '⚡', minimalist: '◻️', vivid: '🎨', 'high-contrast': '👁️' };
+        function updateThemeToggle() {
+            var btn = document.getElementById('theme-toggle');
+            if (!btn) return;
+            var cur = LawGames.getCurrentTheme();
+            var themes = LawGames.THEMES || ['clean', 'midnight', 'neon', 'minimalist', 'vivid', 'high-contrast'];
+            var nextIdx = (themes.indexOf(cur) + 1) % themes.length;
+            btn.textContent = THEME_ICONS[themes[nextIdx]] || '🌙';
+        }
+        function setupThemeToggle() {
+            document.getElementById('theme-toggle').addEventListener('click', function() {
+                LawGames.toggleTheme();
+                updateThemeToggle();
+            });
+        }
 
-// ---- HYPOS ----
-function renderHypos(){
-const hp=HY[S.hypo.hi],q=hp.qs[S.hypo.qi];
-let h=`<h3 style="font-size:17px;color:#e2e8f0;margin-bottom:6px">Practice Hypotheticals</h3>`;
-h+=`<p class="desc">Issue-spot and write IRAC analysis. Write your answer first, then compare.</p>`;
-h+=`<div class="hypo-tabs">`;
-HY.forEach((x,i)=>{h+=`<button class="tab ${i===S.hypo.hi?"active":""}" onclick="setHypo(${i})">${x.title}</button>`;});
-h+=`</div>`;
-h+=`<div class="fact-box"><div class="title">FACT PATTERN: ${hp.title}</div><div class="text">${hp.facts}</div></div>`;
-h+=`<div class="hypo-tabs">`;
-hp.qs.forEach((_,i)=>{h+=`<button class="tab ${i===S.hypo.qi?"purple active":"" }" onclick="setHypoQ(${i})">Q${i+1}</button>`;});
-h+=`</div>`;
-h+=`<div class="q-box"><div class="text">${q.q}</div></div>`;
-h+=`<textarea id="hypoTA" rows="10" placeholder="Write your IRAC analysis... (Issue \u2192 Rule \u2192 Application \u2192 Conclusion)" oninput="S.hypo.txt=this.value"></textarea>`;
-h+=`<button class="action-btn btn-purple" onclick="S.hypo.show=true;render()">Show Model Answer</button>`;
-if(S.hypo.show)h+=`<div class="purple-model"><div class="label">Model Answer:</div><div class="text">${q.m}</div></div>`;
-return h;
-}
+        // ===== TABS =====
+        function setupTabs() {
+            var tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(function(t) { t.classList.remove('active'); });
+                    tab.classList.add('active');
+                    document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
+                    var target = document.getElementById('tab-' + tab.getAttribute('data-tab'));
+                    if (target) target.classList.add('active');
+                });
+            });
+        }
 
-// ---- MNEMONICS ----
-function renderMnemonics(){
-let h=`<h3 style="font-size:17px;color:#e2e8f0;margin-bottom:6px">Mnemonics</h3>`;
-h+=`<p class="desc">Mental shortcuts for multi-element rules. Test yourself: what does each letter stand for?</p>`;
-MN.forEach((m,i)=>{
-h+=`<div class="mnemonic-card"><button class="mnemonic-toggle" onclick="toggleMn(${i})">${S.mnReveal[i]?"Hide":"Reveal"}</button>`;
-h+=`<div class="mnemonic-topic">${m.t}</div><div class="mnemonic-text">${m.m}</div>`;
-if(S.mnReveal[i])h+=`<div class="mnemonic-meaning">${m.x}</div>`;
-h+=`</div>`;
-});
-return h;
-}
+        // ===== RENDER TOOL GRID =====
+        function renderToolGrid() {
+            var grid = document.getElementById('tool-grid');
+            var basePath = LawGames.getBasePath();
+            grid.innerHTML = TOOLS.map(function(t) {
+                return '<a class="tool-card accent-' + t.accent + '" href="' + basePath + t.path + '">' +
+                    '<div class="tool-card-top">' +
+                        '<div class="tool-card-icon">' + t.icon + '</div>' +
+                        '<div class="tool-card-info">' +
+                            '<h3 class="tool-card-name">' + t.name + '</h3>' +
+                            '<p class="tool-card-principle">' + t.principle + '</p>' +
+                        '</div>' +
+                    '</div>' +
+                    '<p class="tool-card-desc">' + t.desc + '</p>' +
+                    '<div class="tool-card-tags">' + t.tags.map(function(tag) { return '<span class="tool-tag">' + tag + '</span>'; }).join('') + '</div>' +
+                    '<span class="tool-card-arrow">→</span>' +
+                '</a>';
+            }).join('');
+        }
 
-// ---- ACTIONS ----
-function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g,"<br>")}
-window.setMode=function(m){S.mode=m;render()};
-window.setUnit=function(u){S.unit=u;S.deck=null;S.cardIdx=0;S.flipped=false;S.quiz.started=false;render()};
-window.flipCard=function(){S.flipped=!S.flipped;render()};
-window.nextCard=function(){S.flipped=false;S.cardIdx=Math.min(S.cardIdx+1,getDeck().length-1);render()};
-window.prevCard=function(){S.flipped=false;S.cardIdx=Math.max(S.cardIdx-1,0);render()};
-window.shuffleDeck=function(){S.deck=shuffle(filtered());S.cardIdx=0;S.flipped=false;render()};
-window.markConf=function(l){const c=getDeck()[S.cardIdx];if(c)S.conf[c.id]=l;S.flipped=false;S.cardIdx=Math.min(S.cardIdx+1,getDeck().length-1);render()};
-window.startQuiz=function(){S.quiz={started:true,deck:shuffle(filtered()).slice(0,Math.min(15,filtered().length)),idx:0,ans:"",show:false,score:{c:0,t:0}};render()};
-window.revealQuiz=function(){S.quiz.show=true;render()};
-window.quizNext=function(correct){S.quiz.score.t++;if(correct)S.quiz.score.c++;S.quiz.idx++;S.quiz.ans="";S.quiz.show=false;render()};
-window.setDrill=function(i){S.drill={idx:i,txt:"",show:false};render()};
-window.setHypo=function(i){S.hypo={hi:i,qi:0,txt:"",show:false};render()};
-window.setHypoQ=function(i){S.hypo.qi=i;S.hypo.txt="";S.hypo.show=false;render()};
-window.toggleMn=function(i){S.mnReveal[i]=!S.mnReveal[i];render()};
+        // ===== RENDER GAMES GRID =====
+        function renderGamesGrid() {
+            var grid = document.getElementById('games-grid');
+            var basePath = LawGames.getBasePath();
+            grid.innerHTML = GAMES.map(function(g) {
+                return '<a class="game-card" href="' + basePath + g.path + '">' +
+                    '<span class="game-card-icon">' + g.icon + '</span>' +
+                    '<h3 class="game-card-title">' + g.name + '</h3>' +
+                    '<p class="game-card-description">' + g.description + '</p>' +
+                '</a>';
+            }).join('');
+        }
 
-// Swipe support for flashcards
-let touchStartX=0;
-document.addEventListener("touchstart",e=>{touchStartX=e.touches[0].clientX},{passive:true});
-document.addEventListener("touchend",e=>{
-if(S.mode!=="flashcards")return;
-const diff=e.changedTouches[0].clientX-touchStartX;
-if(Math.abs(diff)>60){if(diff<0)nextCard();else prevCard();}
-},{passive:true});
+        // ===== RENDER STATS =====
+        function renderStats() {
+            var statsContent = document.getElementById('stats-content');
+            var weakList = document.getElementById('weak-topics-list');
+            var allStats = LawGames.getAllStats();
+            var totalPlayed = 0, totalWon = 0, maxStreak = 0, currentStreak = 0;
 
-render();
-</script>
+            for (var key in allStats) {
+                var s = allStats[key];
+                totalPlayed += s.played || 0;
+                totalWon += s.won || 0;
+                if ((s.maxStreak || 0) > maxStreak) maxStreak = s.maxStreak;
+                if ((s.streak || 0) > currentStreak) currentStreak = s.streak;
+            }
+
+            if (totalPlayed === 0) {
+                statsContent.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:var(--spacing-xl);color:var(--color-text-secondary);">Play some games to see your stats here!</div>';
+                weakList.classList.add('collapsed');
+            } else {
+                var winRate = totalPlayed > 0 ? Math.round((totalWon / totalPlayed) * 100) : 0;
+                statsContent.innerHTML =
+                    '<div class="stat-box"><p class="stat-label">Games Played</p><p class="stat-value">' + totalPlayed + '</p></div>' +
+                    '<div class="stat-box"><p class="stat-label">Win Rate</p><p class="stat-value">' + winRate + '%</p></div>' +
+                    '<div class="stat-box"><p class="stat-label">Current Streak</p><p class="stat-value">' + currentStreak + '</p></div>' +
+                    '<div class="stat-box"><p class="stat-label">Best Streak</p><p class="stat-value">' + maxStreak + '</p></div>';
+
+                var weakTopics = LawGames.getWeakTopics();
+                if (weakTopics && weakTopics.length > 0) {
+                    weakList.classList.remove('collapsed');
+                    weakList.innerHTML = '<h3 style="margin:0 0 var(--spacing-md);font-size:var(--font-size-sm);font-weight:var(--font-weight-semibold);color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:0.5px;">Areas for Practice</h3>' +
+                        weakTopics.slice(0, 8).map(function(t) {
+                            return '<div class="topic-item"><span class="topic-name">' + t.topic + '</span><span class="topic-errors">' + t.errors + ' errors</span></div>';
+                        }).join('');
+                } else {
+                    weakList.classList.add('collapsed');
+                }
+            }
+
+            // Stats toggle
+            document.getElementById('stats-header').addEventListener('click', function() {
+                var icon = document.getElementById('stats-toggle-icon');
+                icon.classList.toggle('expanded');
+                statsContent.classList.toggle('collapsed');
+                weakList.classList.toggle('collapsed');
+            });
+        }
+
+        // Go
+        init();
+    })();
+    </script>
+    <script>
+        // Register service worker for offline PWA support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('./sw.js').catch(function(err) {
+                    console.log('SW registration failed:', err);
+                });
+            });
+        }
+    </script>
 </body>
 </html>

@@ -19,6 +19,7 @@
     { name: 'Feynman Technique', path: 'tools/feynman.html', icon: '🎓' },
     { name: 'Pre-Test Quizzes', path: 'tools/pre-test.html', icon: '🧪' },
     { name: 'Case Briefs', path: 'tools/case-briefs.html', icon: '⚖️' },
+    { name: 'Case Flashcards', path: 'tools/case-cards.html', icon: '🃏' },
     { name: 'Lecture Notes', path: 'tools/lecture-notes.html', icon: '📖' }
   ];
 

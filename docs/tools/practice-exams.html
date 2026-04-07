@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criminal Law Practice Essay Exams</title>
+    <style>
+        :root, [data-theme] {
+            --tool-accent: #6366f1;
+            --tool-accent-dark: #4f46e5;
+            --tool-accent-light: #818cf8;
+            --tool-accent-lighter: #a5b4fc;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--color-header-bg) 0%, var(--color-header-bg-end) 100%);
+            border-radius: 8px;
+            border-left: 4px solid var(--tool-accent);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--tool-accent);
+        }
+
+        .subtitle {
+            color: var(--color-text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Exam Selection Screen */
+        .exam-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .exam-card {
+            background: var(--color-bg-secondary);
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .exam-card:hover {
+            border-color: var(--tool-accent);
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .exam-card h2 {
+            color: var(--tool-accent);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .exam-info {
+            color: var(--color-text-primary);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .start-btn {
+            background: var(--tool-accent, #2563eb);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            background: var(--tool-accent-dark, #1d4ed8);
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
+        }
+
+        /* Exam Screen */
+        .exam-screen {
+            display: none;
+        }
+
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--color-bg-secondary);
+            border-radius: 8px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .exam-title {
+            font-size: 1.8rem;
+            color: var(--tool-accent);
+        }
+
+        .timer-display {
+            font-size: 2rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            color: var(--tool-accent);
+            min-width: 120px;
+        }
+
+        .timer-display.warning {
+            color: var(--color-partial);
+        }
+
+        .timer-display.danger {
+            color: var(--color-wrong);
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .timer-btn {
+            padding: 8px 16px;
+            background: var(--color-bg-secondary);
+            color: var(--color-text-primary);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .timer-btn:hover {
+            background: var(--color-bg-secondary);
+        }
+
+        .timer-btn.active {
+            background: var(--tool-accent);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--color-bg-secondary);
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--tool-accent), var(--tool-accent-light));
+            transition: width 0.3s ease;
+        }
+
+        .content-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 1024px) {
+            .content-area {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .question-panel, .answer-panel {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 25px;
+        }
+
+        .question-panel {
+            border-left: 4px solid var(--tool-accent);
+        }
+
+        .answer-panel {
+            border-left: 4px solid var(--tool-accent-light);
+        }
+
+        .panel-title {
+            font-size: 1.2rem;
+            color: var(--tool-accent);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .fact-pattern {
+            background: var(--color-bg-primary);
+            border-left: 3px solid var(--color-bg-secondary);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .fact-pattern h3 {
+            color: var(--color-text-primary);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .fact-pattern p {
+            color: var(--color-text-primary);
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+
+        .question-text {
+            background: var(--color-bg-primary);
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            color: var(--color-text-primary);
+            border-left: 3px solid var(--tool-accent-light);
+        }
+
+        .question-text strong {
+            color: var(--color-text-primary);
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 15px;
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--tool-accent);
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.2);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--tool-accent);
+            color: var(--color-header-text);
+        }
+
+        .btn-primary:hover {
+            background: var(--tool-accent-dark);
+        }
+
+        .btn-secondary {
+            background: var(--color-bg-secondary);
+            color: var(--color-text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-bg-secondary);
+        }
+
+        .btn-success {
+            background: var(--color-correct);
+            color: var(--color-header-text);
+        }
+
+        .btn-success:hover {
+            background: rgba(16, 185, 129, 0.15);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .question-nav {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .q-btn {
+            width: 45px;
+            height: 45px;
+            padding: 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .q-btn.current {
+            background: var(--tool-accent);
+            color: var(--color-header-text);
+        }
+
+        .q-btn.answered {
+            background: var(--color-correct);
+            color: var(--color-header-text);
+        }
+
+        .q-btn.unanswered {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--color-text-primary);
+        }
+
+        .model-answer {
+            background: var(--color-bg-primary);
+            border-left: 4px solid var(--color-correct);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .model-answer.show {
+            display: block;
+        }
+
+        .model-answer h4 {
+            color: var(--color-correct);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .model-answer p {
+            color: var(--color-text-primary);
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+
+        .rubric {
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .rubric.show {
+            display: block;
+        }
+
+        .rubric h5 {
+            color: var(--tool-accent);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .rubric-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            color: var(--color-text-primary);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .rubric-item:last-child {
+            border-bottom: none;
+        }
+
+        .rubric-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            cursor: pointer;
+            accent-color: var(--tool-accent);
+        }
+
+        .exam-summary {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .summary-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-text-primary);
+        }
+
+        .summary-stat:last-child {
+            border-bottom: none;
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: var(--tool-accent);
+        }
+
+        .finish-btn {
+            background: var(--color-correct);
+            color: var(--color-header-text);
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+
+        .finish-btn:hover {
+            background: rgba(16, 185, 129, 0.15);
+        }
+
+        .results-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .results-screen.show {
+            display: block;
+        }
+
+        .results-title {
+            font-size: 2.5rem;
+            color: var(--tool-accent);
+            margin-bottom: 20px;
+        }
+
+        .results-summary {
+            background: var(--color-bg-secondary);
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .result-stat {
+            background: var(--color-bg-primary);
+            padding: 20px;
+            border-radius: 4px;
+            border-left: 4px solid var(--tool-accent);
+        }
+
+        .result-stat h3 {
+            color: var(--tool-accent);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .result-stat .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--tool-accent-light);
+        }
+
+        .exam-answers {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 25px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .answer-review {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 30px;
+        }
+
+        .answer-review:last-child {
+            border-bottom: none;
+        }
+
+        .answer-review h3 {
+            color: var(--tool-accent);
+            margin-bottom: 15px;
+        }
+
+        .answer-review h4 {
+            color: var(--tool-accent-light);
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .your-answer {
+            background: var(--color-bg-primary);
+            padding: 15px;
+            border-left: 3px solid var(--color-partial);
+            border-radius: 4px;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .back-btn {
+            margin-top: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .word-count {
+            color: var(--color-text-secondary);
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .exam-header {
+                flex-direction: column;
+            }
+
+            .timer-display {
+                font-size: 1.5rem;
+            }
+
+            .content-area {
+                gap: 20px;
+            }
+
+            .question-panel, .answer-panel {
+                padding: 15px;
+            }
+
+            textarea {
+                min-height: 250px;
+            }
+
+            .q-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../theme.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Criminal Law Practice Essay Exams</h1>
+            <p class="subtitle">Complete Exam Simulator with Model Answers</p>
+        </header>
+
+        <!-- Exam Selection Screen -->
+        <div id="selectionScreen" class="exam-selection">
+            <div class="exam-card">
+                <h2>Exam 1</h2>
+                <div class="exam-info">
+                    <strong>Topics:</strong> Homicide & Property Crime<br>
+                    <strong>Questions:</strong> 6<br>
+                    <strong>Time:</strong> 3 hours
+                </div>
+                <button class="start-btn" onclick="startExam(1)">Start Exam 1</button>
+            </div>
+
+            <div class="exam-card">
+                <h2>Exam 2</h2>
+                <div class="exam-info">
+                    <strong>Topics:</strong> Felony Murder & Omissions<br>
+                    <strong>Questions:</strong> 6<br>
+                    <strong>Time:</strong> 3 hours
+                </div>
+                <button class="start-btn" onclick="startExam(2)">Start Exam 2</button>
+            </div>
+
+            <div class="exam-card">
+                <h2>Exam 3</h2>
+                <div class="exam-info">
+                    <strong>Topics:</strong> Overlapping Theories & Strict Liability<br>
+                    <strong>Questions:</strong> 6<br>
+                    <strong>Time:</strong> 3 hours
+                </div>
+                <button class="start-btn" onclick="startExam(3)">Start Exam 3</button>
+            </div>
+        </div>
+
+        <!-- Exam Screen -->
+        <div id="examScreen" class="exam-screen">
+            <div class="exam-header">
+                <div class="exam-title">Exam <span id="currentExamNum">1</span></div>
+                <div>
+                    <div class="timer-display" id="timerDisplay">3:00:00</div>
+                    <div class="timer-controls">
+                        <button class="timer-btn active" id="timerPlayBtn" onclick="toggleTimer()">Pause</button>
+                        <button class="timer-btn" onclick="resetTimer()">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="question-nav" id="questionNav"></div>
+
+            <div class="content-area">
+                <!-- Question Panel -->
+                <div class="question-panel">
+                    <div class="panel-title">Fact Pattern & Question</div>
+                    <div id="factPattern" class="fact-pattern"></div>
+                    <div id="questionText" class="question-text"></div>
+                </div>
+
+                <!-- Answer Panel -->
+                <div class="answer-panel">
+                    <div class="panel-title">Your Answer</div>
+                    <textarea id="answerBox" placeholder="Write your answer here..."></textarea>
+                    <div class="word-count">Word count: <span id="wordCount">0</span></div>
+                    <div class="button-group">
+                        <button class="btn btn-primary" onclick="saveAnswer()">Save Answer</button>
+                        <button class="btn btn-secondary" onclick="toggleModel()">View Model Answer</button>
+                    </div>
+
+                    <!-- Model Answer -->
+                    <div id="modelAnswer" class="model-answer">
+                        <h4>Model Answer</h4>
+                        <div id="modelContent"></div>
+
+                        <!-- Rubric -->
+                        <div id="rubric" class="rubric">
+                            <h5>Grading Rubric</h5>
+                            <div id="rubricItems"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation & Summary -->
+            <div class="exam-summary">
+                <div class="summary-stat">
+                    <span>Questions Answered:</span>
+                    <span class="summary-value" id="answeredCount">0/6</span>
+                </div>
+                <div class="summary-stat">
+                    <span>Time Remaining:</span>
+                    <span class="summary-value" id="timeRemaining">3:00:00</span>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                <button class="btn btn-secondary" onclick="nextQuestion()" id="nextBtn">Next →</button>
+                <button class="btn btn-success finish-btn" onclick="finishExam()">Finish Exam & Review</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="results-screen">
+            <h2 class="results-title">Exam Complete</h2>
+
+            <div class="results-summary">
+                <div class="result-stat">
+                    <h3>Questions Answered</h3>
+                    <div class="value" id="finalAnswered">0/6</div>
+                </div>
+                <div class="result-stat">
+                    <h3>Total Time</h3>
+                    <div class="value" id="finalTime">0:00</div>
+                </div>
+            </div>
+
+            <div class="exam-answers" id="answersReview"></div>
+
+            <button class="btn btn-primary back-btn" onclick="backToSelection()">Back to Exam Selection</button>
+        </div>
+    </div>
+
+    <script>
+        // ==================== DATA ====================
+        const exams = {
+            1: {
+                title: "Exam 1: Homicide & Property Crime",
+                questions: [
+                    {
+                        id: 1,
+                        pattern: {
+                            title: "Fact Pattern 1: Homicide",
+                            text: "Marcus and Victor were roommates who had been arguing for weeks over unpaid rent. On March 5th, Marcus returned home to find Victor had sold Marcus's gaming console to cover his share. Marcus screamed at Victor, calling him a thief. Victor laughed and said \"What are you going to do about it?\" Marcus grabbed a kitchen knife, paused for about 10 seconds staring at Victor, then stabbed him once in the chest. Victor died at the hospital."
+                        },
+                        question: "Analyze whether Marcus committed first-degree murder under the common law. Argue both sides using specific facts.",
+                        modelAnswer: "First-degree murder requires: (1) intentional killing (2) of another human being (3) with premeditation and (4) deliberation. Marcus clearly intended to kill and caused Victor's death, satisfying elements 1-2.\n\nPremeditation (formation of intent to kill before the act): The prosecution argues that Marcus's 10-second pause demonstrates premeditation—he formed the intent to kill during this window. Cases like Bingham support finding premeditation from even brief reflection. The facts show Marcus grabbed the knife intentionally and paused, suggesting he contemplated his action.\n\nDefense counterargument: The 10-second pause may be insufficient. Under the categorical approach, brief reflection without forming a true design to kill is inadequate. The provocation (selling the console) and heated argument suggest impulsive rather than premeditated conduct. The defense emphasizes the immediacy of Marcus's action from provocation to stabbing.\n\nDeliberation (cool mind capable of forming and executing a plan): Prosecution argues Marcus's actions show deliberation—he selected a weapon and acted with purpose. The pause demonstrates consideration.\n\nDefense argues: The provocation inflamed Marcus's passions, preventing the \"cool mind\" required for deliberation. His immediate grab for a knife and stabbing reflect heat-of-passion rather than deliberate killing.\n\nConclusion: Modern courts would likely find premeditation and deliberation from the 10-second pause and weapon selection, supporting first-degree murder. However, the strength of provocation creates a genuine defense argument for reduction to voluntary manslaughter.",
+                        rubric: [
+                            "Issue of first-degree murder elements identified",
+                            "Premeditation element analyzed with specific facts",
+                            "Deliberation element analyzed with specific facts",
+                            "Prosecution argument presented",
+                            "Defense argument presented",
+                            "Case law cited (Bingham or similar)",
+                            "Clear conclusion reached"
+                        ]
+                    },
+                    {
+                        id: 2,
+                        pattern: {
+                            title: "Fact Pattern 1 (continued)",
+                            text: "Same facts as Question 1."
+                        },
+                        question: "Could Marcus's charge be reduced to voluntary manslaughter? Analyze under all three approaches (categorical, modern, EMED).",
+                        modelAnswer: "Voluntary manslaughter requires an intentional killing (1) in the heat of passion (2) caused by adequate provocation (3) before a reasonable person would cool off (4).\n\nADEQUATE PROVOCATION - Three Approaches:\n\n1. CATEGORICAL APPROACH (Most restrictive):\nTraditional categories include: (a) battery/assault on defendant, (b) mutual combat, (c) discovery of adultery, (d) extreme insult. The sale of Marcus's console doesn't fall clearly into these categories. Categorical courts would reject adequate provocation here. Result: First-degree murder conviction stands.\n\n2. MODERN APPROACH (Berry framework):\nRequires: (a) provocation objectively capable of arousing passion, (b) defendant actually provoked, (c) insufficient time to cool off, (d) defendant didn't actually cool off.\n\nProsecution: The loss of property, while frustrating, doesn't typically provoke reasonable person to deadly violence. Courts generally treat property crimes as inadequate provocation for murder reduction.\n\nDefense: The violation of trust (roommate stealing), the insult (laughing), and the accumulated tension create adequate provocation. A reasonable person might react with fury to such betrayal.\n\n3. EMED APPROACH (Emotional/Mental Disturbance):\nRequires extreme emotional or mental disturbance for which there is reasonable explanation. More subjective than other approaches.\n\nDefense: Marcus's accumulated grievances (weeks of rent arguments), the emotional impact of betrayal by a friend, and immediate emotional volatility satisfy EMED. The reasonable explanation is the property theft and trust violation.\n\nProsecution: The 10-second pause undermines EMED—it shows Marcus controlled his emotions, contradicting extreme disturbance claim.\n\nCONCLUSION: Under categorical approach, no reduction. Under modern approach, close question but likely rejected (property inadequate). Under EMED, strongest argument for reduction to voluntary manslaughter. Most likely outcome depends on jurisdiction, but EMED provides best chance for reduction."
+                    },
+                    {
+                        id: 3,
+                        pattern: {
+                            title: "Fact Pattern 1 (continued)",
+                            text: "Same facts as Question 1."
+                        },
+                        question: "Analyze Marcus's liability under the MPC.",
+                        modelAnswer: "Under MPC § 210.2, murder requires purposeful or knowing killing, or reckless killing with extreme indifference to human life (\"depraved heart\").\n\nMARCUS COMMITTED PURPOSEFUL KILLING: He acted with conscious object of causing death. Thus, § 210.2(1)(a) applies—Marcus is guilty of murder at minimum.\n\nEXTENUATION TO MANSLAUGHTER (§ 210.3):\nMPC allows reduction from murder to manslaughter if committed \"under the influence of extreme mental or emotional disturbance for which there is reasonable explanation or excuse.\" This is more expansive than common law EMED.\n\nThe reasonableness is judged from viewpoint of person in defendant's situation.\n\nMarriage-element analysis of disturbance: \n- Emotional component: clear—Marcus was furious\n- Mental component: The betrayal by a trusted roommate caused genuine mental disturbance\n- Extreme: The accumulation of rent disputes plus theft of personal property pushes this beyond ordinary anger\n\nReasonable explanation: The theft and trust violation provide objective explanation for disturbance.\n\nMPC ADVANTAGE: Doesn't require \"adequate provocation\" or specific categories. Doesn't require time to cool. Instead examines whole context of defendant's situation.\n\nPROSECUTION: The deliberate weapon selection and 10-second pause show Marcus controlled the situation, undermining \"extreme\" disturbance.\n\nDEFENSE: The circumstances viewed from Marcus's perspective (roommate theft, weeks of tension, direct insult) create reasonable explanation for extreme disturbance.\n\nCONCLUSION: Under MPC, Marcus likely qualifies for manslaughter reduction. The MPC's focus on actual disturbance from defendant's perspective rather than categorical rules favors the defense. Result: Murder downgraded to manslaughter under § 210.3."
+                    },
+                    {
+                        id: 4,
+                        pattern: {
+                            title: "Fact Pattern 2: Property Crime + Foundational Elements",
+                            text: "Sarah worked as a bank teller. Her friend Jake asked her to hold onto an envelope containing $5,000 \"for safekeeping.\" Sarah agreed, but after three weeks, she opened the envelope, took $2,000, and used it to pay her rent. She intended to replace the money before Jake noticed. Meanwhile, Jake had actually stolen the $5,000 from his employer and was using Sarah to hide it, though Sarah didn't know this."
+                        },
+                        question: "What theft offense(s) has Sarah committed? Distinguish between larceny, embezzlement, and larceny by trick.",
+                        modelAnswer: "LARCENY: Trespassory taking and carrying away of personal property of another with intent to permanently deprive.\n\nSarah did not commit larceny. Jake gave her the money voluntarily for safekeeping, so there's no \"trespassory\" taking. Larceny requires taking from another's possession; Sarah had lawful possession originally.\n\nLARCENY BY TRICK: Obtaining possession (not ownership) of property by deception with intent to permanently deprive.\n\nSarah didn't use deception initially. Jake voluntarily gave her the money. However, one could argue that Sarah's breach of the trust arrangement and conversion of the funds constitutes a kind of deception regarding use, but this is weak. Larceny by trick requires deception at the moment of obtaining possession; Sarah obtained possession honestly.\n\nEMBEZZLEMENT (Best fit): Fraudulent conversion of property of another by person in lawful possession.\n\nElements: (1) lawful possession, (2) fraudulent conversion, (3) property of another\n\n(1) LAWFUL POSSESSION: Sarah clearly had lawful possession. Jake gave her the money to hold. ✓\n\n(2) FRAUDULENT CONVERSION: Sarah opened the envelope, took $2,000, and used it for personal expenses (rent). This is conversion—treating property as her own against the owner's rights. The intent to repay doesn't negate the fraudulent nature of the taking. ✓\n\n(3) PROPERTY OF ANOTHER: The money belonged to Jake. ✓\n\nMENS REA: Sarah acted with intent to use the money personally, satisfying fraudulent intent required for embezzlement. Her stated intent to repay is irrelevant—embezzlement doesn't require permanent deprivation of title, just unauthorized use.\n\nCONCLUSION: Sarah committed EMBEZZLEMENT. She had lawful possession as a bailee, fraudulently converted $2,000 of Jake's property to her use. The fact that Jake himself stole the money from his employer is irrelevant to Sarah's liability—she stole from Jake, not his employer."
+                    },
+                    {
+                        id: 5,
+                        pattern: {
+                            title: "Fact Pattern 2 (continued)",
+                            text: "Same facts as Question 4."
+                        },
+                        question: "Analyze the mens rea element of Sarah's conduct under both common law (general/specific intent) and MPC § 2.02.",
+                        modelAnswer: "COMMON LAW APPROACH:\n\nGENERAL vs SPECIFIC INTENT:\nCommon law traditionally divided crimes into general intent (any culpable state of mind) and specific intent (particular purpose or further intent).\n\nEmbezzlement at common law is typically a SPECIFIC INTENT crime requiring intent to defraud (intent to deal with property in a manner that injures the owner). General recklessness or negligence insufficient.\n\nSarah's mens rea: She deliberately opened the envelope she was entrusted with, removed funds, and used them personally. This demonstrates clear intent to defraud—she knowingly breached her trust relationship and converted funds to personal use. Her state of mind shows specific intent to defraud required for embezzlement.\n\nDefense claim re: \"intent to repay\": Intent to repay doesn't negate fraudulent intent. The crime is the unauthorized conversion and dealing with property, not permanent deprivation. Sarah specifically intended to use Jake's money without permission.\n\nMPC § 2.02 ANALYSIS (more precise):\n\nMPC establishes four culpability levels:\n- PURPOSELY (conscious object) \n- KNOWINGLY (substantial certainty)\n- RECKLESSLY (conscious disregard of substantial risk)\n- NEGLIGENTLY (failure to perceive substantial risk)\n\nDefault rule: crimes require \"purposely\" unless otherwise stated.\n\nEmbezzlement/conversion typically requires PURPOSE—conscious object of converting another's property.\n\nSarah's conduct: She acted purposefully. She had conscious object of taking $2,000 from the envelope and using it for rent. Her conduct demonstrates purpose, the highest culpability level.\n\nAlternative analysis: Even if only \"knowingly\" required, Sarah knew with substantial certainty that taking the money and using it violated Jake's rights.\n\nRecklessness insufficient: Even if evaluated under recklessness, Sarah's deliberate opening of envelope and taking funds far exceeds reckless disregard.\n\nCONCLUSION: Under common law, Sarah possessed specific intent to defraud required for embezzlement. Under MPC, she acted purposefully with conscious object of converting Jake's property, satisfying the highest culpability standard required for theft crimes."
+                    },
+                    {
+                        id: 6,
+                        pattern: {
+                            title: "Fact Pattern 2 (continued)",
+                            text: "Same facts as Question 4."
+                        },
+                        question: "If Sarah claims she believed Jake gave her the money as a gift, analyze her mistake of fact defense.",
+                        modelAnswer: "MISTAKE OF FACT DEFENSE: Generally valid only if mistake negates required mens rea element of crime.\n\nRULE: Mistake is a defense if: (1) it's about a material fact, (2) defendant acted in good faith/reasonably, (3) it negates the mens rea element required for the crime.\n\nSarah's claim: \"I believed Jake gave me the money as a gift, not for safekeeping.\"\n\nANALYSIS:\n\n(1) MATERIAL FACT: The nature of the transfer (gift vs. bailment) is material. If true gift, no theft occurs. ✓\n\n(2) GOOD FAITH/REASONABILITY: This fails. The facts clearly state Jake asked her to hold it \"for safekeeping.\" Sarah cannot reasonably claim misunderstanding when Jake explicitly stated his purpose. Bad faith/unreasonable mistake = no defense.\n\nEven assuming the conversation was ambiguous, Sarah's subsequent actions demonstrate she knew the truth: she \"opened the envelope,\" suggesting she knew it wasn't her property to freely access. If she believed it was a gift, why open envelope secretly? Why intend to repay? These actions prove she actually knew Jake gave her money in trust.\n\n(3) NEGATES MENS REA: Even if mistake were reasonable, it must negate required mens rea. Embezzlement requires fraudulent intent—intent to breach a trust relationship and convert property.\n\nIf Sarah truly believed she received a gift, she would lack fraudulent intent (no breach of trust in using one's own property).\n\nHowever: Under common law, mistake of fact is typically only defense when it negates specific intent. Under the Model Penal Code, mistake is defense when negates required mental state, but reasonableness is judged from actor's perspective if material element of crime (objective reasonableness required for most elements).\n\nCONCLUSION: Sarah's defense fails on multiple grounds. First, it's factually implausible given her explicit statement about safekeeping. Second, her actions (secretly opening envelope, intending to repay) contradict her claimed belief. Third, even generous interpretation wouldn't support reasonableness of \"gift\" belief given explicit safekeeping language. The mistake of fact defense does not apply. Sarah's embezzlement conviction stands."
+                    }
+                ]
+            },
+            2: {
+                title: "Exam 2: Felony Murder & Omissions",
+                questions: [
+                    {
+                        id: 1,
+                        pattern: {
+                            title: "Fact Pattern 1: Felony Murder / Depraved Heart",
+                            text: "Derek and his accomplice Tanya planned to rob a convenience store. Derek carried an unloaded gun as a prop. During the robbery, the store clerk grabbed a hidden pistol and fired at Derek, missing him but killing a customer, Mrs. Chen. Tanya was waiting in the getaway car outside. Derek had told Tanya before the robbery: \"Nobody will get hurt—the gun isn't even loaded.\""
+                        },
+                        question: "Analyze Derek's liability for felony murder. Apply all four limitations (inherently dangerous, res gestae, merger, agency rule).",
+                        modelAnswer: "FELONY MURDER RULE: Death occurring during commission of dangerous felony = murder liability without requiring proof of intent to kill or deliberation.\n\nDerek committed robbery (inherent felony), and death occurred during the robbery. Initial felony murder liability attaches.\n\nHowever, four limitations constrain felony murder liability:\n\n1. INHERENTLY DANGEROUS FELONY LIMITATION:\nOnly felonies inherently dangerous to human life support felony murder liability. Robbery is universally recognized as inherently dangerous.\n\nConclusion: This limitation satisfied. Robbery supports felony murder liability. ✓\n\n2. RES GESTAE (\"things done\") LIMITATION:\nDeath must occur during commission of felony and flight therefrom. There must be causal connection between felony and death.\n\nAnalysis: Mrs. Chen died from gunshot fired by store clerk during the active robbery. The death occurred in direct response to the robbery attempt. The causal chain from Derek's robbery to store clerk's defensive action to innocent bystander's death is direct.\n\nPotential problem: Derek's gun was unloaded. He posed minimal threat. Does this break causal chain? Modern courts generally hold that any robbery creates sufficient causal nexus—the clerk's reaction (grabbing and firing real gun) is foreseeable response to armed robbery threat.\n\nConclusion: Res gestae satisfied. ✓\n\n3. MERGER DOCTRINE LIMITATION:\nFelony murder rule cannot permit the underlying felony to \"merge\" into the homicide charge. Some courts hold that certain felonies (like assault or battery inherent in causing death) cannot support felony murder because they merge.\n\nAnalysis: Robbery is independent felony from the homicide. Derek's robbery didn't require causing death; the death resulted from store clerk's independent action. No merger.\n\nConclusion: Merger doctrine not violated. ✓\n\n4. AGENCY RULE (Minority view):\nSome jurisdictions hold that only deaths caused by person committing felony—not by third parties (like store clerk)—support felony murder. Under agency rule, store clerk caused death, not Derek.\n\nDerek's jurisdiction matters:\n- Traditional/majority rule: Derek liable for death caused by store clerk during robbery\n- Agency rule jurisdiction: Derek might not be liable for clerk-caused death\n\nAnalysis under agency rule: Derek didn't pull trigger. Store clerk did. Thus no felony murder liability.\n\nCONCLUSION: Derek likely guilty of felony murder under majority rule and modern approach. All four limitations satisfied:\n- Robbery is inherently dangerous ✓\n- Death during and causally connected to robbery ✓\n- No merger ✓\n- Assumes away agency rule or jurisdiction uses majority rule ✓\n\nHowever, in agency rule jurisdiction, Derek faces liability for armed robbery and murder (of store clerk's choice), not felony murder per se."
+                    },
+                    {
+                        id: 2,
+                        pattern: {
+                            title: "Fact Pattern 1 (continued)",
+                            text: "Same facts as Question 1."
+                        },
+                        question: "Could Derek alternatively be charged with depraved heart murder? Analyze under both common law and MPC.",
+                        modelAnswer: "DEPRAVED HEART MURDER (second-degree murder): Killing caused by act done with extreme recklessness showing depraved heart and extreme disregard for human life.\n\nCOMMON LAW ANALYSIS:\n\nElements: (1) reckless act, (2) extreme recklessness (not ordinary recklessness), (3) extreme indifference to human life, (4) causes death\n\n(1-3) EXTREME RECKLESSNESS: Derek's conduct during armed robbery—carrying a gun (even unloaded) and pointing it at people—shows extreme recklessness. An armed robber creates grave danger to human life.\n\nProsecution argument: Derek knowingly initiated armed robbery knowing it creates substantial risk of death. The act of pointing gun at store clerk while robbing manifests complete indifference to whether people live or die. Even if gun is unloaded, robber doesn't know if clerk is armed. Derek's conduct shows depraved heart.\n\nDefense argument: The gun was unloaded and clearly a prop. Derek specifically told Tanya \"nobody will get hurt.\" This statement suggests Derek took precautions to minimize harm. Derek didn't intend death and took steps to prevent it.\n\nCounter: Intent irrelevant for depraved heart. The recklessness alone—carrying gun, initiating confrontation—is extreme regardless of subjective hope nobody gets hurt.\n\n(4) CAUSATION: Derek's armed robbery caused the chain of events: clerk armed self in response, fired gun, killed innocent person. Derek's reckless conduct created the danger.\n\nCONCLUSION: Depraved heart murder charge likely viable under common law. Armed robbery with gun constitutes extreme recklessness manifesting extreme indifference to human life.\n\nMPC ANALYSIS (§ 210.2):\n\nMPC murder requires: (1) purposeful or knowing killing, OR (2) reckless killing under circumstances manifesting extreme indifference to value of human life\n\nDerek's conduct: Reckless killing under circumstances manifesting extreme indifference.\n\nThe armed robbery—carrying gun and confronting people—creates substantial and unjustifiable risk of death. Derek's conscious disregard of this risk (proceeding despite knowing risks), even if hoping to avoid harm, manifests extreme indifference.\n\nMPC ADVANTAGE for prosecution: Doesn't require \"depraved heart\" label. Focuses on objective circumstances showing extreme indifference. Armed robbery inherently does this.\n\nAlternatively, if court found Derek's state of mind actually showed extreme indifference despite his statement to Tanya, or found his statement revealed he knew people would likely be hurt, then purpose to kill could be inferred.\n\nCONCLUSION: Under both common law and MPC, depraved heart/extreme indifference murder viable alternative to felony murder charge. Both frameworks capture the extreme recklessness of armed robbery."
+                    },
+                    {
+                        id: 3,
+                        pattern: {
+                            title: "Fact Pattern 1 (continued)",
+                            text: "Same facts as Question 1."
+                        },
+                        question: "Analyze Tanya's liability for Mrs. Chen's death. Consider accomplice liability and the Pinkerton doctrine.",
+                        modelAnswer: "ACCOMPLICE LIABILITY: Accomplice is liable for crimes they aid, abet, counsel, or procure with knowledge of the crime and intent to facilitate.\n\nTanya's role: Co-planner of robbery, waited in getaway car.\n\nELEMENTS:\n(1) Principal committed crime (Derek committed robbery) ✓\n(2) Tanya aided/abetted (planned and facilitated robbery via getaway car) ✓\n(3) Knowledge principal would commit crime ✓\n(4) Intent to facilitate (conspiracy to rob) ✓\n\nTanya clearly liable as accomplice to robbery.\n\nBUT is Tanya liable for MURDER (death of Mrs. Chen)?\n\nCommon law rule: Accomplice liable for crimes aided and \"natural and probable consequences\" thereof. Under this broad rule, murder during robbery is natural and probable consequence.\n\nModern rule: Most jurisdictions restrict accomplice liability to crimes defendant intended to facilitate (not broader natural/probable consequences). Thus Tanya liable for robbery (intended) but only for murder if she:\n(a) Intended the death, OR\n(b) Knew murder was substantially certain to occur, OR  \n(c) Knew principal was armed with deadly weapon\n\nFACTS: Tanya didn't intend death. Derek specifically told her \"nobody will get hurt—gun isn't loaded.\" She likely didn't know murder was substantially certain (Derek assured her). However, Tanya DID know Derek carried a gun.\n\nArmed robbery liability: Knowledge that Derek carried gun increases liability. Armed robbery creates substantial risk of death even if gun unloaded.\n\nPINKERTON DOCTRINE (Conspiracy liability):\nIn conspiracy, each co-conspirator liable for all crimes committed by any conspirator in furtherance of conspiracy.\n\nApplication: If Tanya and Derek were in conspiracy to commit robbery:\n- Each liable for robbery committed by the other\n- Each liable for crimes committed in furtherance of conspiracy\n\nQuestion: Is murder in furtherance of robbery within scope of conspiracy?\n\nFact Pattern Analysis: The murder wasn't planned. It resulted from store clerk's armed response. Courts split on whether unplanned deaths resulting from escalation of agreed crime are \"in furtherance\" of conspiracy.\n\nMajority: Death wasn't foreseeable or part of the plan. Though robbery was armed (gun present), Tanya didn't agree to engage in deadly violence. Thus, murder might fall outside conspiracy scope.\n\nMinority: Armed robbery inherently carries risk of deadly confrontation. Death in such context is foreseeable consequence of armed conspiracy. Tanya liable.\n\nCONCLUSION: \n- Tanya clearly liable as accomplice to robbery\n- Tanya's liability for murder depends on jurisdiction and specific knowledge/intent standard applied\n- Modern approach: probably not liable for murder (didn't intend it, Derek assured her gun unloaded)\n- Pinkerton: Probably not liable for unplanned death outside scope of conspiracy\n- Best answer: Armed robbery liability clear; murder liability questionable and jurisdiction-dependent\n\nMost likely outcome: Tanya convicted of armed robbery and perhaps felony murder under broad natural consequences approach, but modern jurisdictions would likely limit her to robbery."
+                    },
+                    {
+                        id: 4,
+                        pattern: {
+                            title: "Fact Pattern 2: Actus Reus / Omissions / Causation",
+                            text: "Dr. Patricia Reynolds was an ER physician. One night, she treated David, a patient with chest pains. She correctly diagnosed a minor condition and discharged him. On her drive home, she witnessed a car accident where the driver, Tom, was trapped and bleeding. Patricia pulled over, assessed his injuries, began applying pressure to a wound, but then received a phone call that her child was sick. She told Tom \"Someone else will stop\" and drove away. No one else stopped for 45 minutes. Tom bled to death. The medical examiner determined that if pressure had been maintained, Tom would have survived."
+                        },
+                        question: "Did Dr. Reynolds have a legal duty to act? Analyze under all five categories of omission liability.",
+                        modelAnswer: "OMISSION LIABILITY DOCTRINE:\nGenerally, no duty to rescue strangers. But five categories of special relationships/circumstances create legal duties:\n\n1. FAMILY/RELATIONSHIP DUTY:\nParents have duty to minor children; spouses may have duties. Patricia has duty to her own sick child (mentioned in call), but does she have duty to Tom?\n\nAnalysis: No family relationship between Patricia and Tom. This category doesn't create duty. ✗\n\n2. CONTRACTUAL DUTY:\nEmployees have duty to customers; doctors have duty to patients; security guards have duty to persons they contracted to protect.\n\nAnalysis: Patricia is not Tom's physician; no contract between them. Importantly, the ER doctor-patient relationship was with David, not Tom.\n\nConclusion: No contractual duty to Tom. ✗\n\nHowever: Consider the ER physician status generally. Some jurisdictions hold ER doctors have duty to render emergency aid to anyone presenting in the ER. But this case involves Tom encountered on roadside, not at hospital.\n\n3. SPECIAL STATUS/POSITION OF AUTHORITY:\nPolice officers, security guards, and arguably emergency room physicians have duties based on their public role.\n\nAnalysis: Patricia is an ER physician—her profession involves emergency care. Does this create general duty to render aid to accident victims?\n\nMajority rule: Professional status alone doesn't create duty to strangers. Patricia off-duty, on personal drive home.\n\nMinority argument: ER physician has special training and duty to community for emergencies. Her profession involves being first responder in emergencies.\n\nMost likely: No general professional duty off-duty.\n\nHowever: Compare to police officer cases—courts split on whether off-duty police must aid.\n\nConclusion: Weak argument for special status duty. ✗\n\n4. CREATION OF DANGER:\nIf defendant created the dangerous situation, duty to aid arises.\n\nAnalysis: Patricia didn't cause the accident. She wasn't responsible for Tom's dangerous situation.\n\nConclusion: No duty under this category. ✗\n\n5. VOLUNTARILY UNDERTAKEN RESCUE:\n**STRONGEST ARGUMENT** - Once a person begins rendering aid, duty to continue (or ensure others take over) arises.\n\nAnalysis: Patricia \"pulled over, assessed his injuries, began applying pressure to a wound.\" By beginning rescue, she undertook a duty to Tom.\n\nImportant: Once you assume duty by beginning rescue, you must:\n(a) Continue reasonably, OR\n(b) Withdraw carefully without worsening condition, OR\n(c) Ensure another competent person takes over\n\nPatricia's conduct: She suddenly abandoned Tom, told him \"someone else will stop\" (vague), and drove away. She didn't ensure another rescuer took over; she simply left.\n\nCourt holdings: Courts consistently hold that once aid begins, abandonment breaches the duty. The rescue was underway and working (pressure stopping bleeding).\n\nCONCLUSION:\nDr. Reynolds DID have a legal duty to act under Category 5 (voluntarily undertaken rescue). By beginning to apply pressure and assess injuries, she assumed duty to Tom. Her abrupt abandonment without ensuring continuity of care breached this duty.\n\nThe fact that she's an ER physician and received a call about her sick child creates emotional sympathy but doesn't negate the legal duty once assumed through voluntary rescue. A defendant can violate duty even for sympathetic reasons."
+                    },
+                    {
+                        id: 5,
+                        pattern: {
+                            title: "Fact Pattern 2 (continued)",
+                            text: "Same facts as Question 4."
+                        },
+                        question: "Assuming a duty existed, analyze causation. Is Reynolds's departure the actual and proximate cause of Tom's death?",
+                        modelAnswer: "CAUSATION ANALYSIS:\nTwo requirements: (1) actual cause (\"but for\"), (2) proximate cause (legal causation)\n\nACTUAL CAUSE (\"But For\" Test):\nWould Tom have died \"but for\" Patricia's abandonment?\n\nFacts: Medical examiner stated if pressure had been maintained, Tom would have survived.\n\nApplication of But-For: But for Patricia leaving and stopping pressure, Tom would have lived. Without her withdrawal of aid, continuous pressure would have been applied, controlling bleeding, and survival would have occurred.\n\nConclusion: Patricia's departure is actual cause. ✓\n\nPROXIMATE CAUSE (Legal Causation):\nDeath must be foreseeable result of breach of duty. Intervening acts must not be so independent they break causal chain.\n\nFactual Proximate Cause: Patricia's leaving immediately preceded Tom's death (45-minute gap without aid). The death resulted directly from her abandonment.\n\nForeseeability: Completely foreseeable that injured, bleeding accident victim left without aid would die. Patricia knew Tom's condition (assessed injuries), knew pressure was working (medical professional), and knew no one else was at scene.\n\nIntervening causes: The 45-minute gap before potential rescuer might argue is intervening cause, but:\n- No rescuer actually appeared\n- Patricia's assurance \"someone else will stop\" proved false\n- Patricia created false impression of coverage, preventing others from stopping\n\nCourt analysis: Patricia's assurance actually prevented other potential rescuers from responding (they thought aid was being provided). This makes her the sole proximate cause, not intervening third party.\n\nForeseeable intervening acts: In omission cases, \"normal\" human response (someone stopping to help) would only constitute intervening act if it actually occurred. Here, it didn't occur specifically because Patricia's presence was misleading.\n\nCONCLUSION:\nBoth actual and proximate causation satisfied. Patricia's breach of duty (abandoning Tom after beginning rescue) directly caused his death. His survival depended entirely on continuous pressure, which only Patricia was providing. Her departure was but-for cause (actual cause) and foreseeable consequence of breach (proximate cause).\n\nThis is strong causation case—direct chain from breach to harm, no significant intervening acts, clear foreseeability of death if aid withdrawn."
+                    },
+                    {
+                        id: 6,
+                        pattern: {
+                            title: "Fact Pattern 2 (continued)",
+                            text: "Same facts as Question 4."
+                        },
+                        question: "What mens rea would the prosecution need to prove for involuntary manslaughter? Analyze under both common law and MPC standards.",
+                        modelAnswer: "INVOLUNTARY MANSLAUGHTER: Killing without intent, but with culpable conduct.\n\nTwo main theories: (1) deaths in commission of unlawful act, (2) deaths from recklessness or gross negligence.\n\nCOMMON LAW APPROACH:\n\nTheory 1 - Unlawful Act: Death in commission of unlawful act (misdemeanor or felony) = involuntary manslaughter.\n\nApplication to Patricia: Her abandonment of Tom could be prosecuted as:\n- Breach of duty (assuming duty established)\n- Potentially criminal omission under statute\n- But does Patricia's omission constitute \"unlawful act\" sufficient for involuntary manslaughter?\n\nThis is weak. Omissions are harder to characterize as \"unlawful act\" in traditional sense. Usually requires affirmative illegal conduct.\n\nTheory 2 - Recklessness/Gross Negligence: Death caused by defendant's reckless or grossly negligent conduct.\n\nCommon law traditionally recognized two standards:\n(a) Gross negligence (extreme departure from reasonable care)\n(b) Recklessness (conscious disregard of substantial risk)\n\nPatricia's conduct analysis:\n- She began professional rescue (applying pressure)\n- She suddenly abandoned patient mid-rescue\n- She falsely assured patient another would help\n- She had professional knowledge her withdrawal would likely cause death\n- No emergency with her child that genuinely required immediate departure\n\nMENS REA under common law:\n- NOT intent to kill (would be murder)\n- NOT ordinary negligence (too high level of fault required)\n- YES recklessness/gross negligence\n\nPatricia consciously disregarded substantial risk of death by:\n- Knowing pressure was life-sustaining\n- Knowing withdrawal would likely cause death\n- Abandoning without alternative care arrangements\n- Using professional knowledge to know severity\n\nConclusion under common law: Recklessness/gross negligence standard met. Prosecution must prove Patricia consciously disregarded substantial and unjustifiable risk of death.\n\nMPC APPROACH (§ 210.4):\n\nInvoluntary manslaughter under MPC:\n\"Recklessness causing death\" (the word \"reckless\" has specific definition)\n\nMPC § 2.02(c): Recklessly = consciously disregards substantial and unjustifiable risk that result will occur or that circumstance exists.\n\nApplication:\n(1) Substantial risk: Clear risk—abandoning bleeding victim causes death\n(2) Unjustifiable: No justification for abandonment (child call is sympathetic but doesn't legally justify breach of rescue duty)\n(3) Conscious disregard: As physician, Patricia knew the risk her withdrawal created\n\nMENS REA required under MPC: Recklessness (conscious disregard of substantial/unjustifiable risk)\n\nNOT required: Purpose or knowledge (those would be higher culpability)\n\nNOT sufficient: Ordinary negligence or carelessness\n\nMPC Comparison to Common Law:\n- Common law: Gross negligence or recklessness (broader)\n- MPC: Specifically \"recklessness\" with conscious disregard standard (more precise)\n\nEffect: Both require that Patricia knew or consciously disregarded risk of death from her conduct.\n\nCONCLUSION:\nCommon law: Involuntary manslaughter requires proving gross negligence or recklessness—conscious disregard of substantial risk of death.\n\nMPC: Requires proving recklessness—conscious disregard of substantial and unjustifiable risk of death.\n\nBoth standards satisfied here. Patricia's professional knowledge, conscious abandonment despite knowing consequences, and lack of legitimate justification demonstrate required culpability for involuntary manslaughter."
+                    }
+                ]
+            },
+            3: {
+                title: "Exam 3: Overlapping Theories & Strict Liability",
+                questions: [
+                    {
+                        id: 1,
+                        pattern: {
+                            title: "Fact Pattern 1: Overlapping Homicide Theories",
+                            text: "Kevin was drinking heavily at a bar when he overheard someone say his ex-girlfriend Lisa was now dating his best friend, Mike. Kevin drove (intoxicated, swerving between lanes at 90mph) to Mike's apartment. He pounded on the door for five minutes. When Mike opened it, Kevin punched him repeatedly, then picked up a heavy lamp and struck Mike in the head. Mike died two days later from brain hemorrhaging. The medical examiner found that Mike had an unusually thin skull that made him particularly vulnerable to blunt force trauma."
+                        },
+                        question: "Analyze all possible homicide charges under common law — first-degree murder, second-degree murder (including depraved heart), voluntary manslaughter, and involuntary manslaughter. Which charge is most appropriate?",
+                        modelAnswer: "FIRST-DEGREE MURDER:\nRequires: (1) intent to kill, (2) premeditation, (3) deliberation\n\nIntent to kill: Clear—Kevin punched Mike repeatedly and struck him with lamp, intending serious harm/death. ✓\n\nPremeditation (formation of intent before act): \nProsecution: Kevin drove to apartment specifically to confront Mike. This 5-minute drive + pounding on door for 5 minutes demonstrates time to form intent to kill. Not instantaneous; had time to reflect.\n\nDefense: Kevin's intoxication undermines premeditation (impairs reflection). The provocation (hearing ex-girlfriend is dating his best friend) may have provoked immediate fury rather than planned killing. No evidence Kevin planned to kill; he planned to confront.\n\nProblem: Courts require \"cool mind capable of forming\" intent. Heavy intoxication suggests Kevin's mind was not cool.\n\nDeliberation (cool mind choosing to kill):\nAgain, intoxication is critical. Kevin wasn't thinking coolly when striking with lamp. The violence appears impulsive rather than deliberate.\n\nConclusion: First-degree murder weakly supported. Intoxication and lack of evidence of prior intent to kill undermine both premeditation and deliberation.\n\nSECOND-DEGREE MURDER:\nTwo theories: (1) Intentional killing without premeditation/deliberation, (2) Depraved heart murder\n\nTheory 1 - Intentional killing without premeditation/deliberation:\nKevin intentionally struck Mike with lamp and caused death. No premeditation/deliberation apparent (intoxication, provocation). ✓ Supported\n\nTheory 2 - Depraved heart:\nExtreme recklessness showing complete indifference to human life. Kevin:\n- Drove intoxicated at 90mph (extreme recklessness)\n- Punched Mike repeatedly (extreme violence)\n- Struck with heavy lamp to head (knew this creates grave danger)\n\nKevin's conduct manifests extreme indifference. He knew striking someone with blunt force to head creates substantial risk of death.\n\nConclusion: Second-degree murder strongly supported under both theories.\n\nVOLUNTARY MANSLAUGHTER:\nIntentional killing in heat of passion under adequate provocation.\n\nProvocation: Learning ex-girlfriend is dating best friend is emotional provocation, though courts split on whether romantic provocation alone is adequate without ongoing affairs.\n\nHeat of passion: Kevin was intoxicated, enraged, and immediately acted. The provocation and immediate action support heat of passion.\n\nCooling-off period: The drive and 5-minute door-pounding might suggest cooling period. However, under modern approach focusing on actual emotional state, continuous provocation (focus on new relationship) could support unbroken passion.\n\nConclusion: Voluntary manslaughter viable alternative depending on jurisdiction's approach to romantic provocation.\n\nINVOLUNTARY MANSLAUGHTER:\nKilling without intent but with recklessness/gross negligence.\n\nKevin's conduct clearly reckless:\n- Intoxicated driving at high speed\n- Violent physical assault\n- Use of lamp against human head\n\nThese facts establish recklessness beyond what's needed for involuntary manslaughter. This charge would be undercharging given intentional striking.\n\nCONCLUSION - MOST APPROPRIATE CHARGE:\n\nSecond-degree murder is most appropriate. Kevin:\n1. Intentionally struck Mike with lamp (intent to kill presumable)\n2. Did not appear to premeditate/deliberate (intoxication, immediacy)\n3. Manifested extreme indifference to human life (lamp to head, knowing risk)\n\nSecond-degree murder captures the intentional violence and extreme recklessness.\n\nAlternative: Voluntary manslaughter if jurisdiction recognizes romantic provocation as adequate.\n\nHighest probable charge: Second-degree murder (intentional without premeditation/deliberation, or depraved heart)\nFallback: Voluntary manslaughter (romantic provocation)\nMinimum: Involuntary manslaughter (if intent negated by intoxication)\n\nBest answer emphasizes second-degree murder as primary charge with voluntary manslaughter as strong alternative."
+                    },
+                    {
+                        id: 2,
+                        pattern: {
+                            title: "Fact Pattern 1 (continued)",
+                            text: "Same facts as Question 1."
+                        },
+                        question: "Does the \"eggshell skull\" / thin skull issue affect the causation analysis? Discuss actual and proximate causation, including whether Mike's pre-existing condition is an intervening cause.",
+                        modelAnswer: "EGGSHELL SKULL RULE (Thin Skull Doctrine):\n\"Take your victim as you find them.\" Defendant liable for injuries even if victim's pre-existing condition makes harm worse.\n\nAPPLICATION:\n\nACTUAL CAUSE (But-For Test):\nBut for Kevin's lamp strike, would Mike have died? Even with thin skull? \n\nMedical evidence: With normal skull, lamp strike might have caused serious injury but not death (unclear whether normal person would die from single lamp strike).\n\nWith thin skull: Mike did die from the injury.\n\nBut-for analysis:\n- If normal skull = maybe no death or no brain hemorrhaging severe enough for death\n- If thin skull = death occurred\n\nKevin caused blow. The blow to thin skull caused death. But-for the blow, no death. ✓\n\nConclusion: Kevin's strike is actual cause even though Mike's thin skull contributed.\n\nPROXIMATE CAUSE (Legal Causation):\nMust injury be foreseeable result of defendant's conduct?\n\nKey question: Is victim's thin skull a \"normal\" condition such that harm is foreseeable, or is it so unusual that harm becomes unforeseeable?\n\nRule: Thin skull is NOT an intervening cause that breaks causal chain. Why? Because medical conditions are part of \"taking victim as found.\" Victim's vulnerability is not independent act; it's part of victim's condition.\n\nIntervening causes: Acts by third parties or forces of nature that break causal chain. Examples: doctor's negligent treatment, subsequent accident, medical misadventure.\n\nMike's thin skull is not an intervening cause because:\n1. It's not an act (intervening causes are typically acts)\n2. It's pre-existing condition accompanying victim\n3. It's not independent of defendant's conduct (it's part of victim's condition)\n4. Thin skull is within scope of foreseeable harm from blow to head\n\nForeseeable that blow to human head causes serious injury/death: YES\nForeseeable specifically that victim has thin skull: NO\n\nBut foreseeability of type of harm (serious head injury) is satisfied even if specific vulnerability unforeseeable.\n\nIMPORTANT: Eggshell skull rule REJECTS foreseeability of specific vulnerability. Courts hold foreseeable that blow to head causes serious injury; specific susceptibility doesn't matter.\n\nMEDICAL CAUSATION:\nMEDical examiner found that thin skull made Mike particularly vulnerable. Without thin skull, might not have died.\n\nButthis doesn't negate legal causation. Eggshell skull rule says defendant liable for consequences to actual victim, not hypothetical normal-skulled victim.\n\nALTERNATIVE ANALYSIS - Intervening Medical Treatment:\nIf between lamp strike and death occurred negligent medical treatment or failure to treat, that could be intervening cause. However, facts don't show this. Mike died of natural consequence of injury given his condition.\n\nCONCLUSION:\nMike's thin skull does NOT break causal chain under eggshell skull rule.\n\nActual cause: ✓ Kevin's blow but-for caused death (even with thin skull)\nProximate cause: ✓ Death is foreseeable result of blow to head (eggshell skull rule applies)\n\nKevin liable for full consequences including death, even though normal-skulled person might not have died. The rule is designed specifically for this situation—victims with pre-existing vulnerability receive full protection of causation doctrine."
+                    },
+                    {
+                        id: 3,
+                        pattern: {
+                            title: "Fact Pattern 1 (continued)",
+                            text: "Same facts as Question 1."
+                        },
+                        question: "Analyze Kevin's liability under the MPC. How does the MPC framework change the analysis compared to common law?",
+                        modelAnswer: "MPC MURDER ANALYSIS (§ 210.2):\n\nMPC requires: Purpose to kill OR knowledge that conduct will cause death (§ 210.2(1)(a)-(b)), OR recklessness with extreme indifference to human life (§ 210.2(1)(c))\n\nKEVIN'S CONDUCT ANALYSIS:\n\n1. PURPOSE TO KILL:\nDid Kevin act with conscious object of causing Kevin's death?\n\nFacts: Kevin punched repeatedly and struck with heavy lamp. These actions suggest purpose to cause death or serious bodily harm.\n\nMPC approach: What was Kevin's conscious objective? \n\nProsecution: The repeated punches and lamp strike to head manifest conscious object of killing or causing serious harm.\n\nDefense: Kevin was intoxicated and reacting to provocation. His objective was to punch/hurt Mike, not necessarily to kill. The lamp strike could have been intended to incapacitate, not kill.\n\nMPC rule on intoxication: Under MPC, evidence of intoxication relevant to whether person acted purposely (not whether person is culpable—MPC allows per se rules for some intoxicated conduct).\n\nConclusion on purpose: Questionable whether Kevin had conscious object of killing vs. causing serious injury.\n\n2. KNOWLEDGE THAT CONDUCT WILL CAUSE DEATH:\nDid Kevin know with substantial certainty that striking with lamp would cause death?\n\nFacts: Kevin knew striking someone with heavy lamp to head creates serious risk of death. As reasonable person, Kevin would have known.\n\nConclusion: This might be satisfied. Kevin had knowledge sufficient to substantially certain outcome.\n\n3. EXTREME RECKLESSNESS (STRONGEST THEORY):\n\"Conduct causing death, committed recklessly under circumstances manifesting extreme indifference to value of human life.\"\n\nRecklessness: Conscious disregard of substantial and unjustifiable risk (MPC § 2.02(c))\n\nExtreme indifference to human life: More than ordinary recklessness; must show such extreme disregard that it manifests indifference to whether person lives or dies.\n\nKevin's conduct:\n- Intoxicated driving at 90mph (reckless)\n- Repeated punches to person (reckless)\n- Lamp strike to head with knowledge of danger (reckless)\n- Did Kevin consciously disregard risk? YES\n- Did conduct manifest extreme indifference to human life? YES—purposefully striking person with heavy object to head shows disregard for life\n\nMPC MURDER CONCLUSION:\nKevin guilty of murder under § 210.2 based on reckless conduct manifesting extreme indifference to human life.\n\nMPC MANSLAUGHTER REDUCTION (§ 210.3):\nMurder downgraded to manslaughter if committed \"under influence of extreme mental or emotional disturbance for which there is reasonable explanation or excuse.\"\n\nKevin's potential EMED:\n- Emotional component: Discovering ex-girlfriend dating best friend caused extreme emotional disturbance\n- Mental component: Likely affected judgment\n- Extreme: The combination of romantic betrayal and friendship betrayal could be extreme\n- Reasonable explanation: The provocation (learning of new relationship) provides objective explanation\n\nMPC advantage: Focuses on actual emotional state from defendant's perspective. Kevin's perspective:\n- Trusted friend betrayed him\n- Ex-girlfriend involved\n- Double betrayal/emotional devastation\n\nHomade approach: Might deny EMED because Kevin's violence was too extreme. MPC approach: Allows EMED consideration despite violence if emotional disturbance was genuine and reasonable.\n\nConclusion on EMED: Possible that Kevin qualifies for manslaughter reduction if court accepts that betrayal by best friend provides reasonable explanation for extreme emotional disturbance.\n\nFINAL MPC ANALYSIS:\n\nPrimary charge: Murder under extreme indifference/recklessness (strong)\nAlternative reduction: Manslaughter under EMED if disturbance established (moderate)\n\nKEY DIFFERENCES FROM COMMON LAW:\n\n1. Premeditation/Deliberation: MPC discards these. Focuses instead on actual mental state (purpose, knowledge, or recklessness with extreme indifference).\n\n2. Depraved heart: MPC integrates this into extreme indifference standard. No need for separate analysis.\n\n3. Heat of passion/Voluntary manslaughter: MPC replaces with EMED. Broader than heat of passion; focuses on reasonableness from defendant's perspective.\n\n4. Intoxication: MPC allows intoxication evidence on purpose/knowledge (not just manslaughter).\n\n5. Overall: MPC cleaner framework with fewer categorical distinctions. Focus on actual mental state and reasonable explanation for disturbance rather than traditional heat of passion categories.\n\nMPC verdict most likely: Murder (extreme indifference), potentially reduced to manslaughter (EMED) depending on emotional disturbance evidence."
+                    },
+                    {
+                        id: 4,
+                        pattern: {
+                            title: "Fact Pattern 2: Theft + Concurrence + Strict Liability",
+                            text: "Amy found a wallet on a park bench containing $500 and an ID card for \"Robert Chen.\" She took the wallet intending to find Robert and return it. However, over the next week, she spent $200 from the wallet on groceries. Two weeks later, she attempted to return the remaining $300 to Robert. It turned out Amy was in a jurisdiction where a statute provides: \"Any person who finds lost property valued over $100 and fails to deliver it to the police within 48 hours commits a misdemeanor.\" The statute makes no mention of mens rea."
+                        },
+                        question: "Has Amy committed larceny? Analyze the concurrence requirement — did she have intent to permanently deprive at the time of the taking?",
+                        modelAnswer: "LARCENY: Trespassory taking and carrying away of personal property of another with intent to permanently deprive.\n\nELEMENTS ANALYSIS:\n\n(1) TAKING & CARRYING AWAY: Amy took the wallet from bench and carried it away. ✓\n\n(2) PERSONAL PROPERTY: Money and wallet are personal property. ✓\n\n(3) OF ANOTHER: Robert's wallet/money. ✓\n\n(4) TRESPASSORY: Was the taking without legal right?\n\nAmy found lost property. Finder of lost property has some limited rights (duty to attempt to return or turn over to police). The taking wasn't with consent but was a finding.\n\nTraditional view: Finder's taking of lost property is trespassory because property belongs to true owner, not finder.\n\nConclusion: Taking is trespassory. ✓\n\n(5) **INTENT TO PERMANENTLY DEPRIVE** - CRITICAL REQUIREMENT:\n\nCONCURRENCE REQUIREMENT:\nIntent to permanently deprive must exist AT THE TIME OF TAKING, not afterwards.\n\nAmy's intent at taking: Amy took the wallet intending to find Robert and return it. Her ORIGINAL intent was NOT to permanently deprive.\n\nSubsequent actions: Only after taking did Amy decide to spend $200. The change in intent occurred AFTER taking possession.\n\nCOURTS' TREATMENT OF CHANGING INTENT:\n\nRule: If defendant takes with lawful intent but later forms intent to permanently deprive, larceny does not occur.\n\nWhy? Because concurrence requirement not satisfied—intent must accompany the taking.\n\nException: Some courts hold that if intent to permanently deprive forms WHILE defendant still has possession as result of original taking, larceny still attaches. But this is minority view.\n\nAPPLICATION TO AMY:\n\nTime of taking: Intends to return - NO intent to permanently deprive ✗\nTime of spending: Spending occurs a week later, already in possession\n\nConceivable arguments:\n\n(1) STRICT APPROACH (Majority):\nAmy's intent at moment of taking was to return. Subsequent intent to spend money doesn't cure the absence of intent at taking. No larceny.\n\nReasoning: Concurrence requires intent and taking to coincide. They didn't. Amy's taking was not larcenous.\n\n(2) FLEXIBLE APPROACH (Minority):\nIf Amy forms intent to deprive while still wrongfully possessing the property based on original taking, larceny attaches.\n\nFacts: Amy spent money a week later while still possessing wallet. Could argue she \"converted\" the property to her use while in unlawful possession.\n\nHowever: This essentially treats the spending as a new taking, which is different from the original taking.\n\n(3) ALTERNATIVE CHARGE - EMBEZZLEMENT OR LARCENY BY TRICK:\nIf larceny unavailable due to concurrence problem, consider embezzlement.\n\nEmbezzlement: Fraudulent conversion of property of another by person in lawful possession.\n\nAmy did have lawful possession as finder (duty to return, but possession is lawful). When she spent money, she fraudulently converted property in her lawful possession = EMBEZZLEMENT.\n\nBut this is technically different question (separate crime).\n\nCONCLUSION:\nAmy likely has NOT committed larceny due to concurrence requirement failure. At the time of taking, Amy intended to return the wallet—no intent to permanently deprive existed.\n\nThe subsequent spending money a week later, while wrongful, doesn't constitute larceny because the original taking was not accompanied by larcenous intent.\n\nHowever:\n- Amy might face embezzlement charges for spending money while in possession\n- Amy violated the lost property statute (separate question)\n\nBest answer: Larceny not committed (concurrence requirement failed); embezzlement possible alternative charge."
+                    },
+                    {
+                        id: 5,
+                        pattern: {
+                            title: "Fact Pattern 2 (continued)",
+                            text: "Same facts as Question 4."
+                        },
+                        question: "Is Amy guilty under the \"finder's statute\"? Analyze whether this is a strict liability offense, applying the Morissette presumption.",
+                        modelAnswer: "FINDER'S STATUTE:\n\"Any person who finds lost property valued over $100 and fails to deliver it to the police within 48 hours commits a misdemeanor.\"\n\nStatute makes no mention of mens rea.\n\nAMY'S CONDUCT:\n- Found wallet containing $500 (over $100)\n- Failed to deliver to police within 48 hours\n- Attempted to return after 2 weeks\n\nSUBSTANTIVE GUILT:\nAmy clearly violated statute—took possession, didn't deliver within 48 hours. Clear violation.\n\nMENS REA QUESTION:\nDoes statute require intent/knowledge to violate it, or is it strict liability (no mens rea required)?\n\nMORISSETTE PRESUMPTION:\nIn Morissette v. United States, Supreme Court held that common law presumes requirement of mens rea in criminal statutes unless clearly indicated otherwise.\n\nRationale: Criminal liability traditionally requires culpable mind. Exceptions exist but must be clear from statutory language or context.\n\nAPPLICATION TO AMY'S STATUTE:\n\nPlain language: \"Any person who fails to deliver...\" \n\nNo explicit mention of:\n- Knowingly\n- Intentionally\n- Willfully\n- Recklessly\n- Or any other mens rea term\n\nARGUMENT FOR STRICT LIABILITY:\n1. No mens rea language in statute\n2. Regulatory offense (not serious crime, but misdemeanor)\n3. Public policy: Protect lost property, encourage reporting to police\n4. Objective conduct: Either delivered within 48 hours or didn't\n\nARGUMENT AGAINST STRICT LIABILITY (Morissette Presumption):\n1. Morissette presumes mens rea required\n2. Statutory silence doesn't overcome presumption\n3. Criminal misdemeanor carries stigma\n4. Fair notice: Person should know their mens rea state matters\n\nHOW COURTS APPLY MORISSETTE:\n\nCourts look to:\n(a) Text of statute (does it mention mens rea?)\n(b) Nature of offense (malum prohibitum vs. malum in se)\n(c) Severity of penalty\n(d) Common law tradition\n(e) Legislative intent\n\nAPPLYING TO FINDER'S STATUTE:\n\n(a) Text: Silent on mens rea - neutral factor\n\n(b) Nature: Malum prohibitum (wrong because prohibited, not inherently wrong like murder). Regulatory offense. Favors strict liability.\n\n(c) Penalty: Misdemeanor - less serious than felony. Suggests reduced need for mens rea than felony crimes. Favors strict liability.\n\n(d) Common law: No common law crime of \"finder's failure to report.\" This is statutory creation. Could favor strict liability for new statutory offense.\n\n(e) Legislative intent: No legislative history provided, but purpose appears regulatory (protecting lost property). Suggests strict liability okay.\n\nCRITICAL APPLICATION TO AMY:\n\nIf strict liability:\n- Amy guilty regardless of intent or knowledge about the 48-hour deadline\n- Amy guilty even though she attempted to return property\n- Amy guilty even though she didn't know of the statute's existence\n\nIf mens rea required (under Morissette presumption):\n- Prosecution must prove Amy knew:\n  (1) The property was found property (obvious)\n  (2) It was valued over $100 (maybe not obvious)\n  (3) She was required to report to police (depends on notice)\n  (4) Within 48 hours (depends on knowledge of deadline)\n\nMODERN COURT APPROACH:\n\nMany modern courts apply Morissette presumption strictly and require the government to prove specific intent or knowledge, even for regulatory offenses. Courts are skeptical of pure strict liability.\n\nHowever, misdemeanor regulatory statutes (especially property recovery statutes) often treated as strict liability.\n\nCONCLUSION:\n\nUnder strict reading of Morissette: Amy requires mens rea. Prosecution must prove she knew of statute/deadline. If Amy didn't know of 48-hour requirement, strict liability presumption applies and she's guilty anyway.\n\nUnder practical application: Court likely treats finder's statute as strict liability misdemeanor despite Morissette presumption, given:\n- Regulatory nature\n- Misdemeanor level\n- Objective conduct\n- Public policy\n\nMost likely verdict: Guilty under finder's statute as strict liability offense. Amy's good faith attempt to return property is irrelevant to statutory violation. Her ignorance of 48-hour deadline is irrelevant.\n\nMorissette provides best defense argument (men rea required), but practical application likely results in conviction given offense type."
+                    },
+                    {
+                        id: 6,
+                        pattern: {
+                            title: "Fact Pattern 2 (continued)",
+                            text: "Same facts as Question 4."
+                        },
+                        question: "If Amy argues she honestly believed she had a right to keep the wallet until she could find the owner, analyze her mistake of fact and mistake of law defenses.",
+                        modelAnswer: "MISTAKE OF FACT vs. MISTAKE OF LAW:\n\nBasic rule: Mistake of fact can be defense if reasonable and negates mens rea. Mistake of law generally not defense.\n\nAMY'S POTENTIAL DEFENSES:\n\nMISTAKE OF FACT DEFENSE:\n\nAmy's claim: \"I believed I had a right to keep the wallet until I could find Robert.\"\n\nAnalysis: This is arguably mistake of fact about her legal rights (is it fact or law?).\n\nExact nature of mistake: Amy believed:\n(1) That possession by finder is lawful, OR\n(2) That she had duty/right to find owner rather than report to police, OR\n(3) That 48-hour rule didn't exist\n\nElements of mistake of fact defense:\n(1) Mistake about material fact\n(2) Defendant acted in good faith/reasonably\n(3) Mistake negates required mens rea\n\nAPPLYING TO AMY:\n\n(1) MATERIAL FACT: Whether Amy had right to possess wallet until locating owner is arguably material. ✓\n\n(2) GOOD FAITH/REASONABLENESS: Was it reasonable for Amy to believe she could keep wallet and search for owner herself?\n\nProsecution: The law clearly provides that lost property over $100 must be delivered to police within 48 hours. Amy's belief she could retain it is unreasonable. The ID card provided clear means of finding owner (name and presumably ID information).\n\nDefense: Finder might reasonably believe that attempting to return to owner is acceptable. Many people do this (Facebook searches, etc.). Amy's intent to return, evidenced by actual attempt to return 2 weeks later, supports good faith belief.\n\nConclusion: Reasonableness is jury question. Amy's intent to return property suggests good faith, but 48-hour rule is objective and Amy had clear means to find owner.\n\n(3) NEGATES MENS REA: \n\nFor larceny charge (if applicable): Mistake would negate intent to permanently deprive. If Amy believed she had right to keep wallet, she lacked intent to deprive.\n\nFor finder's statute: Only if statute requires mens rea. If strict liability, mistake of fact is irrelevant.\n\nMISTAKE OF LAW DEFENSE:\n\nAmy's claim: \"I didn't know about the 48-hour rule\" or \"I didn't know it was a crime\"\n\nBasic rule: Ignorance of law is no defense. \"Mistake of law\" generally not available.\n\nHowever: Important exception - mistake about scope of legal rights can be defense.\n\nEXCEPTIONS TO MISTAKE OF LAW RULE:\n\n(1) JURISDICTIONAL EXCEPTION:\nIf person honestly and reasonably believes they have legal right to act, mistake of law might be defense even though they're wrong about law.\n\nExample: Person believes statute has been repealed (mistake of law about what law is) = potential defense if reasonable.\n\n(2) LEGAL RIGHT EXCEPTION:\nMistake about one's legal rights (not about what law says) can be defense.\n\nAmy's situation: She might argue \"I believed I had legal right as finder to retain property and search for owner myself.\"\n\nThis is arguably mistake about her legal status/rights rather than pure mistake about what law says.\n\nPROSECUTION RESPONSE:\n- The law is accessible; statutes are public\n- \"I didn't know the law\" not excuse for criminal conduct\n- Amy could have asked police or checked law\n- Constructive knowledge of statute if reasonable diligence\n\nDEFENSE RESPONSE:\n- Not everyone knows all statutes\n- Mistake was not about statute itself, but about her legal rights as finder\n- Good faith attempted to return property (actual return) shows reasonable belief\n- Distinction between \"finder can keep property\" vs. \"finder must report to police\"\n\nMODERN MPC APPROACH (§ 2.04):\n\nMPC allows mistake of law defense in limited circumstances:\n(1) Mistake negates required mental element, OR\n(2) Mistake relates to jurisdiction's own law (whether law was properly enacted), OR\n(3) Statute was not published or reasonably available, OR\n(4) Defendant relied on official statement of law later determined erroneous\n\nUnder MPC:\n- Amy's mistake about her rights might negate required mens rea\n- If she believed she had right to keep property, she couldn't form criminal intent\n- But only if mistake was reasonable\n\nAPPLICATION TO FINDER'S STATUTE:\n\nIf statute requires mens rea (despite strict liability appearance):\n- Mistake of fact (about legal rights to keep property) could negate required intent\n- Amy believed she had right to keep wallet and search for Robert = not intent to violate law\n- Defense viable if reasonableness shown\n\nIf statute is strict liability:\n- Both mistake of fact and mistake of law irrelevant\n- Amy's guilt strict—whether she knew of rule or not doesn't matter\n- Defenses unavailable\n\nCONCLUSION:\n\nMistake of fact defense: Potentially viable if Amy can show:\n1. She reasonably believed finder could keep property while searching\n2. Belief was reasonable given circumstances\n3. For non-strict-liability version of offense\n\nMistake of law defense: Difficult but not impossible. Distinction between \"I didn't know the statute existed\" (pure mistake of law, no defense) vs. \"I didn't know I couldn't keep found property\" (mistake about legal rights, possible defense).\n\nBest defense strategy: Argue mistake of fact about legal rights (not pure statutory ignorance) and demonstrate reasonable good faith belief through her actual attempt to return property two weeks later.\n\nLikelihood: If statute is strict liability (likely), both defenses fail. If statute requires mens rea (unlikely), mistake of fact about rights provides better argument than pure mistake of law."
+                    }
+                ]
+            },
+            3: {
+                title: "Exam 3: Theft Offenses (Larceny, Embezzlement, Burglary, Robbery)",
+                questions: [
+                    {
+                        id: 1,
+                        pattern: {
+                            title: "Fact Pattern 1: Embezzlement vs. Larceny",
+                            text: "Patricia is a cashier at a supermarket. During her shift, she removes $300 from her cash register and puts it in her pocket. She intends to repay the store by bringing the money back the next day. Her supervisor discovers the missing money during the shift and fires her before she has a chance to repay."
+                        },
+                        question: "Is Patricia guilty of larceny, embezzlement, or both? Analyze the elements and distinguish between these offenses.",
+                        modelAnswer: "LARCENY: Trespassory taking and carrying away of personal property of another with intent to permanently deprive.\n\nEMBEZZLEMENT: Fraudulent conversion of property of another by person in lawful possession.\n\nKEY DISTINCTION:\nLarceny requires TRESPASSORY taking (without owner's permission). Embezzlement requires LAWFUL POSSESSION followed by fraudulent conversion.\n\nPATRICIA'S SITUATION:\n\n(1) LAWFUL POSSESSION:\nPatricia's employment as cashier gave her lawful possession of money during her shift. The store authorized her to handle cash. Thus, her taking the money from the register was not a \"trespassory\" taking—it was consistent with her job duties to handle the register.\n\n(2) LACK OF TRESPASS:\nBecause Patricia had authority to handle store funds, her taking money from the register is NOT trespassory. This element fails for larceny.\n\n(3) FRAUDULENT CONVERSION:\nAfter taking the money, Patricia placed it in her pocket and failed to account for it. This constitutes conversion—treating the money as her own. Her intent to repay is irrelevant. The moment she took it for personal use, she fraudulently converted it.\n\nCONCLUSION: \n\nPatricia is guilty of EMBEZZLEMENT, not larceny.\n\nLarceny doesn't apply because she had lawful possession (no trespass).\nEmbezzlement applies because:\n1. She had lawful possession as cashier ✓\n2. She fraudulently converted $300 to personal use (putting in pocket) ✓\n3. The money belonged to the store ✓\n4. She acted with intent to use it for herself ✓\n\nThe fact that she intended to repay is irrelevant. Embezzlement doesn't require permanent deprivation of title, just unauthorized use/conversion. Her good faith intent to repay doesn't negate the fraudulent nature of her conversion.\n\nDefense analysis: Patricia cannot argue she didn't commit embezzlement because she intended to repay. The crime is complete upon conversion, not upon permanent deprivation."
+                    },
+                    {
+                        id: 2,
+                        pattern: {
+                            title: "Fact Pattern 2: Burglary Elements",
+                            text: "Michael saw his ex-girlfriend Lisa's garage door open one evening. He walked through the open door into the garage (where Lisa kept a workshop) without Lisa's permission. He had no intention of stealing anything; he just wanted to find Lisa and talk to her about reconciliation. He found her working in the garage and they argued."
+                        },
+                        question: "Did Michael commit burglary? Analyze each element of burglary: breaking, entry, dwelling, nighttime, and felony intent.",
+                        modelAnswer: "BURGLARY (Common Law): Breaking + Entry + Dwelling + Nighttime + Felony Intent\n\nMICHAEL'S CONDUCT:\n- Entered open garage\n- No breaking (door already open)\n- Evening (but was it nighttime? Depends on time of year and exact time)\n- No felony intent (wanted to talk, not steal)\n\nANALYSIS:\n\n(1) BREAKING ELEMENT:\nBreaking requires some force to enter. Michael entered through an open door. NO BREAKING. This element fails.\n\nEven if we require only that the door was opened to gain entry, modern courts do not require actual breaking—opening a closed door is sufficient entry. But the garage door was already open.\n\nConclusion: No breaking element, so no burglary under traditional rule.\n\n(2) ENTRY ELEMENT:\nEntry requires crossing the threshold of the dwelling with intent to commit felony. Michael clearly entered the garage.\n\nConclusion: Entry element satisfied ✓\n\n(3) DWELLING ELEMENT:\nBurglary protects dwellings—places where people live and sleep. A garage attached to a home is part of the curtilage (Eichman). However, a detached garage not attached to the principal dwelling may not be protected.\n\nKey question: Was this an attached or detached garage?\n\nIf attached: The garage is part of the dwelling structure. Michael's entry into the attached garage = burglary entry. ✓\n\nIf detached: May not qualify as dwelling. Depends on jurisdiction. Modern courts extend protection to structures within curtilage of dwelling. If the garage is immediately adjacent and essential to the residence, it's protected. If it's distant/separate, it may not be. ✓ (probably)\n\nConclusion: Dwelling element likely satisfied if garage is attached or closely connected to main dwelling.\n\n(4) NIGHTTIME ELEMENT (Common Law):\nCommon law burglary required entry at night (between sunset and sunrise). Modern statutes often eliminate nighttime requirement.\n\nFact pattern: \"evening\"—could be before or after nighttime. Not clearly at night.\n\nModern approach: Many jurisdictions eliminated nighttime requirement, making daytime burglary possible.\n\nConclusion: If common law jurisdiction requiring nighttime: May fail (unclear). If modern jurisdiction: Not required. ✓\n\n(5) FELONY INTENT ELEMENT:\nBurglary requires intent to commit a felony INSIDE the dwelling. Michael's stated intent was to talk to Lisa about reconciliation. NO FELONY INTENT.\n\nCrucial point: The crime is complete upon entry with intent. Michael didn't need to actually commit the felony; he needed to enter with intent to commit one.\n\nDid Michael intend to commit a felony when he entered?\n- Unlawful entry into someone's garage without permission could be trespass (misdemeanor, not felony)\n- Wanting to talk is not felonious intent\n- No evidence he intended assault, battery, robbery, or any felony\n\nConclusion: No felony intent element. ✗\n\nOVERALL CONCLUSION:\n\nMichael did NOT commit burglary because:\n1. No breaking (door was open) ✗\n2. Entry element satisfied ✓\n3. Dwelling element likely satisfied (if attached garage) ✓\n4. Nighttime element unclear (depends on jurisdiction and time) ?\n5. Felony intent element NOT satisfied (wanted to talk, not commit felony) ✗\n\nThe failure of multiple elements (breaking, felony intent) means no burglary conviction.\n\nAlternative liability: Michael might face trespass charge for unauthorized entry, but not burglary. The lack of felonious intent is fatal to burglary charge.\n\nProof concept: Burglary criminalizes the intrusion itself (entering with felony intent), not the target of the felony. Michael's intent wasn't felonious, so burglary charge fails."
+                    },
+                    {
+                        id: 3,
+                        pattern: {
+                            title: "Fact Pattern 3: Robbery vs. Larceny & Force Element",
+                            text: "Nathan saw an elderly man waiting at a bus stop with a briefcase. Nathan suddenly yanked the briefcase from the old man's hands. The old man did not resist; he was startled and simply let go. Nathan ran away with the briefcase, which contained $2,000. Nathan never threatened violence; he just grabbed and ran."
+                        },
+                        question: "Did Nathan commit robbery or larceny? Analyze whether the force used satisfies the robbery requirement.",
+                        modelAnswer: "ROBBERY: Larceny + Force or Intimidation\nLARCENY: Taking and carrying away property of another with intent to permanently deprive\n\nKEY ISSUE: Does the force required for robbery need to overcome the victim's resistance, or is any force sufficient?\n\nNATHAN'S CONDUCT:\n- Yanked briefcase from victim's hands\n- No threat of violence\n- Victim didn't resist (was startled)\n- Took $2,000\n\nCOURTS DISAGREE ON FORCE REQUIREMENT:\n\nTRIBUTIONAL ONE (Force must overcome resistance):\nSome courts hold that robbery requires force used to overcome or prevent resistance. Since the victim offered no resistance, no force was \"necessary,\" and thus no robbery.\n\nUnder this approach: Nathan's conduct = LARCENY, not robbery.\n\nProsecution: The force was used to take the property from the victim's possession. Force used to accomplish taking = force for robbery. Victim's failure to resist doesn't negate the force element.\n\nTRIBUTIONAL TWO (Force to accomplish taking):\nMiller approach: Force used during any phase of taking (initial taking, retention, escape) = robbery force.\n\nNathan's yanking the briefcase IS force used to accomplish the taking. The fact that the victim didn't resist doesn't eliminate the force; the force was what secured the victim's property.\n\nUnder this approach: Nathan's conduct = ROBBERY\n\nAPPLYING THE LAW:\n\nModern trend favors Miller's approach. Courts recognize that snatching property with physical force (yanking, pulling) constitutes robbery force, even if victim offers no resistance.\n\nLogic: Robbery punishes forceful taking that terrorizes or endangers victims. Even though this victim wasn't physically hurt, the use of force to take property satisfies robbery's force element.\n\nCRITICAL FACTS:\n\n1. PHYSICAL FORCE USED: Nathan yanked the briefcase. This is force. ✓\n2. FORCE RESULTED IN TAKING: The force accomplished the taking. The victim let go due to the force. ✓\n3. PROPERTY OF ANOTHER: $2,000 belonged to the old man. ✓\n4. INTENT TO PERMANENTLY DEPRIVE: Nathan took the briefcase with intent to keep it. ✓\n\nADDITIONAL CONSIDERATIONS:\n\nTHREAT VS. FORCE:\n- Threat = \"Give me the briefcase or I'll hurt you\" (intimidation)\n- Force = Physical contact/yanking (violence)\n\nNathan used pure force, no threat. But force alone suffices for robbery.\n\nVICTIM'S RESISTANCE:\n- Some courts focus on whether victim resisted\n- Others focus on whether force was used to prevent/overcome resistance\n- Modern approach: Force during taking = robbery, regardless of resistance\n\nCONCLUSION:\n\nNathan committed ROBBERY, not larceny.\n\nThe physical force (yanking) used to accomplish the taking satisfies robbery's force requirement. The victim's lack of resistance doesn't eliminate robbery liability. Nathan took property from the victim's person using force, which is the essence of robbery.\n\nRubric points: Force/takings distinction, Miller doctrine, force requirement satisfaction."
+                    }
+                ]
+            },
+            4: {
+                title: "Exam 4: Self-Defense & Justification",
+                questions: [
+                    {
+                        id: 1,
+                        pattern: {
+                            title: "Fact Pattern 1: Reasonable Belief & Prior Experiences",
+                            text: "Omar was walking home at night in a neighborhood where he had been assaulted three months earlier. He saw two young men approaching him on the street. They asked him for the time. Omar, who was carrying a small knife for protection, perceived them as threatening. Without waiting to see if they were actually armed or would attack, Omar pulled out his knife and slashed one of the young men. The young men were unarmed and had no intention of robbing or assaulting Omar—they simply wanted to know the time."
+                        },
+                        question: "Analyze Omar's self-defense claim under both subjective and objective reasonableness standards (Goetz framework). Would prior assault victims have different analysis?",
+                        modelAnswer: "SELF-DEFENSE ELEMENTS: (1) Imminent threat of unlawful harm, (2) Reasonable belief force necessary, (3) Proportional response\n\nKEY ISSUE: Whether Omar's BELIEF in danger must be reasonable, and whose perspective determines reasonableness.\n\nGOETZ FRAMEWORK (subjective + objective):\n\nGOETZ STANDARD:\nSelf-defense requires:\n1. Defendant actually believed force was necessary (subjective) AND\n2. That belief was reasonable from a reasonable person perspective (objective)\n3. BUT the reasonable person standard considers the defendant's prior experiences and specific knowledge\n\nOMARU'S ANALYSIS UNDER GOETZ:\n\n(1) SUBJECTIVE COMPONENT (Did Omar actually believe?):\nYes. Omar perceived threat and acted on that belief. He didn't imagine the threat—two men approached him in a dangerous neighborhood. His belief was actual. ✓\n\n(2) OBJECTIVE COMPONENT (Would reasonable person believe?):\n\nStandard reasonable person test: \nA reasonable person approached on street by two men asking for time does NOT reasonably perceive imminent threat of deadly harm. A simple request for time is not threatening. The reasonable person would refuse the request or provide it and move on.\n\nUnder plain reasonable person standard: Omar's belief would be UNREASONABLE. ✗\n\nHOWEVER, GOETZ MODIFICATION:\nGoetz allows consideration of the defendant's prior experiences and specific circumstances. Omar had been assaulted in this neighborhood three months earlier.\n\nModified reasonable person test:\nWould a reasonable person with Omar's prior assault experience, in this neighborhood, at night, perceive two approaching men as threatening?\n\nArgument for reasonableness: \n- Prior assault creates heightened awareness\n- Neighborhood has proven dangerous (real assault occurred)\n- Late night approaching (traditional danger time)\n- Two males approaching (Omar's previous assailants may have been male, similar circumstances)\n- A reasonable person with prior assault trauma might reasonably perceive ambiguous approach as threatening\n\nArgument against reasonableness:\n- Two men asking simple question for time = not threatening on its face\n- No weapons visible\n- No aggressive language\n- Requesting information, not demanding property\n- Reasonable person would not assume all men in neighborhood are threats\n\nGOETZ CRITICAL POINT: \"Reasonable person\" includes defendant's vantage point and experiences, but remains objective standard.\n\nCONCLUSION ON REASONABLENESS:\n- Under pure reasonable person standard: Unreasonable\n- Under Goetz framework: Closer question, but likely still unreasonable\n\nThe two men's conduct was non-threatening. Merely approaching + asking time ≠ threat. Prior assault creates context, but doesn't transform non-threatening conduct into threat.\n\nSimon limitation: (mental illness relevance)\nIf Omar had paranoia or severe PTSD from assault, that mental condition might be relevant to explaining why he perceived threat, but wouldn't lower the objective reasonableness standard. A reasonable person with prior assault history—but without mental illness—still wouldn't perceive this as threatening.\n\n(3) PROPORTIONALITY:\n\nEven if imminent threat existed, was Omar's response proportional?\n\nResponse: Pulled knife and SLASHED victim\nThreat: Two unarmed men asking for time\n\nSlashing is likely DISPROPORTIONATE to the threat. If anyone was approaching threateningly, proportional response would be to move away, run, or warn them off—not to slash with knife.\n\nOVERALL CONCLUSION:\n\nOmar's self-defense claim FAILS on multiple grounds:\n\n1. IMMINENT THREAT: No imminent threat existed. Two men asking for time do not pose threat. ✗\n\n2. REASONABLE BELIEF: Under Goetz, even considering prior assault, the belief wasn't reasonable. Non-threatening conduct remained non-threatening despite context. ✗\n\n3. PROPORTIONALITY: If any threat existed, slashing was disproportionate. ✗\n\nOmar is guilty of assault/battery. His prior assault history and neighborhood context don't justify slashing unarmed men asking for time.\n\nLessons: \n- Goetz allows prior experiences to inform reasonableness\n- But objective standard remains—can't equate all similar situations with prior threat\n- Proportionality limitation prevents excessive force\n- Context matters, but conduct itself must be threatening"
+                    },
+                    {
+                        id: 2,
+                        pattern: {
+                            title: "Fact Pattern 2: Justification vs. Excuse; Imperfect Self-Defense",
+                            text: "Zara was at a party when Derek, an aggressive drunk, suddenly swung a punch at her face. Zara, who had studied martial arts, immediately threw Derek to the ground using a technique that caused him to hit his head on concrete. Derek died from head trauma. Investigation revealed Derek was the aggressor (threw first punch), was visibly drunk, and posed genuine danger."
+                        },
+                        question: "Analyze Zara's self-defense claim. Is this justification or excuse? If self-defense fails, would imperfect self-defense reduce charges (MPC § 3.09(2))? Distinguish between jurisdictional approaches.",
+                        modelAnswer: "SELF-DEFENSE: Justification vs. Excuse\n\nJustification defense: Defendant's conduct was LAWFUL—the defendant had right to do what they did. No wrongdoing occurred. Defendant eliminated wrongfulness by acting lawfully.\n\nExcuse defense: Defendant's conduct was WRONG, but defendant shouldn't be blamed because of circumstances. Defendant's responsibility is reduced.\n\nZARA'S SELF-DEFENSE ANALYSIS:\n\nELEMENTS:\n(1) Imminent threat of unlawful harm: Derek threw first punch ✓\n(2) Reasonable belief force necessary: Clear threat requires response ✓\n(3) Proportional response: Martial arts throw to combat punch—reasonable ✓\n(4) No initial aggression: Zara didn't start fight ✓\n\nZARA'S SELF-DEFENSE = JUSTIFIED\n\nZara's conduct was lawful. She responded to Derek's initial assault with reasonable, proportional defensive force. Under traditional self-defense doctrine, Zara acted with right to defend herself. Derek's death, while tragic, was result of his own aggression.\n\nConclusion: Zara is NOT GUILTY. Self-defense is complete justification. No conviction warranted.\n\nHOWEVER, consider complicating factors:\n\nPOTENTIAL PROSECUTION ARGUMENT:\n- Zara \"knows\" martial arts\n- She could have restrained Derek more gently\n- She had training advantage\n- Throwing may have been excessive force\n\nPROSECUTION THEORY: While Derek threw punch (initial aggression), Zara's response was disproportionate. A person with martial arts training should know how to subdue without deadly force.\n\nDEFENSE RESPONSE:\n- No legal duty to use minimal force if proportional force sufficient\n- Zara used reasonable force proportional to threat\n- Derek's drunken aggression posed genuine danger\n- Throwing was reasonable response to punch\n- No duty to account for defendant's superior training; reasonable person may not know outcome\n\nMODERN APPROACH: Zara likely prevails on self-defense justification.\n\n=====\n\nIF SELF-DEFENSE FAILED (Hypothetically):\n\nIMPERFECT SELF-DEFENSE (MPC § 3.09(2)):\n\nMPC § 3.09(2): Even if self-defense fails (belief in necessity unreasonable or disproportional), defendant may reduce murder to manslaughter if:\n- Defendant recklessly or negligently used force\n- Defendant's mistake about threat was unreasonable\n\nExample: If Zara believed punch was more dangerous than reasonable person would believe, or her response was more forceful than believed necessary, § 3.09(2) provides mitigation.\n\nHowever, in Zara's case, self-defense likely succeeds outright (justification), so imperfect self-defense unnecessary.\n\n=====\n\nJURISDICTIONAL APPROACHES:\n\nTRADITIONAL COMMON LAW:\n- Self-defense is affirmative defense (defendant bears burden of showing preponderance)\n- Courts strictly construe—defendant loses burden if any element fails\n- Proportionality strictly tested\n\nResult: Zara likely succeeds. Derek's punch clearly posed threat; throw was proportional response.\n\nMODERN APPROACH (Most jurisdictions):\n- Self-defense is justification (eliminates wrongfulness)\n- Once defendant shows initial aggression and proportional response, burden shifts to prosecution to disprove\n- Broader latitude for defensive force\n\nResult: Zara clearly prevails. Derek was aggressor; Zara's response proportional.\n\nMPC APPROACH:\n- § 3.04: Person may use force when \"actor believes such force is immediately necessary\"\n- More subjective than objective standard\n- Imperfect self-defense available for honest but unreasonable beliefs\n\nResult: Zara clearly prevails under § 3.04. She reasonably believed force necessary. Imperfect self-defense unnecessary.\n\nDUTY TO RETREAT (Some jurisdictions):\nSome jurisdictions impose \"duty to retreat\" if safe retreat available. Before using force, defendant must attempt to escape.\n\nZara at party: Could she have retreated?\n- If path was clear and safe, duty might apply\n- If Derek blocked exit or danger surrounded her, no duty\n\nHowever, duty to retreat is minority rule. Most states don't require it. And even in duty states, reasonable effort to retreat, then defensive force = self-defense succeeds.\n\nConclusion: Even with duty to retreat, Zara likely protected.\n\n=====\n\nFINAL CONCLUSION:\n\nZARA IS NOT GUILTY.\n\nSelf-defense provides complete justification. Derek threw first punch; Zara's response was reasonable and proportional. The fact that Zara had martial arts training doesn't impose duty to restrain herself or account for training advantage. Reasonable person standard applies objectively, not subject to individual variation in capability.\n\nZara acted within her right to self-defense. Derek's death was tragic consequence of his own aggression. No imperfect self-defense necessary; complete justification applies.\n\nOffense charged: Murder/manslaughter\nDefense applied: Self-defense (justification)\nResult: Not guilty (complete acquittal)"
+                    }
+                ]
+            }
+        };
+
+        // ==================== STATE VARIABLES ====================
+        let currentExam = null;
+        let currentQuestion = 0;
+        let answers = {}; // { questionId: answer text }
+        let timerActive = true;
+        let timeRemaining = 3 * 60 * 60; // 3 hours in seconds
+        let timerInterval = null;
+        let examStartTime = null;
+        let examEndTime = null;
+
+        // ==================== INITIALIZATION ====================
+        function startExam(examNumber) {
+            currentExam = examNumber;
+            currentQuestion = 0;
+            answers = {};
+            timerActive = true;
+            timeRemaining = 3 * 60 * 60;
+            examStartTime = new Date();
+            examEndTime = null;
+
+            document.getElementById('selectionScreen').style.display = 'none';
+            document.getElementById('examScreen').style.display = 'block';
+            document.getElementById('resultsScreen').classList.remove('show');
+
+            document.getElementById('currentExamNum').textContent = examNumber;
+
+            buildQuestionNav();
+            displayQuestion();
+            startTimer();
+        }
+
+        function buildQuestionNav() {
+            const navContainer = document.getElementById('questionNav');
+            navContainer.innerHTML = '';
+
+            const exam = exams[currentExam];
+            exam.questions.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'q-btn unanswered';
+                btn.textContent = idx + 1;
+                btn.onclick = () => goToQuestion(idx);
+                if (idx === currentQuestion) {
+                    btn.classList.remove('unanswered');
+                    btn.classList.add('current');
+                }
+                navContainer.appendChild(btn);
+            });
+            updateQuestionStatus();
+        }
+
+        function updateQuestionStatus() {
+            const exam = exams[currentExam];
+            exam.questions.forEach((q, idx) => {
+                const btns = document.querySelectorAll('.q-btn');
+                const btn = btns[idx];
+                btn.classList.remove('current', 'answered', 'unanswered');
+
+                if (idx === currentQuestion) {
+                    btn.classList.add('current');
+                } else if (answers[q.id]) {
+                    btn.classList.add('answered');
+                } else {
+                    btn.classList.add('unanswered');
+                }
+            });
+
+            // Update answered count
+            const answeredCount = Object.keys(answers).length;
+            const totalQuestions = exam.questions.length;
+            document.getElementById('answeredCount').textContent = `${answeredCount}/${totalQuestions}`;
+            document.getElementById('finalAnswered').textContent = `${answeredCount}/${totalQuestions}`;
+
+            // Update progress bar
+            const progress = (answeredCount / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function displayQuestion() {
+            const exam = exams[currentExam];
+            const q = exam.questions[currentQuestion];
+
+            // Display pattern
+            const patternHTML = `<h3>${q.pattern.title}</h3><p>${q.pattern.text}</p>`;
+            document.getElementById('factPattern').innerHTML = patternHTML;
+
+            // Display question
+            document.getElementById('questionText').innerHTML = `<strong>Q${q.id}:</strong> ${q.question}`;
+
+            // Load answer if exists
+            const answerBox = document.getElementById('answerBox');
+            answerBox.value = answers[q.id] || '';
+            updateWordCount();
+
+            // Hide model answer
+            document.getElementById('modelAnswer').classList.remove('show');
+            document.getElementById('rubric').classList.remove('show');
+
+            // Update nav buttons
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            document.getElementById('nextBtn').disabled = currentQuestion === exam.questions.length - 1;
+
+            updateQuestionStatus();
+        }
+
+        function goToQuestion(idx) {
+            // Save current answer
+            saveAnswer();
+            currentQuestion = idx;
+            displayQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < exams[currentExam].questions.length - 1) {
+                goToQuestion(currentQuestion + 1);
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                goToQuestion(currentQuestion - 1);
+            }
+        }
+
+        function saveAnswer() {
+            const q = exams[currentExam].questions[currentQuestion];
+            answers[q.id] = document.getElementById('answerBox').value;
+            updateQuestionStatus();
+        }
+
+        function updateWordCount() {
+            const text = document.getElementById('answerBox').value;
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            document.getElementById('wordCount').textContent = words;
+        }
+
+        document.getElementById('answerBox').addEventListener('input', updateWordCount);
+
+        function toggleModel() {
+            const modelDiv = document.getElementById('modelAnswer');
+            modelDiv.classList.toggle('show');
+            if (modelDiv.classList.contains('show')) {
+                displayModelAnswer();
+            }
+        }
+
+        function displayModelAnswer() {
+            const q = exams[currentExam].questions[currentQuestion];
+            // Format model answer with paragraph breaks
+            const formattedAnswer = q.modelAnswer.split('\n\n').map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+            document.getElementById('modelContent').innerHTML = formattedAnswer;
+
+            // Display rubric if available
+            const rubricDiv = document.getElementById('rubric');
+            if (q.rubric && q.rubric.length > 0) {
+                const itemsHTML = q.rubric.map((item, idx) => `
+                    <div class="rubric-item">
+                        <input type="checkbox" class="rubric-checkbox" id="rubric-${idx}">
+                        <label for="rubric-${idx}">${item}</label>
+                    </div>
+                `).join('');
+                document.getElementById('rubricItems').innerHTML = itemsHTML;
+                rubricDiv.classList.add('show');
+            } else {
+                rubricDiv.classList.remove('show');
+            }
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            if (!timerActive) return;
+
+            timeRemaining--;
+            if (timeRemaining < 0) timeRemaining = 0;
+
+            displayTime();
+
+            if (timeRemaining === 0) {
+                clearInterval(timerInterval);
+                alert('Time expired! Your exam has been submitted.');
+                finishExam();
+            }
+        }
+
+        function displayTime() {
+            const hours = Math.floor(timeRemaining / 3600);
+            const minutes = Math.floor((timeRemaining % 3600) / 60);
+            const seconds = timeRemaining % 60;
+
+            const display = `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            document.getElementById('timerDisplay').textContent = display;
+            document.getElementById('timeRemaining').textContent = display;
+
+            // Color warnings
+            const timer = document.getElementById('timerDisplay');
+            timer.classList.remove('warning', 'danger');
+            if (timeRemaining < 60) { // 1 minute
+                timer.classList.add('danger');
+            } else if (timeRemaining < 300) { // 5 minutes
+                timer.classList.add('warning');
+            }
+        }
+
+        function toggleTimer() {
+            timerActive = !timerActive;
+            const btn = document.getElementById('timerPlayBtn');
+            btn.textContent = timerActive ? 'Pause' : 'Resume';
+            btn.classList.toggle('active');
+        }
+
+        function resetTimer() {
+            if (confirm('Reset timer to 3:00:00?')) {
+                timeRemaining = 3 * 60 * 60;
+                timerActive = true;
+                document.getElementById('timerPlayBtn').textContent = 'Pause';
+                document.getElementById('timerPlayBtn').classList.add('active');
+                displayTime();
+            }
+        }
+
+        function finishExam() {
+            // Save last answer
+            saveAnswer();
+            clearInterval(timerInterval);
+
+            examEndTime = new Date();
+            const elapsedSeconds = Math.floor((examEndTime - examStartTime) / 1000);
+            const elapsedMinutes = Math.floor(elapsedSeconds / 60);
+
+            document.getElementById('examScreen').style.display = 'none';
+            document.getElementById('resultsScreen').classList.add('show');
+
+            const exam = exams[currentExam];
+            const answeredCount = Object.keys(answers).length;
+
+            // Display results
+            document.getElementById('finalTime').textContent = `${elapsedMinutes} min`;
+
+            // Build answers review
+            let reviewHTML = '';
+            exam.questions.forEach(q => {
+                reviewHTML += `
+                    <div class="answer-review">
+                        <h3>Q${q.id}: ${q.question}</h3>
+                        <h4>Your Answer:</h4>
+                        <div class="your-answer">${answers[q.id] || '[No answer provided]'}</div>
+                        <h4>Model Answer:</h4>
+                        <div class="your-answer">${q.modelAnswer}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('answersReview').innerHTML = reviewHTML;
+        }
+
+        function backToSelection() {
+            document.getElementById('selectionScreen').style.display = 'grid';
+            document.getElementById('examScreen').style.display = 'none';
+            document.getElementById('resultsScreen').classList.remove('show');
+
+            // Reset
+            clearInterval(timerInterval);
+            currentExam = null;
+        }
+
+        // Initial display
+        document.getElementById('examScreen').style.display = 'none';
+        document.getElementById('resultsScreen').classList.remove('show');
+    </script>
+    <script src="../shared.js"></script>
+    <script src="../navbar.js"></script>
+</body>
+</html>

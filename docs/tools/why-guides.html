@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criminal Law: Deep-Dive Policy Rationale Guide</title>
+    <style>
+        :root, [data-theme] {
+            --tool-accent: #8b5cf6;
+            --tool-accent-dark: #7c3aed;
+            --tool-accent-light: #a78bfa;
+            --tool-accent-lighter: #c4b5fd;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--tool-accent);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--tool-accent), var(--tool-accent-lighter));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--color-text-secondary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem;
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            color: var(--color-text-primary);
+            font-size: 0.95rem;
+        }
+
+        .search-box::placeholder {
+            color: var(--color-text-tertiary);
+        }
+
+        .progress-tracker {
+            background: var(--color-bg-secondary);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--tool-accent);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--color-border-subtle);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--tool-accent), var(--tool-accent-lighter));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .unit {
+            margin-bottom: 2rem;
+        }
+
+        .unit-header {
+            background: linear-gradient(135deg, var(--color-header-bg), var(--color-header-bg-end));
+            padding: 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--tool-accent);
+            transition: all 0.3s ease;
+        }
+
+        .unit-header:hover {
+            background: linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-tertiary));
+            transform: translateX(4px);
+        }
+
+        .unit-header h2 {
+            font-size: 1.25rem;
+            margin: 0;
+        }
+
+        .unit-header .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .unit-header.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .unit-content {
+            display: none;
+            padding: 0;
+            margin-top: 0;
+        }
+
+        .unit-content.expanded {
+            display: block;
+        }
+
+        .doctrine {
+            background: var(--color-bg-secondary);
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 1px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+
+        .doctrine:hover {
+            border-color: var(--tool-accent);
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.1);
+        }
+
+        .doctrine-header {
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--color-bg-primary);
+            border-bottom: 1px solid var(--color-border);
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .doctrine-header:hover {
+            background: var(--color-bg-secondary);
+        }
+
+        .doctrine-header h3 {
+            font-size: 1.1rem;
+            color: var(--tool-accent-lighter);
+            margin: 0;
+        }
+
+        .doctrine-header .expand-icon {
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+            color: var(--tool-accent);
+        }
+
+        .doctrine-header.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .doctrine-content {
+            display: none;
+            padding: 1rem;
+        }
+
+        .doctrine-content.expanded {
+            display: block;
+        }
+
+        .doctrine-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .doctrine-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .doctrine-section h4 {
+            color: var(--tool-accent);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .doctrine-section p {
+            color: var(--color-text-primary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .why-button {
+            background: var(--tool-accent);
+            border: none;
+            color: var(--color-header-text);
+            padding: 0.6rem 1rem;
+            border-radius: 0.4rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 0.75rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .why-button:hover {
+            background: var(--tool-accent-lighter);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .why-button.expanded {
+            background: var(--tool-accent-dark);
+        }
+
+        .deeper-explanation {
+            display: none;
+            background: var(--color-bg-primary);
+            border-left: 3px solid var(--tool-accent);
+            padding: 1rem;
+            margin-top: 0.75rem;
+            border-radius: 0.3rem;
+            animation: slideDown 0.3s ease;
+        }
+
+        .deeper-explanation.expanded {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .connection-questions {
+            background: var(--color-bg-primary);
+            border-left: 3px solid var(--tool-accent-lighter);
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.3rem;
+            display: none;
+        }
+
+        .connection-questions.expanded {
+            display: block;
+        }
+
+        .connection-questions-header {
+            color: var(--tool-accent-lighter);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .connection-questions-header .toggle {
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+
+        .connection-questions-header.collapsed .toggle {
+            transform: rotate(-90deg);
+        }
+
+        .questions-list {
+            display: none;
+            margin-top: 0.75rem;
+        }
+
+        .questions-list.expanded {
+            display: block;
+        }
+
+        .question {
+            color: var(--color-text-primary);
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .question::before {
+            content: "❓ ";
+            color: var(--tool-accent);
+            font-weight: 600;
+        }
+
+        .mark-read-btn {
+            background: var(--color-bg-secondary);
+            border: none;
+            color: var(--color-text-primary);
+            padding: 0.5rem 0.8rem;
+            border-radius: 0.3rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .mark-read-btn:hover {
+            background: var(--color-bg-tertiary);
+        }
+
+        .mark-read-btn.marked {
+            background: var(--color-correct);
+            color: #fff;
+        }
+
+        .doctrine.read {
+            opacity: 0.7;
+        }
+
+        .doctrine.read .doctrine-header h3 {
+            text-decoration: line-through;
+            color: var(--color-text-tertiary);
+        }
+
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .unit-header h2 {
+                font-size: 1.1rem;
+            }
+
+            .doctrine-header h3 {
+                font-size: 0.95rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+        }
+
+        footer {
+            text-align: center;
+            color: var(--color-text-tertiary);
+            font-size: 0.85rem;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--color-border);
+        }
+    </style>
+    <link rel="stylesheet" href="../theme.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Criminal Law: Deep-Dive Policy Rationale Guide</h1>
+            <p class="subtitle">Understanding the "why" behind every major doctrine</p>
+        </header>
+
+        <div class="controls">
+            <input type="text" class="search-box" id="searchBox" placeholder="Search doctrines...">
+            <button class="why-button" id="expandAllBtn">Expand All</button>
+            <button class="why-button" id="collapseAllBtn">Collapse All</button>
+        </div>
+
+        <div class="progress-tracker">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span>Progress: <strong id="progressText">0 / 0</strong> sections read</span>
+                <button class="mark-read-btn" id="resetBtn">Reset Progress</button>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div id="unitsContainer"></div>
+
+        <footer>
+            <p>Created for deep understanding of criminal law doctrine. All explanations focus on policy rationale and jurisprudential foundations.</p>
+        </footer>
+    </div>
+
+    <script>
+        // In-memory storage only
+        let readDoctrines = new Set();
+        let expandedDoctrines = new Set();
+        let expandedUnits = new Set();
+
+        const doctrinesData = {
+            'UNIT I: FOUNDATIONS': [
+                {
+                    title: 'Why do we punish? (Retribution vs Utilitarianism)',
+                    rule: 'Punishment is justified by both backward-looking retribution (culpability deserves punishment) and forward-looking utilitarianism (punishment deters and incapacitates).',
+                    whyExists: 'This foundational question divides into two powerful but different justifications. Retribution says punishment is inherently just because wrongdoing deserves it—think of it as moral equilibrium. A person who commits a serious wrong has tilted the moral balance, and punishment restores it. This view respects individual autonomy and agency: we punish because the person chose to commit crime. But retributivism alone doesn\'t explain why we adjust punishments for danger to society or why rehabilitation programs exist. Utilitarianism answers this: punishment is a tool to maximize societal welfare. It deters future crimes (both by the offender and by others watching), incapacitates dangerous people, and rehabilitates offenders. This is why we don\'t execute shoplifters—the utility doesn\'t justify it. Modern criminal law weaves both together: we require moral culpability (retribution) but calibrate sentences by deterrent effect and incapacity needs (utilitarianism). Neither alone is sufficient.',
+                    problem: 'Without retribution, we risk creating a utilitarian nightmare: punishing innocent scapegoats if it maximizes social welfare. Without utilitarianism, we might demand disproportionate punishment (executing someone for a minor wrong) just because they "deserve" it. We\'d also ignore whether punishment actually prevents crime.',
+                    counterargument: 'Pure retributivists say utilitarianism corrupts justice—why should an innocent person suffer if it increases aggregate happiness? Pure utilitarians say retribution is vengeance dressed up as philosophy. And some argue punishment as practiced doesn\'t effectively deter at all.',
+                    connectionQuestions: [
+                        'If someone commits a crime and imprisonment definitely won\'t deter others, is punishment still justified?',
+                        'Should we punish someone more harshly if we know they won\'t be rehabilitated?',
+                        'Does retribution require that the punishment "fit" the crime? If so, how do we measure that fit?',
+                        'Would it be justified to punish 10 innocent people to prevent 100 crimes that utilitarianism predicts?'
+                    ]
+                },
+                {
+                    title: 'Why require a voluntary act? (Martin v. State)',
+                    rule: 'Criminal liability requires a voluntary act (actus reus). Status alone, or involuntary conduct, cannot form the basis for punishment.',
+                    whyExists: 'The voluntary act requirement protects individual autonomy and reflects our deepest intuitions about fairness. In Martin v. State (1962), the defendant was convicted for appearing in public while drunk—an involuntary condition caused by a prior voluntary act (getting drunk). The court struck down the conviction because appearing drunk is not itself a voluntary act. Why does this matter? Because punishment should target choices, not involuntary states. If we punish the mere condition of drunkenness (or epilepsy, or sleepwalking), we\'re punishing something the person cannot control in that moment. Criminal law is fundamentally about holding people responsible for what they choose to do. A person who falls asleep at the wheel hasn\'t voluntarily endangered anyone. A person who chooses to drive drunk has. The distinction respects human dignity—we don\'t punish people for things beyond their control.',
+                    problem: 'Without the voluntary act requirement, criminal law becomes arbitrary. We could punish illness, accident, and misfortune. Someone suffering a seizure could be convicted for reckless driving. An epileptic could be imprisoned for appearing in public in a vulnerable state. This would criminalize human vulnerability rather than culpable behavior.',
+                    counterargument: 'Some argue the prior act matters: Martin got himself drunk, so why not hold him liable for the foreseeable consequence? Others say the requirement is too strict—what about someone who leaves a dangerously aggressive dog unattended (inactivity creating danger)?',
+                    connectionQuestions: [
+                        'Is driving after taking prescribed medication that causes drowsiness a "voluntary act"?',
+                        'Does the requirement change if someone\'s involuntary act is the result of a prior voluntary choice (like Martin getting drunk)?',
+                        'Can inaction (failure to act) satisfy the voluntary act requirement? When?',
+                        'What about someone who is sleepwalking and commits a harmful act—are they liable?'
+                    ]
+                },
+                {
+                    title: 'Why can\'t we punish status? (Robinson v. California)',
+                    rule: 'The Eighth Amendment prohibits punishment for status or status-based conditions. You cannot be criminalized merely for being an addict, or homeless, or mentally ill.',
+                    whyExists: 'Robinson v. California (1962) held that punishing someone for the status of being a drug addict violates the Eighth Amendment as cruel and unusual punishment. This is the constitutional anchor for the voluntary act principle. Why? Because punishing status violates fundamental fairness: the person hasn\'t chosen their status, and status alone doesn\'t harm anyone. You can\'t be imprisoned for being addicted—but you can be imprisoned for possessing drugs. You can\'t be imprisoned for being poor—but you can be for theft. This distinction is crucial: it separates our judgment about the person (their condition) from our judgment about their conduct (their choices). Status doesn\'t imply behavioral culpability. An addict might be sympathetic and need treatment, but they haven\'t yet committed a voluntary act that threatens society. Once they do (buy drugs, steal to fund their habit), then the criminal law can engage. The rule also reflects practical wisdom: people in certain statuses often face barriers to change. Punishing status alone doesn\'t improve behavior; it just warehouses vulnerable people.',
+                    problem: 'Without this rule, we could criminalize poverty, illness, disability, and addiction. We\'d essentially be punishing people for the circumstances of their life. This creates a system where being poor or struggling becomes a crime, criminalizing human fragility rather than condemning culpable action.',
+                    counterargument: 'Some argue status is evidence of harmful behavior and can be punished as part of addressing public health crises. Others say distinguishing status from conduct is sometimes impossible—isn\'t appearing in public while drunk both a status and conduct?',
+                    connectionQuestions: [
+                        'Is "appearing in public while drunk" a status or conduct? How would you draw the line?',
+                        'Can we punish someone for being "likely" to commit a crime based on their past?',
+                        'Is the status of being a registered sex offender a punishment? Why or why not?',
+                        'Should treatment for addiction be mandatory, even if punishment for addiction is unconstitutional?'
+                    ]
+                }
+            ],
+            'UNIT II: MENS REA': [
+                {
+                    title: 'Why have a mens rea hierarchy? (MPC § 2.02)',
+                    rule: 'The Model Penal Code establishes four distinct mental states in descending order of culpability: (1) purpose/intent, (2) knowledge, (3) recklessness, and (4) negligence. These are not interchangeable.',
+                    whyExists: 'The MPC hierarchy reflects the truth that not all guilty minds are equally culpable. Someone who purposes to kill is morally worse than someone who recklessly endangers. Someone who knows a risk exists is more blameworthy than someone who should have known (negligence). This creates fairness and proportionality: the law punishes in proportion to moral culpability. Why distinctions matter: A person who purposely starts a fire commits arson with intent to destroy property—maximum culpability. A person who knows their act might start a fire (recklessly stores gasoline) but doesn\'t care is still dangerous but slightly less culpable. A person who should have known gasoline is flammable (negligent) is careless but not morally equivalent to the purposeful arsonist. These differences track common sense judgments about blame. The hierarchy also serves administrability: it gives courts and juries guidance about what mental state to find and gives legislatures precision about what they\'re prohibiting. Without hierarchy, "mens rea" becomes mushy and unpredictable.',
+                    problem: 'Without hierarchy, we couldn\'t distinguish between vastly different moral culpabilities. Murderers and people negligently causing death would occupy the same category. This fails fairness and deterrence: different mental states require different punishments to reflect moral reality and to deter effectively.',
+                    counterargument: 'Some argue the categories are artificial and don\'t capture the nuance of human psychology. Others say drawing lines between recklessness and negligence is practically impossible in borderline cases. Still others argue the hierarchy is too generous to defendants, allowing easy downward deviation.',
+                    connectionQuestions: [
+                        'Is someone who is willfully blind (deliberately ignoring obvious facts) acting with "knowledge" or just "recklessness"?',
+                        'Should negligence ever support criminal liability, or should criminal law require at least recklessness?',
+                        'Can someone act "purposely" toward one element and "recklessly" toward another in the same crime?',
+                        'How do we determine what a defendant actually knew vs. what they should have known?'
+                    ]
+                },
+                {
+                    title: 'Why distinguish general from specific intent? (Atkins)',
+                    rule: 'Some crimes require specific intent (purpose directed toward a particular result beyond the actus reus), while others require only general intent (mens rea as to the act itself). Specific intent crimes allow mistake of fact defenses more readily.',
+                    whyExists: 'General intent crimes (like battery or rape) require only that the defendant intentionally committed the physical act—striking, forcing sex. Specific intent crimes (like larceny, assault with intent to injure, or burglary) require intent to cause a particular future harm or obtain a particular result. This distinction matters because specific intent is easier to negate with a mistake of fact. In Atkins, the defendant stole a car thinking it was abandoned—a specific intent crime (larceny requires intent to permanently deprive). His mistake negates the specific intent element. For general intent crimes, mistake is harder to prove: if you forcefully had sex, your mistake about consent doesn\'t negate the intent to have sex. The distinction exists because specific intent crimes are about purposive wrongdoing directed toward a further goal. A person who purposefully steals but mistakes the owner\'s identity hasn\'t committed the harm larceny targets (permanent deprivation). A person who forcefully has sex hasn\'t misidentified anything—they\'ve committed the harm itself. This tracks culpability: specific intent wrongdoing is fundamentally about pursuing a particular harmful goal; mistake as to circumstances undermines that purpose.',
+                    problem: 'Without this distinction, either all mistakes become defenses (too lenient) or no mistakes do (too harsh). By tailoring the mistake defense to crime structure, law achieves proportionality: genuinely mistaken purposes negate liability, but reckless or negligent harm-causing is still punished.',
+                    counterargument: 'Critics argue the general/specific intent distinction is unstable and confusing. Many crimes don\'t fit neatly. Is assault general or specific intent? What about battery? The categories blur in practice.',
+                    connectionQuestions: [
+                        'Is murder a general or specific intent crime? Does it matter whether it\'s intentional murder or depraved heart?',
+                        'Why should mistake of fact be easier to prove for crimes requiring specific intent?',
+                        'Is DUI a general or specific intent crime? Does the defendant need to intend to drive dangerously?',
+                        'Can someone commit theft (specific intent crime) negligently, or must they intend the deprivation?'
+                    ]
+                },
+                {
+                    title: 'Why allow strict liability? (Morissette)',
+                    rule: 'Strict liability crimes punish harmful conduct without requiring proof of mens rea (any mental state). Morissette held these require clear statutory language; they are disfavored.',
+                    whyExists: 'Strict liability exists for regulatory crimes—traffic violations, food safety violations, environmental pollution. Morissette v. United States involved a defendant who took spent bomb casings from military land, believing them abandoned. He was charged with theft—ordinarily requiring specific intent. But regulatory statutes sometimes eliminate mens rea entirely. Why? Efficiency and public safety. Traffic speed limits are strict liability: if you drive 51 mph in a 50 zone, you\'re liable regardless of whether you knew. This deters better than requiring prosecutors to prove each driver intentionally exceeded the limit. Environmental laws are strict: a company that pollutes due to equipment failure is liable because we want to incentivize extreme care. But Morissette warned that strict liability must be clearly intended by the legislature—it\'s not the default for common law crimes. The policy logic is utilitarian: some harms are so dangerous and hard to monitor that we need strict liability to ensure compliance. We don\'t charge factory owners with cruelty for hurting workers; we charge them regardless of intent because that maximizes compliance with safety regulations. But this tension with retribution is real: is it fair to punish someone who did everything right but encountered bad luck?',
+                    problem: 'Strict liability without mens rea punishes the blameless. A company following all protocols could be liable for environmental harm. A driver could be convicted of vehicular manslaughter due to inexplicable equipment failure. This conflicts with the principle that culpability requires fault.',
+                    counterargument: 'Proponents argue strict liability is necessary for regulatory compliance and public safety. Without it, industries would accept minor violations as a cost of business. Opponents argue it\'s unfair and unconstitutional—violating due process by punishing the faultless.',
+                    connectionQuestions: [
+                        'Should minor criminal offenses (misdemeanors) ever be strict liability? What about felonies?',
+                        'Is it fair to punish someone strictly if they took every reasonable precaution?',
+                        'What makes a statute a "regulatory crime" vs. a true crime?',
+                        'Should punishment (incarceration) ever follow strict liability, or only civil penalties?'
+                    ]
+                },
+                {
+                    title: 'Why does willful blindness equal knowledge? (Jewell)',
+                    rule: 'Willful blindness—deliberately choosing not to know facts that are obvious—constitutes knowledge. Burying your head in the sand doesn\'t eliminate culpability.',
+                    whyExists: 'Jewell involved a defendant smuggling marijuana who argued he didn\'t "know" the drug was in his car. The court held that if you deliberately avoid knowing obvious facts, the law treats you as knowing them. Why? Because allowing deliberate ignorance to become a defense would create perverse incentives. Suppose you own a business and you deliberately avoid learning whether your employees are embezzling, because then you can\'t be convicted of conspiracy or knowledge-based crimes. Willful blindness doctrine closes this loophole. The rationale is psychological and moral: willful blindness is a form of knowledge. If you suspect drug trafficking but refuse to ask questions, you\'re essentially admitting you don\'t want to bear responsibility. The law calls this bluff. You can\'t get the benefits of conduct you\'re trying not to know about while escaping liability. This is fairness: we judge people partly by what they choose not to see. Closing the ostrich loophole—burying your head to avoid knowledge—reflects the truth that deliberate indifference is a form of culpability. It\'s not pure knowledge (you don\'t actually know), but it\'s not innocent either (you\'re avoiding knowing).',
+                    problem: 'Without willful blindness doctrine, defendants could routinely invoke deliberate ignorance as a defense. Employers could avoid liability for rampant misconduct by declining to investigate. This would hollow out knowledge-based crimes, allowing widespread wrongdoing with calculated plausible deniability.',
+                    counterargument: 'Critics argue willful blindness conflates knowledge with negligence or recklessness. If someone genuinely doesn\'t know, punishing them as if they do seems unfair. The doctrine can also chill legitimate business decisions to avoid liability.',
+                    connectionQuestions: [
+                        'Is willful blindness the same as recklessness or knowledge?',
+                        'Should a business owner who doesn\'t investigate fraud be liable as if they knew?',
+                        'Can you be willfully blind to something that isn\'t actually obvious?',
+                        'Does willful blindness doctrine incentivize more thorough investigation, or just create an excuse to ignore problems?'
+                    ]
+                }
+            ],
+            'UNIT III: OMISSIONS & DUTY': [
+                {
+                    title: 'Why not criminalize all failures to help?',
+                    rule: 'The law generally does not impose a duty to rescue or aid strangers. Failure to help is not criminal unless a specific relationship or duty exists.',
+                    whyExists: 'This is the "bad Samaritan" problem: why doesn\'t the law punish you for failing to save a drowning child if you could easily do so? The answer rests on two foundational values: liberty and the distinction between action and inaction. Criminal law traditionally regulates what you do, not what you fail to do. This respects autonomy: you own your own body and talents. Forcing you to rescue someone, especially a stranger, conscripts your labor and risks to serve others\' interests. This goes against the liberal premise that people are free to live their own lives. Secondly, creating a general duty to rescue would be unmanageable. How far does it extend? Do you have to give your kidney? Your house? Every spare dollar? The line-drawing becomes impossible. We limit duties to relationships where we\'ve voluntarily assumed risk (parent-child, doctor-patient) or created danger (if you hit someone with a car, you must help). These are bounded and manageable. Additionally, positive duties (requiring action) are harder to enforce than negative duties (prohibitions). A police officer can see you hit someone and not help. But detecting failure to help a stranger is nearly impossible and intrusive. So we limit positive duties to special relationships where detection and enforcement are feasible.',
+                    problem: 'Without limiting duties, criminal law becomes a vehicle for compelling altruism. You could be jailed for not donating organs, not warning strangers of dangers, not working to support others. This would essentially turn citizens into conscripted servants of the state.',
+                    counterargument: 'Moralists argue we have ethical duties to help even if law doesn\'t enforce them. Some countries (France, Germany) do impose limited duties to rescue. Why should law enforce negative duties but not positive ones? Both require behavior.',
+                    connectionQuestions: [
+                        'Is there a moral difference between killing someone and failing to save them?',
+                        'Should a parent be criminally liable for failing to call 911 for a sick child?',
+                        'If you know a bridge is unsafe, are you criminally liable for failing to warn drivers?',
+                        'Where would you draw the line between required and discretionary help?'
+                    ]
+                },
+                {
+                    title: 'Why these 5 duties specifically?',
+                    rule: 'Criminal duties to act arise from: (1) special relationships (parent-child, jailer-prisoner), (2) contractual duty, (3) statute, (4) voluntary assumption of duty, and (5) creation of danger.',
+                    whyExists: 'These five categories represent situations where limiting liability to omissions is fair and enforceable. Special relationships: Parents are legally responsible for children because they create the dependency. A parent who fails to feed a child is as culpable as one who actively starves them—the child cannot exist independently. Jailers are responsible for prisoners because they\'ve assumed control and removed the prisoner\'s ability to self-protect. These relationships are bounded and verifiable. Contractual duty: If you contract to be a lifeguard, you\'ve explicitly assumed a duty. If you\'re paid to watch someone\'s child and the child drowns, your failure is breach of contract and criminality. The duty is clear and limited. Statute: Legislatures can impose positive duties (like reporting child abuse for professionals) because they can calibrate scope carefully. Voluntary assumption: If you begin rescuing someone, you can\'t abandon them once you\'ve created reliance. This addresses a specific unfairness: harm caused by your own intervention. Creation of danger: If you hit a pedestrian with your car, you\'ve created the danger and must help. This is fairness: don\'t make things worse and leave. These five capture situations where either (1) a relationship justifies the duty (special relationships), (2) it\'s been explicitly accepted (contract, voluntary assumption, statute), or (3) you\'re the causal source (creation of danger). Each is bounded and manageable.',
+                    problem: 'Without these categories, either all omissions would be criminal (unreasonable) or none would be (allowing abandonment of dependent persons). The five categories carve out situations where duty is fair and socially justified.',
+                    counterargument: 'Critics argue the categories are too narrow and protect wrongful inaction. Why should a parent be liable for failing to feed their child but a stranger not liable for failing to call 911? Others argue the categories are too vague—what exactly counts as a "special relationship"?',
+                    connectionQuestions: [
+                        'If you see someone being attacked and do nothing, are you culpable?',
+                        'Does a doctor have a special relationship with a stranger on the street, or only with patients?',
+                        'If you begin CPR on a heart attack victim but stop, can you be liable for their death?',
+                        'Should teachers be required to report bullying to police, or is that going too far?'
+                    ]
+                },
+                {
+                    title: 'Why does Beardsley limit special relationships?',
+                    rule: 'Commonwealth v. Beardsley held that special relationships don\'t automatically impose duty; the defendant must have control over the victim or responsibility for their welfare.',
+                    whyExists: 'Beardsley involved a man who watched a woman overdose at his party and did nothing. He argued no duty existed because they weren\'t in a legally recognized relationship. But Beardsley also cautioned that special relationships can\'t expand infinitely. Just because you\'re a friend doesn\'t mean you have legal responsibility for your friend\'s welfare. Why not? Because expanding duties into ordinary relationships would criminalize ordinary social dynamics. If friends have legal duties to monitor each other\'s behavior, every friendship becomes fraught with liability. Beardsley limits duties to relationships involving control (parent-child, jailer-prisoner, doctor-patient) or explicit responsibility acceptance. This respects two values: privacy and reasonable expectations. You don\'t expect that being someone\'s friend creates a legal duty to intervene in their life decisions. Expanding duties into friendship would be invasive. Additionally, special relationships based on control have clear contours: a parent has control over a child\'s life; a random acquaintance doesn\'t. The boundary is manageable. But Beardsley also wasn\'t absolute—some courts have found duties among very close relationships (spouses sometimes). The rationale is that social intimacy plus control can create responsibility.',
+                    problem: 'Without limitation, every relationship could become a duty-bearing one. This would make criminal law intrude into private relationships, making friends and family members watchdogs over each other. The line-drawing would be vague and unpredictable.',
+                    counterargument: 'Some argue that intimate relationships (spouses, long-term partners) should impose duties because there\'s reasonable reliance. Others argue the court was too protective of the defendant; a responsible person at a party might have called 911.',
+                    connectionQuestions: [
+                        'Should spouses have a duty to rescue each other in emergencies?',
+                        'Does knowing someone\'s suicide plan create a duty to report it?',
+                        'How does Beardsley apply to roommates or family members you live with?',
+                        'Is there a difference between a duty not to cause harm and a duty to prevent harm?'
+                    ]
+                }
+            ],
+            'UNIT IV: MISTAKES': [
+                {
+                    title: 'Why does specific intent get a more generous mistake defense?',
+                    rule: 'Specific intent crimes allow a mistake of fact defense if the mistake negates the specific intent. General intent crimes rarely allow mistake defenses.',
+                    whyExists: 'The distinction tracks the structure of the crime. Specific intent crimes are about pursuing a particular harmful goal—stealing property, intending to injure. If you mistake facts and your mistake prevents the specific intent, you haven\'t committed the crime\'s core wrong. Example: You take property thinking it\'s abandoned, but it\'s actually someone\'s. You\'ve mistakenly negated the intent to permanently deprive, which is the essence of theft. General intent crimes focus on the nature of the act itself—the wrongfulness is in the act, not the purpose. If you have sex with someone, the wrongfulness is the forceful taking of sex, not some further goal. Mistake about age, consent, or identity doesn\'t negate the intent to have sex—it only negates awareness of a factual detail. This distinction respects culpability: punishing someone whose mistake prevented their specific intent seems unfair. They didn\'t have the guilty mind the crime requires. But punishing someone for harmful conduct despite factual mistakes seems fair—they committed the harmful act. This creates graduated fairness: the law is generous to those whose mistake prevented their guilty purpose but strict to those whose mistake only affected factual circumstances.',
+                    problem: 'Without this distinction, we either excuse too much (allowing all mistakes for all crimes) or too little (never allowing mistake for any crime). The distinction allows calibrated fairness based on crime structure.',
+                    counterargument: 'Critics argue the distinction is unstable and unprincipled. Many crimes blur general and specific intent. Is assault general or specific intent? What about the person who mistakes someone for a willing partner—isn\'t consent a "circumstance" they mistake?',
+                    connectionQuestions: [
+                        'Should mistake of fact ever be a defense to crimes of recklessness or negligence?',
+                        'Is murder a general or specific intent crime? Does mistake ever negate murder?',
+                        'Why should honest mistake negate specific intent but not general intent?',
+                        'Can mistake be a defense to strict liability crimes?'
+                    ]
+                },
+                {
+                    title: 'Why is mistake of law generally no defense?',
+                    rule: 'Ignorance of the law is generally not a defense ("Ignorance of the law is no excuse"). Exceptions exist for reliance on official interpretation.',
+                    whyExists: 'The rule rests on practical necessity and fairness. Practically: if mistake of law were a defense, everyone could claim "I didn\'t know it was illegal." Prosecutors would need to prove each defendant\'s actual knowledge of the law, which is nearly impossible and would paralyze enforcement. Additionally, allowing mistake of law would incentivize ignorance—people would avoid learning the law to create a defense. But there\'s a deeper principle: everyone has equal access to the law. Laws are published, available, and part of the social contract. Unlike facts (whether the gun was loaded, whether the victim consented), everyone theoretically knows the law because the law is made public. Your failure to know is negligence or choice, not innocent mistake. However, this principle has limits. If you rely on an official legal interpretation (from a lawyer, prosecutor, or published guidance) and it turns out wrong, equity suggests excusing you. Example: If a tax code says something is deductible, an accountant relies on it, and courts later reverse the interpretation, it seems harsh to criminally punish the accountant. So exceptions exist for official reliance, government-provided guidance, and recent law changes. But general mistake of law—"I didn\'t know it was illegal"—is universally rejected because enforcing the "equal access" principle requires a bright-line rule.',
+                    problem: 'Without the rule, criminal law would collapse: everyone would claim ignorance, and prosecutors would face impossible evidentiary burdens proving what defendants knew about law.',
+                    counterargument: 'Some argue the rule is unjust when applied to vague laws or recent statutes few people know about. Others say mistake of law should be a defense when it\'s reasonable and honest. Still others argue regulatory crimes are so complex that mistake should be excused.',
+                    connectionQuestions: [
+                        'Should mistake of law be a defense if the law is genuinely unclear or ambiguous?',
+                        'Is there a difference between not knowing a law exists and misunderstanding what the law requires?',
+                        'Should ignorance of newly enacted laws be treated differently?',
+                        'What if you relied on advice from an attorney and did what they advised, but it was illegal?'
+                    ]
+                }
+            ],
+            'UNIT V: CAUSATION': [
+                {
+                    title: 'Why do we need BOTH actual and proximate cause?',
+                    rule: 'Liability requires both "but-for" causation (the defendant\'s act was necessary for the result) and proximate cause (the result was a foreseeable consequence of the act).',
+                    whyExists: 'But-for causation is necessary but insufficient. Example: A firefighter is delayed responding to a building fire because of a traffic jam caused by the defendant\'s car accident. The building burns and someone dies. But-for the accident, the firefighter arrives in time and saves the person. But we don\'t hold the defendant liable for murder—the causal chain is too attenuated. This is where proximate cause enters. It asks: was the death a foreseeable result of causing a traffic accident? No, typically. The law limits liability to foreseeable consequences because fairness requires limiting the scope of responsibility. Consider: every act causes infinite ripples. If you cause a one-second delay, perhaps someone misses a train and meets a spouse and has a child. Did you "cause" that child\'s existence? Technically, but the causal connection is so attenuated and unforeseeable that holding you responsible seems absurd. Proximate cause prevents unbounded liability: you\'re responsible for consequences you could have foreseen as likely results of your conduct. This reflects both fairness (don\'t hold people responsible for unforeseeable consequences) and deterrence (we\'re trying to deter foreseeable harms, not all conceivable ripples). The distinction is crucial: but-for causation is a pure factual question (was it necessary?), while proximate cause is a legal/policy question (should liability extend this far?).',
+                    problem: 'Without proximate cause, defendants would face unlimited liability for any consequence their act set in motion, no matter how remote. With only proximate cause, we might excuse defendants whose act was actually necessary for a foreseeable harm.',
+                    counterargument: 'Some argue foreseeability is vague and makes outcomes unpredictable. Others argue we shouldn\'t use proximate cause to excuse clearly wrongful acts with serious consequences. Still others say the distinction between but-for and proximate is artificial.',
+                    connectionQuestions: [
+                        'Is negligent driving that causes a traffic jam leading to a delayed ambulance a proximate cause of death?',
+                        'What if a person\'s injury causes them to develop an infection, which leads to death years later?',
+                        'Should psychiatric injury caused by witnessing a crime be a proximate result of the crime?',
+                        'Can the intervening act of a third party break the causal chain?'
+                    ]
+                },
+                {
+                    title: 'Why treat responsive vs coincidental intervening causes differently?',
+                    rule: 'An intervening cause that is a normal response to the defendant\'s conduct does not break the causal chain. A coincidental intervening cause usually does.',
+                    whyExists: 'Suppose the defendant shoots someone, injures them, and then—while in the hospital—a nurse makes a medication error and the patient dies. The medication error is an intervening cause. But was it foreseeable that an injured person goes to the hospital? Yes. Is medical error a normal risk of hospitalization? Unfortunately, yes. So the nurse\'s conduct, while culpable, doesn\'t relieve the shooter of liability. This is a "responsive" intervening cause—a normal, expectable response to the defendant\'s conduct. But suppose the defendant slightly injures someone on a Tuesday, and on Thursday, the victim is struck by an unrelated car and dies. The car accident is coincidental—it has nothing to do with the defendant\'s conduct and wouldn\'t have happened but for pure chance. This intervening cause breaks the chain. The distinction tracks foreseeability and moral responsibility. Responsive intervening causes are foreseeable as normal consequences of wrongdoing. The defendant is responsible for foreseeable responses. Coincidental causes are mere happenstance—the defendant can\'t be expected to foresee them. This distinction limits responsibility to the defendant\'s sphere of influence: you\'re liable for the normal risks your conduct creates, not for random misfortune that happens to occur. It also respects the intervening actor\'s autonomy: if a nurse makes a negligent decision, we hold both the shooter and the nurse liable, not the shooter alone.',
+                    problem: 'Without this distinction, either all intervening causes break the causal chain (protecting defendants unfairly) or none do (making defendants liable for pure accident).',
+                    counterargument: 'Critics argue foreseeability is vague and unpredictable. Was a medication error foreseeable? Depends on how we characterize it. Others argue responsive/coincidental is a false dichotomy—many causes fit neither category cleanly.',
+                    connectionQuestions: [
+                        'Does the victim\'s own negligence (refusing medical treatment) break the causal chain?',
+                        'What if a doctor intentionally makes a medical error to kill someone the defendant injured?',
+                        'Does the passage of time make a cause more likely to be coincidental?',
+                        'Should we treat natural consequences (infection) differently from human responses (medical error)?'
+                    ]
+                }
+            ],
+            'UNIT VI: HOMICIDE': [
+                {
+                    title: 'Why distinguish degrees of murder?',
+                    rule: 'Common law divides murder into degrees (first-degree and second-degree) based on deliberation, premeditation, and malice. This allows graduated punishment reflecting moral culpability.',
+                    whyExists: 'Not all murders are morally equivalent. Someone who deliberately plans and executes a murder over weeks is more culpable than someone who kills in sudden rage. The degree distinction allows proportional punishment. First-degree murder requires premeditation (thought beforehand) and deliberation (weighing the decision). Second-degree requires malice aforethought but not premeditation/deliberation. This tracks moral intuition: the cold, calculating killer is worse than the impulsive one. Why? Because premeditation shows the defendant resisted moral restraint over time. An impulsive killer acts on emotion; a premeditative killer acts despite having time to reconsider. This reflects human psychology and desert: the person who consciously overcomes moral inhibition is morally culpable in a special way. Additionally, the distinction incentivizes self-control. If you feel rage building, the law gives you a chance to cool off—if you do, you\'re less culpable. This encourages reflection. The degree distinction also allows legislatures to set different sentences, respecting proportionality: capital punishment for first-degree, life for second-degree. This calibrates punishment to culpability. The Pennsylvania model (which distinguished degrees in the 1790s) was influential because it recognized that murder requires moral grading. Not every death by human agency deserves the same punishment.',
+                    problem: 'Without degree distinctions, all murders would carry the same punishment, treating a calculated assassination the same as a spur-of-the-moment killing. This fails fairness and proportionality.',
+                    counterargument: 'Critics argue premeditation/deliberation are just moments in time and don\'t necessarily indicate greater moral culpability. A person might premeditate but act from emotional impulse. Others argue the distinction is too subjective—when does thought become premeditation?',
+                    connectionQuestions: [
+                        'Does premeditation require hours, or can it happen in moments?',
+                        'Is someone more culpable for deliberately choosing to kill slowly vs. quickly?',
+                        'Should passion or provocation reduce first-degree murder to second-degree?',
+                        'How do we measure whether someone "deliberated" before killing?'
+                    ]
+                },
+                {
+                    title: 'Why does premeditation & deliberation matter? (Bingham)',
+                    rule: 'Commonwealth v. Bingham held that "cool dispassionate killer" acts with special moral culpability. Premeditation and deliberation show the killer resisted moral restraints.',
+                    whyExists: 'Bingham captures something true about human moral psychology: the person who calmly decides to kill is worse than the person who kills in rage. Why? Because killing in rage is a human weakness we can sympathize with—emotion overwhelms judgment. But deliberately planning a killing shows the person made a moral choice with full knowledge and reflection. This shows they\'re dangerous because they weren\'t driven by passion they couldn\'t control; they made a conscious decision that their victim\'s life was worth less than whatever they wanted. The "cool dispassionate" metaphor is key: this person isn\'t out of control, isn\'t blinded by emotion. They\'re acting rationally, and rationally choosing to kill. This makes them especially culpable and dangerous. From a deterrence perspective, rational killers are more likely to respond to penalty increases—they\'ve already calculated consequences (or they wouldn\'t have premeditated). From a retribution perspective, the calculated killer deserves harsher punishment because they had full control and chose wrong. Bingham also reflects a view about human dignity: we hold people most accountable for the conscious choices they make after reflection. A moment of passion is more forgivable because the person wasn\'t fully themselves. A deliberate choice is wholly themselves.',
+                    problem: 'Without this principle, all culpable killings would be equivalent, failing to distinguish between passion and calculation.',
+                    counterargument: 'Some argue passion crimes can be equally culpable or worse because the defendant lost control. Others say premeditation is hard to prove and often serves as a proxy for other biases. Still others argue an impulsive killer might be more dangerous because unpredictable.',
+                    connectionQuestions: [
+                        'Is a crime of passion less morally culpable than a premeditated one?',
+                        'Can you premeditate and deliberate in minutes, or does it require hours?',
+                        'Does intoxication that eliminates premeditation reduce murder to manslaughter?',
+                        'Is someone who carefully plans a killing more or less dangerous than an impulsive killer?'
+                    ]
+                },
+                {
+                    title: 'Why reduce to voluntary manslaughter? (Human frailty)',
+                    rule: 'Voluntary manslaughter is murder mitigated by legal provocation or some legal excuse. It reflects the law\'s compassion for human weakness in extreme circumstances.',
+                    whyExists: 'Voluntary manslaughter recognizes that humans have limited ability to control emotion. Someone who witnesses their spouse committing adultery, learns of a beating of their child, or suffers extreme insult might lose the ability to act rationally. The law reduces murder to manslaughter because killing in these circumstances, while wrong, reflects human frailty rather than malevolence. This is compassion: the law says, "Yes, you killed. Yes, you deserve punishment. But we understand you were pushed to the edge of human endurance." This reflects both retribution (you still deserve punishment for the killing, just not as much) and utilitarianism (people are more deterrable by harsh punishment if they\'re thinking rationally; a person in the grip of extreme emotion won\'t be deterred by threats). Additionally, voluntary manslaughter reflects that we partly evaluate culpability by the person\'s circumstances. A person provoked beyond endurance is less culpable than one acting in cold blood, even though both killed. The reduction to manslaughter (typically life to a shorter sentence) reflects this moral judgment. However, the law still punishes—killing is wrong even when provoked. But the punishment reflects the defendant\'s partial loss of control and the extremity of circumstances.',
+                    problem: 'Without this reduction, people in extreme circumstances would be punished as if they were cold calculators, failing to account for human limits. But allowing provocation might excuse too much, appearing to forgive passion.',
+                    counterargument: 'Critics argue the provocation defense privileges certain emotions (rage) over others (despair) arbitrarily. Others say recognizing provocation excuses murder and disrespects victims. Still others argue modern people should be expected to control emotion.',
+                    connectionQuestions: [
+                        'What counts as legal provocation? Is discovering adultery enough?',
+                        'Should learning of a child\'s abuse be more provocation than a physical attack?',
+                        'Does the defendant\'s ability to control themselves matter to whether provocation applies?',
+                        'Can someone be provoked and still premeditate, or are they mutually exclusive?'
+                    ]
+                },
+                {
+                    title: 'Why three different approaches to provocation?',
+                    rule: 'Categorical approach: lists specific provocations (e.g., spousal infidelity). Modern approach: asks whether a reasonable person would be provoked. EMED: considers the individual defendant\'s characteristics.',
+                    whyExists: 'These three approaches reflect different philosophies about law\'s role. The categorical approach (traditional common law) provides certainty: adultery always counts as provocation, insults never do. This gives predictability and limits jury discretion. But it can be rigid—insult might provoke someone whose spouse is already leaving. The modern approach (reasonable person standard) provides flexibility: would a reasonable person in the defendant\'s situation be provoked? This allows context-sensitivity but creates unpredictability. Juries can reach different conclusions about "reasonableness." The EMED approach (Extreme Mental or Emotional Disturbance, from the MPC) considers the individual defendant\'s history and psychology: did this particular person, given their circumstances and personality, act under extreme disturbance? This is most individualized and fair but hardest to apply and most unpredictable. The three approaches make different bets. Categorical says: certainty matters; we accept some injustice for predictability. Modern says: fairness requires flexibility; we tolerate some unpredictability. EMED says: individual fairness is paramount; we\'re willing to treat similar cases differently if the defendants are different. These reflect different conceptions of justice itself—rule of law vs. individual fairness.',
+                    problem: 'Each approach has costs. Categorical is too rigid and excludes genuine provocation. Modern is vague and unpredictable. EMED can treat similar cases very differently, violating equal treatment.',
+                    counterargument: 'Categorical proponents argue certainty is more important than sensitivity. Modern proponents say flexibility is essential to fairness. EMED proponents argue individual dignity requires individual consideration.',
+                    connectionQuestions: [
+                        'Should the "reasonable person" standard consider the defendant\'s peculiar psychology?',
+                        'Is there a provocation that applies universally, or is provocation always personal?',
+                        'Should the defendant\'s prior violent history affect whether they\'re provoked?',
+                        'Does the time between the provocation and the killing matter?'
+                    ]
+                },
+                {
+                    title: 'Why is depraved heart murder "murder"?',
+                    rule: 'Depraved heart (or implied malice) murder punishes extreme recklessness with such indifference to human life that it\'s equivalent to intent to kill.',
+                    whyExists: 'A person who shoots into a crowded street doesn\'t intend to kill anyone specific, but displays such callous disregard for life that they deserve murder liability. This is depraved heart murder. Why is it murder, not just recklessness? Because the defendant\'s conduct shows an "abandoned and malignant heart"—not just carelessness, but profound indifference to whether people die. This shows moral depravity equivalent to intent. The doctrine recognizes that extreme recklessness can be as culpable as purpose. A person who shoots into a crowd doesn\'t intend specific deaths, but their conduct shows they don\'t care if people die. That indifference is a form of moral guilt. Additionally, from a deterrence perspective, treating extreme recklessness as murder prevents defendants from escaping murder liability by claiming "I didn\'t specifically intend anyone\'s death." If you show callous indifference, that\'s culpable enough. The doctrine also reflects fairness: a person who kills someone through such dangerous conduct deserves to be called a murderer, not just a reckless driver. The victim is just as dead whether killed by intent or by callous disregard. However, the doctrine is controversial because it treats extreme recklessness as equivalent to intent. A defendant might argue, "I didn\'t mean to kill, so it\'s not murder." The doctrine responds: your indifference to death is equivalent to intending it.',
+                    problem: 'Without this doctrine, defendants could escape murder liability for extremely dangerous conduct by claiming they didn\'t intend death. A person firing into a crowd wouldn\'t be a murderer, just reckless.',
+                    counterargument: 'Critics argue treating recklessness as intent stretches mens rea beyond recognition. If someone genuinely didn\'t intend death, calling them a murderer misrepresents their guilt. Others argue the doctrine conflates different moral wrongs.',
+                    connectionQuestions: [
+                        'Is extreme recklessness truly equivalent to intent, or just very bad?',
+                        'Should recklessness ever rise to murder level, or should murder require intent?',
+                        'How extreme must recklessness be to count as depraved heart?',
+                        'Is playing Russian roulette alone different from playing it with others?'
+                    ]
+                },
+                {
+                    title: 'Why have felony murder at all?',
+                    rule: 'Felony murder doctrine makes a defendant liable for murder if someone dies during the commission of a dangerous felony, even without intent to kill.',
+                    whyExists: 'Felony murder doctrine is historically rooted and remains controversial. The basic idea: if you commit a dangerous felony (robbery, burglary, rape), and someone dies, you\'re a murderer, even if you didn\'t intend the death. Why? Deterrence and risk management. The doctrine deters felonies by making them more dangerous—if a robbery might become a murder charge, robbers are more careful. Additionally, someone committing a dangerous felony is already disregarding law and safety. If someone dies, they\'re morally responsible because their conduct created the danger. A robber who doesn\'t use a gun but the victim has a heart attack is still liable for murder because the robber created the dangerous situation. However, the doctrine is controversial because it punishes people who didn\'t intend murder as if they did. A robber whose gun accidentally discharges isn\'t a murderer in the traditional sense. But the doctrine says the dangerous conduct itself is culpable enough. The doctrine also responds to real problems: without it, robbers could escape murder liability by claiming the death was unintended. The doctrine prevents this perverse incentive. But there\'s genuine moral unease about calling someone a murderer when they didn\'t intend the death.',
+                    problem: 'Without felony murder, defendants could commit dangerous felonies knowing that if a death results, they\'re only liable for manslaughter, not murder. This would underdeter very dangerous felonies.',
+                    counterargument: 'Critics argue felony murder is unjust because it imposes murder liability without intent. Some jurisdictions restrict it, and some academics argue it should be abolished. Others note that felony murder has become a tool for excessive punishment.',
+                    connectionQuestions: [
+                        'Should someone be liable for murder if someone dies during a felony they didn\'t commit?',
+                        'Does it matter whether the death was caused by the defendant or by a co-felon?',
+                        'Should all felonies trigger felony murder, or only dangerous ones?',
+                        'Should the defendant\'s intent to use force matter to felony murder liability?'
+                    ]
+                },
+                {
+                    title: 'Why each felony murder limitation?',
+                    rule: 'Four limitations exist: (1) Inherently dangerous felony; (2) Merger doctrine; (3) Agency rule; (4) Res gestae (temporal scope).',
+                    whyExists: 'These limitations exist because felony murder doctrine is controversial and unjust without them. Inherently dangerous felony: not all felonies trigger felony murder, only dangerous ones (robbery, rape, arson). Why? Because the doctrine\'s rationale is that the defendant created danger. A non-violent felony (forgery, tax evasion) doesn\'t inherently create danger of death. Limiting to inherently dangerous felonies ensures proportionality. Merger doctrine: murder cannot merge with the underlying felony. If you steal a car and shoot the owner, the murder doesn\'t merge with the theft—you\'re liable for both. Why? Because allowing merger would allow defendants to escape murder liability by claiming the death was part of the underlying felony. Agency rule: you\'re only liable for deaths caused by yourself or your co-felons, not by victims or police. Why? Because making the robber liable for a death caused by police response to the robbery is too attenuated. Holding the robber liable for the victim shooting back in self-defense seems unfair. Res gestae: the death must occur during and in furtherance of the felony. If a robber escapes, is caught three days later, and someone dies during arrest, that death isn\'t part of the robbery. Why? Because temporal and causal limits prevent liability from extending infinitely. These limitations collectively say: felony murder doctrine is acceptable, but only narrowly applied to truly dangerous situations. Without these limits, the doctrine would be an instrument of massive overreach.',
+                    problem: 'Without limitations, felony murder could apply to deaths far removed from the defendant\'s conduct, punishing people as murderers for events beyond their control.',
+                    counterargument: 'Some argue the limitations swallow the rule—felony murder becomes so narrow it barely applies. Others argue the limitations are vague and unpredictable. Still others argue even with limitations, felony murder is unjust.',
+                    connectionQuestions: [
+                        'Is burglary inherently dangerous if no one is home?',
+                        'Should felony murder apply if a police officer accidentally kills a bystander?',
+                        'How long after the felony ends does felony murder apply?',
+                        'Should intention to use force affect felony murder liability?'
+                    ]
+                }
+            ],
+            'UNIT VII: THEFT': [
+                {
+                    title: 'Why distinguish larceny, embezzlement, and false pretenses?',
+                    rule: 'Common law developed three separate crimes to cover different ways of taking property without permission. Larceny: taking and carrying away property. Embezzlement: breach of trust in handling already-lawful possession. False pretenses: obtaining property through deception.',
+                    whyExists: 'This historical distinction arose because English common law had gaps. Larceny required trespassory taking (violating possession). If someone lawfully had possession (e.g., an employee given property to manage), they couldn\'t commit larceny because there was no trespass. So embezzlement filled the gap: breach of trust by someone already lawfully in possession. False pretenses filled another gap: someone who obtained property through fraud but didn\'t "take" it (the victim handed it over). Why preserve these distinctions? Each reflects different culpability and different harms. Larceny is direct theft—taking without permission. Embezzlement is betrayal of trust—the defendant violated a relationship of confidence. False pretenses is deception—the defendant manipulated the victim. These involve different moral wrongs. Additionally, each has different elements and proof requirements. Larceny requires proof of trespass. Embezzlement requires a trust relationship. False pretenses requires proof of deception and reliance. These distinctions allow precise liability: someone who received property lawfully can be charged with embezzlement, not larceny. Someone who obtained property through fraud is guilty of false pretenses. The distinctions also reflect practical history: courts discovered gaps and filled them. But the Model Penal Code consolidated these into unified "theft," eliminating the need to categorize. Still, common law jurisdictions maintain the distinctions for historical, administrative, and conceptual reasons.',
+                    problem: 'Without these distinctions, prosecutors couldn\'t reach certain wrongdoing (like embezzlement). Victims would go without remedy because conduct didn\'t fit the available crime.',
+                    counterargument: 'Critics argue the distinctions are confusing and arbitrary. Consolidating them (as the MPC did) is simpler. Others note that the distinctions create technicality: a clever defendant can structure conduct to avoid the worst charges.',
+                    connectionQuestions: [
+                        'Is taking property you have lawful possession of theft or embezzlement?',
+                        'Does it matter whether the victim handed over property voluntarily or the defendant took it?',
+                        'Should selling property for personal gain (if you were supposed to keep it safe) be embezzlement?',
+                        'Why should fraud matter to determining whether a taking is theft?'
+                    ]
+                },
+                {
+                    title: 'Why does intent-to-permanently-deprive element matter?',
+                    rule: 'Larceny requires intent to permanently deprive the owner of property. Temporary taking (even if wrongful) is not larceny. Borrowing without permission is not theft.',
+                    whyExists: 'This element reflects a key insight: the harm in theft is not temporary loss but permanent dispossession. If someone borrows your car and returns it, they\'ve wronged you (conversion), but they haven\'t stolen it. Why distinguish? Because theft involves a particular harm: depriving someone of their property permanently. Borrowing violates autonomy (you didn\'t consent) but respects property ownership (you\'re getting the item back). Stealing violates both (you lose the item entirely). The distinction matters morally: a thief is trying to make the property theirs. A borrower is trying to use it temporarily. This reflects different goals and culpability. Additionally, the distinction affects victim experience. Losing your car permanently is catastrophic. Borrowing without permission is annoying. Limiting theft to permanent deprivation ensures the law targets the most serious wrong. From a deterrence perspective, we want to deter permanent taking (which destroys value) more than borrowing (which might not). Some argue the distinction is artificial: what if someone borrows your car and crashes it? They didn\'t intend permanent deprivation, but the result is the same. The law responds: intent matters. If you borrow recklessly (not caring if you lose it), you still didn\'t intend deprivation. If you crash it intentionally to destroy it, that\'s different.',
+                    problem: 'Without this requirement, any wrongful taking would be theft. Borrowing without permission, using someone\'s property without consent, would all be theft.',
+                    counterargument: 'Critics argue the distinction between borrowing and stealing is often unclear. If someone borrows without permission and doesn\'t return it for months, is that still borrowing? Others argue intent to deprive is hard to prove.',
+                    connectionQuestions: [
+                        'Is taking someone\'s property temporarily to teach them a lesson theft?',
+                        'Does the length of time you intend to deprive the owner matter?',
+                        'Is selling someone else\'s property without permission embezzlement or larceny?',
+                        'Can you steal something you own (e.g., retrieving property from a pawnshop without paying)?'
+                    ]
+                }
+            ],
+            'UNIT VIII: MPC vs COMMON LAW': [
+                {
+                    title: 'Why did the MPC replace common law approaches?',
+                    rule: 'The Model Penal Code (1960s) replaced the common law approach with a unified, systematic framework for federal and state criminal law.',
+                    whyExists: 'Common law developed incrementally through cases. Different jurisdictions had different rules. Larceny, embezzlement, and false pretenses were separate. Specific vs general intent blurred across cases. Mens rea categories weren\'t uniform. This created chaos: a conduct that was a crime in one jurisdiction might be lawful in another. Lawyers and judges couldn\'t reliably predict liability. The MPC aimed to rationalize and unify. It created a systematic approach: unified theft (covering larceny, embezzlement, false pretenses), clear mens rea hierarchy (purpose, knowledge, recklessness, negligence), uniform treatment of defenses (mistake, duress, etc.). This was motivated by respect for rule of law: people deserve clear notice of what\'s prohibited. Additionally, the MPC aimed to reflect modern criminal policy. Common law rules were centuries old and didn\'t reflect contemporary justice values. The MPC incorporated retribution, deterrence, and rehabilitation explicitly. It also aimed to reduce the burden on courts: instead of applying common law categories, courts could apply statutory definitions. From a comparative standpoint, the MPC followed the German approach of codification—systematizing criminal law in a comprehensive code. Why has common law persisted? Inertia, tradition, and values. Jurisdictions that adopted common law rules early often maintain them for stability. Additionally, some argue case-by-case development (common law) is more flexible and responsive to justice than codification.',
+                    problem: 'Without the MPC, criminal law remained fragmented and unpredictable. Different jurisdictions applied different rules to similar conduct.',
+                    counterargument: 'Traditionalists argue common law developed through centuries of judicial wisdom and shouldn\'t be abandoned. Others argue codification is too rigid—the MPC doesn\'t account for every scenario. Still others note that many jurisdictions ignored the MPC, maintaining common law.',
+                    connectionQuestions: [
+                        'Is common law or statutory code more democratic?',
+                        'Should criminal law be systematized and uniform, or flexible and case-specific?',
+                        'Does codification protect against arbitrary prosecution?',
+                        'Is the MPC too complex, or does it provide needed clarity?'
+                    ]
+                },
+                {
+                    title: 'Why do jurisdictions still use common law?',
+                    rule: 'Despite the MPC, many jurisdictions maintain common law approaches for constitutional, historical, and practical reasons.',
+                    whyExists: 'Several reasons explain common law persistence. First, inertia: jurisdictions don\'t lightly overturn centuries of legal development. Courts and lawyers understand common law categories. Switching to the MPC requires retraining and creates confusion during transition. Second, democratic legitimacy: common law developed through case law, reflecting community standards. The MPC is a scholars\' creation. Some argue community development is more legitimate than expert imposition. Third, constitutional values: many jurisdictions view the common law tradition as constitutionally protected. You can\'t simply legislate it away. Fourth, flexibility: common law allows case-by-case adaptation. Judges can distinguish hard cases or extend rules to new situations. The MPC\'s statutory rules are more rigid. If the MPC doesn\'t cover a scenario, judges must either apply it loosely or wait for legislative amendment. Fifth, federalism: the U.S. has multiple sovereigns (states). Some states adopted the MPC, others didn\'t. This diversity itself has value—states are laboratories for legal innovation. Additionally, many defense attorneys prefer common law because it provides more discretion and argument space. Prosecutors sometimes prefer it too for prosecutorial flexibility. From a jurisprudential perspective, the choice between common law and the MPC reflects deeper disagreements: is law a system of rules or principles that develop through practice? Is change better effected through legislation or court decisions? These disagreements persist, and jurisdictions make different choices.',
+                    problem: 'Maintaining both common law and MPC jurisdictions creates inconsistency and complexity. Interstate conduct might be treated very differently.',
+                    counterargument: 'Some argue inconsistency is the price of federalism and democratic choice. Others defend the MPC but acknowledge common law has virtues. Still others argue we should gradually move toward unified approaches.',
+                    connectionQuestions: [
+                        'Is common law or the MPC more likely to produce just outcomes?',
+                        'Should federal courts apply common law or the MPC framework?',
+                        'How should a lawyer advise a client about liability if the law is unclear between common law and MPC?',
+                        'Is there value in allowing states to maintain different criminal law approaches?'
+                    ]
+                }
+            ],
+            'UNIT IX: Theft Offenses': [
+                {
+                    title: 'Why do we distinguish between larceny, embezzlement, and false pretenses?',
+                    rule: 'These three theft offenses punish different mechanisms of wrongfully taking property: larceny (taking), embezzlement (misappropriation by fiduciary), false pretenses (deception).',
+                    whyExists: 'The distinction reflects different culpability and social harms. Larceny is the most basic theft—you simply take someone else\'s property and carry it off. It\'s direct, forceful wrong. Embezzlement targets a particular harm: breach of trust. When someone in a position of trust (accountant, employee, trustee) misappropriates funds, the harm is double—loss of money plus violation of trust. Society relies on trust relationships; embezzlement is particularly pernicious because it exploits that reliance. False pretenses also involves deception but targets the act of lying to obtain property. The wrongdoer tricked the victim into voluntarily giving up property. This requires proof of false statements, knowledge of falsity, and reliance—different elements from simple taking. From a moral standpoint: the larcenist wants your property and takes it; the embezzler is trusted with your property and betrays that trust; the con artist lies to you to make you give up property. These feel like different wrongs. Legally, distinguishing them allows for: (1) tailored punishment (embezzlement often punished more severely because breach of trust aggravates), (2) different proof requirements (false pretenses requires proving the false statement; larceny doesn\'t), (3) different defenses (mistake of fact might apply to false pretenses but not larceny). Practically, the distinctions help prosecutors charge appropriately: if you embezzle from your employer, that\'s embezzlement (not larceny), which may carry stiffer penalties and signals breach of trust to judge/jury.',
+                    problem: 'Without these distinctions, all property wrongdoing would be one crime. But that obscures different moral wrongs and different dangers. A trusted employee misappropriating funds is different from a stranger shoplifting.',
+                    counterargument: 'Critics argue the distinctions are confusing and technical. The MPC unified these into one "theft" offense to simplify law. Others note the distinctions sometimes overlap and create charging/proof problems.',
+                    connectionQuestions: [
+                        'Is breach of trust (embezzlement) more serious morally than simple stealing?',
+                        'Should embezzlement carry heavier penalties than larceny?',
+                        'Why does consent to transfer possession (in false pretenses) matter when the victim didn\'t consent to the deception?',
+                        'Can someone unwittingly commit embezzlement if they don\'t know they\'re in a fiduciary position?'
+                    ]
+                },
+                {
+                    title: 'Why does robbery require force or intimidation (not just theft)?',
+                    rule: 'Robbery = larceny + force/intimidation. The force element elevates it from property crime to violent crime.',
+                    whyExists: 'Robbery is punished more severely than larceny because it involves violence or threat of violence. The force creates multiple harms: (1) threat to the victim\'s physical safety, (2) psychological terror from confrontation, (3) the victim\'s inability to resist. When someone steals your property without force (shoplifting, pickpocketing), you\'ve lost property but remained safe. When someone robs you at gunpoint, you face death or injury. Additionally, force during robbery creates risk of escalation: victims might fight back, resulting in injury or death. The robber has threatened violence, so violence becomes foreseeable. Society must punish robbery more severely to deter the added danger it creates. Morally, the robber shows greater disregard for the victim\'s safety. A thief values property over the victim\'s possessory interest; a robber values property over the victim\'s physical safety. From a policy perspective, robbery requires more serious punishment because: (1) it\'s more terrifying and violates more interests, (2) it creates greater danger, (3) it demonstrates greater culpability (willing to threaten force). Some argue this is why robbery is sometimes treated as a "violent" felony (can enhance sentences, counts as strike in three-strikes laws). The force element ensures we\'re targeting the most dangerous property crimes.',
+                    problem: 'Without the force requirement, simple theft would be robbery. Shoplifting would be robbery if the shoplifter resisted security. The distinction matters enormously.',
+                    counterargument: 'Some argue force is hard to define (does grabbing from someone\'s hands count?). Others note that some robberies involve minimal force (pointing toy gun). Modern courts have expanded what counts as force to include force used during escape, not just taking.',
+                    connectionQuestions: [
+                        'If someone uses a fake gun, is that robbery if the victim believes it\'s real?',
+                        'Does force during escape count as robbery force, or only force during the taking?',
+                        'Should psychological terror (threat without visible weapon) satisfy robbery\'s force element?',
+                        'Is robbery uniquely dangerous, or are other crimes (burglary, assault) equally serious?'
+                    ]
+                }
+            ],
+            'UNIT X: Self-Defense & Justification': [
+                {
+                    title: 'Why does self-defense require an IMMINENT threat, not just any threat?',
+                    rule: 'Self-defense is available only when facing imminent (immediate) harm, not future or speculative threats.',
+                    whyExists: 'The imminence requirement prevents vigilantism and preemptive violence. If someone threatens to hurt you tomorrow, you cannot justifiably use force today. Why? Because alternatives exist. You can report to police, get a restraining order, avoid the person, or prepare defensive measures. Forcing someone to wait for police/legal remedies instead of taking immediate self-help is central to rule of law. If we permitted force based on future threats, every argument would justify preemptive violence. Person A says "I\'ll hurt you next week"—does A then get to hurt B preventively first? This descends into cycles of mutual violence. Imminence ensures that self-defense applies only when there\'s no time for law enforcement or alternatives. It\'s a last resort. Morally, the requirement reflects fairness: the threat must be immediate enough that you reasonably cannot escape or seek help. If you had time to warn, flee, or call police, you had alternatives to violence. Legally, imminence prevents a claim that "I was defending myself from a threat three months away." Practically, imminence also prevents false claims. If defendants could invoke self-defense for any perceived future threat, litigation would explode (every defendant would claim self-defense). Limiting self-defense to imminent threats makes the law administrable. From a policy perspective, imminence requires the defendant to attempt escape or avoidance first (rule of retreat in some jurisdictions). This reflects policy to minimize violence. However, imminence doesn\'t require the defendant to wait for the attacker to strike first. The threat need only be about to materialize immediately.',
+                    problem: 'Without imminence, self-defense would justify preemptive violence against anyone perceived as a future threat. This would undermine rule of law and encourage escalation.',
+                    counterargument: 'Battered women advocates argue imminence is unfair to abuse victims who reasonably fear (based on pattern) that the abuser might attack during a lull. Modern courts have started relaxing imminence for battered woman syndrome.',
+                    connectionQuestions: [
+                        'Should a battered woman be able to use self-defense when her abuser is not currently attacking but has a pattern of violence?',
+                        'Does imminence mean the attacker must have drawn a weapon, or can approaching threateningly satisfy imminence?',
+                        'Can you preemptively harm someone who is walking toward you with intent to harm?',
+                        'Is a restraining order a better legal remedy than self-defense for future threats?'
+                    ]
+                },
+                {
+                    title: 'Why is self-defense a JUSTIFICATION, not an excuse?',
+                    rule: 'Self-defense is a justification (conduct was lawful), not an excuse (conduct was wrong but understandable).',
+                    whyExists: 'The distinction matters legally and morally. Justification means you did nothing wrong—you had the right to act as you did. Excuses acknowledge wrongdoing but attribute it to circumstances that reduce blame. In self-defense cases, the defendant isn\'t admitting wrongdoing; they\'re claiming the force was lawful. This makes self-defense a complete defense—if successful, the defendant is fully acquitted (not guilty at all). Excuses (like insanity or duress) also lead to acquittal but on different grounds: the defendant acknowledges the conduct was harmful but argues they shouldn\'t be blamed. Why is this distinction important? Morally and legally, it says that a person defending themselves hasn\'t committed any crime. They acted rightly, not just understandably. A person who killed in self-defense is not a killer—they\'re a defender. This affects how we view the defendant afterward. They face no social stigma, criminal record (fully acquitted), or sentencing. Additionally, the justification status affects third-party conduct: a third party (like a bystander) can help someone exercising self-defense without criminal liability. If self-defense were merely an excuse, third parties couldn\'t assist (they\'d still be committing crime). Moreover, justification versus excuse affects the law\'s message. Justification says "what you did was right given the circumstances." Excuse says "what you did was wrong, but we understand why." Society sends different messages with these frameworks. From a policy standpoint, making self-defense a justification encourages victims to defend themselves (they\'re acting lawfully) rather than wait for police or authorities. It empowers people to protect their safety without fear of criminal prosecution.',
+                    problem: 'If self-defense were merely an excuse, defendants would receive criminal records (though potentially reduced sentences). This would stigmatize victims who defended themselves.',
+                    counterargument: 'Some argue the distinction is semantic. Others note that imperfect self-defense (under MPC § 3.09) reduces liability without being full justification, showing the line isn\'t always clear.',
+                    connectionQuestions: [
+                        'Should victims of assault face any criminal liability even if their self-defense was excessive?',
+                        'What\'s the practical difference between acquittal via justification versus excuse?',
+                        'Can a third party help someone using self-defense without committing a crime?',
+                        'Does making self-defense a justification rather than excuse encourage more violence?'
+                    ]
+                }
+            ]
+        };
+
+        // Initialize the page
+        function init() {
+            renderAllUnits();
+            setupEventListeners();
+            updateProgress();
+        }
+
+        function renderAllUnits() {
+            const container = document.getElementById('unitsContainer');
+            container.innerHTML = '';
+
+            Object.entries(doctrinesData).forEach(([unit, doctrines]) => {
+                const unitElement = createUnitElement(unit, doctrines);
+                container.appendChild(unitElement);
+            });
+        }
+
+        function createUnitElement(unit, doctrines) {
+            const unitDiv = document.createElement('div');
+            unitDiv.className = 'unit';
+
+            const header = document.createElement('div');
+            header.className = 'unit-header collapsed';
+            header.innerHTML = `
+                <h2>${unit}</h2>
+                <span class="toggle-icon">▶</span>
+            `;
+
+            const content = document.createElement('div');
+            content.className = 'unit-content';
+
+            doctrines.forEach((doctrine, idx) => {
+                const doctrineId = `${unit.replace(/\s+/g, '-')}-${idx}`;
+                const doctrineElement = createDoctrineElement(doctrine, doctrineId);
+                content.appendChild(doctrineElement);
+            });
+
+            header.addEventListener('click', () => {
+                header.classList.toggle('collapsed');
+                content.classList.toggle('expanded');
+                const unitName = unit.replace(/\s+/g, '-');
+                if (header.classList.contains('collapsed')) {
+                    expandedUnits.delete(unitName);
+                } else {
+                    expandedUnits.add(unitName);
+                }
+            });
+
+            unitDiv.appendChild(header);
+            unitDiv.appendChild(content);
+            return unitDiv;
+        }
+
+        function createDoctrineElement(doctrine, doctrineId) {
+            const doctrineDiv = document.createElement('div');
+            doctrineDiv.className = 'doctrine';
+            doctrineDiv.id = doctrineId;
+            if (readDoctrines.has(doctrineId)) {
+                doctrineDiv.classList.add('read');
+            }
+
+            const header = document.createElement('div');
+            header.className = 'doctrine-header';
+            header.innerHTML = `
+                <h3>${doctrine.title}</h3>
+                <span class="expand-icon">▼</span>
+            `;
+
+            const content = document.createElement('div');
+            content.className = 'doctrine-content';
+            if (expandedDoctrines.has(doctrineId)) {
+                header.classList.add('expanded');
+                content.classList.add('expanded');
+            }
+
+            content.innerHTML = `
+                <div class="doctrine-section">
+                    <h4>The Rule</h4>
+                    <p>${doctrine.rule}</p>
+                </div>
+
+                <div class="doctrine-section">
+                    <h4>Why This Rule Exists</h4>
+                    <p>${doctrine.whyExists}</p>
+                    <button class="why-button" onclick="this.nextElementSibling.classList.toggle('expanded'); this.classList.toggle('expanded');">
+                        Deeper Dive →
+                    </button>
+                    <div class="deeper-explanation">
+                        <p><strong>Policy Rationale:</strong> The core of why this rule matters is that it balances competing values. It prevents the system from going too far in one direction (whether that's deterrence, fairness, or flexibility) while ensuring that the law achieves its fundamental goals.</p>
+                    </div>
+                </div>
+
+                <div class="doctrine-section">
+                    <h4>What Problem It Solves</h4>
+                    <p>${doctrine.problem}</p>
+                </div>
+
+                <div class="doctrine-section">
+                    <h4>The Counterargument</h4>
+                    <p>${doctrine.counterargument}</p>
+                </div>
+
+                <div class="connection-questions">
+                    <div class="connection-questions-header" onclick="this.classList.toggle('collapsed'); this.nextElementSibling.classList.toggle('expanded')">
+                        <span>📚 Connection Questions (Elaborative Interrogation)</span>
+                        <span class="toggle">▼</span>
+                    </div>
+                    <div class="questions-list expanded">
+                        ${doctrine.connectionQuestions.map(q => `
+                            <div class="question">${q}</div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <button class="mark-read-btn ${readDoctrines.has(doctrineId) ? 'marked' : ''}"
+                    onclick="toggleMarkRead('${doctrineId}')">
+                    ${readDoctrines.has(doctrineId) ? '✓ Read' : 'Mark as Read'}
+                </button>
+            `;
+
+            header.addEventListener('click', () => {
+                header.classList.toggle('expanded');
+                content.classList.toggle('expanded');
+                if (header.classList.contains('expanded')) {
+                    expandedDoctrines.add(doctrineId);
+                } else {
+                    expandedDoctrines.delete(doctrineId);
+                }
+            });
+
+            doctrineDiv.appendChild(header);
+            doctrineDiv.appendChild(content);
+            return doctrineDiv;
+        }
+
+        function setupEventListeners() {
+            document.getElementById('expandAllBtn').addEventListener('click', () => {
+                document.querySelectorAll('.unit-header').forEach(h => {
+                    h.classList.remove('collapsed');
+                    h.nextElementSibling.classList.add('expanded');
+                });
+                document.querySelectorAll('.doctrine-header').forEach(h => {
+                    h.classList.add('expanded');
+                    h.nextElementSibling.classList.add('expanded');
+                });
+                expandedUnits.clear();
+                expandedDoctrines.clear();
+                Object.keys(doctrinesData).forEach(u => expandedUnits.add(u.replace(/\s+/g, '-')));
+                document.querySelectorAll('.doctrine').forEach(d => {
+                    expandedDoctrines.add(d.id);
+                });
+            });
+
+            document.getElementById('collapseAllBtn').addEventListener('click', () => {
+                document.querySelectorAll('.unit-header').forEach(h => {
+                    h.classList.add('collapsed');
+                    h.nextElementSibling.classList.remove('expanded');
+                });
+                document.querySelectorAll('.doctrine-header').forEach(h => {
+                    h.classList.remove('expanded');
+                    h.nextElementSibling.classList.remove('expanded');
+                });
+                expandedUnits.clear();
+                expandedDoctrines.clear();
+            });
+
+            document.getElementById('resetBtn').addEventListener('click', () => {
+                readDoctrines.clear();
+                updateProgress();
+                document.querySelectorAll('.doctrine').forEach(d => {
+                    d.classList.remove('read');
+                    const btn = d.querySelector('.mark-read-btn');
+                    if (btn) {
+                        btn.classList.remove('marked');
+                        btn.textContent = 'Mark as Read';
+                    }
+                });
+            });
+
+            document.getElementById('searchBox').addEventListener('input', (e) => {
+                filterDoctrines(e.target.value.toLowerCase());
+            });
+        }
+
+        function toggleMarkRead(doctrineId) {
+            const doctrine = document.getElementById(doctrineId);
+            const btn = doctrine.querySelector('.mark-read-btn');
+
+            if (readDoctrines.has(doctrineId)) {
+                readDoctrines.delete(doctrineId);
+                doctrine.classList.remove('read');
+                btn.classList.remove('marked');
+                btn.textContent = 'Mark as Read';
+            } else {
+                readDoctrines.add(doctrineId);
+                doctrine.classList.add('read');
+                btn.classList.add('marked');
+                btn.textContent = '✓ Read';
+            }
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const totalDoctrines = Object.values(doctrinesData).reduce((sum, arr) => sum + arr.length, 0);
+            const readCount = readDoctrines.size;
+            document.getElementById('progressText').textContent = `${readCount} / ${totalDoctrines}`;
+            const percentage = totalDoctrines > 0 ? (readCount / totalDoctrines) * 100 : 0;
+            document.getElementById('progressFill').style.width = percentage + '%';
+        }
+
+        function filterDoctrines(searchTerm) {
+            document.querySelectorAll('.doctrine').forEach(doctrine => {
+                const title = doctrine.querySelector('h3').textContent.toLowerCase();
+                const rule = doctrine.querySelector('.doctrine-section p').textContent.toLowerCase();
+                const matches = title.includes(searchTerm) || rule.includes(searchTerm);
+                doctrine.style.display = matches ? 'block' : 'none';
+            });
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+    <script src="../shared.js"></script>
+    <script src="../navbar.js"></script>
+</body>
+</html>

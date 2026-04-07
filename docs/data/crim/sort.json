@@ -1,0 +1,473 @@
+{
+  "modes": [
+    {
+      "id": "cl-vs-mpc",
+      "title": "Common Law vs. MPC",
+      "buckets": ["Common Law", "MPC"],
+      "pairs": [
+        {
+          "statement": "Murder is divided into first and second degrees.",
+          "answer": "Common Law",
+          "explanation": "Common law distinguishes between first-degree murder (P&D, statutory, FM) and second-degree murder. The MPC uses no degrees—only 'murder' defined by specific mental states."
+        },
+        {
+          "statement": "Murder requires purposely or knowingly killing, or recklessly killing under extreme indifference.",
+          "answer": "MPC",
+          "explanation": "MPC § 210.2 defines murder via mental states (purpose, knowledge, extreme recklessness). Common law uses 'malice aforethought' with four forms."
+        },
+        {
+          "statement": "Involuntary manslaughter can be based on ordinary negligence.",
+          "answer": "Common Law",
+          "explanation": "CL allows recklessness, gross negligence, or negligence. MPC § 210.3 permits only recklessness for involuntary manslaughter—never negligence."
+        },
+        {
+          "statement": "The default mens rea is recklessness when none is specified.",
+          "answer": "MPC",
+          "explanation": "MPC § 2.02 sets recklessness as the default. Common law defaults vary by jurisdiction and crime."
+        },
+        {
+          "statement": "Voluntary manslaughter reduction is based on categorical legal provocation (battery, adultery, etc.).",
+          "answer": "Common Law",
+          "explanation": "CL uses the categorical approach with judge-decided categories. MPC § 210.3 uses EMED with a jury-decided reasonableness standard."
+        },
+        {
+          "statement": "EMED is the framework for mitigating murder to manslaughter.",
+          "answer": "MPC",
+          "explanation": "MPC § 210.3 defines Extreme Mental or Emotional Disturbance (EMED). Common law uses categorical provocation or modern 'reasonable person' approach."
+        },
+        {
+          "statement": "Felony murder applies as an automatic doctrine when death results from a dangerous felony.",
+          "answer": "Common Law",
+          "explanation": "Common law uses FM with limitations (inherently dangerous, res gestae, merger, agency). The MPC eliminates FM but presumes extreme recklessness for enumerated felonies."
+        },
+        {
+          "statement": "A stated mental state modifies all actus reus elements unless contrary intent appears.",
+          "answer": "MPC",
+          "explanation": "MPC § 2.02(3)–(4) establishes this principle. Common law does not have a uniform rule applying mens rea across elements."
+        },
+        {
+          "statement": "Mistake of fact defense for specific intent crimes requires the mistake to be both honest and reasonable.",
+          "answer": "Common Law",
+          "explanation": "For CL general intent crimes, both honesty and reasonableness required. Specific intent crimes only need honesty. MPC § 2.04 has a unified framework based on the mental state required."
+        },
+        {
+          "statement": "Willful blindness satisfies 'knowingly' when there is conscious purpose to avoid learning the truth.",
+          "answer": "MPC",
+          "explanation": "United States v. Jewell (MPC jurisdiction) holds willful blindness = knowledge. Common law jurisdictions vary on whether willful blindness counts as knowledge."
+        },
+        {
+          "statement": "An omission can satisfy actus reus when a legal duty exists.",
+          "answer": "Common Law",
+          "explanation": "Both systems recognize omission as satisfying actus reus if duty exists (special relationship, contract, statute, creation of risk, voluntary assumption). This is universal."
+        },
+        {
+          "statement": "The prosecution must prove deliberation and premeditation as separate elements.",
+          "answer": "Common Law",
+          "explanation": "CL first-degree murder requires willful, deliberate, and premeditated killing. MPC has no 'deliberation' or 'premeditation'—only mental state definitions."
+        },
+        {
+          "statement": "Recklessness is defined as conscious disregard of a substantial and unjustifiable risk.",
+          "answer": "MPC",
+          "explanation": "MPC § 2.02 defines recklessness this way. Common law uses similar concept but applies it variably across different crime categories."
+        },
+        {
+          "statement": "Conditional intent is a cognizable mental state that satisfies the mens rea requirement.",
+          "answer": "MPC",
+          "explanation": "MPC § 2.02(6) recognizes conditional intent. Common law does not uniformly recognize it."
+        },
+        {
+          "statement": "Transferred intent applies when defendant intends harm to one person but causes it to another.",
+          "answer": "Common Law",
+          "explanation": "Both systems recognize transferred intent to an extent, but it originates in common law doctrine. People v. Scott applies it to bad-aim killings."
+        }
+      ]
+    },
+    {
+      "id": "gen-vs-spec",
+      "title": "General Intent vs. Specific Intent",
+      "buckets": ["General Intent", "Specific Intent"],
+      "pairs": [
+        {
+          "statement": "Assault — the attempt or threat of force.",
+          "answer": "General Intent",
+          "explanation": "Assault requires only intent to do the act (threat or attempt). No intent beyond the actus reus."
+        },
+        {
+          "statement": "Theft — the intent to permanently deprive the owner of property.",
+          "answer": "Specific Intent",
+          "explanation": "Theft requires intent to PERMANENTLY DEPRIVE, which goes beyond the taking itself. This is additional intent beyond the actus reus."
+        },
+        {
+          "statement": "Battery — the unlawful application of force.",
+          "answer": "General Intent",
+          "explanation": "Battery requires only intent to apply force. No additional intent beyond the actus reus."
+        },
+        {
+          "statement": "Burglary — breaking and entering a building with intent to commit a crime inside.",
+          "answer": "Specific Intent",
+          "explanation": "Burglary requires intent to commit a crime INSIDE (future crime). This intent goes beyond the entry itself."
+        },
+        {
+          "statement": "Rape — non-consensual sexual intercourse.",
+          "answer": "General Intent",
+          "explanation": "Rape requires only intent to commit the sexual act. No additional intent beyond the actus reus (though jurisdictions vary)."
+        },
+        {
+          "statement": "Robbery — taking property by force or threat with intent to permanently deprive.",
+          "answer": "Specific Intent",
+          "explanation": "Robbery requires specific intent to permanently deprive (the intent of theft) plus the act of taking by force."
+        },
+        {
+          "statement": "Murder — unlawful killing with malice aforethought.",
+          "answer": "General Intent",
+          "explanation": "Murder is generally classified as general intent—intent to do the act of killing, with malice inferred from circumstances. (Some modern courts debate this.)"
+        },
+        {
+          "statement": "Larceny — the trespassory taking and carrying away of personal property of another with intent to permanently deprive.",
+          "answer": "Specific Intent",
+          "explanation": "The specific intent to PERMANENTLY DEPRIVE is an intent beyond the taking; this makes it specific intent."
+        },
+        {
+          "statement": "Under the specific intent rule, an honest mistake of fact is a complete defense.",
+          "answer": "Specific Intent",
+          "explanation": "For specific intent crimes, even an unreasonable honest mistake negates intent. General intent crimes require the mistake to be both honest AND reasonable."
+        },
+        {
+          "statement": "Under the general intent rule, a mistake of fact is only a defense if both honest and reasonable.",
+          "answer": "General Intent",
+          "explanation": "General intent crimes require the higher standard: the mistake must be both honest AND reasonable to be a valid defense."
+        },
+        {
+          "statement": "Arson — the malicious burning of a dwelling or property.",
+          "answer": "Specific Intent",
+          "explanation": "Arson requires malice (intent to burn), which is an additional mental state beyond the act of burning. Specific intent crime."
+        },
+        {
+          "statement": "Manslaughter — unlawful killing without malice aforethought.",
+          "answer": "General Intent",
+          "explanation": "Voluntary manslaughter (heat of passion) requires only intent to kill or do GBI. Involuntary manslaughter requires recklessness or negligence. General intent."
+        },
+        {
+          "statement": "False pretenses — obtaining title and possession of property through fraudulent misrepresentation.",
+          "answer": "Specific Intent",
+          "explanation": "False pretenses requires specific intent to defraud (intent to permanently deprive), going beyond the receipt of property."
+        },
+        {
+          "statement": "Forgery — making or altering a false document with intent to defraud.",
+          "answer": "Specific Intent",
+          "explanation": "Forgery requires specific intent to defraud or use the false document. Intent beyond the mere act of creating the document."
+        },
+        {
+          "statement": "Kidnapping — the unlawful taking and carrying away of a person without consent.",
+          "answer": "Specific Intent",
+          "explanation": "Kidnapping requires specific intent—intent to move the person or confine them. Specific intent crime."
+        }
+      ]
+    },
+    {
+      "id": "justify-vs-excuse",
+      "title": "Justification vs. Excuse",
+      "buckets": ["Justification", "Excuse"],
+      "pairs": [
+        {
+          "statement": "Self-defense — using proportional force to protect yourself from imminent harm.",
+          "answer": "Justification",
+          "explanation": "Self-defense is a justification: the defendant's act was RIGHT under the circumstances. The law approves of defending oneself from attack."
+        },
+        {
+          "statement": "Duress — committing a crime under threat of imminent bodily harm from a human threat.",
+          "answer": "Excuse",
+          "explanation": "Duress is an excuse: the defendant's act was WRONG, but the defendant is not criminally responsible due to the coercive circumstances. (Note: duress does not excuse murder.)"
+        },
+        {
+          "statement": "Necessity — choosing the lesser evil when faced with a choice of harms from natural circumstances.",
+          "answer": "Justification",
+          "explanation": "Necessity is typically treated as a justification: the defendant's choice to cause lesser harm was RIGHT under the circumstances. (Cannot justify killing an innocent person.)"
+        },
+        {
+          "statement": "Insanity — the defendant lacked capacity to appreciate the nature/wrongfulness of the act due to mental illness.",
+          "answer": "Excuse",
+          "explanation": "Insanity is an excuse: the defendant's act was wrong, but the defendant is excused from responsibility due to lack of mental capacity to appreciate wrongfulness."
+        },
+        {
+          "statement": "Defense of others — using force to protect another person from imminent harm.",
+          "answer": "Justification",
+          "explanation": "Defense of others is a justification: defending an innocent third party from harm is socially approved, like self-defense."
+        },
+        {
+          "statement": "Infancy/age — a child under a certain age (typically 7) cannot form criminal intent.",
+          "answer": "Excuse",
+          "explanation": "Infancy is typically an excuse: young children lack the cognitive capacity to appreciate wrongfulness. It's status-based, not about the rightness of the act."
+        },
+        {
+          "statement": "Intoxication (involuntary) — someone secretly slipped the defendant drugs without knowledge or consent.",
+          "answer": "Excuse",
+          "explanation": "Involuntary intoxication is an excuse: the defendant's act may have been wrong, but the defendant lacked capacity to form intent due to unknown intoxication."
+        },
+        {
+          "statement": "Voluntary intoxication — the defendant knowingly consumed alcohol or drugs before committing the crime.",
+          "answer": "Excuse",
+          "explanation": "Voluntary intoxication is sometimes treated as an excuse (negates specific intent) or partial excuse. It typically does not excuse general intent crimes or gross negligence."
+        }
+      ]
+    },
+    {
+      "id": "theft-types",
+      "title": "Classify the Theft",
+      "buckets": ["Larceny", "Larceny by Trick", "False Pretenses", "Embezzlement"],
+      "pairs": [
+        {
+          "statement": "D shoplifts a coat from a store by concealing it in a bag and walking out.",
+          "answer": "Larceny",
+          "explanation": "Classic larceny: trespassory taking (without owner consent) + asportation (carrying away) + intent to permanently deprive. No fraud involved."
+        },
+        {
+          "statement": "D tells a jeweler that she is buying on behalf of a royal family, securing possession of a necklace to show the 'client,' then sells it.",
+          "answer": "Larceny by Trick",
+          "explanation": "D obtained possession through fraud (false statement) but NOT title. Larceny by trick: fraudulent deception → possession obtained. The jeweler still owned the necklace."
+        },
+        {
+          "statement": "D uses a fake ID to pose as a bank official, convincing a homeowner to sign documents transferring property title. The homeowner thinks D is a legitimate buyer.",
+          "answer": "False Pretenses",
+          "explanation": "D obtained BOTH title AND possession through fraud. The victim transferred ownership believing D was legitimate. This is false pretenses (State v. Pierce)."
+        },
+        {
+          "statement": "D, a cashier at a grocery store, pockets $100 from the register over the course of her shift.",
+          "answer": "Embezzlement",
+          "explanation": "D is in lawful possession of the money through employment. She then CONVERTS it (uses it contrary to the owner's interests). This is embezzlement—conversion by someone entrusted."
+        },
+        {
+          "statement": "D borrowed her friend's car with permission, intending to return it. She drives it to another state and sells it.",
+          "answer": "Embezzlement",
+          "explanation": "D had lawful possession (lent the car). She then converted it (sold it instead of returning). Embezzlement: lawful possession + conversion."
+        },
+        {
+          "statement": "D convinces a store manager that she is a health inspector and needs to 'inspect' valuable merchandise for quality control, takes it, and never returns it.",
+          "answer": "Larceny by Trick",
+          "explanation": "D obtained possession through a false pretense (false identity) but the store manager never intended to transfer title. Possession obtained via fraud = larceny by trick."
+        },
+        {
+          "statement": "D's employer gives D a check to deposit in the company account. D cashes it and keeps the money instead.",
+          "answer": "Embezzlement",
+          "explanation": "D had lawful possession of the check (entrusted to deposit it). She converted it to her own use instead. Embezzlement."
+        },
+        {
+          "statement": "D picks a pocket and steals a wallet without the victim's knowledge or consent.",
+          "answer": "Larceny",
+          "explanation": "Classic larceny: trespassory taking (without consent) + carrying away + intent to permanently deprive. No fraud; purely a stealth taking."
+        },
+        {
+          "statement": "D, a bank teller, gradually skims small amounts from dormant accounts over six months, totaling $12,000.",
+          "answer": "Embezzlement",
+          "explanation": "D had lawful possession (as teller) and converted the funds. Systematic conversion by someone entrusted = embezzlement."
+        },
+        {
+          "statement": "D rents an apartment, claiming to be employed at a prestigious firm and showing fake employment verification. After the lease is signed and she receives keys, she moves in and lives there for three months without paying rent.",
+          "answer": "False Pretenses",
+          "explanation": "D obtained the right to POSSESSION (and arguably an estate in the property) through fraudulent misrepresentation of identity/employment. False pretenses."
+        },
+        {
+          "statement": "D tells a pawn broker that a watch is his own, when it actually belongs to a relative. The pawn broker buys the watch.",
+          "answer": "Larceny by Trick",
+          "explanation": "D lied about ownership, causing the pawn broker to take possession believing D had the right to sell. But the pawn broker never got good title. Larceny by trick."
+        },
+        {
+          "statement": "D, a handyman hired to repair a homeowner's roof, finds valuable jewelry in the attic and takes it.",
+          "answer": "Larceny",
+          "explanation": "D was in lawful possession of the house (invited) but took the jewelry trespassorily (without consent). Not embezzlement because the homeowner never entrusted the jewelry to D."
+        },
+        {
+          "statement": "D finds a package containing expensive electronics on a public street. D takes it and sells it.",
+          "answer": "Larceny",
+          "explanation": "D takes property of another without consent + carries it away + intent to permanently deprive. Though found, it is still property of another. Larceny."
+        },
+        {
+          "statement": "D, a lawyer, is given client funds to hold in trust. D uses the funds for personal gambling, intending to replace them later but never does.",
+          "answer": "Embezzlement",
+          "explanation": "D had lawful possession (entrusted as fiduciary/lawyer). D converted the funds to personal use. Embezzlement."
+        }
+      ]
+    },
+    {
+      "id": "mens-rea",
+      "title": "MPC Mens Rea Levels",
+      "buckets": ["Purposely", "Knowingly", "Recklessly", "Negligently"],
+      "pairs": [
+        {
+          "statement": "D shoots a gun at a target at a shooting range, consciously aiming to hit the bullseye.",
+          "answer": "Purposely",
+          "explanation": "D has a conscious OBJECT to hit the target. Purposely = desire to produce the result. This is the highest mental state."
+        },
+        {
+          "statement": "D drives a car knowing the brakes are defective, aware that failure to stop at a red light is practically certain.",
+          "answer": "Knowingly",
+          "explanation": "D is aware that braking failure is practically CERTAIN (virtual certainty). Knowingly = awareness the result is practically certain, even if not the conscious object."
+        },
+        {
+          "statement": "D drives 80 mph in a residential neighborhood, aware of a substantial risk that someone might be hit.",
+          "answer": "Recklessly",
+          "explanation": "D consciously disregards a SUBSTANTIAL and UNJUSTIFIABLE RISK of harm. Aware of the risk but disregarding it = recklessness."
+        },
+        {
+          "statement": "D leaves a loaded gun on a coffee table in a home with young children present, without thinking about the risks.",
+          "answer": "Negligently",
+          "explanation": "D SHOULD BE AWARE of the risk but is not actually conscious of it. Negligence = objective; reasonable person standard. D should have known better."
+        },
+        {
+          "statement": "D puts a cup of coffee on a ledge intending to trip a coworker, causing the coworker to break an arm.",
+          "answer": "Purposely",
+          "explanation": "D has conscious object to cause harm (injury). Purposely—the conscious object to cause bodily injury."
+        },
+        {
+          "statement": "D sells a car knowing the engine will definitely fail within 100 miles, though the buyer doesn't know this.",
+          "answer": "Knowingly",
+          "explanation": "D is aware the engine failure is practically CERTAIN. Not D's conscious object, but virtually certain. Knowingly."
+        },
+        {
+          "statement": "D throws a rock off a cliff, aware of a substantial risk it will hit a hiker below, but indifferent to the outcome.",
+          "answer": "Recklessly",
+          "explanation": "D is consciously aware of a substantial risk and consciously disregards it. Recklessness = awareness + disregard."
+        },
+        {
+          "statement": "D leaves a banana peel on a grocery store floor. A reasonable store manager would have noticed and removed the hazard, but D did not think about it.",
+          "answer": "Negligently",
+          "explanation": "D is not consciously aware of the risk. But a reasonable person would be aware. Negligence = should have been aware."
+        },
+        {
+          "statement": "D manufactures a faulty bridge with a conscious objective to harm people who cross it.",
+          "answer": "Purposely",
+          "explanation": "Purposely requires conscious object/desire to cause harm. D intentionally built a dangerous bridge to cause injury."
+        },
+        {
+          "statement": "D releases a swarm of bees into a crowded marketplace, knowing people will certainly be stung.",
+          "answer": "Knowingly",
+          "explanation": "D knows stings are practically CERTAIN (virtual certainty). Not D's object/desire, but knowledge of certainty = knowingly."
+        },
+        {
+          "statement": "D plays Russian roulette with a loaded revolver, conscious of the substantial risk of death.",
+          "answer": "Recklessly",
+          "explanation": "D consciously disregards a substantial risk of death. Recklessness—conscious awareness + conscious disregard."
+        },
+        {
+          "statement": "D parks a car on a steep hill without engaging the parking brake. A reasonable driver would have used the brake, but D was careless.",
+          "answer": "Negligently",
+          "explanation": "D is not conscious of the risk. A reasonable person would engage the brake. Negligence = objective failure to be aware of risk."
+        },
+        {
+          "statement": "D adds poison to a drink with the intent to kill the person who drinks it.",
+          "answer": "Purposely",
+          "explanation": "Conscious object to cause death. Purposely—the highest and clearest form of culpability."
+        },
+        {
+          "statement": "D operates a heavily polluting factory, fully aware that the pollution will definitely cause respiratory illness in nearby residents.",
+          "answer": "Knowingly",
+          "explanation": "D knows illness is practically certain (virtual certainty), even if D's object is just to operate the factory profitably. Knowingly."
+        }
+      ]
+    },
+    {
+      "id": "theft-types-advanced",
+      "title": "Larceny vs. Embezzlement vs. False Pretenses",
+      "buckets": ["Larceny", "Embezzlement", "False Pretenses"],
+      "pairs": [
+        {
+          "statement": "D obtains possession of property through a misrepresentation but does not get title.",
+          "answer": "Larceny",
+          "explanation": "This is larceny by trick — D obtains possession (not title) through deception. The owner's consent is negated by the fraud."
+        },
+        {
+          "statement": "D, a company accountant, transfers company funds to personal accounts.",
+          "answer": "Embezzlement",
+          "explanation": "D was entrusted with lawful possession of the funds in a fiduciary capacity and converted them. This is the hallmark of embezzlement."
+        },
+        {
+          "statement": "D submits fraudulent insurance claims and receives payment based on false documentation.",
+          "answer": "False Pretenses",
+          "explanation": "Like Mills, D made intentionally false statements, knew they were false, intended the victim to rely on them, and the victim did — obtaining title to the money through fraud."
+        },
+        {
+          "statement": "D takes a test drive car and never returns it.",
+          "answer": "Larceny",
+          "explanation": "Like Barbour, D was given custody (limited permission to drive), not possession or title. Exceeding that custody with intent to deprive is larceny."
+        },
+        {
+          "statement": "D, a pastor trusted by an elderly widow, uses her bank account funds for personal expenses.",
+          "answer": "Embezzlement",
+          "explanation": "Like Steele, D was placed in a position of trust and confidence creating fiduciary duty, then converted the entrusted property."
+        },
+        {
+          "statement": "D picks V's pocket while standing in a crowded subway.",
+          "answer": "Larceny",
+          "explanation": "Classic larceny: trespassory taking and carrying away of personal property with intent to permanently deprive. No consent, no trust relationship."
+        },
+        {
+          "statement": "D lies about a charity to collect donations that D keeps personally.",
+          "answer": "False Pretenses",
+          "explanation": "D made false representations (fake charity) with intent to defraud, and victims transferred title to the money based on those misrepresentations."
+        },
+        {
+          "statement": "D borrows V's laptop intending at the time to return it, but later decides to keep it.",
+          "answer": "Larceny",
+          "explanation": "Not embezzlement (no fiduciary relationship), not false pretenses (no misrepresentation at time of obtaining). The intent to permanently deprive formed after lawful possession — this is a continuing trespass theory."
+        },
+        {
+          "statement": "D, a bank teller, skims small amounts from customer accounts over months.",
+          "answer": "Embezzlement",
+          "explanation": "D had lawful possession through employment trust and converted the funds. Classic embezzlement scenario."
+        },
+        {
+          "statement": "D uses Knight's business information to fraudulently purchase phones from AT&T at discount and resell at full price.",
+          "answer": "False Pretenses",
+          "explanation": "Like Pierce, D made false representations (pretending to be authorized) to obtain title to property through fraud."
+        }
+      ]
+    },
+    {
+      "id": "self-defense",
+      "title": "Self-Defense: Justified vs. Not Justified",
+      "buckets": ["Justified", "Not Justified"],
+      "pairs": [
+        {
+          "statement": "D reasonably believed attacker was about to use deadly force and responded with proportional deadly force.",
+          "answer": "Justified",
+          "explanation": "Meets all elements: reasonable belief, imminent threat, necessity, and proportionality."
+        },
+        {
+          "statement": "D shot at someone who insulted them verbally but made no physical threat.",
+          "answer": "Not Justified",
+          "explanation": "Words alone are not sufficient provocation for deadly force. No imminent threat of unlawful force."
+        },
+        {
+          "statement": "D used a baseball bat against an attacker who was punching them repeatedly.",
+          "answer": "Not Justified",
+          "explanation": "Likely disproportionate force — responding to non-deadly force (punches) with potentially deadly force (bat) violates proportionality unless D reasonably feared serious bodily injury."
+        },
+        {
+          "statement": "D, who had been previously mugged in the same neighborhood, shot subway riders who approached aggressively asking for money.",
+          "answer": "Not Justified",
+          "explanation": "Per Goetz, self-defense requires objectively reasonable belief. Prior experiences are relevant but don't override the objective standard — jury must find a reasonable person would have acted similarly."
+        },
+        {
+          "statement": "D killed an attacker who had cornered them in an alley and was swinging a knife.",
+          "answer": "Justified",
+          "explanation": "Imminent deadly threat (knife), no retreat possible (cornered), proportional response (deadly force against deadly force), reasonable belief in necessity."
+        },
+        {
+          "statement": "D shot someone who threatened to 'get them tomorrow.'",
+          "answer": "Not Justified",
+          "explanation": "No imminence — the threat was for the future, not immediate. Self-defense requires imminent and unlawful force."
+        },
+        {
+          "statement": "Under the MPC, D believed force was immediately necessary to protect against unlawful force, even though the belief was unreasonable.",
+          "answer": "Justified",
+          "explanation": "MPC § 3.04 focuses on subjective belief — if D believed force was immediately necessary, it's justified. But under § 3.09(2), if D was reckless/negligent in forming that belief, conviction for manslaughter is possible."
+        },
+        {
+          "statement": "D, suffering from anxiety neurosis, overreacted to a minor physical altercation by using deadly force.",
+          "answer": "Not Justified",
+          "explanation": "Per Simon, the belief must be reasonable to a reasonable person. Mental health conditions go to subjective belief but the objective standard still applies."
+        }
+      ]
+    }
+  ]
+}

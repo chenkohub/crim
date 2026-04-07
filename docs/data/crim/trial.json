@@ -1,0 +1,227 @@
+{
+  "scenarios": [
+    {
+      "id": 1,
+      "title": "The Bar Fight",
+      "sentences": [
+        "Dave and Victor get into a heated argument at a bar after Victor insults Dave's wife.",
+        "Victor shoves Dave hard against the bar.",
+        "Dave, visibly enraged, reaches under his jacket and pulls out a knife he carries daily.",
+        "Dave stabs Victor once in the chest with the blade.",
+        "Victor dies on the way to the hospital.",
+        "Medical evidence shows Victor would have survived if the ambulance had not been delayed 40 minutes due to a highway traffic accident."
+      ],
+      "best_charge": "Voluntary Manslaughter",
+      "charge_options": ["First-Degree Murder", "Second-Degree Murder", "Voluntary Manslaughter", "Involuntary Manslaughter", "Negligent Homicide", "No Crime"],
+      "best_defense": "Heat of Passion / Provocation",
+      "defense_options": ["Self-Defense", "Heat of Passion / Provocation", "Lack of Premeditation", "EMED (MPC)", "Causation Defense", "No Voluntary Act"],
+      "analysis": {
+        "prosecution": "Dave's actions demonstrate at minimum second-degree murder. While premeditation is questionable (the stabbing occurred immediately after the shove), Dave's carrying of the knife daily suggests preparation for violence. He consciously chose to use a weapon targeting a vital area (chest), showing he weighed the consequences. If deliberation can be established through the positioning and targeting, first-degree murder is supportable. The 40-minute ambulance delay does not break the chain of causation; medical complications are foreseeable consequences of inflicting a serious chest wound.",
+        "defense": "Dave acted in the immediate heat of passion triggered by a battery (the shove) after insulting words about his wife. Under the categorical approach, battery is legally adequate provocation. The stabbing occurred with no reasonable opportunity to cool off—it was instantaneous. Under Bingham, merely having time to deliberate does not mean he actually deliberated; the brief seconds between provocation and response are insufficient for premeditation. Under the modern approach, a jury could find a reasonable person would not have cooled off. Under MPC EMED, Dave's extreme emotional disturbance following spousal insult + physical assault has a reasonable explanation.",
+        "key_cases": ["State v. Brown", "State v. Bingham", "People v. Berry", "State v. Dumlao", "People v. Scott"],
+        "secondary_issues": ["Causation (ambulance delay as intervening cause)", "Temporal proximity of provocation to killing", "Carrying a weapon as evidence of premeditation vs. habit"]
+      }
+    },
+    {
+      "id": 2,
+      "title": "The Pawn Shop Scheme",
+      "sentences": [
+        "Mia borrows her neighbor Tom's expensive watch, telling him she needs it for a formal event.",
+        "Instead of attending the event, Mia takes the watch to a pawn shop and sells it, pocketing the cash.",
+        "Separately, Mia's coworker Jake knows that Mia has been pawning stolen items.",
+        "When Mia asks Jake to drive her to the pawn shop 'to sell some stuff,' Jake agrees despite suspecting the items are stolen.",
+        "Jake drives Mia to the pawn shop without confirming what items are involved.",
+        "Meanwhile, Mia's friend Carol, a bank teller, has been skimming small amounts from dormant accounts over six months, totaling $12,000."
+      ],
+      "best_charge": "Larceny by Trick (Mia); Embezzlement (Carol); Accomplice Liability (Jake)",
+      "charge_options": ["Larceny", "Larceny by Trick", "False Pretenses", "Embezzlement", "Theft by Deception", "No Crime", "Accomplice Liability"],
+      "best_defense": "Mistake of Fact (all defendants)",
+      "defense_options": ["Mistake of Fact", "No Intent to Permanently Deprive", "Lawful Possession", "Lack of Knowledge", "Duress", "Lack of Assistance"],
+      "analysis": {
+        "prosecution": "Mia committed larceny by trick. She fraudulently obtained possession of Tom's watch by lying about needing it for an event (State v. Barbour framework). Tom never intended to transfer title—he lent the watch expecting return. Her conversion by selling it completes larceny by trick. Carol committed embezzlement—she had lawful possession of funds through her employment as a bank teller and converted them to her own use over six months. This shows purpose and knowledge (MPC § 2.02 levels). Jake aided and abetted Mia's theft. Under willful blindness doctrine (United States v. Jewell), Jake's conscious purpose to avoid learning whether items were stolen, combined with his knowledge that Mia deals in stolen goods, satisfies 'knowingly' for accomplice liability.",
+        "defense": "Mia could argue no intent to permanently deprive (though she pawned the watch, undercutting this). More realistically, she might claim the watch was collateral against a loan she never repaid (embezzlement theory), though the facts suggest fraud. Carol could argue the money was a 'loan' she intended to repay, but the six-month pattern undermines this. Jake's strongest defense is lack of knowledge—he suspected but did not confirm. Under the MPC, 'knowingly' requires awareness of a high probability, and Jewell's willful blindness doctrine is not universally accepted. However, Jake's pattern of driving Mia to pawn shops knowing her pattern of behavior is likely sufficient.",
+        "key_cases": ["State v. Barbour", "State v. Pierce", "United States v. Jewell", "People v. Navarro", "Embezzlement standards"],
+        "secondary_issues": ["Distinction between larceny by trick (Mia), false pretenses (Carol if she misrepresented), and embezzlement (Carol's fiduciary duty)", "Accomplice liability mental state for Jake", "Willful blindness as knowledge"]
+      }
+    },
+    {
+      "id": 3,
+      "title": "The House Party",
+      "sentences": [
+        "Alex hosts a house party where guests are using drugs and alcohol.",
+        "Alex's friend Ben, heavily intoxicated, gets into a fight with another guest, Chris.",
+        "Alex sees Ben beating Chris severely but does nothing to intervene.",
+        "Chris later dies from his injuries.",
+        "A toxicology report shows Chris had a rare, undiagnosed heart condition that made the injuries fatal; an otherwise healthy person would have survived.",
+        "During the same party, Alex's roommate Dana decides to rob a guest named Eddie at knifepoint in an upstairs bedroom.",
+        "As Dana flees the house with Eddie's wallet, Eddie chases Dana into the street.",
+        "Eddie is struck and killed by a passing car."
+      ],
+      "best_charge": "Involuntary Manslaughter (Alex); Felony Murder or MPC Murder (Dana)",
+      "charge_options": ["Murder", "Voluntary Manslaughter", "Involuntary Manslaughter", "Negligent Homicide", "No Crime", "Felony Murder", "Reckless Endangerment"],
+      "best_defense": "No Legal Duty (Alex); Agency Rule or Proximate Cause Theory (Dana)",
+      "defense_options": ["No Legal Duty", "No Causation", "Lack of Mens Rea", "Intervening Cause", "Proximate Cause Theory", "Agency Rule", "Insanity"],
+      "analysis": {
+        "prosecution": "Alex had a legal duty to act. As the host who created dangerous conditions (drugs and alcohol present), or under a duty arising from control over premises (analogous to a business owner's duty to patrons), Alex failed to intervene when he saw Chris being beaten. Alex's inaction while aware of substantial risk of death constitutes recklessness (conscious disregard). Under MPC, involuntary manslaughter requires recklessness; under CL, recklessness or gross negligence. The rare heart condition does not break causation—under the 'thin skull' rule, D takes victim as found. For Dana: felony murder applies when death results from robbery. Robbery is inherently dangerous felony; Eddie's death occurred during flight from robbery (within res gestae); the underlying felony has independent purpose (theft). Under FM doctrine, all elements likely satisfied. Under MPC, the presumption of extreme recklessness applies to FM enumerated felonies like robbery.",
+        "defense": "Alex had no legal duty under Beardsley—a mere social relationship as host does not create a legal duty to intervene in a fight between two adult guests. Alex did not start the fight, did not create the specific risk of Ben beating Chris, and lacked a 'protector' relationship. Even if duty existed, Chris's rare heart condition was unforeseeable and breaks the chain of proximate causation. For Dana: Under the agency rule (State v. Canola), FM does not apply to killings by third parties (the car driver) not co-felons with Dana. The driver is not Dana's agent or associate. Alternatively, under the temporary safety rule (People v. Bodely), Dana may have reached temporary safety when fleeing into the street, ending the res gestae of the robbery. Under MPC, the recklessness presumption is rebuttable—Dana did not act with extreme indifference to life; the car strike was unforeseeable.",
+        "key_cases": ["Beardsley (omission doctrine)", "People v. Bodely (res gestae)", "State v. Canola (agency rule)", "People v. James (inherently dangerous)", "Thin Skull Rule (causation)", "State v. Dumlao (MPC analysis)"],
+        "secondary_issues": ["Whether host's duty arises from creation of risk or control of premises", "Causation and 'thin skull' doctrine", "FM limitations: agency rule vs. proximate cause theory (jurisdictional variation)"]
+      }
+    },
+    {
+      "id": 4,
+      "title": "The Reckless Driver",
+      "sentences": [
+        "Marcus is driving 65 mph in a residential school zone posted at 25 mph, despite seeing children playing on a nearby lawn.",
+        "A child, Tommy, suddenly runs into the street chasing a ball.",
+        "Marcus swerves but is unable to avoid the collision.",
+        "Tommy suffers severe injuries and dies three days later in the hospital from internal bleeding.",
+        "An expert toxicologist testifies that Marcus had a minor amount of marijuana in his bloodstream, though he was not visibly impaired and his reaction time was normal."
+      ],
+      "best_charge": "Involuntary Manslaughter or Negligent Homicide",
+      "charge_options": ["First-Degree Murder", "Second-Degree Murder", "Voluntary Manslaughter", "Involuntary Manslaughter", "Negligent Homicide", "No Crime"],
+      "best_defense": "Intervening Cause; Lack of Recklessness",
+      "defense_options": ["Child Suddenly Entered Roadway", "Unforeseeable Intervening Cause", "No Conscious Disregard", "Negligence Only", "No Duty", "Act of God"],
+      "analysis": {
+        "prosecution": "Marcus consciously disregarded a substantial and unjustifiable risk by driving 2.6 times the posted speed in a school zone where children were visibly playing. The risk of death was obvious; the justification (speed) was minimal. This establishes recklessness. Under CL, involuntary manslaughter is based on recklessness. Under MPC § 210.3(1)(a), involuntary manslaughter requires recklessness. The minor marijuana presence supports awareness of risk (though normal reaction time may undercut this). Tommy's death resulted from the collision directly; causation is clear. The three-day delay and hospitalization do not break the chain—medical complications are foreseeable consequences of vehicular injuries.",
+        "defense": "Tommy's sudden entry into the street is a responsive intervening cause—Tommy reacted to the ball. Under the responsive IC rule, Marcus remains the proximate cause UNLESS the IC was extremely bizarre or unforeseeable. Children running into streets in residential zones are foreseeable; Marcus's presence in the zone created the risk. However, defense might argue Marcus's consciously disregarding the risk was not at the extreme level of 'depraved heart' but mere negligence or gross negligence (depending on jurisdiction). Under MPC, if Marcus's conduct was only negligent (should have been aware, not consciously aware), he is not guilty of involuntary manslaughter (which requires recklessness). The marijuana may support lack of conscious awareness—if the amount was minimal and reaction time normal, was Marcus actually consciously aware of the risk?",
+        "key_cases": ["State v. Williams (gross negligence standard)", "Intervening cause analysis", "Recklessness vs. Negligence (MPC)", "Vehicular homicide statutes (vary by jurisdiction)"],
+        "secondary_issues": ["Whether marijuana use constitutes conscious disregard or merely impairs judgment (negligence)", "Temporal and geographical proximity of school zone to residential area", "Foreseeability of children entering street"]
+      }
+    },
+    {
+      "id": 5,
+      "title": "The Self-Defense Shooting",
+      "sentences": [
+        "Derek is home alone when he hears glass breaking and sees an intruder, Robbie, climbing through his bedroom window at 2 a.m.",
+        "Derek grabs a handgun from his nightstand drawer, which he keeps loaded for home protection.",
+        "Derek shouts 'Stop! I have a gun!' to warn Robbie.",
+        "Robbie continues toward Derek, saying 'I'm going to hurt you.'",
+        "Derek fires once, hitting Robbie in the shoulder.",
+        "Robbie falls but is not seriously injured; the bullet grazed an artery but paramedics stop the bleeding.",
+        "Later, police discover Robbie had no weapon and was attempting a burglary, not a violent crime."
+      ],
+      "best_charge": "No Crime (justifiable homicide)",
+      "charge_options": ["Murder", "Assault", "Attempted Murder", "No Crime", "Negligent Assault"],
+      "best_defense": "Self-Defense",
+      "defense_options": ["Self-Defense", "Defense of Property", "Proportional Force", "Imperfect Self-Defense", "Necessity"],
+      "analysis": {
+        "prosecution": "The prosecution would struggle here. Derek used force only after an explicit threat and warning. Derek was in his own home (castle doctrine—no duty to retreat). Robbie was an intruder who threatened harm. The force used (gunshot) was proportional to the threat (intruder saying he would hurt Derek). Derek did not fire to kill but to stop the threat; the injury was minor. This is a classic self-defense case. Prosecution might argue Derek should have known Robbie had no weapon once confronted, but the dark, surprise element cuts against this.",
+        "defense": "Self-defense is straightforward here. Elements: (1) Imminent threat—Robbie was advancing toward Derek with explicit threat. (2) Proportional force—Derek used a firearm to stop the threat, proportional to the intruder threat. (3) Reasonable belief—Derek reasonably believed Robbie posed danger. (4) No initial aggression—Derek did not start the confrontation. Under both CL and MPC, Derek is justified. Imperfect self-defense (unreasonable belief) does not apply here because Derek's belief was reasonable. This is a weak prosecution case.",
+        "key_cases": ["Self-defense doctrine", "Castle Doctrine", "Proportional force requirement", "Imminent threat analysis"],
+        "secondary_issues": ["Whether property defense applies (burglary)", "Duty to retreat (castle doctrine vs. stand-your-ground)", "Reasonable belief of threat (Robbie's weapon status)"]
+      }
+    },
+    {
+      "id": 6,
+      "title": "The Poison Plot",
+      "sentences": [
+        "Lisa is married to Tom, who has a terminal illness with six months to live.",
+        "Lisa fears that Tom's medical bills will bankrupt the family.",
+        "Lisa researches arsenic poisoning online, watching multiple videos on 'untraceable poisons.'",
+        "Lisa buys arsenic from an online supplier under a false name, paying with an anonymous cryptocurrency account.",
+        "Over two weeks, Lisa adds small amounts of arsenic to Tom's daily coffee.",
+        "Tom becomes violently ill and is rushed to the hospital.",
+        "Doctors diagnose arsenic poisoning and begin chelation therapy, which successfully removes the arsenic from Tom's body.",
+        "Tom survives, but suffers permanent neurological damage (tremors, memory loss).",
+        "During the investigation, police find the online search history, purchase records, and a diary where Lisa describes her plan."
+      ],
+      "best_charge": "Attempted Murder or Assault",
+      "charge_options": ["First-Degree Murder", "Second-Degree Murder", "Attempted Murder", "Assault", "Conspiracy", "Aggravated Battery", "No Crime"],
+      "best_defense": "Lack of Intent; Duress (very weak)",
+      "defense_options": ["Lack of Intent to Kill", "Heat of Passion", "Necessity", "Duress", "Insanity", "Entrapment"],
+      "analysis": {
+        "prosecution": "This is straightforward attempted first-degree murder. Lisa's deliberation and premeditation are evident: extensive research, calculated purchases using anonymity, systematic poisoning over two weeks. Her diary documents intent. She used a deadly substance (arsenic) in a method designed to be 'untraceable,' showing consciousness of guilt and intent to kill. Tom's recovery does not matter—attempted murder is complete when the substantial step is taken with intent to kill, regardless of outcome. The medical intervention does not negate her conduct. First-degree murder is appropriate because of the planning, preparation, and deliberation.",
+        "defense": "Lisa has almost no defense. She cannot claim lack of intent—the diary and research prove intent to kill. She cannot claim heat of passion—her actions were cold, calculated, and spread over weeks. She cannot claim necessity—Tom's illness does not justify murder (and even valid necessity cannot justify killing an innocent). She could attempt insanity (temporary psychosis due to stress), but the methodical planning undermines this. Her best argument might be duress (medical debt threatening the family), but duress does not justify attempted murder and does not apply to threat-of-debt.",
+        "key_cases": ["Premeditation and deliberation elements", "Attempted murder (substantial step test vs. dangerous proximity test)", "State v. Brown (deliberation definition)", "State v. Bingham (premeditation vs. time)"],
+        "secondary_issues": ["Substantial step requirement for attempt (MPC vs. CL)", "Merger of conspiracy and murder charges", "Medical intervention as intervening cause (but irrelevant for attempt)"]
+      }
+    },
+    {
+      "id": 7,
+      "title": "The Traffic Accident",
+      "sentences": [
+        "Officer Patterson, while on duty driving to an emergency call, is traveling at 55 mph in a 45 mph zone.",
+        "An off-duty officer, Kelly, is driving normally in the same direction when Patterson, distracted by radio dispatch communications, rear-ends Kelly's car.",
+        "The collision causes Kelly's car to veer into an oncoming lane.",
+        "An innocent third party, Samuel, driving in the opposite direction, collides head-on with Kelly's car.",
+        "Kelly is killed instantly.",
+        "Samuel is severely injured but survives."
+      ],
+      "best_charge": "Involuntary Manslaughter or Negligent Homicide",
+      "charge_options": ["Murder", "Voluntary Manslaughter", "Involuntary Manslaughter", "Negligent Homicide", "No Crime", "Reckless Endangerment"],
+      "best_defense": "No Gross Negligence; Emergency Driver Exception",
+      "defense_options": ["Lawful Pursuit Exception", "Dispatch Communications Distraction", "Intervening Cause (Samuel's driving)", "No Conscious Disregard", "Emergency Response Privilege"],
+      "analysis": {
+        "prosecution": "Patterson was driving 10 mph over the posted limit while distracted by radio dispatch. This exceeds ordinary negligence—it is at minimum gross negligence. Patterson consciously disregarded the risk of collision by not focusing on the road while responding to dispatch. The rear-end collision was foreseeable; the subsequent veer into oncoming traffic and Samuel's collision were responsive intervening causes that Patterson set in motion. Patterson's distraction caused the initial collision, which directly caused Kelly's death. Under both CL and MPC, Patterson is liable for involuntary manslaughter at minimum.",
+        "defense": "Patterson could argue he was responding to an emergency (lawful police pursuit exception), which may reduce standard of care in some jurisdictions. However, merely traveling slightly over the limit to an emergency call is not sufficient to eliminate duty of care—Patterson was distracted, which is independent negligence. The intervening cause (Samuel's collision) is responsive—it would not have occurred but for Patterson's rear-ending Kelly. Samuel's own driving does not break the chain because Samuel was driving lawfully in the opposite direction. Patterson's negligence was the proximate cause of Kelly's death.",
+        "key_cases": ["Police pursuit exception (varies by jurisdiction)", "Involuntary manslaughter standard", "Intervening cause analysis", "Gross negligence vs. negligence"],
+        "secondary_issues": ["Whether dispatch communications create special duty exception", "Responsive vs. independent intervening causes", "Duty of care for officers responding to emergencies"]
+      }
+    },
+    {
+      "id": 8,
+      "title": "The Art Heist",
+      "sentences": [
+        "Victor, a museum security guard, plans a theft of a valuable painting with accomplice Marcus.",
+        "Victor disables the alarm system and leaves a window unlocked, knowing Marcus will enter through it.",
+        "Marcus enters the museum at night and steals the painting, worth $2 million.",
+        "While fleeing, Marcus is spotted by a night watchman, Gary.",
+        "Marcus brandishes a gun at Gary and says 'I will shoot you if you follow me.'",
+        "Gary, frightened, does not follow but does call police.",
+        "Marcus escapes the building and is later caught by police at the airport with the painting.",
+        "Victor is identified as the accomplice through security footage analysis showing him disabling the alarm."
+      ],
+      "best_charge": "Robbery (Marcus); Accomplice to Robbery (Victor)",
+      "charge_options": ["Theft", "Larceny", "Burglary", "Robbery", "Conspiracy", "Attempted Robbery", "No Crime"],
+      "best_defense": "No Force Actually Applied; Threat Not Carried Out",
+      "defense_options": ["No Actual Force", "Threat Only (Not Robbery)", "Possession Obtained Before Threat", "Larceny Not Robbery"],
+      "analysis": {
+        "prosecution": "Marcus committed robbery. Robbery requires theft (taking of property of another with intent to permanently deprive) PLUS force or threat of force against the person. Marcus threatened Gary with a gun, satisfying the threat element. The threat occurred during the theft (while fleeing with the painting), making it part of the transaction. The fact that Marcus did not actually shoot Gary or seriously harm him is irrelevant—robbery is complete upon the threat. Victor aided and abetted Marcus by disabling the alarm and unlocking the window, with intent to help Marcus commit theft. Victor's conduct directly enabled the robbery. Both are guilty.",
+        "defense": "Marcus could argue the threat came after the theft was complete—the painting was already taken from the museum when he threatened Gary. Under some jurisdictions' 'force against the person' requirement, if the theft was consummated before the threat, Marcus committed larceny, not robbery. However, the threat occurred during Marcus's flight with the stolen property, still within the res gestae of the theft. Most jurisdictions view the entire transaction (taking + leaving with property + resisting/threatening) as one continuous crime. Victor's defense is weak—he clearly intended to facilitate the theft. His 'accomplice to accomplice' liability is established.",
+        "key_cases": ["Robbery elements (theft + force/threat)", "Timing of force for robbery classification", "Accomplice liability (aiding and abetting)", "Flight as part of theft transaction"],
+        "secondary_issues": ["Whether threat of future force (if you follow) differs from threat during flight", "Timing of force relative to property transfer in robbery", "Accomplice liability for Victor despite not being present at crime scene"]
+      }
+    },
+    {
+      "id": 9,
+      "title": "The Jewelry Heist",
+      "sentences": [
+        "Marcus discovers that his neighbor Tanya keeps expensive jewelry in her bedroom safe.",
+        "Late at night, Marcus forces open Tanya's back door using a crowbar.",
+        "Marcus enters the house while Tanya is sleeping upstairs.",
+        "Marcus finds the jewelry but Tanya wakes up and confronts him at the bedroom door.",
+        "Marcus shoves Tanya against the wall and grabs a diamond necklace from her hand.",
+        "Marcus flees the house with the necklace and other jewelry from the safe."
+      ],
+      "best_charge": "Robbery",
+      "charge_options": ["Burglary", "Robbery", "Larceny", "Assault", "First-Degree Murder", "No Crime"],
+      "best_defense": "No Robbery — Force After Completed Taking",
+      "defense_options": ["Self-Defense", "No Robbery — Force After Completed Taking", "Consent", "Mistake of Fact", "Necessity", "No Intent to Permanently Deprive"],
+      "analysis": {
+        "prosecution": "Marcus committed both burglary (breaking and entering a dwelling at night with intent to commit a felony) and robbery (trespassory taking from Tanya's immediate presence using force). Under Miller, the shove during the asportation phase satisfies the force element. Per Eichman, forcing open the door and entering satisfies the breaking and entry elements of burglary. The intent to steal was formed before entry.",
+        "defense": "Defense could argue the primary taking (from the safe) was completed before any force occurred, making it larceny not robbery. Per Crocker, robbery requires force during the taking. However, Miller suggests force during asportation still counts. Defense could also challenge burglary under Thibeault if there's any argument Marcus had prior permission to enter (unlikely here). Best defense is challenging whether the shove constitutes sufficient force for robbery, arguing it was more akin to Crocker's snatching."
+      }
+    },
+    {
+      "id": 10,
+      "title": "The Subway Confrontation",
+      "sentences": [
+        "Derek, who was previously mugged twice on the subway, carries a licensed firearm for protection.",
+        "Three teenagers approach Derek on a subway car and surround him.",
+        "One teenager says 'Give us five dollars' while the others block the exit.",
+        "Derek, believing he is about to be robbed again, pulls out his gun.",
+        "Derek shoots one teenager who was reaching into his jacket pocket.",
+        "The teenager was actually reaching for his own wallet to show Derek a student ID."
+      ],
+      "best_charge": "Second-Degree Murder",
+      "charge_options": ["First-Degree Murder", "Second-Degree Murder", "Voluntary Manslaughter", "Involuntary Manslaughter", "Attempted Murder", "No Crime"],
+      "best_defense": "Self-Defense",
+      "defense_options": ["Self-Defense", "Heat of Passion / Provocation", "EMED (MPC)", "Mistake of Fact", "Duress", "Lack of Mens Rea"],
+      "analysis": {
+        "prosecution": "Derek used deadly force when not objectively reasonable. Under Goetz, the reasonableness standard is objective — would a reasonable person in Derek's position have believed deadly force was immediately necessary? A request for five dollars from teenagers, even if intimidating, does not constitute an imminent threat of deadly force. Derek's prior muggings are relevant context but do not make the shooting objectively reasonable per Simon. Under the common law objective standard, Derek's fear was excessive and disproportionate.",
+        "defense": "Under Goetz, the jury may consider Derek's prior experiences (two previous muggings), knowledge of subway crime, and the specific circumstances (surrounded, exit blocked, aggressive demand). Per MPC § 3.04, Derek subjectively believed force was immediately necessary. Even if his belief was unreasonable, MPC § 3.09(2) would reduce liability to manslaughter rather than murder. Under Simon, Derek's prior trauma and the threatening circumstances (outnumbered, cornered) support the reasonableness of his belief."
+      }
+    }
+  ]
+}

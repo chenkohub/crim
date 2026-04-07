@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connections - Law Games</title>
+    <link rel="stylesheet" href="../../theme.css">
+    <style>
+        /* Connections-specific styles */
+        .connections-container {
+            padding: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .puzzle-info {
+            text-align: center;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .puzzle-info button {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px 8px;
+            transition: transform 0.2s;
+        }
+
+        .puzzle-info button:hover {
+            transform: scale(1.2);
+        }
+
+        .puzzle-info button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Solved groups area */
+        .solved-groups {
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .group-bar {
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 12px;
+            text-align: center;
+            opacity: 0;
+            animation: slideDown 0.4s ease-out forwards;
+        }
+
+        .group-bar.yellow { background-color: var(--color-category-yellow); color: var(--color-text-primary); }
+        .group-bar.green { background-color: var(--color-category-green); color: var(--color-text-primary); }
+        .group-bar.blue { background-color: var(--color-category-blue); color: var(--color-text-primary); }
+        .group-bar.purple { background-color: var(--color-category-purple); color: #fff; }
+
+        /* Grid container */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: max-height 0.3s ease;
+        }
+
+        /* Tile styles */
+        .tile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--tile-bg, #e8e8e8);
+            border: 2px solid var(--tile-border, transparent);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            padding: 10px 6px;
+            min-height: 52px;
+            text-align: center;
+            line-height: 1.25;
+            transition: all 0.2s ease;
+            user-select: none;
+            color: var(--text-primary);
+            word-break: break-word;
+        }
+
+        .tile:hover {
+            background-color: var(--tile-hover-bg, #d8d8d8);
+            transform: translateY(-2px);
+        }
+
+        .tile.selected {
+            background-color: var(--tile-selected-bg, #999);
+            color: var(--text-inverted, #fff);
+            transform: scale(0.98);
+            border-color: var(--text-inverted, #fff);
+        }
+
+        .tile.animate-shake {
+            animation: shake 0.4s;
+        }
+
+        .tile.animate-bounce {
+            animation: bounce 0.6s;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            background-color: var(--btn-bg, #333);
+            color: var(--btn-text, #fff);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s, opacity 0.2s;
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .btn:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn.submit {
+            background-color: var(--text-primary);
+            color: var(--bg-primary);
+            flex: 2;
+        }
+
+        /* Lives indicator */
+        .lives {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            letter-spacing: 8px;
+        }
+
+        /* Completion section (inline, below the board) */
+        .completion-section {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .completion-section.visible {
+            display: block;
+        }
+
+        .completion-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--color-text-primary, #1a1a1a);
+        }
+
+        .completion-title.won { color: var(--color-correct); }
+        .completion-title.lost { color: var(--color-wrong); }
+
+        .completion-stats {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin: 12px 0 16px;
+            font-size: 13px;
+            color: var(--color-text-secondary, #555);
+        }
+
+        .completion-stats span { font-weight: 600; }
+
+        .completion-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .share-button {
+            padding: 10px 20px;
+            background-color: var(--color-text-primary, #333);
+            color: var(--color-bg-primary, #fff);
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .share-button:hover { opacity: 0.9; }
+
+        .next-puzzle-button {
+            padding: 10px 20px;
+            background-color: var(--color-category-blue);
+            color: var(--color-text-primary);
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .next-puzzle-button:hover { opacity: 0.9; }
+
+        /* Dark theme overrides (applies to dark, midnight, forest, ocean, sunset) */
+        [data-theme="dark"] .tile,
+        [data-theme="midnight"] .tile,
+        [data-theme="forest"] .tile,
+        [data-theme="ocean"] .tile,
+        [data-theme="sunset"] .tile {
+            --tile-bg: var(--color-bg-tertiary, #4a4a4a);
+            --tile-hover-bg: var(--color-bg-secondary, #5a5a5a);
+            --tile-selected-bg: var(--color-bg-secondary, #666);
+            --text-inverted: #fff;
+            color: var(--color-text-primary, #fff);
+        }
+
+        [data-theme="dark"] .btn,
+        [data-theme="midnight"] .btn,
+        [data-theme="forest"] .btn,
+        [data-theme="ocean"] .btn,
+        [data-theme="sunset"] .btn {
+            --btn-bg: var(--color-bg-tertiary, #ccc);
+            --btn-text: var(--color-text-primary, #fff);
+        }
+
+        [data-theme="dark"] .btn.submit,
+        [data-theme="midnight"] .btn.submit,
+        [data-theme="forest"] .btn.submit,
+        [data-theme="ocean"] .btn.submit,
+        [data-theme="sunset"] .btn.submit {
+            background-color: var(--color-text-primary, #fff);
+            color: var(--color-bg-primary, #111);
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .connections-container {
+                padding: 12px;
+            }
+
+            .tile {
+                font-size: 12px;
+            }
+
+            .controls {
+                gap: 8px;
+            }
+
+            .btn {
+                padding: 8px 12px;
+                font-size: 12px;
+                min-width: 80px;
+            }
+        }
+
+        /* One away toast */
+        .one-away-toast {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--color-category-yellow);
+            color: var(--color-text-primary);
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 500;
+            animation: slideDown 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="connections-container">
+        <header id="header"></header>
+
+        <div class="puzzle-info">
+            <span id="puzzle-label">Puzzle <span id="current-puzzle">1</span> of <span id="total-puzzles">1</span></span>
+            <div style="margin-top: 8px;">
+                <button id="prev-puzzle" aria-label="Previous puzzle">←</button>
+                <button id="next-puzzle" aria-label="Next puzzle">→</button>
+            </div>
+        </div>
+
+        <div class="solved-groups" id="solved-groups"></div>
+
+        <div class="grid-container" id="grid"></div>
+
+        <div class="lives" id="lives">● ● ● ●</div>
+
+        <div class="controls" id="controls">
+            <button class="btn" id="shuffle-btn">Shuffle</button>
+            <button class="btn" id="deselect-btn">Deselect All</button>
+            <button class="btn submit" id="submit-btn" disabled>Submit</button>
+        </div>
+
+        <!-- Completion section (shown after game ends, below the full board) -->
+        <div class="completion-section" id="completion-section"></div>
+    </div>
+    <script src="../../shared.js"></script>
+    <script src="../../navbar.js"></script>
+    <script>
+        var CONNECTIONS_DATA = {
+  "puzzles": [
+    {
+      "id": 1,
+      "groups": [
+        {
+          "category": "Forms of Malice Aforethought",
+          "difficulty": 1,
+          "items": ["Intent to Kill", "Intent to Inflict GBI", "Depraved Heart", "Felony Murder"]
+        },
+        {
+          "category": "Felony Murder Limitations",
+          "difficulty": 2,
+          "items": ["Inherently Dangerous", "Res Gestae", "Merger Doctrine", "Agency Rule"]
+        },
+        {
+          "category": "MPC Mens Rea Levels",
+          "difficulty": 3,
+          "items": ["Purposely", "Knowingly", "Recklessly", "Negligently"]
+        },
+        {
+          "category": "Heat of Passion Elements",
+          "difficulty": 4,
+          "items": ["Heat of Passion", "Adequate Provocation", "No Cooling Off", "Causal Link"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "groups": [
+        {
+          "category": "Theft Offense Types",
+          "difficulty": 1,
+          "items": ["Larceny", "Larceny by Trick", "False Pretenses", "Embezzlement"]
+        },
+        {
+          "category": "Criminal Defenses",
+          "difficulty": 2,
+          "items": ["Self-Defense", "Necessity", "Duress", "Insanity"]
+        },
+        {
+          "category": "Larceny Elements",
+          "difficulty": 3,
+          "items": ["Trespassory Taking", "Asportation", "Personal Property of Another", "Intent to Permanently Deprive"]
+        },
+        {
+          "category": "Key Homicide Cases",
+          "difficulty": 4,
+          "items": ["State v. Brown", "State v. Bingham", "People v. Berry", "People v. Knoller"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "groups": [
+        {
+          "category": "Punishment Theories",
+          "difficulty": 1,
+          "items": ["Deterrence", "Rehabilitation", "Incapacitation", "Retribution"]
+        },
+        {
+          "category": "Duties to Act (Omissions)",
+          "difficulty": 2,
+          "items": ["Special Relationship", "Contractual Duty", "Statutory Duty", "Creation of Risk"]
+        },
+        {
+          "category": "Elements of First-Degree Murder",
+          "difficulty": 3,
+          "items": ["Willful", "Deliberate", "Premeditated", "Killing"]
+        },
+        {
+          "category": "Common Law Adequate Provocation Categories",
+          "difficulty": 4,
+          "items": ["Battery/Assault", "Mutual Combat", "Serious Crime Against Relative", "Illegal Arrest"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "groups": [
+        {
+          "category": "MPC Murder Elements",
+          "difficulty": 1,
+          "items": ["Purposely", "Knowingly", "Extreme Indifference", "Human Life"]
+        },
+        {
+          "category": "Involuntary Manslaughter Standards",
+          "difficulty": 2,
+          "items": ["Recklessness", "Gross Negligence", "Negligence", "Criminal Negligence"]
+        },
+        {
+          "category": "Causation Types",
+          "difficulty": 3,
+          "items": ["Actual Cause", "But-For Test", "Proximate Cause", "Intervening Cause"]
+        },
+        {
+          "category": "Key Felony Murder Cases",
+          "difficulty": 4,
+          "items": ["People v. James", "People v. Bodely", "Rose v. State", "State v. Canola"]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "groups": [
+        {
+          "category": "Voluntary Manslaughter Frameworks",
+          "difficulty": 1,
+          "items": ["Categorical Approach", "Modern Approach", "MPC EMED", "Reasonable Person"]
+        },
+        {
+          "category": "Actus Reus Requirements",
+          "difficulty": 2,
+          "items": ["Voluntary Act", "Omission (if Duty)", "Causal Link", "Social Harm"]
+        },
+        {
+          "category": "Mistake Defense Rules",
+          "difficulty": 3,
+          "items": ["Specific Intent", "General Intent", "Strict Liability", "Honest Mistake"]
+        },
+        {
+          "category": "Key Mens Rea Cases",
+          "difficulty": 4,
+          "items": ["People v. Atkins", "State v. Freeman", "Morissette v. United States", "United States v. Jewell"]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "groups": [
+        {
+          "category": "Intervening Cause Analysis",
+          "difficulty": 1,
+          "items": ["Responsive IC", "Dependent IC", "Coincidental IC", "Independent IC"]
+        },
+        {
+          "category": "Breaking the Chain of Causation",
+          "difficulty": 2,
+          "items": ["Extremely Bizarre", "Unforeseeable", "Superceding", "Intervening Cause"]
+        },
+        {
+          "category": "Depraved Heart Murder Standards",
+          "difficulty": 3,
+          "items": ["Extreme Recklessness", "Extreme Indifference", "Risk of Death", "Conscious Disregard"]
+        },
+        {
+          "category": "Key Theft Cases",
+          "difficulty": 4,
+          "items": ["State v. Barbour", "State v. Pierce", "State v. Williams", "People v. Navarro"]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "groups": [
+        {
+          "category": "Arson/Property Crimes",
+          "difficulty": 1,
+          "items": ["Arson", "Burglary", "Robbery", "Vandalism"]
+        },
+        {
+          "category": "Mental State Modifiers",
+          "difficulty": 2,
+          "items": ["Conditional Intent", "Transferred Intent", "Willful Blindness", "Knowledge"]
+        },
+        {
+          "category": "Strict Liability Characteristics",
+          "difficulty": 3,
+          "items": ["No Mens Rea Requirement", "Health/Safety Offense", "Light Penalties", "Regulatory"]
+        },
+        {
+          "category": "EMED and Provocation Cases",
+          "difficulty": 4,
+          "items": ["State v. Dumlao", "People v. Berry", "State v. Arrington", "Commonwealth v. Mercado"]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "groups": [
+        {
+          "category": "Jurisdictional Approaches to FM",
+          "difficulty": 1,
+          "items": ["In the Abstract", "Fact-Specific", "Inherently Dangerous", "Enumerated Felonies"]
+        },
+        {
+          "category": "Premeditation Evidence",
+          "difficulty": 2,
+          "items": ["Weapon Ready", "Considering Alternatives", "Positioning to Avoid Detection", "Returning for Additional Weapon"]
+        },
+        {
+          "category": "MPC Hierarchy Key Features",
+          "difficulty": 3,
+          "items": ["Desire to Produce Result", "Virtual Certainty", "Awareness + Disregard", "Should Be Aware"]
+        },
+        {
+          "category": "Accomplice Liability Elements",
+          "difficulty": 4,
+          "items": ["Act of Assistance", "Intent to Assist", "Intent Crime Be Committed", "Knowledge"]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "groups": [
+        {
+          "category": "Larceny Conceptual Boundaries",
+          "difficulty": 1,
+          "items": ["Possession", "Custody", "Constructive Possession", "Breaking the Bulk"]
+        },
+        {
+          "category": "Concurrence Requirements",
+          "difficulty": 2,
+          "items": ["Temporal Concurrence", "Motivational Concurrence", "Continuous Transaction", "Same Time"]
+        },
+        {
+          "category": "Void for Vagueness Issues",
+          "difficulty": 3,
+          "items": ["Fair Notice", "Arbitrary Enforcement", "Due Process", "Fourteenth Amendment"]
+        },
+        {
+          "category": "Self-Defense Doctrine",
+          "difficulty": 4,
+          "items": ["Proportional Force", "Imperfect Self-Defense", "Duty to Retreat", "Castle Doctrine"]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "groups": [
+        {
+          "category": "Transferred Intent Applications",
+          "difficulty": 1,
+          "items": ["Bad Aim Killings", "Wrong Person", "Same Type of Harm", "Intent for Harm"]
+        },
+        {
+          "category": "MPC vs CL Differences",
+          "difficulty": 2,
+          "items": ["Degrees vs Single Murder", "P&D vs Purposely/Knowingly", "Default Mens Rea", "Murder Definition"]
+        },
+        {
+          "category": "Reasonable Person Standard",
+          "difficulty": 3,
+          "items": ["Heat of Passion", "Self-Defense", "Cooling Off Period", "Objective Test"]
+        },
+        {
+          "category": "Merger Doctrine Specifics",
+          "difficulty": 4,
+          "items": ["Independent Felonious Purpose", "Assaultive Felonies", "Underlying Felony", "Robbery Exception"]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "groups": [
+        {
+          "category": "Conscious Disregard Factors",
+          "difficulty": 1,
+          "items": ["Substantial Risk", "Unjustifiable Risk", "Awareness", "Reckless Disregard"]
+        },
+        {
+          "category": "Jurisdiction-Specific Rules",
+          "difficulty": 2,
+          "items": ["Pennsylvania Model", "California Model", "Proximate Cause Theory", "Agency Rule Theory"]
+        },
+        {
+          "category": "Causation Doctrines",
+          "difficulty": 3,
+          "items": ["Thin Skull", "Take Victim as Found", "Foreseeability", "Medical Complications"]
+        },
+        {
+          "category": "Willfulness and Knowledge Cases",
+          "difficulty": 4,
+          "items": ["Cheek v. United States", "United States v. Yermian", "People v. Scott", "State v. Fugate"]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "groups": [
+        {
+          "category": "Actus Reus Defects",
+          "difficulty": 1,
+          "items": ["Reflexes", "Convulsions", "Sleep/Unconsciousness", "No Effort or Determination"]
+        },
+        {
+          "category": "Battery Categories for Provocation",
+          "difficulty": 2,
+          "items": ["Mutual Combat", "Sudden Attack", "Serious Bodily Harm", "Physical Touching"]
+        },
+        {
+          "category": "MPC Default Rules",
+          "difficulty": 3,
+          "items": ["Recklessness Suffices", "Jurisdictional Elements Exempted", "Stated Mental State Modifies", "Conditional Intent Cognizable"]
+        },
+        {
+          "category": "Duress/Necessity Cases",
+          "difficulty": 4,
+          "items": ["Regina v. Dudley & Stephens", "Innocent Person Cannot Die", "Imminence Requirement", "Last Resort"]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "groups": [
+        {
+          "category": "Possession vs Title Issues",
+          "difficulty": 1,
+          "items": ["Larceny by Trick", "False Pretenses", "Owner Consent", "Fraudulent Deception"]
+        },
+        {
+          "category": "Omission Categories",
+          "difficulty": 2,
+          "items": ["Voluntary Assumption of Care", "Creation of Risk", "Special Relationship", "Parent-Child"]
+        },
+        {
+          "category": "Knowledge vs Recklessness Boundary",
+          "difficulty": 3,
+          "items": ["Practical Certainty", "Substantial Risk", "Virtual Certainty", "Conscious Awareness"]
+        },
+        {
+          "category": "Statutory FM Elements",
+          "difficulty": 4,
+          "items": ["Enumerated Felony", "Death Results", "Commission or Attempted Commission", "Prescribed Manner"]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "groups": [
+        {
+          "category": "Deliberation Factors",
+          "difficulty": 1,
+          "items": ["Weighing Reasons", "Measuring Facets", "Considering Consequences", "Cool Head Capable"]
+        },
+        {
+          "category": "Premeditation Markers",
+          "difficulty": 2,
+          "items": ["Thinking Beforehand", "Preparation", "Planning", "Time to Reflect"]
+        },
+        {
+          "category": "Recklessness Key Components",
+          "difficulty": 3,
+          "items": ["Substantial Risk", "Unjustifiable", "Conscious Awareness", "Conscious Disregard"]
+        },
+        {
+          "category": "Extreme Indifference Cases",
+          "difficulty": 4,
+          "items": ["Phillips Test", "Risk of Death Only", "Serious Bodily Injury Insufficient", "Extreme Callousness"]
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "groups": [
+        {
+          "category": "General Intent Crime Characteristics",
+          "difficulty": 1,
+          "items": ["Intent to Do Actus Reus", "Honest AND Reasonable Mistake", "No Additional Purpose", "Simple Crimes"]
+        },
+        {
+          "category": "Specific Intent Crime Characteristics",
+          "difficulty": 2,
+          "items": ["Intent Beyond Actus Reus", "Honest Mistake Only", "Additional Mental State", "Complex Crimes"]
+        },
+        {
+          "category": "Embezzlement Elements",
+          "difficulty": 3,
+          "items": ["Lawful Possession", "Entrusted Position", "Conversion", "Fiduciary Duty"]
+        },
+        {
+          "category": "Mistake of Law Framework",
+          "difficulty": 4,
+          "items": ["Official Interpretation Reliance", "Willfulness Crimes", "Ignorance No Excuse", "Marrero Exception"]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "groups": [
+        {
+          "category": "Voluntary Act Requirement",
+          "difficulty": 1,
+          "items": ["Product of Effort", "Product of Determination", "Conscious Control", "Voluntary Choice"]
+        },
+        {
+          "category": "Mens Rea Modifying Function",
+          "difficulty": 2,
+          "items": ["Applies to All Elements", "Contrary Intent Exception", "Stated Mental State", "Default Application"]
+        },
+        {
+          "category": "Felony Murder Shield Exception",
+          "difficulty": 3,
+          "items": ["Using Innocent Shield", "Third Party Killer", "Co-Felon's Act", "Death by Associate"]
+        },
+        {
+          "category": "Necessity Elements",
+          "difficulty": 4,
+          "items": ["Choice of Lesser Evil", "Imminent Threat", "No Reasonable Alternative", "Not Justifying Innocent Death"]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "groups": [
+        {
+          "category": "Breaking and Entering Elements",
+          "difficulty": 1,
+          "items": ["Breaking", "Entering", "Building", "Intent to Commit Crime"]
+        },
+        {
+          "category": "Responsible IC Characteristics",
+          "difficulty": 2,
+          "items": ["Reaction to D's Act", "Not Bizarre", "D Remains Proximate Cause", "Dependent on Initial Act"]
+        },
+        {
+          "category": "Robbery Offense Elements",
+          "difficulty": 3,
+          "items": ["Theft", "Force or Threat", "Against Person", "Permanent Deprivation"]
+        },
+        {
+          "category": "Duress Requirements",
+          "difficulty": 4,
+          "items": ["Coercion/Threat", "Imminent Harm", "Not Available to Murder", "Human Threat vs Natural Circumstance"]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "groups": [
+        {
+          "category": "Cooling Off Analysis",
+          "difficulty": 1,
+          "items": ["Reasonable Time", "Reasonable Opportunity", "Heat Dissipated", "Objective Standard"]
+        },
+        {
+          "category": "Risk Assessment in Recklessness",
+          "difficulty": 2,
+          "items": ["Death Risk vs SBI Risk", "Degree of Risk", "Justification for Risk", "Extreme vs Ordinary"]
+        },
+        {
+          "category": "Foreseeable IC Rule",
+          "difficulty": 3,
+          "items": ["Independent IC", "Predictable Consequence", "Medical Complications", "Traffic Delays"]
+        },
+        {
+          "category": "Attempt Doctrine Basics",
+          "difficulty": 4,
+          "items": ["Substantial Step Test", "Dangerous Proximity Test", "Specific Intent Crime", "Last Act Test"]
+        }
+      ]
+    }
+  ]
+};
+
+        'use strict';
+
+        // Game state
+        let gameState = {
+            currentPuzzleIndex: 0,
+            puzzles: [],
+            puzzle: null,
+            remaining: [],
+            solved: [],
+            selected: [],
+            lives: 4,
+            gameOver: false,
+            mistakes: 0,
+            solveOrder: []
+        };
+
+        const DIFFICULTY_COLORS = {
+            1: 'yellow',
+            2: 'green',
+            3: 'blue',
+            4: 'purple'
+        };
+
+        const EMOJI_COLORS = {
+            yellow: '🟨',
+            green: '🟩',
+            blue: '🟦',
+            purple: '🟪'
+        };
+
+        // ========================================================================
+        // INITIALIZATION
+        // ========================================================================
+
+        async function initGame() {
+            // Initialize theme
+            LawGames.initTheme();
+
+            // Add header
+            document.getElementById('header').appendChild(LawGames.createHeader('Connections', true));
+
+            // Load puzzles
+            try {
+                const data = CONNECTIONS_DATA;
+                gameState.puzzles = data.puzzles;
+                document.getElementById('total-puzzles').textContent = gameState.puzzles.length;
+
+                // Try to load from URL or use first puzzle
+                const params = new URLSearchParams(window.location.search);
+                const puzzleId = parseInt(params.get('puzzle'));
+                if (puzzleId) {
+                    const idx = gameState.puzzles.findIndex(p => p.id === puzzleId);
+                    if (idx !== -1) gameState.currentPuzzleIndex = idx;
+                }
+
+                loadPuzzle();
+            } catch (error) {
+                console.error('Failed to load puzzles:', error);
+                document.getElementById('grid').innerHTML = '<p>Error loading puzzles. Please refresh.</p>';
+            }
+        }
+
+        // ========================================================================
+        // PUZZLE MANAGEMENT
+        // ========================================================================
+
+        function loadPuzzle() {
+            gameState.puzzle = gameState.puzzles[gameState.currentPuzzleIndex];
+            gameState.remaining = [];
+            gameState.solved = [];
+            gameState.selected = [];
+            gameState.lives = 4;
+            gameState.gameOver = false;
+            gameState.mistakes = 0;
+            gameState.solveOrder = [];
+
+            // Flatten and shuffle all items
+            gameState.puzzle.groups.forEach(group => {
+                group.items.forEach(item => {
+                    gameState.remaining.push({ text: item, groupId: gameState.puzzle.groups.indexOf(group) });
+                });
+            });
+            gameState.remaining = LawGames.shuffleArray(gameState.remaining);
+
+            document.getElementById('current-puzzle').textContent = gameState.currentPuzzleIndex + 1;
+            updateUI();
+        }
+
+        function prevPuzzle() {
+            if (gameState.currentPuzzleIndex > 0) {
+                gameState.currentPuzzleIndex--;
+                loadPuzzle();
+            }
+        }
+
+        function nextPuzzle() {
+            if (gameState.currentPuzzleIndex < gameState.puzzles.length - 1) {
+                gameState.currentPuzzleIndex++;
+                loadPuzzle();
+            }
+        }
+
+        // ========================================================================
+        // UI UPDATES
+        // ========================================================================
+
+        function updateUI() {
+            renderGrid();
+            renderSolvedGroups();
+            renderLives();
+            updateControlStates();
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+
+            // Adjust grid class based on remaining tiles
+            const rowCount = Math.ceil(gameState.remaining.length / 4);
+            grid.className = `grid-container rows-${rowCount}`;
+
+            gameState.remaining.forEach(tile => {
+                const tileEl = document.createElement('div');
+                tileEl.className = 'tile';
+                if (gameState.selected.indexOf(tile) !== -1) {
+                    tileEl.classList.add('selected');
+                }
+                tileEl.textContent = tile.text;
+                tileEl.onclick = () => selectTile(tile, tileEl);
+                grid.appendChild(tileEl);
+            });
+        }
+
+        function renderSolvedGroups() {
+            const container = document.getElementById('solved-groups');
+            container.innerHTML = '';
+
+            // Sort by difficulty (1, 2, 3, 4)
+            const sorted = [...gameState.solved].sort((a, b) => a.difficulty - b.difficulty);
+
+            sorted.forEach((group, idx) => {
+                const bar = document.createElement('div');
+                bar.className = `group-bar ${DIFFICULTY_COLORS[group.difficulty]}`;
+                bar.style.animationDelay = (idx * 0.1) + 's';
+                bar.innerHTML = `<strong>${group.category}</strong><br><small>${group.items.join(', ')}</small>`;
+                container.appendChild(bar);
+            });
+        }
+
+        function renderLives() {
+            const livesEl = document.getElementById('lives');
+            let display = '';
+            for (let i = 0; i < 4; i++) {
+                display += i < gameState.lives ? '● ' : '○ ';
+            }
+            livesEl.textContent = display.trim();
+        }
+
+        function updateControlStates() {
+            document.getElementById('submit-btn').disabled = gameState.selected.length !== 4 || gameState.gameOver;
+            document.getElementById('prev-puzzle').disabled = gameState.currentPuzzleIndex === 0;
+            document.getElementById('next-puzzle').disabled = gameState.currentPuzzleIndex === gameState.puzzles.length - 1;
+        }
+
+        // ========================================================================
+        // GAME LOGIC
+        // ========================================================================
+
+        function selectTile(tile, tileEl) {
+            if (gameState.gameOver) return;
+
+            const idx = gameState.selected.indexOf(tile);
+            if (idx === -1 && gameState.selected.length < 4) {
+                gameState.selected.push(tile);
+                tileEl.classList.add('selected');
+            } else if (idx !== -1) {
+                gameState.selected.splice(idx, 1);
+                tileEl.classList.remove('selected');
+            }
+
+            updateControlStates();
+            checkOneAway();
+        }
+
+        function deselectAll() {
+            gameState.selected = [];
+            updateUI();
+        }
+
+        function shuffle() {
+            gameState.remaining = LawGames.shuffleArray(gameState.remaining);
+            renderGrid();
+
+            // Visual shuffle animation
+            const grid = document.getElementById('grid');
+            grid.style.opacity = '0.7';
+            setTimeout(() => grid.style.opacity = '1', 200);
+        }
+
+        function checkOneAway() {
+            if (gameState.selected.length !== 4) return;
+
+            const groupCounts = {};
+            gameState.selected.forEach(tile => {
+                const gid = tile.groupId;
+                groupCounts[gid] = (groupCounts[gid] || 0) + 1;
+            });
+
+            // Find if exactly 3 from one group
+            for (const [gid, count] of Object.entries(groupCounts)) {
+                if (count === 3) {
+                    const group = gameState.puzzle.groups[parseInt(gid)];
+                    const hasAllFour = group.items.every(item =>
+                        gameState.selected.some(t => t.text === item)
+                    );
+                    if (!hasAllFour) {
+                        LawGames.createToast('One away...', 1500);
+                        return;
+                    }
+                }
+            }
+        }
+
+        function submit() {
+            if (gameState.selected.length !== 4 || gameState.gameOver) return;
+
+            // Check if selected tiles form a valid group
+            const selectedGroupIds = [...new Set(gameState.selected.map(t => t.groupId))];
+            if (selectedGroupIds.length !== 1) {
+                // Wrong guess - loss
+                wrongGuess();
+                return;
+            }
+
+            const groupId = selectedGroupIds[0];
+            const group = gameState.puzzle.groups[groupId];
+
+            // Verify all 4 items belong to this group
+            const selectedTexts = new Set(gameState.selected.map(t => t.text));
+            const groupItems = new Set(group.items);
+            const match = Array.from(selectedTexts).every(text => groupItems.has(text));
+
+            if (!match) {
+                wrongGuess();
+                return;
+            }
+
+            // Correct guess
+            correctGuess(group, groupId);
+        }
+
+        function wrongGuess() {
+            // Shake animation
+            const tiles = document.querySelectorAll('.tile.selected');
+            tiles.forEach(tile => {
+                tile.classList.remove('selected');
+                tile.classList.add('animate-shake');
+                setTimeout(() => tile.classList.remove('animate-shake'), 400);
+            });
+
+            gameState.mistakes++;
+            gameState.lives--;
+            gameState.selected = [];
+            updateUI();
+
+            if (gameState.lives <= 0) {
+                endGame(false);
+            }
+        }
+
+        function correctGuess(group, groupId) {
+            // Bounce animation on selected tiles
+            const tiles = document.querySelectorAll('.tile.selected');
+            tiles.forEach(tile => {
+                tile.classList.add('animate-bounce');
+                setTimeout(() => tile.classList.remove('animate-bounce'), 600);
+            });
+
+            // Remove solved tiles from remaining
+            gameState.remaining = gameState.remaining.filter(t => t.groupId !== groupId);
+            gameState.solved.push(group);
+            gameState.solveOrder.push(group);
+            gameState.selected = [];
+
+            updateUI();
+
+            // Check if won
+            if (gameState.remaining.length === 0) {
+                setTimeout(() => endGame(true), 500);
+            } else if (gameState.solved.length === 3) {
+                // Auto-reveal last group
+                setTimeout(() => {
+                    const lastGroup = gameState.puzzle.groups.find(g => !gameState.solved.includes(g));
+                    gameState.remaining = [];
+                    gameState.solved.push(lastGroup);
+                    gameState.solveOrder.push(lastGroup);
+                    updateUI();
+                    setTimeout(() => endGame(true), 500);
+                }, 300);
+            }
+        }
+
+        // ========================================================================
+        // GAME END
+        // ========================================================================
+
+        function endGame(won) {
+            gameState.gameOver = true;
+
+            // Record stats
+            LawGames.recordGame('connections', {
+                won: won,
+                attempts: gameState.solveOrder.length,
+                score: won ? (4 - gameState.mistakes) * 25 : 0
+            });
+
+            // Mark puzzle as played
+            LawGames.markPuzzlePlayed('connections', gameState.puzzle.id);
+
+            // Show all groups
+            if (!won) {
+                gameState.puzzle.groups.forEach(group => {
+                    if (!gameState.solved.includes(group)) {
+                        gameState.solved.push(group);
+                    }
+                });
+            }
+
+            updateUI();
+            showGameOverScreen(won);
+        }
+
+        function showGameOverScreen(won) {
+            // Hide controls and lives
+            document.getElementById('controls').style.display = 'none';
+            document.getElementById('lives').style.display = 'none';
+            document.getElementById('grid').style.display = 'none';
+
+            // Build inline completion section below the solved groups
+            const section = document.getElementById('completion-section');
+            const score = won ? (4 - gameState.mistakes) * 25 : 0;
+
+            let html = '<div class="completion-title ' + (won ? 'won' : 'lost') + '">' +
+                (won ? '🎉 Nice work!' : '😢 Not this time') + '</div>';
+            html += '<div class="completion-stats">' +
+                '<span>Groups: ' + gameState.solveOrder.length + '/4</span>' +
+                '<span>Mistakes: ' + gameState.mistakes + '/4</span>' +
+                '<span>Score: ' + score + '</span>' +
+                '</div>';
+            html += '<div class="completion-buttons">';
+            html += '<button class="share-button" onclick="shareResult()">Share Result</button>';
+            if (gameState.currentPuzzleIndex < gameState.puzzles.length - 1) {
+                html += '<button class="next-puzzle-button" onclick="goNextPuzzle()">Next Puzzle →</button>';
+            }
+            html += '</div>';
+
+            section.innerHTML = html;
+            section.classList.add('visible');
+        }
+
+        function goNextPuzzle() {
+            document.getElementById('completion-section').classList.remove('visible');
+            document.getElementById('completion-section').innerHTML = '';
+            document.getElementById('controls').style.display = '';
+            document.getElementById('lives').style.display = '';
+            document.getElementById('grid').style.display = '';
+            nextPuzzle();
+        }
+
+        function shareResult() {
+            let shareText = '⚖️ Connections #' + gameState.puzzle.id + '\n';
+
+            // Build emoji grid
+            const groups = gameState.puzzle.groups;
+            const solved = gameState.solveOrder;
+
+            // Create map of group to when it was solved
+            const solveMap = {};
+            solved.forEach((group, idx) => {
+                const groupIdx = groups.indexOf(group);
+                solveMap[groupIdx] = idx;
+            });
+
+            // Build grid: each row is difficulty 1-4
+            // Emoji is colored by difficulty
+            const rows = [];
+            for (let i = 0; i < 4; i++) {
+                let row = '';
+                for (let j = 0; j < 4; j++) {
+                    const groupIdx = i * 4 + j;
+                    if (groupIdx < groups.length) {
+                        const group = groups[groupIdx];
+                        const color = DIFFICULTY_COLORS[group.difficulty];
+                        row += EMOJI_COLORS[color];
+                    }
+                }
+                if (row) rows.push(row);
+            }
+
+            // If not all solved, add mistake indicator
+            if (gameState.lives > 0 && gameState.lives < 4) {
+                const mistakesRow = '⬛'.repeat(4 - gameState.lives);
+                rows.push(mistakesRow);
+            }
+
+            shareText += rows.join('\n');
+            shareText += '\n\nlawgames.github.io';
+
+            LawGames.copyShareText(shareText, 'Copied to clipboard!');
+        }
+
+        // ========================================================================
+        // EVENT LISTENERS
+        // ========================================================================
+
+        document.getElementById('submit-btn').onclick = submit;
+        document.getElementById('deselect-btn').onclick = deselectAll;
+        document.getElementById('shuffle-btn').onclick = shuffle;
+        document.getElementById('prev-puzzle').onclick = prevPuzzle;
+        document.getElementById('next-puzzle').onclick = nextPuzzle;
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (gameState.gameOver) return;
+            if (e.key === 'Enter') submit();
+            if (e.key === 'Escape') deselectAll();
+        });
+
+        // Initialize on load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initGame);
+        } else {
+            initGame();
+        }
+    </script>
+</body>
+</html>

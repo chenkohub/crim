@@ -1,0 +1,328 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "case": "United States v. Cole",
+      "topic": "Introduction to Criminal Law",
+      "unit": "Unit I: Introduction",
+      "facts": "Cole, a corporate insider at Diebold, manipulated financial records to commit securities fraud. The case illustrates the scope and application of federal criminal jurisdiction.",
+      "holding": "The court affirmed that federal criminal jurisdiction extends to securities fraud involving corporate insiders who manipulate financial records. Federal crimes are prosecuted when they affect interstate commerce and involve federal regulatory schemes.",
+      "significance": "Demonstrates how federal criminal law applies to white-collar crimes and corporate wrongdoing, establishing foundational principles of federal jurisdiction over securities fraud."
+    },
+    {
+      "id": 2,
+      "case": "United States v. Bronstein",
+      "topic": "Void for Vagueness",
+      "unit": "Unit I: Introduction",
+      "facts": "Defendants were arrested for expressive activity near the Supreme Court building under 40 U.S.C. § 6134. They challenged the constitutionality of the statute regulating conduct in that area.",
+      "holding": "The court analyzed whether the statute was unconstitutionally vague under the void-for-vagueness doctrine, examining whether the statutory language gave fair notice of prohibited conduct and whether it invited arbitrary enforcement.",
+      "significance": "Illustrates the constitutional limits on criminal statutes and the void-for-vagueness doctrine as a protection against overbroad or undefined criminal liability."
+    },
+    {
+      "id": 3,
+      "case": "Robinson v. California",
+      "topic": "Actus Reus",
+      "unit": "Unit II: Actus Reus & Mens Rea",
+      "facts": "Robinson was convicted solely for the status of being addicted to narcotics, with no evidence of any criminal conduct or drug transaction.",
+      "holding": "The Supreme Court struck down the conviction, holding that a state cannot criminalize a status or condition. The Eighth and Fourteenth Amendments prohibit punishing mere status without an actus reus.",
+      "significance": "Establishes the fundamental principle that criminal liability requires a voluntary act (actus reus), not mere status or condition, protecting individuals from criminalization based on immutable characteristics."
+    },
+    {
+      "id": 4,
+      "case": "Commonwealth v. Mercado",
+      "topic": "Actus Reus",
+      "unit": "Unit II: Actus Reus & Mens Rea",
+      "facts": "Mercado was observed leaning out of a window above a location where a drug sale was occurring. He was charged with aiding and abetting the drug transaction.",
+      "holding": "The court found that constructive presence at the scene of the crime is insufficient for conviction as an accomplice. Involuntary or passive acts do not satisfy the actus reus requirement for liability.",
+      "significance": "Demonstrates that presence alone, even at the scene of a crime, is insufficient for criminal liability; an affirmative act is required to establish actus reus."
+    },
+    {
+      "id": 5,
+      "case": "People v. Atkins",
+      "topic": "Mens Rea",
+      "unit": "Unit II: Actus Reus & Mens Rea",
+      "facts": "The case addressed the distinction between general intent and specific intent crimes, requiring analysis of the statutory language defining the offense.",
+      "holding": "The court held that specific intent is required when statute language indicates an intent beyond the act itself, such as intent to harm, intent to deprive, or specific purpose. General intent requires only awareness of the nature of the conduct.",
+      "significance": "Clarifies the critical distinction between general and specific intent crimes, which affects both mens rea analysis and availability of defenses like voluntary intoxication."
+    },
+    {
+      "id": 6,
+      "case": "United States v. Jewell",
+      "topic": "Mens Rea",
+      "unit": "Unit II: Actus Reus & Mens Rea",
+      "facts": "Jewell transported a car across the border containing drugs in a hidden compartment. He claimed he deliberately avoided looking in the trunk to avoid knowledge of the drugs.",
+      "holding": "The court held that willful blindness — conscious avoidance of knowledge — satisfies the 'knowingly' mental state requirement. A defendant cannot escape liability by deliberately closing his eyes to the obvious.",
+      "significance": "Expands the mens rea requirement for 'knowingly' crimes to include willful blindness, preventing defendants from using deliberate ignorance as a shield against criminal liability."
+    },
+    {
+      "id": 7,
+      "case": "United States v. Yermian",
+      "topic": "Mens Rea",
+      "unit": "Unit II: Actus Reus & Mens Rea",
+      "facts": "Yermian was charged with a crime involving jurisdictional elements. The case addressed whether mens rea must be applied to jurisdictional elements of the crime.",
+      "holding": "The court held that jurisdictional elements need not have a mental state applied. Under MPC § 2.02, jurisdictional elements are excepted from the general requirement that a culpable mental state apply to all elements.",
+      "significance": "Establishes that the prosecution need not prove mens rea as to jurisdictional elements, simplifying proof of crimes that depend on federal or interstate jurisdiction."
+    },
+    {
+      "id": 8,
+      "case": "State v. Fugate",
+      "topic": "Mens Rea",
+      "unit": "Unit II: Actus Reus & Mens Rea",
+      "facts": "Fugate committed an act during the commission of another crime. The question was whether intent to kill could be inferred from the defendant's actions.",
+      "holding": "Intent to kill may be inferred from the natural and probable consequences of the defendant's actions, not just from express statements or deliberate purpose.",
+      "significance": "Allows inference of specific intent (to kill) from the defendant's conduct and the foreseeable results of his actions, rather than requiring explicit evidence of desire or purpose."
+    },
+    {
+      "id": 9,
+      "case": "People v. Scott",
+      "topic": "Mens Rea",
+      "unit": "Unit II: Actus Reus & Mens Rea",
+      "facts": "Scott aimed at one person with intent to kill but missed and hit another victim instead, killing that person.",
+      "holding": "Transferred intent doctrine applies: the intent to kill the intended victim transfers to the actual victim. Scott is liable for murder of the person actually killed.",
+      "significance": "Establishes that intent is transferred from the intended victim to the actual victim in cases of mistaken identity or bad aim, ensuring liability for homicide regardless of which person is actually harmed."
+    },
+    {
+      "id": 10,
+      "case": "Morissette v. United States",
+      "topic": "Mens Rea",
+      "unit": "Unit II: Actus Reus & Mens Rea",
+      "facts": "Morissette took spent shell casings from a military range without permission. He was charged with theft of government property without proving he knew the items belonged to the government.",
+      "holding": "The court presumed that mens rea is required for criminal offenses absent clear Congressional intent to impose strict liability. The government bears the burden of showing Congress intended to eliminate the mens rea requirement.",
+      "significance": "Establishes the strong presumption favoring mens rea requirements and places the burden on the prosecution to prove strict liability was intended, protecting defendants from unexpected criminal liability."
+    },
+    {
+      "id": 11,
+      "case": "State v. Freeman",
+      "topic": "Mistake of Fact",
+      "unit": "Unit III: Mistakes, Causation & Concurrence",
+      "facts": "Freeman took a stereo from a store, claiming his girlfriend had paid for it. He raised a mistake of fact defense, arguing he believed he had the owner's consent to take the merchandise.",
+      "holding": "For specific intent crimes, an honest mistake of fact is a defense regardless of reasonableness. For general intent crimes, the mistake must be both honest AND reasonable to be a valid defense.",
+      "significance": "Establishes the critical distinction between mistake of fact defenses in specific intent vs. general intent crimes, with specific intent crimes requiring only honesty while general intent crimes require reasonableness."
+    },
+    {
+      "id": 12,
+      "case": "Cheek v. United States",
+      "topic": "Mistake of Law",
+      "unit": "Unit III: Mistakes, Causation & Concurrence",
+      "facts": "Cheek, a tax protester, was convicted of willfully violating tax laws. He claimed an honest belief that he was not required to file tax returns or pay income tax.",
+      "holding": "An honest belief may negate willfulness in crimes requiring 'willfulness,' even if the belief is incorrect. However, disagreement with or misunderstanding of the law is not a valid defense; the belief must be honest.",
+      "significance": "Distinguishes between honest mistake of law (which may negate willfulness) and mere disagreement with the law, creating a narrow defense for crimes requiring willful violation of law."
+    },
+    {
+      "id": 13,
+      "case": "State v. Bingham",
+      "topic": "First-Degree Murder",
+      "unit": "Unit IV: Criminal Homicide",
+      "facts": "Bingham strangled a victim. The prosecution argued that because the defendant had time to think about the killing, premeditation was established.",
+      "holding": "Having time to deliberate is not the same as actually deliberating. The prosecution must prove the defendant in fact deliberated on the decision to kill, not merely that circumstances allowed time to think.",
+      "significance": "Clarifies that premeditation requires actual reflection on the decision to kill, not merely the availability of time, preventing automatic imposition of first-degree murder based solely on temporal opportunity."
+    },
+    {
+      "id": 14,
+      "case": "State v. Brown",
+      "topic": "First-Degree Murder",
+      "unit": "Unit IV: Criminal Homicide",
+      "facts": "Brown killed a victim. The case addressed what mental process constitutes 'deliberation' under first-degree murder law.",
+      "holding": "Deliberation requires measuring and evaluating the major facets of a choice, weighing the reasons for and against the killing. It involves a cool mind capable of forming and executing a purpose to kill.",
+      "significance": "Defines deliberation as requiring actual weighing and consideration of the decision to kill, not mere emotion or impulsive action, narrowing first-degree murder to cases of truly premeditated killings."
+    },
+    {
+      "id": 15,
+      "case": "Gilbert v. State",
+      "topic": "First-Degree Murder",
+      "unit": "Unit IV: Criminal Homicide",
+      "facts": "Gilbert was charged with first-degree murder. The prosecution offered evidence of premeditation factors including weapon preparation, consideration of alternatives, and positioning to avoid detection.",
+      "holding": "Premeditation may be inferred from factors such as: weapon ready in advance, consideration of alternative courses of action, positioning to avoid detection, and retrieving an additional weapon.",
+      "significance": "Provides evidentiary framework for proving premeditation through circumstantial evidence of planning and preparation, guiding juries on what facts demonstrate a calculated decision to kill."
+    },
+    {
+      "id": 16,
+      "case": "State v. Arrington",
+      "topic": "First-Degree Murder",
+      "unit": "Unit IV: Criminal Homicide",
+      "facts": "Arrington shot a victim in the back of the head at close range. Evidence suggested intent to kill, but the defendant argued lack of deliberation.",
+      "holding": "Even when evidence supports premeditation, second-degree murder instructions must be given because a jury could still find the defendant did not deliberate, reserving the question for the jury.",
+      "significance": "Ensures that juries have the option to find second-degree murder even when evidence might support premeditation, protecting defendants' right to have deliberation determined by the jury."
+    },
+    {
+      "id": 17,
+      "case": "People v. Berry",
+      "topic": "Voluntary Manslaughter",
+      "unit": "Unit IV: Criminal Homicide",
+      "facts": "Berry killed his wife after 20 hours of heated discussion about her affair. He claimed the passion had not cooled despite the lengthy time period.",
+      "holding": "Under the modern approach, passion may be cumulative; a long cooling period does not automatically negate 'heat of passion' if the defendant remained provoked and had not regained his composure.",
+      "significance": "Modernizes voluntary manslaughter doctrine by focusing on defendant's actual emotional state rather than objective time limits, allowing heat of passion to persist despite hours of provocation."
+    },
+    {
+      "id": 18,
+      "case": "State v. Dumlao",
+      "topic": "Voluntary Manslaughter",
+      "unit": "Unit IV: Criminal Homicide",
+      "facts": "Dumlao raised a heat of passion defense, arguing emotional disturbance negated malice aforethought. The case addressed the standard for evaluating such claims.",
+      "holding": "The EMED two-step test applies: (1) view the situation from the defendant's subjective perspective; (2) assess whether the explanation for the emotional disturbance was reasonable to a reasonable person.",
+      "significance": "Provides a structured test for heat of passion defenses that balances subjective defendant perspective with objective reasonableness, ensuring consistency in voluntary manslaughter determinations."
+    },
+    {
+      "id": 19,
+      "case": "People v. Knoller",
+      "topic": "Depraved Heart Murder",
+      "unit": "Unit IV: Criminal Homicide",
+      "facts": "Knoller owned dogs that killed a neighbor. The defendant was charged with depraved heart murder based on extreme negligence regarding the danger.",
+      "holding": "Depraved heart murder requires conscious disregard of a substantial risk of DEATH specifically. Awareness of a risk of serious bodily injury is insufficient for this type of implied malice murder.",
+      "significance": "Establishes that depraved heart murder requires awareness of a specific risk of death, not merely risk of serious injury, narrowing the scope of implied malice crimes."
+    },
+    {
+      "id": 20,
+      "case": "State v. Williams",
+      "topic": "Involuntary Manslaughter",
+      "unit": "Unit IV: Criminal Homicide",
+      "facts": "Parents failed to obtain medical care for their sick child who subsequently died. They were charged with involuntary manslaughter based on gross negligence.",
+      "holding": "The legislature changed the involuntary manslaughter standard from gross negligence to ordinary negligence. Conviction may be based on ordinary negligence tested by a reasonable person standard that does not incorporate defendant's characteristics.",
+      "significance": "Lowers the negligence threshold for involuntary manslaughter to ordinary negligence and applies an objective reasonable person standard, making such convictions more accessible to prosecution."
+    },
+    {
+      "id": 21,
+      "case": "People v. James",
+      "topic": "Felony Murder",
+      "unit": "Unit IV: Criminal Homicide",
+      "facts": "James committed a felony during which a death occurred. The court had to determine whether the underlying felony was inherently dangerous enough to support felony murder liability.",
+      "holding": "In applying the 'inherently dangerous felony' rule, courts must look at the statutory elements of the felony 'in the abstract' rather than as committed by this particular defendant.",
+      "significance": "Limits felony murder liability to truly dangerous felonies by requiring an abstract analysis of the crime itself, preventing cherry-picked application based on how a particular defendant committed the offense."
+    },
+    {
+      "id": 22,
+      "case": "People v. Bodely",
+      "topic": "Felony Murder",
+      "unit": "Unit IV: Criminal Homicide",
+      "facts": "During a robbery, the robber was killed by someone. The issue was whether the felony murder rule extended to a killing during the escape phase.",
+      "holding": "The temporary safety rule provides that a felony is not complete until the robber reaches a place of safety. Killings during the escape phase may still fall within the felony murder rule.",
+      "significance": "Extends felony murder liability through the escape phase of the crime, with the 'res gestae' limitation ensuring liability only for killings that are part of the continuous criminal transaction."
+    },
+    {
+      "id": 23,
+      "case": "Rose v. State",
+      "topic": "Felony Murder",
+      "unit": "Unit IV: Criminal Homicide",
+      "facts": "The defendant committed an assault during which a death occurred. The issue was whether the assault could serve as the predicate felony for felony murder.",
+      "holding": "Under the merger doctrine, the underlying felony must be independent of the homicide. Assaultive felonies merge with the homicide and cannot serve as the predicate for felony murder.",
+      "significance": "Prevents charging felony murder based on assaults that are inherent to any homicide, ensuring felony murder applies only when the defendant committed a distinct, independent felony."
+    },
+    {
+      "id": 24,
+      "case": "State v. Canola",
+      "topic": "Felony Murder",
+      "unit": "Unit IV: Criminal Homicide",
+      "facts": "During a felony committed by Canola and co-felons, a third party killed one of the felons. The issue was whether felony murder liability extended to this killing.",
+      "holding": "The agency rule limits felony murder: a defendant is liable only for killings by co-felons in furtherance of the joint felony, not for killings by third parties or non-participants.",
+      "significance": "Restricts felony murder liability to killings by those acting as agents of the defendant's criminal enterprise, preventing liability for deaths caused by law enforcement or other third parties."
+    },
+    {
+      "id": 25,
+      "case": "State v. Barbour",
+      "topic": "Theft Offenses",
+      "unit": "Unit V: Theft Offenses",
+      "facts": "Barbour took a truck for a test drive with the owner's permission but never returned it. He was charged with larceny.",
+      "holding": "This constitutes larceny by trick: the defendant obtained possession through fraud, but the owner retained title. Larceny requires only trespassory taking of possession; title remains with the true owner.",
+      "significance": "Distinguishes larceny by trick from false pretenses, establishing that larceny occurs when the owner retains title despite fraudulently obtained possession."
+    },
+    {
+      "id": 26,
+      "case": "State v. Pierce",
+      "topic": "Theft Offenses",
+      "unit": "Unit V: Theft Offenses",
+      "facts": "Pierce fraudulently used someone else's information to purchase phones from AT&T, obtaining both possession and legal ownership of the phones.",
+      "holding": "This constitutes false pretenses: the defendant obtained both title and possession through fraudulent misrepresentation. The victim's loss of ownership distinguishes it from larceny by trick.",
+      "significance": "Establishes the distinction between larceny by trick (possession only obtained by fraud) and false pretenses (both title and possession obtained by fraud)."
+    },
+    {
+      "id": 27,
+      "case": "People v. Navarro",
+      "topic": "Theft Offenses",
+      "unit": "Unit V: Theft Offenses",
+      "facts": "Navarro committed a theft through fraud. The case addressed how to classify the offense based on what the fraud obtained.",
+      "holding": "Theft classification depends on the scope of the fraud: if fraud obtains possession only (owner retains title), it is larceny by trick; if fraud obtains both title and possession, it is false pretenses.",
+      "significance": "Clarifies the framework for classifying fraud-based thefts based on whether title transfers, providing clear guidance for distinguishing between larceny by trick and false pretenses."
+    },
+    {
+      "id": 28,
+      "case": "Commonwealth v. Mills",
+      "topic": "Theft Offenses",
+      "unit": "Unit V: Theft Offenses",
+      "facts": "Mills submitted fraudulent claims to the city and the city willingly paid based on false representations. The case analyzed what type of theft occurred.",
+      "holding": "Not larceny (no trespassory taking—city willingly paid). Not embezzlement (no fiduciary relationship). This is false pretenses: defendant made purposely false statements, knew they were false, intended reliance, and the city actually relied.",
+      "significance": "Demonstrates the application of false pretenses doctrine to fraud cases where the victim voluntarily provides money based on the defendant's false representations."
+    },
+    {
+      "id": 29,
+      "case": "State v. Steele",
+      "topic": "Theft Offenses",
+      "unit": "Unit V: Theft Offenses",
+      "facts": "Steele, a pastor, managed an elderly widow's finances and misappropriated funds that had been entrusted to him for financial management.",
+      "holding": "Embezzlement: a fiduciary duty arises from the special confidence and trust placed in the defendant. Look to the depositor's intent—money given for management creates a trust relationship even without formal POA.",
+      "significance": "Establishes that embezzlement fiduciary duties arise from de facto trust relationships based on the victim's intent to have property managed, not merely from formal legal appointments."
+    },
+    {
+      "id": 30,
+      "case": "United States v. Eichman",
+      "topic": "Burglary",
+      "unit": "Unit V: Theft Offenses",
+      "facts": "The case involved flag burning and addressed the statutory definition of burglary, specifically the 'entry' requirement and the concept of 'dwelling' or protected structure.",
+      "holding": "The entry element of burglary requires an intrusion within four walls or beneath a roof. Curtilage (the area near the home) expands the dwelling concept but requires actual structural intrusion.",
+      "significance": "Defines the scope of structures protected by burglary law, extending beyond traditional dwellings to include curtilage while requiring actual entry into enclosed spaces."
+    },
+    {
+      "id": 31,
+      "case": "State v. Thibeault",
+      "topic": "Burglary",
+      "unit": "Unit V: Theft Offenses",
+      "facts": "Thibeault entered an apartment with the owner's permission but with intent to steal. He was charged with burglary, claiming the consent defeated the breaking requirement.",
+      "holding": "Consent is a complete defense to the breaking element; lack of breaking is separate from lack of license. However, knowing lack of license and felonious intent are separate elements requiring independent proof.",
+      "significance": "Clarifies that permission/consent negates the breaking requirement of burglary, though the defendant's state of mind regarding the felonious purpose remains an independent element."
+    },
+    {
+      "id": 32,
+      "case": "Crocker v. State",
+      "topic": "Robbery",
+      "unit": "Unit V: Theft Offenses",
+      "facts": "Crocker snatched money from a victim's hand without applying force, threat, or creating any sense of fear. He was charged with robbery.",
+      "holding": "Snatching money without force, threat, or fear constitutes larceny, not robbery. Robbery requires proof of force, coercion, or conduct creating fear in the victim.",
+      "significance": "Establishes that the force requirement of robbery is distinct from the taking itself; gentle snatching without threat or fear does not satisfy the force element."
+    },
+    {
+      "id": 33,
+      "case": "Miller v. Superior Court",
+      "topic": "Robbery",
+      "unit": "Unit V: Theft Offenses",
+      "facts": "A shoplifter struggled with a security guard during the escape phase. The defendant argued the force occurred after the theft was complete, outside robbery's scope.",
+      "holding": "Force used during the asportation (carrying away) phase satisfies robbery's 'immediate presence' requirement. The force must be used to retain possession, not necessarily to obtain it initially.",
+      "significance": "Extends the temporal scope of robbery to include force used during escape and asportation, ensuring liability when force is used to retain stolen property immediately after taking."
+    },
+    {
+      "id": 34,
+      "case": "Regina v. Dudley & Stephens",
+      "topic": "Necessity",
+      "unit": "Unit VI: Defenses",
+      "facts": "Shipwrecked sailors were starving at sea. They killed a cabin boy, an innocent person, and drank his blood to survive. They claimed necessity as a defense.",
+      "holding": "The necessity defense cannot justify killing an innocent person. There are limits to what necessity can excuse, and taking the life of an innocent is beyond those limits.",
+      "significance": "Establishes a fundamental principle limiting the necessity defense: it cannot be used to justify the death of innocent people, even when necessary for the defendant's survival."
+    },
+    {
+      "id": 35,
+      "case": "People v. Goetz",
+      "topic": "Self-Defense",
+      "unit": "Unit VI: Defenses",
+      "facts": "Goetz, a subway vigilante, shot four teenagers who he believed were about to rob him. The teenagers were unarmed. He claimed self-defense.",
+      "holding": "Self-defense requires an objectively reasonable belief in the need to use force. 'Reasonably' modifies 'believes,' but the jury may consider the defendant's knowledge of the victim, physical attributes, and prior experiences.",
+      "significance": "Balances subjective and objective self-defense standards: the belief must be reasonable, but jurors may consider facts known to the defendant that might make his belief reasonable."
+    },
+    {
+      "id": 36,
+      "case": "State v. Simon",
+      "topic": "Self-Defense",
+      "unit": "Unit VI: Defenses",
+      "facts": "Simon killed a victim and claimed self-defense, arguing his anxiety neurosis caused him to overreact and believe force was necessary.",
+      "holding": "The belief in necessity must be reasonable to a reasonable person, applying an objective standard. Prior dealings and mental health are relevant to the defendant's subjective belief but are tested against the objective reasonableness standard.",
+      "significance": "Clarifies that while subjective facts can inform self-defense analysis, the ultimate test is whether the belief was reasonable to a reasonable person, preventing mental illness from creating a lower standard."
+    }
+  ]
+}

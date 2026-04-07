@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criminal Law Rule Writing Drills</title>
+    <style>
+        :root, [data-theme] {
+            --tool-accent: #ef4444;
+            --tool-accent-dark: #dc2626;
+            --tool-accent-light: #f87171;
+            --tool-accent-lighter: #fca5a5;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--tool-accent);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--tool-accent);
+        }
+
+        .subtitle {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .mode-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--color-bg-secondary);
+            color: var(--color-text-primary);
+            border: 2px solid var(--color-border);
+        }
+
+        button:hover {
+            background: var(--color-bg-secondary);
+            border-color: var(--tool-accent);
+        }
+
+        button.active {
+            background: var(--tool-accent);
+            color: var(--color-text-primary);
+            border-color: var(--tool-accent);
+        }
+
+        .main-content {
+            display: none;
+        }
+
+        .main-content.active {
+            display: block;
+        }
+
+        .drill-card {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .drill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .rule-number {
+            background: var(--tool-accent);
+            color: var(--color-text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        .rule-title {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .rule-title h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+            color: var(--color-text-primary);
+        }
+
+        .rule-category {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+        }
+
+        .progress-bar {
+            background: var(--color-bg-primary);
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--tool-accent), var(--tool-accent-light));
+            transition: width 0.3s ease;
+        }
+
+        .prompt-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .prompt-label {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .prompt {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            padding: 1rem;
+            background: var(--color-bg-primary);
+            border-left: 4px solid var(--tool-accent);
+            border-radius: 0.375rem;
+        }
+
+        .input-section {
+            margin-bottom: 1.5rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 1rem;
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.95rem;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--tool-accent);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .button-group button {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .check-button {
+            background: var(--tool-accent);
+            color: var(--color-text-primary);
+            border-color: var(--tool-accent);
+        }
+
+        .check-button:hover {
+            background: var(--tool-accent-light);
+            border-color: var(--tool-accent-light);
+        }
+
+        .check-button:disabled {
+            background: var(--color-border);
+            color: var(--color-text-primary);
+            border-color: var(--color-text-tertiary);
+            cursor: not-allowed;
+        }
+
+        .next-button {
+            background: var(--tool-accent-light);
+            border-color: var(--tool-accent-light);
+        }
+
+        .next-button:hover {
+            background: var(--tool-accent);
+            border-color: var(--tool-accent);
+        }
+
+        .answer-reveal {
+            display: none;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .answer-reveal.shown {
+            display: block;
+        }
+
+        .comparison-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .answer-column {
+            background: var(--color-bg-primary);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--color-border);
+        }
+
+        .answer-column h3 {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .answer-text {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--color-text-primary);
+        }
+
+        .highlight-match {
+            background: rgba(16, 185, 129, 0.3);
+            color: #86efac;
+            font-weight: 600;
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+        }
+
+        .highlight-missing {
+            background: rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            font-weight: 600;
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+            text-decoration: underline;
+        }
+
+        .rating-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .rating-label {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .rating-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .rating-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--color-border);
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .rating-btn:hover {
+            border-color: var(--tool-accent);
+        }
+
+        .rating-btn.nailed {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--color-correct);
+            color: #86efac;
+        }
+
+        .rating-btn.close {
+            background: rgba(var(--color-partial-rgb), 0.2);
+            border-color: var(--color-partial);
+            color: var(--color-partial);
+        }
+
+        .rating-btn.missed {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--tool-accent);
+            color: #fca5a5;
+        }
+
+        .stats-panel {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--tool-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--tool-accent);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--color-bg-primary);
+            border-radius: 0.5rem;
+            border: 2px solid var(--tool-accent);
+        }
+
+        .timer.warning {
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .fill-blank-question {
+            background: var(--color-bg-primary);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--color-border);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            line-height: 2;
+        }
+
+        .blank {
+            background: var(--color-bg-secondary);
+            color: var(--color-text-primary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            display: inline-block;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .rules-list {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .rules-list h3 {
+            margin-bottom: 1rem;
+            color: var(--color-text-primary);
+        }
+
+        .rule-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: var(--color-bg-primary);
+            border-radius: 0.375rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 3px solid var(--color-border);
+            transition: border-color 0.3s ease;
+        }
+
+        .rule-item.nailed {
+            border-left-color: var(--color-correct);
+        }
+
+        .rule-item.close {
+            border-left-color: var(--color-partial);
+        }
+
+        .rule-item.missed {
+            border-left-color: var(--tool-accent);
+        }
+
+        .rule-item.untested {
+            border-left-color: var(--color-text-tertiary);
+        }
+
+        .rule-item-name {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .rule-item-status {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+        }
+
+        .status-nailed {
+            background: rgba(16, 185, 129, 0.2);
+            color: #86efac;
+        }
+
+        .status-close {
+            background: rgba(var(--color-partial-rgb), 0.2);
+            color: var(--color-partial);
+        }
+
+        .status-missed {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        .status-untested {
+            background: rgba(100, 116, 139, 0.2);
+            color: var(--color-text-primary);
+        }
+
+        .intro-section {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .intro-section h2 {
+            color: var(--tool-accent);
+            margin-bottom: 1rem;
+        }
+
+        .intro-section p {
+            color: var(--color-text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .generation-effect {
+            background: rgba(239, 68, 68, 0.1);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--tool-accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .generation-effect strong {
+            color: var(--color-text-primary);
+        }
+
+        @media (max-width: 640px) {
+            .mode-selector {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .drill-header {
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .drill-card {
+                padding: 1.5rem;
+            }
+
+            textarea {
+                min-height: 120px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../theme.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Criminal Law Rule Writing Drills</h1>
+            <p class="subtitle">Closed-Book Exam Preparation • Generation Effect in Action</p>
+        </header>
+
+        <div class="generation-effect">
+            <strong>How this works:</strong> Writing rules from memory creates dramatically stronger retention than reading them. Type your answer, check it against the correct rule, and rate yourself. Focus on weak areas to master all 25 critical rules.
+        </div>
+
+        <div class="mode-selector">
+            <button id="mode-practice" class="mode-btn active">Practice Mode</button>
+            <button id="mode-random" class="mode-btn">Random Drill</button>
+            <button id="mode-timed" class="mode-btn">Timed Mode (2 min)</button>
+            <button id="mode-weak" class="mode-btn">Weak Rules</button>
+            <button id="mode-fillblank" class="mode-btn">Fill-in-Blank</button>
+            <button id="mode-review" class="mode-btn">Progress Review</button>
+        </div>
+
+        <div id="practice-mode" class="main-content active">
+            <div id="practice-drills"></div>
+        </div>
+
+        <div id="random-mode" class="main-content">
+            <div id="random-drills"></div>
+        </div>
+
+        <div id="timed-mode" class="main-content">
+            <div id="timed-drills"></div>
+        </div>
+
+        <div id="weak-mode" class="main-content">
+            <div id="weak-drills"></div>
+        </div>
+
+        <div id="fillblank-mode" class="main-content">
+            <div id="fillblank-drills"></div>
+        </div>
+
+        <div id="review-mode" class="main-content">
+            <div class="stats-panel">
+                <h2 style="margin-bottom: 1.5rem; color: var(--color-text-primary);">Overall Performance</h2>
+                <div class="stats-grid" id="overall-stats">
+                    <div class="stat">
+                        <div class="stat-value" id="stat-total">0</div>
+                        <div class="stat-label">Rules Tested</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="stat-nailed">0</div>
+                        <div class="stat-label">Nailed It</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="stat-close">0</div>
+                        <div class="stat-label">Close</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="stat-missed">0</div>
+                        <div class="stat-label">Missed</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rules-list">
+                <h3>Rule-by-Rule Breakdown</h3>
+                <div id="rules-breakdown"></div>
+            </div>
+
+            <div style="text-align: center;">
+                <button id="reset-btn" style="background: var(--tool-accent); color: var(--color-text-primary); border-color: var(--tool-accent); width: 100%; max-width: 300px;">Reset All Progress</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // DATA: 25 Critical Criminal Law Rules
+        // ============================================
+
+        const rules = [
+            {
+                id: 1,
+                title: "MPC § 2.02 Culpability Hierarchy",
+                category: "Mens Rea",
+                prompt: "Define the MPC § 2.02 hierarchy of culpability: Purpose, Knowledge, Recklessness, Negligence.",
+                correct: "PURPOSE: The actor's conscious objective is to engage in the conduct or cause the result. KNOWLEDGE: The actor is aware that the conduct is of that nature or that the result is practically certain to follow. RECKLESSNESS: The actor consciously disregards a substantial and unjustifiable risk that the result will follow, where the disregard constitutes a gross deviation from the standard of conduct that a law-abiding person would observe. NEGLIGENCE: The actor should be aware of a substantial and unjustifiable risk that the result will follow, where the failure to perceive it constitutes a gross deviation from the standard of care that a reasonable person would observe.",
+                keyTerms: ["Purpose", "conscious objective", "Knowledge", "practically certain", "Recklessness", "consciously disregards", "substantial and unjustifiable risk", "gross deviation", "Negligence", "should be aware", "reasonable person"],
+                fillBlank: "PURPOSE: The actor's [BLANK] is to engage in the conduct or cause the result. KNOWLEDGE: The actor is aware that the conduct is of that nature or that the result is [BLANK] to follow. RECKLESSNESS: The actor [BLANK] a substantial and unjustifiable risk. NEGLIGENCE: The actor [BLANK] a substantial and unjustifiable risk."
+            },
+            {
+                id: 2,
+                title: "Common Law Malice Aforethought",
+                category: "Murder",
+                prompt: "Name and define the four forms of malice aforethought under common law.",
+                correct: "1) INTENT TO KILL: Conscious objective or knowledge to cause death. 2) INTENT TO CAUSE SERIOUS BODILY HARM: Conscious objective to cause grievous injury, though not necessarily death. 3) DEPRAVED HEART MURDER: Reckless indifference to human life; extremely dangerous conduct evidencing extreme atrocity or cruelty. 4) FELONY MURDER: Death occurs during the commission of an inherently dangerous felony.",
+                keyTerms: ["Intent to Kill", "conscious objective", "Intent to Cause Serious Bodily Harm", "Depraved Heart", "reckless indifference", "extremely dangerous conduct", "Felony Murder", "inherently dangerous felony"],
+                fillBlank: "The four forms are: 1) [BLANK] - conscious objective or knowledge to cause death. 2) [BLANK]] - conscious objective to cause grievous injury. 3) [BLANK] - reckless indifference to human life. 4) [BLANK] - death occurs during commission of an inherently dangerous felony."
+            },
+            {
+                id: 3,
+                title: "Voluntary Manslaughter - Elements",
+                category: "Manslaughter",
+                prompt: "State the four categorical elements of voluntary manslaughter under common law.",
+                correct: "1) The defendant intentionally killed the victim. 2) The defendant acted with malice aforethought (intent to kill, intent to cause serious bodily harm, depraved heart, or felony murder intent). 3) The killing was committed in the heat of passion. 4) The heat of passion was provoked by adequate provocation.",
+                keyTerms: ["intentionally killed", "malice aforethought", "heat of passion", "adequate provocation"],
+                fillBlank: "Voluntary manslaughter requires: 1) [BLANK] by the defendant. 2) [BLANK]] or depraved heart intent. 3) The killing in the [BLANK]]. 4) The passion provoked by [[BLANK]]."
+            },
+            {
+                id: 4,
+                title: "EMED Test & Dumlao",
+                category: "Extreme Mental or Emotional Disturbance",
+                prompt: "State MPC § 210.3 EMED (Extreme Mental or Emotional Disturbance) and the Dumlao two-step test.",
+                correct: "MPC § 210.3: A person who kills in the heat of passion upon adequate provocation, or while under the influence of extreme mental or emotional disturbance for which there is a reasonable explanation or excuse, is guilty of manslaughter. DUMLAO TWO-STEP: Step 1 - Was there evidence of extreme mental or emotional disturbance? Step 2 - Was there a reasonable explanation or excuse for the disturbance from the defendant's perspective? If both are satisfied, a jury question exists; if not, the actor is guilty of murder.",
+                keyTerms: ["extreme mental or emotional disturbance", "reasonable explanation or excuse", "Dumlao two-step", "jury question", "defendant's perspective"],
+                fillBlank: "EMED requires [[BLANK]] or [[BLANK]] for which there is a [[BLANK]]. Dumlao asks: 1) Was there evidence of [[BLANK]]? 2) Was there [[BLANK]]?"
+            },
+            {
+                id: 5,
+                title: "Felony Murder - Four Limitations",
+                category: "Felony Murder",
+                prompt: "State the four major limitations on felony murder liability.",
+                correct: "1) INHERENTLY DANGEROUS LIMITATION (James v. Ohio): The felony must be inherently dangerous to human life; petty or non-inherently-dangerous felonies do not qualify. 2) RES GESTAE LIMITATION (People v. Bodely): The death must occur during the commission of the felony or its immediate flight; deaths after the felony is complete or felony is abandoned do not qualify. 3) MERGER LIMITATION (People v. Rose): Felonies that are included elements of murder (like assault causing death or manslaughter) merge with murder and cannot serve as the predicate felony; EXCEPTION: Independently motivated felonies may not merge (independent purpose doctrine). 4) AGENCY LIMITATION (People v. Canola): The death must be caused by the felon or an accomplice, not by the victim or a third party in response to the felonious conduct; EXCEPTION: Shield exception protects accomplices when the felon's co-felon causes death.",
+                keyTerms: ["inherently dangerous", "James", "res gestae", "Bodely", "immediate flight", "merger", "Rose", "independent purpose", "agency", "Canola", "shield exception"],
+                fillBlank: "Four limitations: 1) [[BLANK]] - felony must be [[BLANK]] (James). 2) [[BLANK]] - death must occur during [[BLANK]] (Bodely). 3) [[BLANK]] - felonies included in murder [[BLANK]] (Rose). 4) [[BLANK]] - death must be caused by [[BLANK]] (Canola)."
+            },
+            {
+                id: 6,
+                title: "Larceny - Five Elements",
+                category: "Property Crimes",
+                prompt: "State all five elements of larceny.",
+                correct: "1) TRESPASS: A taking without the owner's consent, without lawful authority, or beyond the scope of consent given. 2) OF THE PERSONAL PROPERTY: The thing taken must be movable, tangible property owned by another. 3) OF ANOTHER: The property must belong to someone other than the taker. 4) WITH INTENT TO PERMANENTLY DEPRIVE: The defendant must act with the specific intent to permanently deprive the owner of the property, not merely to borrow or temporarily use it. 5) CARRYING AWAY (Asportation): The property must be moved from its original location, even slightly, with the intent to carry it away.",
+                keyTerms: ["trespass", "taking", "personal property", "another", "intent to permanently deprive", "carrying away", "asportation"],
+                fillBlank: "Larceny requires: 1) [[BLANK]] without consent. 2) Of [[BLANK]] property. 3) Of [[BLANK]]. 4) With [[BLANK]]. 5) [[BLANK]] of the property."
+            },
+            {
+                id: 7,
+                title: "Causation - Two-Part Test",
+                category: "General Principles",
+                prompt: "State the two-part causation test and explain intervening cause analysis.",
+                correct: "PART 1 - BUT-FOR CAUSATION (Actual Cause): The defendant's conduct must be a 'but-for' cause of the result, meaning the result would not have occurred but for the defendant's conduct. PART 2 - PROXIMATE CAUSATION (Legal Cause): The defendant's conduct must be the proximate cause of the result, meaning the result is a reasonably foreseeable consequence of the defendant's conduct. INTERVENING CAUSE: An act or event that occurs after the defendant's conduct and contributes to the result. A dependent intervening cause (foreseeable response to defendant's conduct) does not break the causal chain. An independent intervening cause (unforeseeable act by another person or force of nature) typically breaks the causal chain and relieves the defendant of liability.",
+                keyTerms: ["but-for causation", "actual cause", "would not have occurred", "proximate causation", "reasonably foreseeable", "intervening cause", "dependent", "independent", "breaks the causal chain"],
+                fillBlank: "Causation requires: 1) [[BLANK]] - result would not occur but for [[BLANK]]. 2) [[BLANK]] - result is a [[BLANK]] consequence. [[BLANK]] intervening causes break the chain; [[BLANK]] intervening causes typically do not."
+            },
+            {
+                id: 8,
+                title: "Omission Liability - Five Duties to Act",
+                category: "General Principles",
+                prompt: "State the five situations imposing a duty to act (omission liability) with case citations.",
+                correct: "1) SPECIAL RELATIONSHIP: Parent-child, spouse-spouse, guardian-ward, employer-employee in some jurisdictions (creates affirmative duty). 2) STATUTE: Any statute explicitly imposing a duty to aid, report, or rescue (e.g., mandatory reporting laws). 3) CONTRACT: A contract that explicitly requires performance of a duty (e.g., lifeguard at a beach). 4) PRIOR CONDUCT: When the defendant's own prior conduct creates the danger or places the victim in a helpless condition (duty to prevent further harm from one's own creation). 5) ASSUMPTION OF CARE: When a person voluntarily assumes responsibility for another's welfare, a duty to perform that care reasonably (e.g., Jones v. United States: babysitter liable for infant's starvation).",
+                keyTerms: ["special relationship", "statute", "contract", "prior conduct", "assumption of care", "duty to act", "affirmative duty", "Jones v. United States"],
+                fillBlank: "Five duties to act: 1) [[BLANK]] relationships. 2) [[BLANK]]. 3) [[BLANK]]. 4) [[BLANK]] that creates danger. 5) [[BLANK]] for another's welfare (Jones)."
+            },
+            {
+                id: 9,
+                title: "Mistake of Fact - Framework",
+                category: "Defenses",
+                prompt: "State the legal framework for mistake of fact defenses and how it applies to specific intent, general intent, and strict liability crimes.",
+                correct: "SPECIFIC INTENT CRIMES: A mistake of fact—whether reasonable or unreasonable—is a defense if it negates the required specific intent. The defendant must show they acted under the mistake, regardless of reasonableness. GENERAL INTENT CRIMES: Only a reasonable mistake of fact is a defense. An unreasonable mistake is generally not a defense. STRICT LIABILITY CRIMES: A mistake of fact—whether reasonable or unreasonable—is typically not a defense, because strict liability crimes require no mens rea. EXAMPLE: Larceny (specific intent) - unreasonable mistake about consent negates intent to permanently deprive. Assault (general intent) - only reasonable mistake about victim's age may be a defense. Statutory rape (strict liability) - no mistake of fact defense, even if defendant reasonably believed victim was older.",
+                keyTerms: ["specific intent", "reasonable", "unreasonable", "negates", "general intent", "strict liability", "no mens rea"],
+                fillBlank: "For [[BLANK]] crimes, any mistake—[[BLANK]] or [[BLANK]]—is a defense. For [[BLANK]] crimes, only a [[BLANK]] mistake is a defense. For [[BLANK]] crimes, mistakes are typically [[BLANK]] defenses."
+            },
+            {
+                id: 10,
+                title: "Depraved Heart Murder - Knoller Test",
+                category: "Murder",
+                prompt: "Define depraved heart murder and state the Knoller test for when conduct manifests extreme indifference to human life.",
+                correct: "DEPRAVED HEART MURDER: Murder committed with a heart so devoid of social duty and fatally bent on mischief that the act manifests extreme indifference to human life. This is a form of malice aforethought involving reckless indifference to an obvious and high risk that death or serious bodily harm will result. KNOLLER TEST (People v. Knoller): Depraved heart murder requires: 1) The defendant's conduct was inherently and substantially dangerous to human life. 2) The defendant acted with knowledge of the danger. 3) The defendant acted with conscious disregard for human life. 4) The danger was obvious. The test establishes that extreme indifference must be a conscious choice to disregard a known substantial risk, not merely negligent risk-taking.",
+                keyTerms: ["depraved heart", "extreme indifference", "heart devoid of social duty", "reckless indifference", "Knoller", "inherently dangerous", "conscious disregard", "obvious"],
+                fillBlank: "Depraved heart murder requires [[BLANK]] to human life. Knoller requires: 1) Conduct [[BLANK]] to human life. 2) Knowledge of [[BLANK]]. 3) [[BLANK]] disregard. 4) Danger was [[BLANK]]."
+            },
+            {
+                id: 11,
+                title: "First-Degree Murder - Pennsylvania Model",
+                category: "Murder",
+                prompt: "State the first-degree murder elements under the Pennsylvania model, including the definitions of premeditation (Brown) and deliberation (Bingham).",
+                correct: "FIRST-DEGREE MURDER (Pennsylvania model): Willful, deliberate, and premeditated killing. PREMEDITATION (Commonwealth v. Brown): The defendant thought about killing before acting; the design to kill must precede the fatal blow. The time required is not fixed—it may be formed in an instant, but there must be some thought process reflecting on the idea of killing. DELIBERATION (Commonwealth v. Bingham): The defendant made a conscious decision to kill; the killer acts with a formed conscious purpose to kill the victim. Together, premeditation and deliberation require that the killing be the product of a cool mind capable of reflection, not the result of sudden passion or impulse.",
+                keyTerms: ["willful", "deliberate", "premeditated", "Brown", "thought about killing", "design to kill", "precede", "Bingham", "conscious decision", "cool mind", "sudden passion"],
+                fillBlank: "First-degree murder requires [[BLANK]], [[BLANK]], and [[BLANK]] killing. Brown: [[BLANK]] before acting. Bingham: [[BLANK]] to kill."
+            },
+            {
+                id: 12,
+                title: "Premeditation - Supporting Factors",
+                category: "Murder",
+                prompt: "State the factors courts consider when determining whether premeditation was established (Gilbert v. State analysis).",
+                correct: "GILBERT V. STATE FACTORS for premeditation: 1) THE MOTIVE: Whether the defendant had a reason or motive to kill (financial gain, revenge, jealousy). 2) THE NATURE OF THE WEAPON USED: Whether the weapon was obtained in advance (showing planning) or was readily available. 3) THE MANNER OF THE KILLING: Whether the defendant used a method suggesting a predetermined plan or calculated execution. 4) THE PLACE OF THE KILLING: Whether the defendant selected a location in advance or killed in a convenient location. 5) PRIOR THREATS OR STATEMENTS: Whether the defendant made prior threats, expressed intent to kill, or demonstrated planning. 6) THE TIME INTERVAL: The greater the time between formation of the intent and the act, the stronger the inference of premeditation. These factors are not required to be present, but their presence or absence informs the premeditation determination.",
+                keyTerms: ["Gilbert v. State", "motive", "weapon obtained in advance", "manner of killing", "place of killing", "prior threats", "time interval", "planning", "calculated"],
+                fillBlank: "Gilbert factors: 1) [[BLANK]]. 2) [[BLANK]] of weapon. 3) [[BLANK]] of killing. 4) [[BLANK]] of killing. 5) [[BLANK]]. 6) [[BLANK]] between intent and act."
+            },
+            {
+                id: 13,
+                title: "Involuntary Manslaughter - Common Law vs MPC",
+                category: "Manslaughter",
+                prompt: "Define involuntary manslaughter under common law and the MPC, and state the key differences.",
+                correct: "COMMON LAW INVOLUNTARY MANSLAUGHTER: 1) Death caused by reckless conduct (conscious disregard of substantial risk), or 2) Death caused during commission of a lawful act done in an unlawful manner (with culpable negligence). Defendant lacks intent to kill and acts without malice aforethought. MPC § 210.3 INVOLUNTARY MANSLAUGHTER (RECKLESSNESS): A person who unintentionally causes death by conduct displaying extreme indifference to the value of human life (recklessness under § 2.02). KEY DIFFERENCE: The MPC uses the culpability hierarchy (recklessness) rather than the common law distinction between recklessness and negligence. Common law has both reckless and negligent involuntary manslaughter; MPC involuntary manslaughter requires recklessness (conscious disregard), not mere negligence.",
+                keyTerms: ["involuntary manslaughter", "reckless conduct", "conscious disregard", "unlawful manner", "culpable negligence", "MPC § 210.3", "extreme indifference", "unintentionally"],
+                fillBlank: "Common law involuntary manslaughter: death by [[BLANK]] conduct or [[BLANK]]. MPC: death by [[BLANK]] displaying extreme indifference. Key difference: MPC uses [[BLANK]], not negligence."
+            },
+            {
+                id: 14,
+                title: "MPC Murder Definition",
+                category: "Murder",
+                prompt: "State the MPC § 210.2 definition of murder.",
+                correct: "MPC § 210.2 MURDER: A person is guilty of murder if: 1) He purposely or knowingly causes the death of another human being, OR 2) He causes the death of another human being under circumstances manifesting extreme indifference to the value of human life (recklessness). This definition consolidates common law murder (intent to kill, serious bodily harm, depraved heart) into two categories: purposeful/knowing killing and reckless killing manifesting extreme indifference. The MPC eliminates the felony murder rule as a separate category; instead, extreme indifference can be inferred from the nature and circumstances of the offense.",
+                keyTerms: ["purposely", "knowingly", "causes death", "extreme indifference", "value of human life", "recklessness", "purposeful", "MPC § 210.2"],
+                fillBlank: "MPC § 210.2: Murder is [[BLANK]] or [[BLANK]] causing death, OR causing death under [[BLANK]] manifesting extreme indifference."
+            },
+            {
+                id: 15,
+                title: "Modern Voluntary Manslaughter - Berry",
+                category: "Manslaughter",
+                prompt: "State the modern approach to voluntary manslaughter under MPC and the Berry factors.",
+                correct: "MODERN APPROACH (MPC § 210.3 & Berry case law): Voluntary manslaughter (as imperfect self-defense or heat of passion) requires: 1) An intentional or knowing killing (satisfying murder elements). 2) Adequate provocation that would cause a reasonable person to lose self-control (heat of passion). 3) The defendant actually lost control due to the provocation. 4) There was insufficient time for the defendant's passion to cool and reason to reassert itself. BERRY FACTORS (People v. Berry): Adequate provocation exists when: - The provocation was of a nature that would inflame the passions of a reasonable person. - The defendant acted under the immediate influence of that provocation. - There was no opportunity for the mind to cool. - The circumstances were such that a reasonable person would conclude the provocation justified the loss of control. Berry modernizes the categorical approach to allow fact-specific analysis of reasonableness.",
+                keyTerms: ["voluntary manslaughter", "intentional killing", "adequate provocation", "reasonable person", "lost control", "heat of passion", "Berry", "mind to cool", "immediate influence"],
+                fillBlank: "Modern voluntary manslaughter requires: 1) [[BLANK]] killing. 2) [[BLANK]] provocation. 3) Defendant [[BLANK]]. 4) [[BLANK]] to cool. Berry: Provocation [[BLANK]] reasonable person."
+            },
+            {
+                id: 16,
+                title: "Categorical Provocation Approach",
+                category: "Manslaughter",
+                prompt: "State the traditional four categories of legally adequate provocation.",
+                correct: "TRADITIONAL FOUR CATEGORIES OF ADEQUATE PROVOCATION: 1) VIOLENT ASSAULT OR BATTERY: An immediate threat or actual physical assault (but not mere words, insults, or non-violent threats) that would cause a reasonable person to lose control and fight back. 2) EXTREME INSULTS: Severe insults or affronts to honor (in older cases: insults to family honor, cuckoldry), though modern courts increasingly reject 'mere words' as adequate provocation. 3) MUTUAL COMBAT OR CHALLENGE: Engagement in mutual combat where the victim initiated and the defendant responded with excessive force, or acceptance of a fair challenge to fight. 4) DISCOVERY OF INFIDELITY: Finding the victim in the act of adultery with the defendant's spouse (or in some jurisdictions, catching spouse in bed with another). NOTE: Modern courts increasingly move away from categorical approach (Berry) toward a fact-specific reasonableness analysis, but the categorical approach remains a foundational framework for traditional common law provocation.",
+                keyTerms: ["violent assault", "extreme insults", "mutual combat", "discovery of infidelity", "reasonable person", "loss of control", "adequate provocation", "categorical"],
+                fillBlank: "Four categories: 1) [[BLANK]]. 2) [[BLANK]]. 3) [[BLANK]]. 4) [[BLANK]]."
+            },
+            {
+                id: 17,
+                title: "Strict Liability - Characteristics",
+                category: "General Principles",
+                prompt: "State the characteristics of strict liability crimes and give examples (Morissette analysis).",
+                correct: "STRICT LIABILITY CHARACTERISTICS (Morissette v. United States): 1) NO MENS REA REQUIRED: The government need not prove intent, knowledge, recklessness, or negligence regarding any element of the offense. 2) CONDUCT-BASED: Liability attaches solely to the defendant's act or omission, not to mental state. 3) TYPICALLY APPLIES TO REGULATORY/MALUM PROHIBITUM OFFENSES: Crimes that are bad because they are prohibited (regulatory violations) rather than inherently wrong (malum in se). EXAMPLES: Speeding, statutory rape (many jurisdictions), selling alcohol to minors, parking violations, environmental violations. MORISSETTE HOLDING: Congress did not intend to eliminate the common law requirement of mens rea without making its intent unmistakably clear; courts presume mens rea is required unless the statute expressly dispenses with it. Thus, strict liability is disfavored and narrowly construed.",
+                keyTerms: ["strict liability", "no mens rea", "conduct-based", "regulatory", "malum prohibitum", "Morissette", "presume mens rea", "statutory rape", "malum in se"],
+                fillBlank: "Strict liability: 1) [[BLANK]] required. 2) [[BLANK]]-based liability. 3) Typically [[BLANK]] offenses. Morissette: Courts [[BLANK]] mens rea unless statute clearly eliminates it."
+            },
+            {
+                id: 18,
+                title: "General vs Specific Intent - Atkins Rule",
+                category: "Mens Rea",
+                prompt: "Explain the distinction between general intent and specific intent crimes and apply the Atkins rule.",
+                correct: "GENERAL INTENT CRIMES: Crimes requiring only intent to perform the act; no further intent regarding result is required. The defendant must know they are committing the act and act voluntarily, but intent regarding the result is immaterial. EXAMPLES: Assault (intent to commit the act constituting assault), battery (intent to commit harmful contact), rape. SPECIFIC INTENT CRIMES: Crimes requiring intent not only to perform the act but also to achieve a further intent, result, or consequence. The defendant must act with a specific mental state beyond the commission of the act itself. EXAMPLES: Larceny (intent to permanently deprive), burglary (intent to commit a felony inside), murder (intent to kill). ATKINS RULE (Atkins v. People): A mistake of fact may negate specific intent but typically does not negate general intent. Specific intent crimes require subjective intent regarding the result; general intent crimes require only that the defendant voluntarily commit the act, so a reasonable person standard may apply.",
+                keyTerms: ["general intent", "specific intent", "intent to perform the act", "further intent", "result", "Atkins rule", "mistake of fact", "subjective intent"],
+                fillBlank: "General intent requires intent to [[BLANK]]. Specific intent requires [[BLANK]] regarding the result. Atkins: Mistakes negate [[BLANK]] but not [[BLANK]]."
+            },
+            {
+                id: 19,
+                title: "Transferred Intent Doctrine",
+                category: "Mens Rea",
+                prompt: "State the transferred intent rule and its limitations (Scott analysis).",
+                correct: "TRANSFERRED INTENT RULE (Scott v. Shepherd): Intent to harm one person transfers to another person if the defendant's act causes harm to that other person. The defendant's intent is transferred from the intended victim to the actual victim. REQUIREMENTS: 1) The defendant acted with intent to harm (specific intent). 2) The defendant's act caused harm to a person. 3) The harm caused must be of the same type the defendant intended (e.g., intent to kill transfers to killing someone else, not to robbery). LIMITATIONS: - Transfer applies only within the same crime category. - Intent to cause harm to one person does not transfer if the crime is committed against a different type of harm (e.g., intent to assault does not transfer to create larceny). - Transferred intent does not apply to negligent or reckless conduct (only to intentional conduct). EXAMPLE: Defendant shoots at A intending to kill, but misses and kills B. The intent to kill transfers to B, and defendant is guilty of murder of B.",
+                keyTerms: ["transferred intent", "Scott v. Shepherd", "intent to harm", "intended victim", "actual victim", "same type of harm", "limitations", "intentional conduct"],
+                fillBlank: "Transferred intent: Intent to [[BLANK]] transfers to [[BLANK]]. Applies only if [[BLANK]] is the same type. Scott: [[BLANK]] conduct excluded."
+            },
+            {
+                id: 20,
+                title: "Willful Blindness Doctrine",
+                category: "Mens Rea",
+                prompt: "Define willful blindness and state when it constitutes knowledge (Jewell test).",
+                correct: "WILLFUL BLINDNESS DOCTRINE (United States v. Jewell): Willful blindness (deliberate ignorance) constitutes knowledge under criminal law when: 1) The defendant deliberately avoided learning facts that would establish liability. 2) The defendant was aware of a high probability that the avoided fact existed. 3) The defendant consciously chose not to investigate or learn the truth. JEWELL TEST: For willful blindness to equal knowledge: Step 1 - Prove the defendant was aware of a substantial risk that the fact existed. Step 2 - Prove the defendant deliberately chose not to investigate to avoid learning the truth. The doctrine applies to crimes requiring 'knowledge' under the MPC (§ 2.02(b)). Willful blindness is NOT the same as negligence or recklessness; it requires conscious avoidance of known risks. EXAMPLE: A defendant accepts a package knowing there is a high probability it contains drugs but deliberately does not open it to avoid 'knowing' its contents. Willful blindness treats this as equivalent to knowledge for liability purposes.",
+                keyTerms: ["willful blindness", "deliberate ignorance", "Jewell", "knowledge", "consciously avoided", "high probability", "deliberately chose", "conscious avoidance", "substantial risk"],
+                fillBlank: "Willful blindness = knowledge when: 1) Defendant [[BLANK]]. 2) [[BLANK]] of high probability. 3) [[BLANK]] not to investigate. Jewell: Must prove [[BLANK]] and [[BLANK]]."
+            },
+            {
+                id: 21,
+                title: "Larceny by Trick vs False Pretenses",
+                category: "Property Crimes",
+                prompt: "Distinguish larceny by trick from obtaining property by false pretenses (Barbour and Pierce analysis).",
+                correct: "LARCENY BY TRICK: The defendant obtains possession of property through deception (misrepresentation), but the victim intends only to transfer possession, not title. The defendant's intent to steal is formed before or at the moment of obtaining possession. The property obtained is still property 'of another' because the victim retained title. EXAMPLE: Defendant falsely claims to be a collector and borrows a painting with no intent to return it. OBTAINING BY FALSE PRETENSES (Pretenses): The defendant obtains title to property (not just possession) through fraudulent misrepresentation of a material fact, with intent to defraud. The victim's intent is to transfer title based on the misrepresentation. The defendant must knowingly and with intent to defraud misrepresent a material fact. BARBOUR & PIERCE ANALYSIS: Larceny by trick = possession only; False pretenses = title transfer. The distinction turns on what the victim intended to transfer: possession alone (larceny by trick) or ownership/title (false pretenses). Modern jurisdictions often consolidate both under 'larceny' or 'theft,' but the theoretical distinction remains important for understanding fraud crimes.",
+                keyTerms: ["larceny by trick", "possession", "title", "deception", "false pretenses", "fraudulent misrepresentation", "material fact", "Barbour", "Pierce", "intent to defraud"],
+                fillBlank: "Larceny by trick: [[BLANK]] only, intent to steal [[BLANK]]. False pretenses: [[BLANK]], [[BLANK]]. Barbour/Pierce: Distinction turns on [[BLANK]]."
+            },
+            {
+                id: 22,
+                title: "Embezzlement - Elements",
+                category: "Property Crimes",
+                prompt: "State the elements of embezzlement.",
+                correct: "EMBEZZLEMENT ELEMENTS: 1) LAWFUL POSSESSION: The defendant obtained possession of the property lawfully (distinguishing it from larceny, which involves trespass). 2) CONVERSION TO PERSONAL USE: The defendant converted the property to their own use or the use of another, or withheld it from the owner. 3) OF PROPERTY OF ANOTHER: The property belongs to another person, typically an employer, client, or person in whose service the defendant was employed. 4) WITH INTENT TO DEFRAUD: The defendant acted with intent to permanently deprive the owner of the property's use and benefit. 5) IN A POSITION OF TRUST: The defendant occupied a position of trust or fiduciary duty (though this is a contextual element, not always required in all jurisdictions). DISTINGUISHING FEATURE: Unlike larceny, embezzlement requires lawful possession at the outset; the crime arises when the defendant converts the property to unauthorized use. EXAMPLE: Accountant lawfully receives company funds but embezzles them by transferring to personal account.",
+                keyTerms: ["embezzlement", "lawful possession", "conversion", "personal use", "property of another", "intent to defraud", "position of trust", "fiduciary duty"],
+                fillBlank: "Embezzlement requires: 1) [[BLANK]] possession. 2) [[BLANK]] to personal use. 3) Of [[BLANK]]. 4) With [[BLANK]]. 5) [[BLANK]] position (contextual)."
+            },
+            {
+                id: 23,
+                title: "Robbery - Elements",
+                category: "Property Crimes",
+                prompt: "State the elements of robbery and explain what distinguishes it from other theft crimes.",
+                correct: "ROBBERY ELEMENTS: 1) A TAKING: The defendant took the property (same as larceny). 2) OF PERSONAL PROPERTY: The property is movable and tangible (same as larceny). 3) OF ANOTHER: The property belongs to someone other than the defendant (same as larceny). 4) WITH INTENT TO PERMANENTLY DEPRIVE: The defendant intended to permanently deprive the owner (same as larceny). 5) BY FORCE OR THREAT OF FORCE: The taking was accomplished by actual violence, threat of immediate violence, or putting the victim in fear of immediate harm. The force or threat must occur contemporaneously with the taking and be the means by which the property is obtained. DISTINGUISHING FEATURE: Robbery is larceny + force/threat. The force element elevates simple theft to the more serious crime of robbery. The threat must be of immediate bodily harm, not threats to destroy property or future harm. DEGREES: Simple robbery (basic elements); Aggravated robbery (with weapon, serious injury, multiple offenders).",
+                keyTerms: ["robbery", "taking", "personal property", "another", "intent to permanently deprive", "force or threat", "contemporaneous", "means of obtaining", "immediate bodily harm"],
+                fillBlank: "Robbery = Larceny (taking, [[BLANK]], [[BLANK]], intent) + [[BLANK]]. Force must be [[BLANK]] with taking. Threat must be [[BLANK]] harm."
+            },
+            {
+                id: 24,
+                title: "Concurrence Requirement",
+                category: "General Principles",
+                prompt: "State the concurrence requirement and explain temporal and motivational concurrence.",
+                correct: "CONCURRENCE REQUIREMENT: For criminal liability, the defendant's guilty mind (mens rea) must concur with the guilty act (actus reus) at the same moment. TEMPORAL CONCURRENCE: The mens rea must exist at the same time the actus reus is committed. A defendant cannot form intent after committing an act (post hoc intent does not satisfy concurrence). EXAMPLE: Defendant negligently hits a pedestrian, then forms an intent to harm. No murder, because intent did not exist when the act occurred. MOTIVATIONAL CONCURRENCE: The mens rea must relate to and motivate the actus reus. The defendant's intent must be directed toward the consequence that occurs. If the defendant achieves the same result through different means than intended, courts analyze whether the result flows from the intended conduct. EXAMPLE: Defendant intends to poison a victim through food, but the poison spills and kills through inhalation. Whether concurrence is satisfied depends on whether the death is a reasonably foreseeable consequence of the intended conduct. SIGNIFICANCE: Concurrence prevents liability where intent and act are disconnected in time or purpose.",
+                keyTerms: ["concurrence requirement", "mens rea", "actus reus", "same moment", "temporal concurrence", "motivational concurrence", "post hoc intent", "guilty mind"],
+                fillBlank: "Concurrence: [[BLANK]] and [[BLANK]] must occur at [[BLANK]]. Temporal: Intent at [[BLANK]] as act. Motivational: Intent [[BLANK]] the act."
+            },
+            {
+                id: 25,
+                title: "Voluntary Act Requirement - MPC § 2.01",
+                category: "General Principles",
+                prompt: "State the MPC § 2.01 voluntary act requirement and define what constitutes a voluntary act.",
+                correct: "MPC § 2.01 VOLUNTARY ACT REQUIREMENT: Guilt is not imposed for conduct that is not a product of the person's own volition. A person is not guilty of an offense unless their liability is based on conduct that includes a voluntary act or the omission of an act of which they are capable. VOLUNTARY ACT DEFINITION: A conscious exercise of the will; bodily movement under the person's control and direction. INVOLUNTARY ACTS (Not voluntary under § 2.01): 1) Movements that occur during sleep or unconsciousness (sleepwalking, automatism). 2) Reflexive movements (seizures, jerking away from hot surface). 3) Movements performed under hypnosis or extreme duress where capacity for volition is eliminated. 4) Acts of another person imposed on the defendant's body (if X physically forces Y's arm into a gun, Y's arm movement is not voluntary). OMISSION AS VOLUNTARY ACT: An omission is treated as a voluntary act if the defendant had the capacity to perform the omitted act. SIGNIFICANCE: The voluntary act requirement ensures that criminal liability is based on conduct for which the defendant can be held morally and legally responsible.",
+                keyTerms: ["MPC § 2.01", "voluntary act", "conscious exercise of will", "bodily movement", "involuntary acts", "sleep", "unconsciousness", "automatism", "duress", "omission", "capacity"],
+                fillBlank: "Voluntary act: [[BLANK]] exercise of [[BLANK]]. Involuntary includes: [[BLANK]], [[BLANK]], [[BLANK]]. Omission is voluntary if [[BLANK]]."
+            },
+            {
+                id: 26,
+                title: "Burglary - Elements & Nighttime",
+                category: "Property Crimes",
+                prompt: "State the common law elements of burglary and explain the nighttime requirement.",
+                correct: "BURGLARY ELEMENTS (COMMON LAW): 1) BREAKING: An unauthorized entry into, or remaining within, a structure; can be through force or exploitation of open entry points. 2) ENTRY: A physical intrusion into the dwelling (or structure) with any part of the body. 3) DWELLING: The burglary is of a dwelling house or residence; modern law may extend to other structures within curtilage (Eichman). 4) NIGHTTIME: At night (traditionally between sunset and sunrise); many modern statutes eliminate this requirement. 5) FELONY INTENT: The defendant entered with intent to commit a felony inside the dwelling. DISTINGUISHING FEATURE: Burglary is complete upon breaking and entry with felony intent; the felon need not actually commit the intended felony. Burglary protects the security of homes and the sanctity of the dwelling. NIGHTTIME REQUIREMENT: Reflects the greater danger and terror of home invasion at night; modern statutes often eliminate it or add daytime burglary as separate offense. INTENT ELEMENT: Must exist at the time of entry (though some jurisdictions permit constructive breaking and entry when exceeding the scope of an invitation).",
+                keyTerms: ["burglary", "breaking", "entry", "dwelling", "nighttime", "felony intent", "curtilage", "Eichman", "Thibeault", "intent at entry"],
+                fillBlank: "Burglary: 1) [[BLANK]] into dwelling. 2) [[BLANK]] of body. 3) [[BLANK]] structure. 4) At [[BLANK]] (traditional). 5) [[BLANK]] to commit felony. Crime complete upon [[BLANK]], not actual felony."
+            },
+            {
+                id: 27,
+                title: "Self-Defense - Elements & Imminence",
+                category: "Justification Defenses",
+                prompt: "State the elements of self-defense and explain why imminence is required.",
+                correct: "SELF-DEFENSE ELEMENTS: 1) IMMINENT THREAT: An immediate threat of unlawful harm; the threat must be about to occur, not future or speculative. 2) UNLAWFUL THREAT: The threat must come from unlawful conduct; lawful police action (arrest, detention) does not justify self-defense. 3) REASONABLE BELIEF FORCE NECESSARY: The defendant must have a reasonable belief (both subjective and objective under Goetz) that force is immediately necessary to prevent the harm. 4) PROPORTIONAL RESPONSE: The force used must be proportional to the threat; deadly force is justified only against threats of death or serious bodily injury. 5) NO INITIAL AGGRESSION: The defendant did not initially provoke the incident; if they did, they lose self-defense unless they clearly withdrew. IMMINENCE REQUIREMENT: Imminence prevents vigilantism and ensures self-defense is a last resort. If someone threatens future harm, legal remedies (restraining orders, police protection) exist. Imminence requires that there is no time for legal alternatives. This also prevents false claims of self-defense. GOETZ FRAMEWORK: Reasonableness is judged objectively but considering the defendant's prior experiences and vantage point (not subjective delusions). JUSTIFICATION STATUS: Self-defense is a justification (conduct was lawful), not merely an excuse.",
+                keyTerms: ["self-defense", "imminent threat", "unlawful threat", "reasonable belief", "proportional", "deadly force", "no initial aggression", "imminence", "Goetz", "justification"],
+                fillBlank: "Self-defense requires: 1) [[BLANK]] threat. 2) [[BLANK]] threat. 3) [[BLANK]] force necessary. 4) [[BLANK]] response. 5) No [[BLANK]]. Imminence prevents [[BLANK]]. Reasonableness is [[BLANK]] (Goetz)."
+            }
+        ];
+
+        // ============================================
+        // STATE MANAGEMENT (IN-MEMORY ONLY)
+        // ============================================
+
+        let currentMode = 'practice';
+        let currentRuleIndex = 0;
+        let randomOrder = [];
+        let ruleScores = {}; // { ruleId: 'nailed' | 'close' | 'missed' | undefined }
+        let timerInterval = null;
+        let timeRemaining = 0;
+
+        // Initialize scores
+        rules.forEach(rule => {
+            ruleScores[rule.id] = undefined;
+        });
+
+        // ============================================
+        // UI RENDERING FUNCTIONS
+        // ============================================
+
+        function renderDrill(mode, ruleIndex, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            const rule = mode === 'random' ? rules[randomOrder[ruleIndex]] : rules[ruleIndex];
+            const drillContent = createDrillCard(rule, mode, ruleIndex);
+            container.appendChild(drillContent);
+        }
+
+        function createDrillCard(rule, mode, ruleIndex) {
+            const card = document.createElement('div');
+            card.className = 'drill-card';
+
+            const progress = mode === 'random' ?
+                `${ruleIndex + 1}/${randomOrder.length}` :
+                `${ruleIndex + 1}/${rules.length}`;
+
+            let timerHtml = '';
+            if (mode === 'timed') {
+                timerHtml = `<div class="timer" id="timer-display">2:00</div>`;
+            }
+
+            let modeLabel = '';
+            if (mode === 'fillblank') {
+                modeLabel = '<span style="background: var(--tool-accent-light); color: var(--color-text-primary); padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 700;">FILL-IN-BLANK</span>';
+            }
+
+            card.innerHTML = `
+                <div class="drill-header">
+                    <div class="rule-number">Rule ${rule.id}</div>
+                    <div class="rule-title">
+                        <h2>${rule.title} ${modeLabel}</h2>
+                        <div class="rule-category">${rule.category} • ${progress}</div>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${(ruleIndex / (mode === 'random' ? randomOrder.length : rules.length)) * 100}%"></div>
+                </div>
+
+                ${timerHtml}
+
+                <div class="prompt-section">
+                    <label class="prompt-label">Your Task</label>
+                    <div class="prompt">${rule.prompt}</div>
+                </div>
+
+                ${mode === 'fillblank' ? createFillBlankContent(rule) : createWritingContent(rule, mode)}
+            `;
+
+            return card;
+        }
+
+        function createWritingContent(rule, mode) {
+            return `
+                <div class="input-section">
+                    <label class="prompt-label">Write Your Answer from Memory</label>
+                    <textarea id="answer-input" placeholder="Type your answer here. Take your time—this is from memory, not reading."></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button class="check-button" onclick="checkAnswer()">Check Answer</button>
+                    <button onclick="skipRule()">Skip</button>
+                </div>
+
+                <div class="answer-reveal" id="answer-reveal">
+                    <div class="comparison-section">
+                        <div class="answer-column">
+                            <h3>Your Answer</h3>
+                            <div class="answer-text" id="student-answer"></div>
+                        </div>
+                        <div class="answer-column">
+                            <h3>Correct Rule</h3>
+                            <div class="answer-text" id="correct-rule"></div>
+                        </div>
+                    </div>
+
+                    <div class="rating-section">
+                        <label class="rating-label">How did you do?</label>
+                        <div class="rating-buttons">
+                            <button class="rating-btn nailed" onclick="rateAnswer('nailed')">✓ Nailed It</button>
+                            <button class="rating-btn close" onclick="rateAnswer('close')">◐ Close</button>
+                            <button class="rating-btn missed" onclick="rateAnswer('missed')">✗ Missed Key Parts</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createFillBlankContent(rule) {
+            const blanks = rule.fillBlank.split(/\[\[BLANK\]\]/);
+            let html = '<div class="input-section"><label class="prompt-label">Complete the Rule (Blanks are hidden)</label><div class="fill-blank-question">';
+
+            for (let i = 0; i < blanks.length; i++) {
+                html += blanks[i];
+                if (i < blanks.length - 1) {
+                    html += '<input type="text" style="background: var(--color-bg-secondary); color: var(--color-text-primary); padding: 0.25rem 0.5rem; border: 1px solid var(--color-border); border-radius: 0.25rem; min-width: 150px; font-family: monospace; margin: 0 0.25rem;" placeholder="[Type here]">';
+                }
+            }
+
+            html += '</div></div>';
+            html += '<div class="button-group"><button class="check-button" onclick="checkFillBlank()">Check Fill-in-Blank</button></div>';
+            html += '<div class="answer-reveal" id="answer-reveal"><div class="answer-column" style="grid-column: 1; border: 1px solid var(--color-border);"><h3>Correct Rule</h3><div class="answer-text" id="correct-rule-fillblank"></div></div></div>';
+
+            return html;
+        }
+
+        // ============================================
+        // MAIN FUNCTIONS: Check Answer, Rate, Navigate
+        // ============================================
+
+        function checkAnswer() {
+            const rule = currentMode === 'random' ? rules[randomOrder[currentRuleIndex]] : rules[currentRuleIndex];
+            const studentAnswer = document.getElementById('answer-input').value.trim();
+
+            if (!studentAnswer) {
+                alert('Please write an answer before checking.');
+                return;
+            }
+
+            const reveal = document.getElementById('answer-reveal');
+            document.getElementById('student-answer').textContent = studentAnswer;
+            document.getElementById('correct-rule').innerHTML = highlightDifferences(studentAnswer, rule.correct, rule.keyTerms);
+            reveal.classList.add('shown');
+            document.getElementById('answer-input').disabled = true;
+            document.querySelector('.check-button').disabled = true;
+        }
+
+        function checkFillBlank() {
+            const rule = currentMode === 'random' ? rules[randomOrder[currentRuleIndex]] : rules[currentRuleIndex];
+            const reveal = document.getElementById('answer-reveal');
+            document.getElementById('correct-rule-fillblank').innerHTML = highlightDifferences('', rule.correct, rule.keyTerms);
+            reveal.classList.add('shown');
+        }
+
+        function highlightDifferences(studentAnswer, correctAnswer, keyTerms) {
+            let highlighted = correctAnswer;
+
+            keyTerms.forEach(term => {
+                const regex = new RegExp(`\\b${term}\\b`, 'gi');
+                if (studentAnswer.toLowerCase().includes(term.toLowerCase())) {
+                    highlighted = highlighted.replace(regex, `<span class="highlight-match">${term}</span>`);
+                } else {
+                    highlighted = highlighted.replace(regex, `<span class="highlight-missing">${term}</span>`);
+                }
+            });
+
+            return highlighted;
+        }
+
+        function rateAnswer(rating) {
+            const rule = currentMode === 'random' ? rules[randomOrder[currentRuleIndex]] : rules[currentRuleIndex];
+            ruleScores[rule.id] = rating;
+
+            if (currentMode === 'timed') {
+                clearInterval(timerInterval);
+            }
+
+            nextRule();
+        }
+
+        function nextRule() {
+            const maxIndex = currentMode === 'random' ? randomOrder.length - 1 : rules.length - 1;
+
+            if (currentRuleIndex < maxIndex) {
+                currentRuleIndex++;
+                const containerId = `${currentMode}-drills`;
+                renderDrill(currentMode, currentRuleIndex, containerId);
+
+                if (currentMode === 'timed') {
+                    startTimer();
+                }
+                window.scrollTo(0, 0);
+            } else {
+                alert(`You've completed all rules in ${currentMode} mode! Review your progress to see weak areas.`);
+                switchMode('review');
+            }
+        }
+
+        function skipRule() {
+            nextRule();
+        }
+
+        // ============================================
+        // MODE SWITCHING & INITIALIZATION
+        // ============================================
+
+        function switchMode(mode) {
+            currentMode = mode;
+            currentRuleIndex = 0;
+            timeRemaining = 120;
+
+            // Hide all modes
+            document.querySelectorAll('.main-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(`${mode}-mode`).classList.add('active');
+
+            // Update active button
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`mode-${mode}`).classList.add('active');
+
+            if (mode === 'practice') {
+                renderDrill(mode, 0, 'practice-drills');
+            } else if (mode === 'random') {
+                randomOrder = Array.from({length: rules.length}, (_, i) => i).sort(() => Math.random() - 0.5);
+                renderDrill(mode, 0, 'random-drills');
+            } else if (mode === 'timed') {
+                randomOrder = Array.from({length: rules.length}, (_, i) => i).sort(() => Math.random() - 0.5);
+                renderDrill(mode, 0, 'timed-drills');
+                startTimer();
+            } else if (mode === 'weak') {
+                const weakRules = rules.filter(r => ruleScores[r.id] === 'missed');
+                if (weakRules.length === 0) {
+                    document.getElementById('weak-drills').innerHTML = '<div class="drill-card"><p style="text-align: center;">Great! You haven\'t marked any rules as "Missed key parts" yet. Keep practicing!</p></div>';
+                } else {
+                    randomOrder = weakRules.map(r => r.id - 1).sort(() => Math.random() - 0.5);
+                    renderDrill(mode, 0, 'weak-drills');
+                }
+            } else if (mode === 'fillblank') {
+                renderDrill(mode, 0, 'fillblank-drills');
+            } else if (mode === 'review') {
+                renderReview();
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        function startTimer() {
+            timeRemaining = 120;
+            clearInterval(timerInterval);
+            updateTimerDisplay();
+
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    alert('Time\'s up for this rule!');
+                    nextRule();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const display = document.getElementById('timer-display');
+            if (display) {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                display.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeRemaining <= 30) {
+                    display.classList.add('warning');
+                } else {
+                    display.classList.remove('warning');
+                }
+            }
+        }
+
+        // ============================================
+        // PROGRESS REVIEW
+        // ============================================
+
+        function renderReview() {
+            const container = document.getElementById('review-mode');
+
+            let nailedCount = 0;
+            let closeCount = 0;
+            let missedCount = 0;
+            let totalTested = 0;
+
+            Object.values(ruleScores).forEach(score => {
+                if (score) {
+                    totalTested++;
+                    if (score === 'nailed') nailedCount++;
+                    else if (score === 'close') closeCount++;
+                    else if (score === 'missed') missedCount++;
+                }
+            });
+
+            let rulesHtml = '';
+            rules.forEach(rule => {
+                const score = ruleScores[rule.id];
+                let statusClass = 'untested';
+                let statusText = 'Not yet tested';
+
+                if (score === 'nailed') {
+                    statusClass = 'nailed';
+                    statusText = 'Nailed it';
+                } else if (score === 'close') {
+                    statusClass = 'close';
+                    statusText = 'Close';
+                } else if (score === 'missed') {
+                    statusClass = 'missed';
+                    statusText = 'Missed key parts';
+                }
+
+                rulesHtml += `
+                    <div class="rule-item ${statusClass}">
+                        <div class="rule-item-name"><strong>Rule ${rule.id}:</strong> ${rule.title}</div>
+                        <div class="rule-item-status status-${statusClass}">${statusText}</div>
+                    </div>
+                `;
+            });
+
+            const statsHtml = `
+                <div id="stat-total">${totalTested}</div>
+                <div id="stat-nailed">${nailedCount}</div>
+                <div id="stat-close">${closeCount}</div>
+                <div id="stat-missed">${missedCount}</div>
+            `;
+
+            document.getElementById('overall-stats').innerHTML = statsHtml;
+            document.getElementById('rules-breakdown').innerHTML = rulesHtml;
+        }
+
+        function resetProgress() {
+            if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+                rules.forEach(rule => {
+                    ruleScores[rule.id] = undefined;
+                });
+                renderReview();
+                alert('Progress reset. Start fresh!');
+            }
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+
+        document.getElementById('mode-practice').addEventListener('click', () => switchMode('practice'));
+        document.getElementById('mode-random').addEventListener('click', () => switchMode('random'));
+        document.getElementById('mode-timed').addEventListener('click', () => switchMode('timed'));
+        document.getElementById('mode-weak').addEventListener('click', () => switchMode('weak'));
+        document.getElementById('mode-fillblank').addEventListener('click', () => switchMode('fillblank'));
+        document.getElementById('mode-review').addEventListener('click', () => switchMode('review'));
+        document.getElementById('reset-btn').addEventListener('click', resetProgress);
+
+        // Initialize
+        switchMode('practice');
+    </script>
+    <script src="../shared.js"></script>
+    <script src="../navbar.js"></script>
+</body>
+</html>

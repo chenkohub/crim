@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criminal Law Pre-Test Diagnostic Quizzes</title>
+    <style>
+        :root, [data-theme] {
+            --tool-accent: #8b5cf6;
+            --tool-accent-dark: #7c3aed;
+            --tool-accent-light: #a78bfa;
+            --tool-accent-lighter: #c4b5fd;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            padding: 16px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-top: 24px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--tool-accent), var(--tool-accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--color-text-secondary);
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+
+        .hero-message {
+            background: var(--color-bg-secondary);
+            border-left: 4px solid var(--tool-accent);
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 32px;
+            font-size: 14px;
+            color: var(--color-text-primary);
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .mode-btn {
+            padding: 12px 24px;
+            background: var(--color-bg-secondary);
+            color: var(--color-text-primary);
+            border: 2px solid var(--color-border);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .mode-btn:hover {
+            border-color: var(--tool-accent);
+            color: var(--tool-accent);
+        }
+
+        .mode-btn.active {
+            background: var(--tool-accent);
+            border-color: var(--tool-accent);
+            color: #fff;
+        }
+
+        .unit-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .unit-btn {
+            padding: 16px;
+            background: var(--color-bg-secondary);
+            border: 2px solid var(--color-border);
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+
+        .unit-btn:hover {
+            border-color: var(--tool-accent);
+            background: var(--color-bg-secondary);
+        }
+
+        .unit-btn.selected {
+            background: var(--tool-accent);
+            border-color: var(--tool-accent);
+            color: #fff;
+        }
+
+        .unit-btn-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .unit-btn-questions {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        .quiz-container {
+            display: none;
+        }
+
+        .quiz-container.active {
+            display: block;
+        }
+
+        .quiz-header {
+            background: var(--color-bg-secondary);
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .quiz-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .progress-info {
+            display: flex;
+            gap: 24px;
+            font-size: 14px;
+        }
+
+        .progress-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .progress-item label {
+            color: var(--color-text-secondary);
+        }
+
+        .question-card {
+            background: var(--color-bg-secondary);
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: border-color 0.2s ease;
+        }
+
+        .question-card.answered {
+            border-color: var(--tool-accent);
+        }
+
+        .question-number {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: var(--color-text-primary);
+        }
+
+        .answer-options {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .answer-option {
+            padding: 12px 16px;
+            background: var(--color-bg-primary);
+            border: 2px solid var(--color-border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .answer-option:hover {
+            border-color: var(--tool-accent);
+            background: var(--color-bg-secondary);
+        }
+
+        .answer-option.selected {
+            background: var(--tool-accent);
+            border-color: var(--tool-accent);
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .answer-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .answer-feedback {
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 6px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .answer-feedback.show {
+            display: block;
+        }
+
+        .feedback-correct {
+            background: rgba(106, 170, 100, 0.12);
+            border-left: 4px solid var(--color-correct);
+            color: var(--color-text-primary);
+        }
+
+        .feedback-incorrect {
+            background: rgba(201, 69, 58, 0.12);
+            border-left: 4px solid var(--color-wrong);
+            color: var(--color-text-primary);
+        }
+
+        .feedback-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feedback-explanation {
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .feedback-unit {
+            font-size: 12px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background: var(--tool-accent);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: var(--tool-accent-light);
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background: var(--color-text-tertiary);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--tool-accent);
+            border: 2px solid var(--tool-accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--tool-accent);
+            color: #fff;
+        }
+
+        .results-container {
+            display: none;
+        }
+
+        .results-container.active {
+            display: block;
+        }
+
+        .results-card {
+            background: var(--color-bg-secondary);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .results-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--tool-accent);
+        }
+
+        .score-display {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--tool-accent);
+            margin-bottom: 8px;
+        }
+
+        .score-message {
+            font-size: 16px;
+            color: var(--color-text-primary);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .knowledge-gaps {
+            background: var(--color-bg-primary);
+            padding: 16px;
+            border-radius: 6px;
+            margin-top: 16px;
+        }
+
+        .gap-item {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 14px;
+        }
+
+        .gap-item:last-child {
+            border-bottom: none;
+        }
+
+        .gap-icon {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--color-wrong);
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .topic-link {
+            color: var(--tool-accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .topic-link:hover {
+            text-decoration: underline;
+        }
+
+        .empty-state {
+            background: var(--color-bg-secondary);
+            border: 2px dashed var(--color-border);
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            color: var(--color-text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .timer {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--tool-accent);
+        }
+
+        @media (max-width: 640px) {
+            header {
+                padding-top: 16px;
+                margin-bottom: 24px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
+
+            .quiz-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .progress-info {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .unit-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .score-display {
+                font-size: 36px;
+            }
+
+            .mode-selector {
+                flex-direction: column;
+            }
+
+            .mode-btn {
+                width: 100%;
+            }
+
+            .quiz-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../theme.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Criminal Law Pre-Test Diagnostic</h1>
+            <p class="subtitle">Take these quizzes BEFORE studying each unit</p>
+            <div class="hero-message">
+                💡 <strong>Forward Testing Effect:</strong> Getting answers wrong right now is EXACTLY what you want. Testing yourself before learning primes your brain to encode the material more deeply. Don't worry about your score—worry about what you learn!
+            </div>
+        </header>
+
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="select">Pick a Unit</button>
+            <button class="mode-btn" data-mode="all">Take All Quizzes</button>
+        </div>
+
+        <div id="unitSelector" class="unit-selector"></div>
+
+        <div id="quizContainer" class="quiz-container">
+            <div class="quiz-header">
+                <div>
+                    <div class="quiz-title" id="quizTitle"></div>
+                </div>
+                <div class="progress-info">
+                    <div class="progress-item">
+                        <label>Question:</label>
+                        <span id="questionCounter">0/0</span>
+                    </div>
+                    <div class="progress-item">
+                        <label>Score:</label>
+                        <span id="scoreCounter">0/0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="questionsContainer"></div>
+
+            <div class="quiz-actions">
+                <button class="btn" id="submitBtn">Check Answers</button>
+                <button class="btn btn-secondary" id="resetBtn">Start Over</button>
+                <button class="btn btn-secondary" id="backBtn">Back to Units</button>
+            </div>
+        </div>
+
+        <div id="resultsContainer" class="results-container">
+            <div class="results-card">
+                <div class="results-title">Quiz Results</div>
+                <div class="score-display" id="finalScore">0/0</div>
+                <div class="score-message" id="scoreMessage"></div>
+                <div class="knowledge-gaps" id="gapAnalysis"></div>
+            </div>
+
+            <div class="quiz-actions">
+                <button class="btn" id="retakeBtn">Retake This Quiz</button>
+                <button class="btn btn-secondary" id="nextUnitBtn">Next Unit</button>
+                <button class="btn btn-secondary" id="backToSelectBtn">Back to Units</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz Data Structure
+        const quizzes = {
+            unit1: {
+                title: "UNIT I: Foundations & Theories",
+                subtitle: "Why do we punish? What makes criminal law different?",
+                questions: [
+                    {
+                        id: "1-1",
+                        question: "Which theory of punishment is BACKWARD-LOOKING (focused on the past crime)?",
+                        options: {
+                            A: "Deterrence—punishing to discourage future crimes",
+                            B: "Retribution—punishing because the offender deserves it for what they did",
+                            C: "Rehabilitation—punishing to reform the offender",
+                            D: "Incapacitation—punishing to prevent future crimes"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Retribution is backward-looking: it's about what the person did. Deterrence, rehabilitation, and incapacitation all look forward to future effects.",
+                        unit: "Unit I: Theories of Punishment"
+                    },
+                    {
+                        id: "1-2",
+                        question: "What is the primary difference between CRIMINAL law and CIVIL law?",
+                        options: {
+                            A: "Criminal cases always involve money damages; civil cases always involve jail time",
+                            B: "Criminal law is about punishment for violating social norms; civil law resolves disputes between parties",
+                            C: "Criminal law applies to government actions; civil law applies to private actions",
+                            D: "There's no real difference—they're just different names for the same thing"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Criminal law punishes conduct that violates society's core values (with prison/fines). Civil law resolves disputes between parties (usually money damages). The state prosecutes in criminal cases; private parties sue in civil cases.",
+                        unit: "Unit I: Criminal vs. Civil Law"
+                    },
+                    {
+                        id: "1-3",
+                        question: "What constitutional problem does the void-for-vagueness doctrine protect against?",
+                        options: {
+                            A: "Laws that are too old and outdated",
+                            B: "Laws that are so unclear that people can't know in advance what conduct is prohibited",
+                            C: "Laws that are enforced unevenly across the country",
+                            D: "Laws that don't have criminal penalties attached to them"
+                        },
+                        correctAnswer: "B",
+                        explanation: "If a law is too vague, people can't know what's illegal, and the government can selectively enforce it. Due process requires fair notice of what's prohibited.",
+                        unit: "Unit I: Void for Vagueness"
+                    },
+                    {
+                        id: "1-4",
+                        question: "Can a jury decide to ignore the law and acquit someone they believe is guilty?",
+                        options: {
+                            A: "No—juries must always follow the judge's instructions on the law",
+                            B: "Yes, juries have the power to acquit even if they think the defendant is guilty (jury nullification)",
+                            C: "Only if the jury is split evenly on guilt",
+                            D: "Only if the defendant requests it in writing before trial"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Juries have the POWER to nullify (acquit despite guilt), but judges usually won't tell them about this power. It's controversial but real—an acquittal verdict can't be appealed.",
+                        unit: "Unit I: Jury Power & Nullification"
+                    },
+                    {
+                        id: "1-5",
+                        question: "Which of the following is NOT an element that the prosecution must prove beyond a reasonable doubt?",
+                        options: {
+                            A: "Actus reus (guilty act)",
+                            B: "Mens rea (guilty mind)",
+                            C: "The defendant's motive or reason for committing the crime",
+                            D: "Causation and social harm"
+                        },
+                        correctAnswer: "C",
+                        explanation: "Motive is NOT an element. You can commit a crime for any reason (good, bad, selfish, noble). The prosecution must prove actus reus, mens rea, causation, and harm, but not motive.",
+                        unit: "Unit I: Elements of a Crime"
+                    },
+                    {
+                        id: "1-6",
+                        question: "What is the significance of a crime being 'mala in se' vs. 'mala prohibita'?",
+                        options: {
+                            A: "Mala in se crimes are federal crimes; mala prohibita crimes are state crimes",
+                            B: "Mala in se crimes are inherently wrong (murder, rape); mala prohibita crimes are wrong only because the law says so (speeding)",
+                            C: "Mala in se crimes can be punished more harshly than mala prohibita crimes",
+                            D: "Mala in se crimes require intent; mala prohibita crimes do not"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Mala in se = inherently immoral (murder, rape). Mala prohibita = wrong only because prohibited (parking violations). This distinction affects requirements like mens rea.",
+                        unit: "Unit I: Mala in Se vs. Mala Prohibita"
+                    },
+                    {
+                        id: "1-7",
+                        question: "Which constitutional amendment protects against double jeopardy (being tried twice for the same crime)?",
+                        options: {
+                            A: "First Amendment",
+                            B: "Fourth Amendment",
+                            C: "Fifth Amendment",
+                            D: "Sixth Amendment"
+                        },
+                        correctAnswer: "C",
+                        explanation: "The Fifth Amendment provides that no person shall 'be subject for the same offense to be twice put in jeopardy of life or limb.' Once acquitted, you can't be retried.",
+                        unit: "Unit I: Constitutional Protections"
+                    },
+                    {
+                        id: "1-8",
+                        question: "What does it mean for a statute to be 'strictly construed' in criminal law?",
+                        options: {
+                            A: "The law is rigidly applied without exception",
+                            B: "Ambiguities in criminal statutes are interpreted in favor of the defendant",
+                            C: "The law applies only to intentional conduct",
+                            D: "The law must be written in very formal legal language"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Criminal statutes are strictly construed against the government (rule of lenity). If a law is ambiguous, courts interpret it in favor of the defendant to protect liberty.",
+                        unit: "Unit I: Rule of Lenity"
+                    }
+                ]
+            },
+            unit2: {
+                title: "UNIT II: Actus Reus (Guilty Act)",
+                subtitle: "Voluntary acts, consequences, and social harm",
+                questions: [
+                    {
+                        id: "2-1",
+                        question: "Can a person be convicted for BEING a drug addict?",
+                        options: {
+                            A: "Yes, the status of being addicted is itself the crime",
+                            B: "No, the Constitution prohibits punishing people merely for their status",
+                            C: "Only if they were convicted of possession first",
+                            D: "Only if they're a repeat offender"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Robinson v. California: the Constitution prohibits criminalizing mere status (being an addict, alcoholic, or having a disease). You can be punished for ACTS related to addiction, but not the addiction itself.",
+                        unit: "Unit II: Status Crimes"
+                    },
+                    {
+                        id: "2-2",
+                        question: "An epileptic driver has an unforeseeable seizure while driving and kills a pedestrian. Is the death a 'voluntary act' for criminal purposes?",
+                        options: {
+                            A: "Yes, because operating a vehicle is inherently a voluntary act",
+                            B: "No, the seizure was involuntary and therefore the defendant's act was involuntary",
+                            C: "Yes, but only if the driver knew they might have a seizure",
+                            D: "No, but only if the seizure was unforeseeable"
+                        },
+                        correctAnswer: "B",
+                        explanation: "A reflex, involuntary movement, or act done while unconscious is NOT a voluntary act. If the seizure was unforeseeable, the driver shouldn't be held criminally liable for the death because there was no actus reus.",
+                        unit: "Unit II: Voluntary Act Requirement"
+                    },
+                    {
+                        id: "2-3",
+                        question: "What is the basic chain of criminal liability for conduct crimes?",
+                        options: {
+                            A: "Guilty mind → social harm → punishment",
+                            B: "Voluntary act → causation → social harm",
+                            C: "Intent → negligence → injury",
+                            D: "Motive → weapon → victim"
+                        },
+                        correctAnswer: "B",
+                        explanation: "For a conduct crime: (1) Voluntary act (actus reus), (2) Causation (but-for and proximate cause), (3) Social harm/result (homicide, property loss, etc.). Mens rea is separate.",
+                        unit: "Unit II: Chain of Liability"
+                    },
+                    {
+                        id: "2-4",
+                        question: "Does sleeping count as a 'voluntary act' in criminal law?",
+                        options: {
+                            A: "Yes, the person made the choice to sleep",
+                            B: "No, sleeping is inherently involuntary",
+                            C: "It depends on whether the person was sleeping in a public place",
+                            D: "It depends on what happens while the person is asleep"
+                        },
+                        correctAnswer: "D",
+                        explanation: "If you sleep while driving and cause harm, that's usually a crime (reckless or negligent driving). But if you're simply sleeping at home and nothing harmful occurs, there's no actus reus for any crime.",
+                        unit: "Unit II: Acts During Sleep"
+                    },
+                    {
+                        id: "2-5",
+                        question: "Which of the following is an OMISSION (failure to act)?",
+                        options: {
+                            A: "Pulling a fire alarm",
+                            B: "Watching a child drown without helping",
+                            C: "Telling someone a lie",
+                            D: "All of the above"
+                        },
+                        correctAnswer: "B",
+                        explanation: "An omission is a failure to act when action was required. Pulling an alarm is an act; lying is an act; watching passively is an omission. Most crimes require affirmative acts, not omissions.",
+                        unit: "Unit II: Acts vs. Omissions"
+                    },
+                    {
+                        id: "2-6",
+                        question: "What is the legal term for the requirement that the defendant's act must be the cause-in-fact of the harm?",
+                        options: {
+                            A: "Proximate cause",
+                            B: "But-for causation (cause-in-fact)",
+                            C: "Substantial factor test",
+                            D: "Intervening cause"
+                        },
+                        correctAnswer: "B",
+                        explanation: "'But-for' causation means: 'But for the defendant's act, the harm would not have occurred.' It's the basic factual causation test. Proximate cause is about whether the defendant should be held liable for distant consequences.",
+                        unit: "Unit II: But-For Causation"
+                    },
+                    {
+                        id: "2-7",
+                        question: "Can you be guilty of a crime based on a failure to act (omission)?",
+                        options: {
+                            A: "Never—criminal law requires affirmative acts",
+                            B: "Only if there's a special duty or legal relationship creating a duty to act",
+                            C: "Always, if the omission causes harm",
+                            D: "Only for serious felonies like homicide"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Generally, there's NO duty to rescue strangers. But special duties arise from: parent-child, doctor-patient, contractual duties, assumption of duty, or creation of danger. These can make omissions criminal.",
+                        unit: "Unit II: Omissions & Duty to Act"
+                    },
+                    {
+                        id: "2-8",
+                        question: "What is a 'habitual status' crime and why is it constitutionally problematic?",
+                        options: {
+                            A: "A crime committed repeatedly by the same person—it's not problematic",
+                            B: "A crime that punishes someone for their repeated status (like vagrancy laws)—it violates due process",
+                            C: "A crime with a mandatory minimum sentence—it violates the Eighth Amendment",
+                            D: "A crime that requires proof of habit—it requires clear and convincing evidence"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Laws criminalizing 'habitual status' (vagrancy, being homeless, loitering) punish status rather than conduct, which violates the Constitution. You must be punished for what you DO, not who you ARE.",
+                        unit: "Unit II: Habitual Status Crimes"
+                    }
+                ]
+            },
+            unit3: {
+                title: "UNIT III: Omissions",
+                subtitle: "When is failure to act a crime?",
+                questions: [
+                    {
+                        id: "3-1",
+                        question: "If you watch a stranger drown in a pool and do nothing, are you criminally liable?",
+                        options: {
+                            A: "Yes, because you could have saved them",
+                            B: "No, because there's generally no duty to rescue strangers",
+                            C: "Yes, but only if you're a strong swimmer",
+                            D: "It depends on whether you're related to the person"
+                        },
+                        correctAnswer: "B",
+                        explanation: "The general rule: NO DUTY TO RESCUE STRANGERS. Even if you could save someone at no risk to yourself, you have no legal obligation to do so (though it may be morally required). This is a foundational principle of criminal law.",
+                        unit: "Unit III: No Duty to Rescue Rule"
+                    },
+                    {
+                        id: "3-2",
+                        question: "Which relationship would CREATE a legal duty to act (and make omission criminal)?",
+                        options: {
+                            A: "Two strangers on the street",
+                            B: "A parent and child",
+                            C: "Two coworkers",
+                            D: "An adult and a neighbor"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Parents have a duty to care for their children. Omitting food, shelter, or medical care can be child abuse or negligent homicide. Other duties: doctor-patient, contractual relationships, assumption of duty.",
+                        unit: "Unit III: Duty to Act—Family"
+                    },
+                    {
+                        id: "3-3",
+                        question: "If you voluntarily assume a duty (e.g., promise to babysit), can your failure to act become criminal?",
+                        options: {
+                            A: "No, assumed duties are not legally binding for criminal purposes",
+                            B: "Yes, once you assume a duty, you must perform it; failure can be criminal",
+                            C: "Only if you took payment for the duty",
+                            D: "Only if the child is seriously harmed"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Assumption of duty: if you agree to care for someone (babysit, guard, etc.), you must perform that duty. Failing to do so can make you criminally liable. You can't be better off by taking on a duty and breaching it.",
+                        unit: "Unit III: Assumed Duty"
+                    },
+                    {
+                        id: "3-4",
+                        question: "What is the 'special relationship' doctrine and does it apply to landlord-tenant relationships?",
+                        options: {
+                            A: "A doctrine creating duties for close family; it does apply to landlord-tenant",
+                            B: "A doctrine imposing duties for certain relationships (parent-child, doctor-patient); courts split on landlord-tenant",
+                            C: "A doctrine only applying to contractual relationships; it applies to landlord-tenant",
+                            D: "There is no such doctrine—the law doesn't recognize special relationships"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Special relationship doctrine: certain relationships (parent-child, doctor-patient, custodian-prisoner) create duties. Landlord-tenant is disputed—some jurisdictions recognize the duty; others don't.",
+                        unit: "Unit III: Special Relationships"
+                    },
+                    {
+                        id: "3-5",
+                        question: "Can failure to call 911 or provide first aid make you criminally liable?",
+                        options: {
+                            A: "Never—you have no duty to call for help",
+                            B: "Only if you caused the harm",
+                            C: "Only if you have a special relationship or assumed a duty",
+                            D: "Always, if someone dies"
+                        },
+                        correctAnswer: "C",
+                        explanation: "You generally have no duty to call 911 for a stranger. BUT if you caused the danger, assumed a duty, or have a special relationship, failure to get help can be criminal.",
+                        unit: "Unit III: Duty to Rescue"
+                    },
+                    {
+                        id: "3-6",
+                        question: "What is a 'Good Samaritan' law and how does it relate to omissions?",
+                        options: {
+                            A: "A law that requires people to help strangers",
+                            B: "A law that shields people from liability for attempting to help (not directly about omissions, but relevant to encouraging rescue)",
+                            C: "A law that punishes people who fail to help",
+                            D: "A law that criminalizes reckless rescue attempts"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Good Samaritan laws protect people who voluntarily help from liability for mistakes. They don't create a duty to rescue, but they encourage helping by removing the threat of lawsuits.",
+                        unit: "Unit III: Good Samaritan Laws"
+                    }
+                ]
+            },
+            unit4: {
+                title: "UNIT IV: Mens Rea (Guilty Mind)",
+                subtitle: "Intention, knowledge, recklessness, and negligence",
+                questions: [
+                    {
+                        id: "4-1",
+                        question: "What is the difference between PURPOSE (intent) and KNOWLEDGE?",
+                        options: {
+                            A: "No difference—they're synonyms in criminal law",
+                            B: "Purpose is wanting the result; knowledge is aware it will happen (or substantially certain)",
+                            C: "Purpose is reckless; knowledge is negligent",
+                            D: "Knowledge requires proof of motive; purpose does not"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Purpose (intent): the person's conscious goal is to cause the result. Knowledge: the person is aware (or substantially certain) that the result will occur, even if it's not their goal.",
+                        unit: "Unit IV: Purpose vs. Knowledge"
+                    },
+                    {
+                        id: "4-2",
+                        question: "If you know a gun is loaded but fire it anyway, being aware of the risk, what mental state is that?",
+                        options: {
+                            A: "Purpose to cause harm",
+                            B: "Knowledge that harm might occur",
+                            C: "Recklessness—conscious disregard of a substantial risk",
+                            D: "Negligence—failure to be aware of a risk"
+                        },
+                        correctAnswer: "C",
+                        explanation: "Recklessness: conscious awareness of a substantial and unjustifiable risk, but proceeding anyway. You know the danger and ignore it. This is more culpable than negligence (which doesn't require awareness).",
+                        unit: "Unit IV: Recklessness"
+                    },
+                    {
+                        id: "4-3",
+                        question: "Can you be guilty of a crime without ANY mens rea (guilty mind)?",
+                        options: {
+                            A: "No, every crime requires some form of intent",
+                            B: "Yes, for strict liability crimes (no mens rea required)",
+                            C: "Yes, but only for felonies",
+                            D: "No, the Constitution requires intent for all serious crimes"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Strict liability crimes require NO mens rea (e.g., statutory rape, speeding, environmental violations). The prosecution only needs to prove the actus reus. They're unusual and typically misdemeanors.",
+                        unit: "Unit IV: Strict Liability"
+                    },
+                    {
+                        id: "4-4",
+                        question: "When a statute doesn't specify a mental state (like 'Any person who steals shall be punished'), what should a court presume?",
+                        options: {
+                            A: "Strict liability—no mens rea is required",
+                            B: "Purpose or knowledge for serious crimes; may vary for minor crimes",
+                            C: "The lowest mens rea available (negligence)",
+                            D: "The statute is unconstitutionally vague and unenforceable"
+                        },
+                        correctAnswer: "B",
+                        explanation: "When a statute is silent on mens rea, courts often presume the legislature intended purpose or knowledge for serious crimes. For minor crimes, they might allow negligence or recklessness.",
+                        unit: "Unit IV: Default Mental States"
+                    },
+                    {
+                        id: "4-5",
+                        question: "If you deliberately avoid learning whether a fact is true (willful blindness), does that count as KNOWLEDGE?",
+                        options: {
+                            A: "No, actual knowledge is required",
+                            B: "Yes, willful blindness is equivalent to knowledge",
+                            C: "Only if you're a drug dealer",
+                            D: "It depends on whether you received a warning"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Willful blindness: deliberately avoiding knowledge of a fact when you strongly suspect it's true. Courts treat it as equivalent to actual knowledge. 'I didn't want to know' is no defense.",
+                        unit: "Unit IV: Willful Blindness"
+                    },
+                    {
+                        id: "4-6",
+                        question: "What is NEGLIGENCE in criminal law?",
+                        options: {
+                            A: "The same as ordinary negligence in tort law",
+                            B: "Failure to be aware of a substantial and unjustifiable risk (less culpable than recklessness)",
+                            C: "An accident with no fault",
+                            D: "Being careless without any injury"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Criminal negligence: failure to be aware of a substantial and unjustifiable risk that your conduct will cause harm. It's lower than recklessness (no conscious awareness required) but higher than mere accident.",
+                        unit: "Unit IV: Criminal Negligence"
+                    },
+                    {
+                        id: "4-7",
+                        question: "Can a corporation have mens rea?",
+                        options: {
+                            A: "No, corporations can't form intent",
+                            B: "Yes, if we attribute the intent of employees to the company",
+                            C: "Only for financial crimes",
+                            D: "Corporations can only be strictly liable"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Corporate criminal liability: we attribute the intent of employees/agents to the corporation. A company can be found guilty of crimes based on employee conduct within the scope of employment.",
+                        unit: "Unit IV: Corporate Mens Rea"
+                    },
+                    {
+                        id: "4-8",
+                        question: "What does the Model Penal Code (MPC) mean by 'purpose'?",
+                        options: {
+                            A: "Any conscious intent",
+                            B: "The conscious goal or object of the conduct",
+                            C: "Knowing the consequences are virtually certain",
+                            D: "Any willful or intentional act"
+                        },
+                        correctAnswer: "B",
+                        explanation: "MPC purpose: the act is done with the conscious objective of causing the result. It's the highest mental state. Knowledge comes next (aware the result is practically certain).",
+                        unit: "Unit IV: MPC Definitions"
+                    },
+                    {
+                        id: "4-9",
+                        question: "If you intend to kill Person A but accidentally kill Person B, what mens rea is present?",
+                        options: {
+                            A: "No mens rea—the death was unintended",
+                            B: "Purpose to kill, but transferred to the wrong victim",
+                            C: "Recklessness toward Person B",
+                            D: "Negligence only, if at all"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Transferred intent: if you intend to harm one person but harm another, the intent transfers. You're guilty of attempting to murder A and murdering B (not just manslaughter).",
+                        unit: "Unit IV: Transferred Intent"
+                    },
+                    {
+                        id: "4-10",
+                        question: "Does a mistake about the law (thinking something is legal when it isn't) negate mens rea?",
+                        options: {
+                            A: "Yes, if you reasonably believed it was legal",
+                            B: "No, ignorance of the law is generally no excuse",
+                            C: "Only for serious felonies",
+                            D: "Only if you consulted a lawyer"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Ignorance or mistake of law is NO EXCUSE. You can't negate mens rea by claiming you didn't know the law. You're expected to know the law applies to you.",
+                        unit: "Unit IV: Mistake of Law"
+                    }
+                ]
+            },
+            unit5: {
+                title: "UNIT V: Mistakes & Strict Liability",
+                subtitle: "How mistakes affect guilt and when intent doesn't matter",
+                questions: [
+                    {
+                        id: "5-1",
+                        question: "If you honestly but UNREASONABLY believe you own property and take it, is that a defense to larceny?",
+                        options: {
+                            A: "Yes, honest belief is a defense",
+                            B: "No, the test is whether a reasonable person would believe you owned it",
+                            C: "Yes, but only if you return the property",
+                            D: "It depends on whether you actually looked for ownership marks"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Mistake of fact (larceny): courts differ, but many require a REASONABLE mistake. If you unreasonably believe you own something, you likely can't use that as a defense.",
+                        unit: "Unit V: Mistake of Fact"
+                    },
+                    {
+                        id: "5-2",
+                        question: "Does the answer about reasonable mistakes change depending on the type of crime?",
+                        options: {
+                            A: "No, the standard is the same for all crimes",
+                            B: "Yes, for specific-intent crimes, even unreasonable mistakes may be a defense",
+                            C: "Yes, but only for strict liability crimes",
+                            D: "It depends on state law only"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Mistake of fact and intent crimes: for specific-intent crimes (larceny, burglary, fraud), an HONEST MISTAKE may be a defense, even if unreasonable. For general-intent crimes, the mistake must be reasonable.",
+                        unit: "Unit V: Mistake & Intent Level"
+                    },
+                    {
+                        id: "5-3",
+                        question: "Can 'I didn't know that was illegal' ever be a defense?",
+                        options: {
+                            A: "Yes, always—ignorance of the law is a defense",
+                            B: "No, ignorance of the law is never a defense",
+                            C: "Yes, but only if the law wasn't published",
+                            D: "It depends on how old the law is"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Ignorance of law is NO EXCUSE. You can't defend by saying you didn't know something was illegal. The law assumes everyone knows the law (constructive notice).",
+                        unit: "Unit V: Ignorance of Law"
+                    },
+                    {
+                        id: "5-4",
+                        question: "What is a 'strict liability' crime?",
+                        options: {
+                            A: "A crime punishing strict behavior or following strict rules",
+                            B: "A crime requiring NO mens rea—liability is based solely on actus reus",
+                            C: "A crime with strict penalties (mandatory minimum sentences)",
+                            D: "A crime that must be proven strictly (beyond strict scrutiny)"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Strict liability: NO mens rea required. Prosecution must only prove the act occurred (e.g., statutory rape, selling alcohol to minors, environmental violations). Defenses based on intent don't apply.",
+                        unit: "Unit V: Strict Liability Crimes"
+                    },
+                    {
+                        id: "5-5",
+                        question: "Are strict liability crimes constitutional?",
+                        options: {
+                            A: "No, the Constitution requires mens rea for all crimes",
+                            B: "Yes, but only for regulatory/public welfare crimes",
+                            C: "Yes, but only for misdemeanors",
+                            D: "No, the Supreme Court has abolished strict liability"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Strict liability is constitutional for regulatory crimes (environmental, health, safety violations). However, the Supreme Court has limited it—serious crimes (murder, rape) likely require mens rea.",
+                        unit: "Unit V: Constitutionality of Strict Liability"
+                    },
+                    {
+                        id: "5-6",
+                        question: "For the crime of statutory rape (sex with someone under the age of consent), is mistake of age a defense?",
+                        options: {
+                            A: "Yes, if you reasonably believed the person was of age",
+                            B: "No, statutory rape is typically strict liability as to age",
+                            C: "Yes, if the person looked old enough",
+                            D: "Only in some states"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Statutory rape: most jurisdictions make it strict liability as to age. You can't defend by saying you thought the person was old enough. The law protects minors by making age irrelevant to intent.",
+                        unit: "Unit V: Statutory Rape & Age"
+                    },
+                    {
+                        id: "5-7",
+                        question: "Can duress be a defense to a strict liability crime?",
+                        options: {
+                            A: "Yes, duress is a defense to any crime",
+                            B: "No, if the crime is strict liability, duress doesn't apply",
+                            C: "Yes, but only for felonies",
+                            D: "It depends on the seriousness of the duress"
+                        },
+                        correctAnswer: "A",
+                        explanation: "Even for strict liability crimes, duress (threats of serious harm) is a defense. The defendant must show: (1) immediate threat of death/serious harm, (2) from another person, (3) and no reasonable opportunity to escape.",
+                        unit: "Unit V: Defenses to Strict Liability"
+                    },
+                    {
+                        id: "5-8",
+                        question: "What does 'malum in se' have to do with mens rea requirements?",
+                        options: {
+                            A: "Mala in se crimes never require mens rea",
+                            B: "Mala in se crimes typically require mens rea; mala prohibita crimes are often strict liability",
+                            C: "Mala in se and mala prohibita have nothing to do with mens rea",
+                            D: "Only mala prohibita crimes exist in modern law"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Mala in se (inherently wrong) crimes usually require mens rea (murder, rape). Mala prohibita (regulatory) crimes are often strict liability (parking, environmental). This reflects the severity of the wrong.",
+                        unit: "Unit V: Malum in Se & Mens Rea"
+                    }
+                ]
+            },
+            unit6: {
+                title: "UNIT VI: Causation",
+                subtitle: "When is the defendant responsible for the result?",
+                questions: [
+                    {
+                        id: "6-1",
+                        question: "You shoot someone. They're rushed to the hospital, but the ambulance crashes and they die in the crash. Did you cause their death?",
+                        options: {
+                            A: "No, the ambulance crash is an intervening cause that breaks the chain",
+                            B: "Yes, but-for your shooting, they wouldn't have been in the ambulance",
+                            C: "Maybe—it depends on whether the crash was foreseeable",
+                            D: "No, the hospital is responsible"
+                        },
+                        correctAnswer: "C",
+                        explanation: "This is the difference between but-for causation (you caused it) and proximate cause (are you liable?). You satisfy but-for causation, but proximate cause depends on whether the ambulance crash was foreseeable.",
+                        unit: "Unit VI: Proximate vs. But-For"
+                    },
+                    {
+                        id: "6-2",
+                        question: "What is the difference between ACTUAL CAUSE (but-for cause) and PROXIMATE CAUSE?",
+                        options: {
+                            A: "There is no difference—they're the same thing",
+                            B: "Actual cause: 'but-for' the act, harm wouldn't occur. Proximate cause: the defendant should be held liable for the harm",
+                            C: "Actual cause is for civil cases; proximate cause is for criminal cases",
+                            D: "Proximate cause must be proven beyond reasonable doubt; actual cause doesn't"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Actual (but-for) cause: factual test. Proximate cause: fairness test. You can be the actual cause of harm but not liable if the harm is too distant or unforeseeable.",
+                        unit: "Unit VI: Causation Concepts"
+                    },
+                    {
+                        id: "6-3",
+                        question: "If the victim had a pre-existing condition (weak heart) and dies when you strike them, does that affect causation?",
+                        options: {
+                            A: "Yes, the pre-existing condition broke the causal chain",
+                            B: "No, you take your victim as you find them (eggshell rule)",
+                            C: "It depends on whether the victim knew about the condition",
+                            D: "Only if the condition was rare or unusual"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Eggshell rule: if the victim is unusually vulnerable (weak heart, hemophilia), you're liable even though a normal person might survive. You take your victim as you find them.",
+                        unit: "Unit VI: Eggshell Victims"
+                    },
+                    {
+                        id: "6-4",
+                        question: "What is an 'independent intervening cause' and when does it break the causal chain?",
+                        options: {
+                            A: "An act by another person that causes harm; it always breaks the chain",
+                            B: "An act by another person that causes harm; it breaks the chain only if unforeseeable",
+                            C: "An act that was already planned before your crime",
+                            D: "An unintended consequence of your act"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Intervening cause: an act by someone else that causes harm. If it's foreseeable, you're still liable. If it's extraordinary/unforeseeable, it breaks the causal chain.",
+                        unit: "Unit VI: Intervening Causes"
+                    },
+                    {
+                        id: "6-5",
+                        question: "If multiple people contribute to causing harm, can you be liable for all of it?",
+                        options: {
+                            A: "No, only one person can be liable",
+                            B: "Yes, if your act was a substantial factor in causing the harm",
+                            C: "Only if you were the primary cause",
+                            D: "It depends on who caused the most direct harm"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Substantial factor test: if your conduct was a substantial factor in producing the harm, you're liable even if others also contributed. You don't have to be the sole cause.",
+                        unit: "Unit VI: Multiple Causes"
+                    },
+                    {
+                        id: "6-6",
+                        question: "What happens if the victim receives negligent medical treatment after your assault?",
+                        options: {
+                            A: "You're not liable if the medical treatment caused the harm",
+                            B: "You're liable only if the medical treatment was grossly negligent",
+                            C: "You're liable as long as your act was a substantial factor, even if medical care was negligent",
+                            D: "It depends on the type of crime you committed"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Negligent intervening causes usually don't break the chain (you're still liable). BUT if the medical treatment is GROSSLY negligent, it may be extraordinary enough to break causation and shield you.",
+                        unit: "Unit VI: Medical Negligence & Causation"
+                    }
+                ]
+            },
+            unit7: {
+                title: "UNIT VII: Homicide",
+                subtitle: "Murder, manslaughter, and degrees of killing",
+                questions: [
+                    {
+                        id: "7-1",
+                        question: "What is the primary distinction between MURDER and MANSLAUGHTER?",
+                        options: {
+                            A: "Murder is always intentional; manslaughter is always unintentional",
+                            B: "Murder requires malice aforethought; manslaughter is the absence of malice",
+                            C: "Murder is a felony; manslaughter is a misdemeanor",
+                            D: "Murder must be premeditated; manslaughter must be spontaneous"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Malice aforethought (intent to kill, knowing serious bodily injury, extreme recklessness) = murder. Absence of malice = manslaughter. Malice is the key distinction.",
+                        unit: "Unit VII: Murder vs. Manslaughter"
+                    },
+                    {
+                        id: "7-2",
+                        question: "Is thinking about killing someone for 5 seconds enough to constitute 'premeditation'?",
+                        options: {
+                            A: "No, premeditation requires hours or days of planning",
+                            B: "No, there must be time for the person to think about the consequences",
+                            C: "Yes, as long as it's a conscious decision",
+                            D: "It depends on how serious the thought was"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Premeditation requires: (1) formed an intent to kill, (2) with SOME reflection (even brief, but more than instantaneous). Courts require more than a snap decision—there must be time to think.",
+                        unit: "Unit VII: Premeditation"
+                    },
+                    {
+                        id: "7-3",
+                        question: "If someone insults your family and you kill them in a rage, is that murder or manslaughter?",
+                        options: {
+                            A: "Murder, because you acted with intent",
+                            B: "Manslaughter, because the provocation reduced your mental state",
+                            C: "It depends on your relationship to the family member",
+                            D: "Manslaughter, but only if the insult was severe enough"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Heat of passion/provocation: if you kill in immediate response to serious provocation, it reduces murder to manslaughter. Insults alone may not be enough; you need adequate provocation (imminent threat, attempted rape, etc.).",
+                        unit: "Unit VII: Heat of Passion"
+                    },
+                    {
+                        id: "7-4",
+                        question: "Can you be guilty of murder for a death during a robbery, even if you didn't kill anyone?",
+                        options: {
+                            A: "No, only the person who pulled the trigger is guilty of murder",
+                            B: "Yes, under the felony murder rule",
+                            C: "Yes, but only if you caused the conditions leading to death",
+                            D: "Only if you knew the other robber was armed"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Felony murder rule: if a death occurs during the commission of a dangerous felony (robbery, burglary, rape), all participants are guilty of murder—even if they didn't intend or cause the death.",
+                        unit: "Unit VII: Felony Murder Rule"
+                    },
+                    {
+                        id: "7-5",
+                        question: "What if a co-felon (your partner in the robbery) is shot and killed by police during the crime?",
+                        options: {
+                            A: "You're guilty of murder of your co-felon",
+                            B: "The police are guilty of murder, not you",
+                            C: "It depends on whether you knew the police were present",
+                            D: "Most courts now hold you're NOT guilty under the felony murder rule for this scenario"
+                        },
+                        correctAnswer: "D",
+                        explanation: "Modern felony murder rule limitation: courts increasingly hold that you're not liable if a co-felon is killed by police resisting the crime. The 'co-felon killed' exception reflects fairness concerns.",
+                        unit: "Unit VII: Felony Murder Limits"
+                    },
+                    {
+                        id: "7-6",
+                        question: "What is the difference between FIRST-DEGREE and SECOND-DEGREE murder?",
+                        options: {
+                            A: "First-degree is always more intentional; second-degree is less intentional",
+                            B: "First-degree requires premeditation and deliberation; second-degree requires malice without premeditation",
+                            C: "First-degree has mandatory life; second-degree has optional sentences",
+                            D: "First-degree is intentional; second-degree is negligent"
+                        },
+                        correctAnswer: "B",
+                        explanation: "First-degree: premeditation + deliberation + intent to kill (or felony murder). Second-degree: malice aforethought but without premeditation (recklessness, intent to cause SBH, etc.).",
+                        unit: "Unit VII: Degrees of Murder"
+                    },
+                    {
+                        id: "7-7",
+                        question: "What is 'depraved heart' murder?",
+                        options: {
+                            A: "Murder committed for selfish or cruel reasons",
+                            B: "Murder based on extreme recklessness/indifference to human life",
+                            C: "Murder committed by someone with psychopathy",
+                            D: "Murder committed without provocation"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Depraved heart/extreme recklessness: killing through conduct that shows extreme indifference to human life (firing a gun into a crowd, setting a fire in an occupied building). It's murder even without intent to kill.",
+                        unit: "Unit VII: Depraved Heart Murder"
+                    },
+                    {
+                        id: "7-8",
+                        question: "What is VOLUNTARY MANSLAUGHTER?",
+                        options: {
+                            A: "Unintentional killing with criminal negligence",
+                            B: "Intentional killing in the heat of passion or in response to mutual combat",
+                            C: "Intentional killing without adequate provocation",
+                            D: "Reckless killing during a crime"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Voluntary manslaughter: intentional killing but with heat of passion or adequate provocation. It 'reduces' murder to manslaughter because the mental state is partially excused.",
+                        unit: "Unit VII: Voluntary Manslaughter"
+                    },
+                    {
+                        id: "7-9",
+                        question: "What is INVOLUNTARY MANSLAUGHTER?",
+                        options: {
+                            A: "Intentional killing without premeditation",
+                            B: "Unintentional killing through recklessness or criminal negligence",
+                            C: "Unintentional killing during a misdemeanor",
+                            D: "Killing in self-defense that goes too far"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Involuntary manslaughter: unintentional killing through reckless conduct (driving drunk) or criminal negligence (gross failure to care). There's no heat of passion or provocation.",
+                        unit: "Unit VII: Involuntary Manslaughter"
+                    },
+                    {
+                        id: "7-10",
+                        question: "Can you be guilty of murder based on the doctrine of implied malice?",
+                        options: {
+                            A: "No, malice must be expressed or proven explicitly",
+                            B: "Yes, if your conduct shows extreme recklessness, malice is implied",
+                            C: "Only for negligent homicide",
+                            D: "It depends on state law"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Implied malice: courts infer malice (depraved heart) from conduct showing extreme indifference to human life. You don't have to intend to kill—the conduct implies the malice.",
+                        unit: "Unit VII: Implied Malice"
+                    },
+                    {
+                        id: "7-11",
+                        question: "What is the 'misdemeanor manslaughter rule'?",
+                        options: {
+                            A: "A death during the commission of any misdemeanor is manslaughter",
+                            B: "A death during commission of an inherently dangerous misdemeanor is manslaughter",
+                            C: "Any death caused by negligence is automatic manslaughter",
+                            D: "Misdemeanor assault that results in death is murder"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Misdemeanor manslaughter: if a death occurs during an inherently dangerous misdemeanor (unlicensed surgery, traffic violation), it can be manslaughter. Not every misdemeanor will trigger it.",
+                        unit: "Unit VII: Misdemeanor Manslaughter"
+                    },
+                    {
+                        id: "7-12",
+                        question: "Does 'necessity' justify killing an innocent person to save multiple lives?",
+                        options: {
+                            A: "Yes, the math is simple—saving more lives is always justified",
+                            B: "No, you can't intentionally kill an innocent person, even to save others",
+                            C: "Maybe, but the doctrine of necessity is very narrow and rarely applies to killing",
+                            D: "Yes, but only if you get permission from a magistrate"
+                        },
+                        correctAnswer: "C",
+                        explanation: "Necessity (saving 10 lives by killing 1) is theoretically possible but narrow. Most courts say you can't intentionally kill an innocent person, even for great good. It's a rare exception.",
+                        unit: "Unit VII: Necessity & Killing"
+                    }
+                ]
+            },
+            unit8: {
+                title: "UNIT VIII: Property Crimes",
+                subtitle: "Theft, fraud, burglary, and property offenses",
+                questions: [
+                    {
+                        id: "8-1",
+                        question: "What is the difference between STEALING (larceny) and FRAUD?",
+                        options: {
+                            A: "Stealing is taking property; fraud is deceiving someone about property",
+                            B: "Stealing involves force; fraud involves deception",
+                            C: "There's no difference—they're synonyms",
+                            D: "Stealing is a felony; fraud is a misdemeanor"
+                        },
+                        correctAnswer: "A",
+                        explanation: "Larceny (theft): taking and carrying away someone else's property with intent to permanently deprive. Fraud (false pretenses): deceiving someone into voluntarily handing over property. Different acts, different crimes.",
+                        unit: "Unit VIII: Larceny vs. Fraud"
+                    },
+                    {
+                        id: "8-2",
+                        question: "If you borrow something and then decide to keep it forever, is that larceny?",
+                        options: {
+                            A: "No, because you didn't intend to steal it initially",
+                            B: "Yes, if you later form the intent to permanently deprive the owner",
+                            C: "It depends on whether you asked permission to borrow",
+                            D: "No, borrowing is never larceny"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Later-formed intent: if you borrow with honest intent to return but later decide to keep it, that's larceny. The time when you form intent to permanently deprive doesn't matter.",
+                        unit: "Unit VIII: Later-Formed Intent"
+                    },
+                    {
+                        id: "8-3",
+                        question: "What if you trick someone into giving you their property (false pretenses)?",
+                        options: {
+                            A: "That's larceny because you took it",
+                            B: "That's fraud (obtaining property by false pretenses), not larceny",
+                            C: "That's not a crime—the person agreed to give it",
+                            D: "It depends on whether you used force"
+                        },
+                        correctAnswer: "B",
+                        explanation: "False pretenses/fraud: obtaining property through deception (lying about who you are, what you'll do with it). The owner voluntarily transfers it but is deceived. It's fraud, not larceny.",
+                        unit: "Unit VIII: False Pretenses"
+                    },
+                    {
+                        id: "8-4",
+                        question: "What is EMBEZZLEMENT?",
+                        options: {
+                            A: "Stealing from an employer",
+                            B: "Misappropriating property you have legal possession of (employee stealing from employer)",
+                            C: "Fraud involving financial documents",
+                            D: "Stealing from a bank"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Embezzlement: taking property you already have legal possession of (as employee, trustee, agent) and converting it to your use. You don't 'take' it (you have it), but you betray the trust.",
+                        unit: "Unit VIII: Embezzlement"
+                    },
+                    {
+                        id: "8-5",
+                        question: "What is BURGLARY?",
+                        options: {
+                            A: "Stealing someone's property",
+                            B: "Breaking into a building with intent to commit a felony (theft, assault, rape, etc.)",
+                            C: "Breaking into someone's home",
+                            D: "Theft from a store"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Burglary: (1) Breaking/entering (or unlawful entry), (2) Into a dwelling or building, (3) With intent to commit a felony (not just theft—any felony). The crime is complete at intent; you don't have to actually steal.",
+                        unit: "Unit VIII: Burglary"
+                    },
+                    {
+                        id: "8-6",
+                        question: "What is ROBBERY?",
+                        options: {
+                            A: "Stealing from a store",
+                            B: "Taking property by force or threat of force",
+                            C: "Breaking into a home",
+                            D: "Shoplifting with a weapon"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Robbery: larceny + force (or threat of force). The force/threat causes the victim to yield the property. Without force, it's just larceny; with force, it becomes robbery (more serious).",
+                        unit: "Unit VIII: Robbery"
+                    },
+                    {
+                        id: "8-7",
+                        question: "Can you have property rights in stolen property?",
+                        options: {
+                            A: "Yes, once you possess it for long enough",
+                            B: "No, the original owner's rights are superior",
+                            C: "It depends on how you obtained it",
+                            D: "Only if you're a good-faith purchaser"
+                        },
+                        correctAnswer: "B",
+                        explanation: "No valid title through theft: the original owner's rights are always superior. This is why receiving stolen property is a crime—you can't acquire rights to it.",
+                        unit: "Unit VIII: Stolen Property Rights"
+                    },
+                    {
+                        id: "8-8",
+                        question: "What is the crime of RECEIVING STOLEN PROPERTY?",
+                        options: {
+                            A: "Buying stolen property accidentally",
+                            B: "Knowingly receiving/retaining stolen property with intent to permanently deprive the owner",
+                            C: "Any transaction involving stolen goods",
+                            D: "Selling stolen property on behalf of a thief"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Receiving stolen property: (1) Property is stolen, (2) You knowingly receive/retain it, (3) With knowledge of its stolen status, (4) With intent to permanently deprive the owner. It's a way to prosecute fences/receivers.",
+                        unit: "Unit VIII: Receiving Stolen Property"
+                    }
+                ]
+            },
+            unit9: {
+                title: "UNIT IX: Self-Defense & Justification",
+                subtitle: "When is using force lawful? Imminence, proportionality, and reasonable belief",
+                questions: [
+                    {
+                        id: "9-1",
+                        question: "What are the main elements of self-defense?",
+                        options: {
+                            A: "Intention to cause harm, ability to cause harm, and opportunity",
+                            B: "Imminent threat, reasonable belief force is necessary, proportional response, and no initial aggression by defendant",
+                            C: "Any threat, any response, any time",
+                            D: "Fear of future harm, any weapons, warning to opponent"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Self-defense requires: (1) imminent unlawful threat, (2) reasonable belief force is necessary, (3) proportional response to the threat, (4) defendant didn't initially provoke. All four must be present.",
+                        unit: "Unit IX: Self-Defense Elements"
+                    },
+                    {
+                        id: "9-2",
+                        question: "What does 'imminence' mean in self-defense?",
+                        options: {
+                            A: "A threat that might happen sometime in the future",
+                            B: "A threat of harm about to occur immediately",
+                            C: "Any threatening language or gesture",
+                            D: "The victim's general bad reputation"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Imminence: the threat must be IMMEDIATE—about to happen right now. Future threats don't justify present force. If someone says 'I'll hurt you tomorrow,' that's not imminent; self-defense doesn't apply today.",
+                        unit: "Unit IX: Imminence Requirement"
+                    },
+                    {
+                        id: "9-3",
+                        question: "If someone punches you, can you respond with a deadly weapon?",
+                        options: {
+                            A: "Yes, you can always use maximum force",
+                            B: "No, you must always use non-deadly force first",
+                            C: "Only if the punch causes serious injury",
+                            D: "It depends on whether the force is proportional to the threat"
+                        },
+                        correctAnswer: "D",
+                        explanation: "Proportionality: your response must match the threat's severity. A punch doesn't justify using a gun (usually). You must use reasonable force proportional to the threat. Deadly force is justified only against threats of death or serious bodily injury.",
+                        unit: "Unit IX: Proportionality Requirement"
+                    },
+                    {
+                        id: "9-4",
+                        question: "Does self-defense apply if YOU started the fight?",
+                        options: {
+                            A: "Yes, self-defense always applies",
+                            B: "No, self-defense never applies if you were the initial aggressor",
+                            C: "Only if the other person used more force than you did",
+                            D: "Only if you clearly withdrew from the fight"
+                        },
+                        correctAnswer: "D",
+                        explanation: "Initial aggression bars self-defense, but with exception: if you clearly withdrew from the fight and the opponent continued, self-defense applies to the renewed attack. You must communicate your intention to stop fighting.",
+                        unit: "Unit IX: Initial Aggression Limitation"
+                    },
+                    {
+                        id: "9-5",
+                        question: "What is the difference between JUSTIFICATION and EXCUSE defenses?",
+                        options: {
+                            A: "Justification means the conduct was lawful; excuse means you aren't blamed even though conduct was wrong",
+                            B: "Justification is available for any crime; excuse is not",
+                            C: "There's no difference—they're the same thing",
+                            D: "Justification applies to misdemeanors; excuse to felonies"
+                        },
+                        correctAnswer: "A",
+                        explanation: "Justification: the conduct was LAWFUL—you had the right to do it (self-defense). Excuse: the conduct was WRONG, but you shouldn't be blamed (duress, insanity). Self-defense is justification; the defendant did no wrong.",
+                        unit: "Unit IX: Justification vs. Excuse"
+                    },
+                    {
+                        id: "9-6",
+                        question: "Can you use self-defense against police lawfully arresting you?",
+                        options: {
+                            A: "Yes, self-defense applies against anyone",
+                            B: "No, you cannot resist a lawful arrest by using force",
+                            C: "Only if the police are using excessive force",
+                            D: "It depends on whether the arrest warrant is valid"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Self-defense against lawful arrest: generally NOT available. You cannot use force to resist a lawful arrest. The remedy is going to court, not fighting police. However, if police use EXCESSIVE force beyond what's needed, you may defend yourself against that excessive force.",
+                        unit: "Unit IX: No Self-Defense Against Lawful Arrest"
+                    },
+                    {
+                        id: "9-7",
+                        question: "Does self-defense require the threat to be REAL, or just the defendant's BELIEF?",
+                        options: {
+                            A: "The threat must be real (objective)",
+                            B: "Defendant's honest belief is sufficient (subjective only)",
+                            C: "Both: defendant must reasonably believe the threat is real (subjective + objective)",
+                            D: "It depends on the defendant's prior experience with violence"
+                        },
+                        correctAnswer: "C",
+                        explanation: "Most jurisdictions require BOTH: (1) the defendant actually believed force was necessary (subjective), AND (2) that belief was reasonable (objective reasonableness). However, the reasonable person can account for the defendant's prior experiences (Goetz).",
+                        unit: "Unit IX: Subjective + Objective Reasonableness"
+                    },
+                    {
+                        id: "9-8",
+                        question: "What is 'imperfect self-defense' under the MPC?",
+                        options: {
+                            A: "Self-defense that fails completely",
+                            B: "Honest but unreasonable belief in threat, or disproportional response (reduces murder to manslaughter)",
+                            C: "Self-defense without proportionality",
+                            D: "Defensive force that accidentally causes injury"
+                        },
+                        correctAnswer: "B",
+                        explanation: "Imperfect self-defense (MPC § 3.09): even if self-defense fails (belief was unreasonable or response disproportional), defendant may reduce murder to manslaughter if they acted under honest belief (even if unreasonable) that force was necessary.",
+                        unit: "Unit IX: Imperfect Self-Defense"
+                    }
+                ]
+            }
+        };
+
+        // Application state (in-memory only)
+        let appState = {
+            currentMode: 'select', // 'select' or 'all'
+            currentUnit: null,
+            currentQuiz: null,
+            answers: {},
+            quizStartTime: null,
+            results: null
+        };
+
+        // Initialize the app
+        function init() {
+            renderUnitSelector();
+            attachEventListeners();
+        }
+
+        // Render unit selector
+        function renderUnitSelector() {
+            const container = document.getElementById('unitSelector');
+            container.innerHTML = '';
+
+            Object.entries(quizzes).forEach(([unitId, unitData]) => {
+                const btn = document.createElement('button');
+                btn.className = 'unit-btn';
+                btn.innerHTML = `
+                    <div class="unit-btn-title">${unitData.title}</div>
+                    <div class="unit-btn-questions">${unitData.questions.length} questions</div>
+                `;
+                btn.addEventListener('click', () => startQuiz(unitId));
+                container.appendChild(btn);
+            });
+        }
+
+        // Start a quiz
+        function startQuiz(unitId) {
+            appState.currentUnit = unitId;
+            appState.currentQuiz = quizzes[unitId];
+            appState.answers = {};
+            appState.results = null;
+            appState.quizStartTime = Date.now();
+
+            document.getElementById('unitSelector').style.display = 'none';
+            document.getElementById('resultsContainer').classList.remove('active');
+            document.getElementById('quizContainer').classList.add('active');
+
+            renderQuiz();
+        }
+
+        // Render quiz questions
+        function renderQuiz() {
+            const quiz = appState.currentQuiz;
+            document.getElementById('quizTitle').textContent = quiz.title;
+
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quiz.questions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `question-${q.id}`;
+
+                const questionNum = document.createElement('div');
+                questionNum.className = 'question-number';
+                questionNum.textContent = `Question ${index + 1} of ${quiz.questions.length}`;
+
+                const questionText = document.createElement('div');
+                questionText.className = 'question-text';
+                questionText.textContent = q.question;
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'answer-options';
+
+                Object.entries(q.options).forEach(([key, text]) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'answer-option';
+                    btn.textContent = `${key}. ${text}`;
+                    btn.addEventListener('click', () => selectAnswer(q.id, key, btn, optionsDiv, index));
+                    optionsDiv.appendChild(btn);
+                });
+
+                const feedback = document.createElement('div');
+                feedback.className = 'answer-feedback';
+                feedback.id = `feedback-${q.id}`;
+
+                card.appendChild(questionNum);
+                card.appendChild(questionText);
+                card.appendChild(optionsDiv);
+                card.appendChild(feedback);
+                container.appendChild(card);
+            });
+
+            updateProgress();
+        }
+
+        // Select an answer
+        function selectAnswer(questionId, answer, btn, optionsDiv, questionIndex) {
+            appState.answers[questionId] = answer;
+
+            // Disable all options
+            optionsDiv.querySelectorAll('.answer-option').forEach(option => {
+                option.classList.remove('selected');
+                option.classList.add('disabled');
+            });
+
+            // Mark selected
+            btn.classList.add('selected');
+
+            // Show feedback
+            const question = appState.currentQuiz.questions.find(q => q.id === questionId);
+            const isCorrect = answer === question.correctAnswer;
+
+            const feedback = document.getElementById(`feedback-${questionId}`);
+            const card = document.getElementById(`question-${questionId}`);
+
+            if (isCorrect) {
+                feedback.className = 'answer-feedback show feedback-correct';
+                card.classList.add('answered');
+            } else {
+                feedback.className = 'answer-feedback show feedback-incorrect';
+            }
+
+            feedback.innerHTML = `
+                <div class="feedback-title">${isCorrect ? '✓ Correct!' : '⚡ Not quite — but that\'s the point!'}</div>
+                <div class="feedback-explanation">${question.explanation}</div>
+                <div class="feedback-unit">Covered in: ${question.unit}</div>
+            `;
+
+            updateProgress();
+        }
+
+        // Update progress counter
+        function updateProgress() {
+            const quiz = appState.currentQuiz;
+            const answered = Object.keys(appState.answers).length;
+            const correct = Object.keys(appState.answers).filter(
+                qId => appState.answers[qId] === quiz.questions.find(q => q.id === qId).correctAnswer
+            ).length;
+
+            document.getElementById('questionCounter').textContent = `${answered}/${quiz.questions.length}`;
+            document.getElementById('scoreCounter').textContent = `${correct}/${quiz.questions.length}`;
+        }
+
+        // Submit quiz
+        function submitQuiz() {
+            const quiz = appState.currentQuiz;
+            const answered = Object.keys(appState.answers).length;
+
+            if (answered < quiz.questions.length) {
+                alert('Please answer all questions before submitting.');
+                return;
+            }
+
+            // Calculate results
+            const correct = Object.keys(appState.answers).filter(
+                qId => appState.answers[qId] === quiz.questions.find(q => q.id === qId).correctAnswer
+            ).length;
+
+            const gaps = quiz.questions
+                .filter(q => appState.answers[q.id] !== q.correctAnswer)
+                .map(q => ({ question: q.question.substring(0, 60) + '...', unit: q.unit }));
+
+            appState.results = {
+                correct,
+                total: quiz.questions.length,
+                percentage: Math.round((correct / quiz.questions.length) * 100),
+                gaps
+            };
+
+            showResults();
+        }
+
+        // Show results
+        function showResults() {
+            const results = appState.results;
+            const quiz = appState.currentQuiz;
+
+            document.getElementById('quizContainer').classList.remove('active');
+            document.getElementById('resultsContainer').classList.add('active');
+            document.getElementById('finalScore').textContent = `${results.correct}/${results.total}`;
+
+            const scoreMessage = `
+                <strong>You got ${results.correct}/${results.total} (${results.percentage}%)</strong><br><br>
+                Perfect! Your brain is now primed to learn these concepts. The answers you got wrong? That's exactly why you took this diagnostic—your brain will encode these concepts more deeply because you've already thought about them.<br><br>
+                Ready to dive into the unit and crush these concepts? Let's go!
+            `;
+            document.getElementById('scoreMessage').innerHTML = scoreMessage;
+
+            // Show gaps
+            if (results.gaps.length > 0) {
+                const gapHTML = `
+                    <strong style="display: block; margin-bottom: 12px;">Areas to prioritize:</strong>
+                    ${results.gaps.map(gap => `
+                        <div class="gap-item">
+                            <span class="gap-icon"></span>
+                            <strong>${gap.unit}</strong>
+                        </div>
+                    `).join('')}
+                `;
+                document.getElementById('gapAnalysis').innerHTML = gapHTML;
+            }
+        }
+
+        // Reset quiz
+        function resetQuiz() {
+            startQuiz(appState.currentUnit);
+        }
+
+        // Back to units
+        function backToUnits() {
+            appState.currentUnit = null;
+            appState.currentQuiz = null;
+            document.getElementById('quizContainer').classList.remove('active');
+            document.getElementById('resultsContainer').classList.remove('active');
+            document.getElementById('unitSelector').style.display = 'grid';
+            renderUnitSelector();
+        }
+
+        // Attach event listeners
+        function attachEventListeners() {
+            document.getElementById('submitBtn').addEventListener('click', submitQuiz);
+            document.getElementById('resetBtn').addEventListener('click', resetQuiz);
+            document.getElementById('backBtn').addEventListener('click', backToUnits);
+            document.getElementById('retakeBtn').addEventListener('click', resetQuiz);
+            document.getElementById('nextUnitBtn').addEventListener('click', () => {
+                const units = Object.keys(quizzes);
+                const currentIndex = units.indexOf(appState.currentUnit);
+                if (currentIndex < units.length - 1) {
+                    startQuiz(units[currentIndex + 1]);
+                } else {
+                    alert('You\'ve completed all units!');
+                    backToUnits();
+                }
+            });
+            document.getElementById('backToSelectBtn').addEventListener('click', backToUnits);
+
+            // Mode selector
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    appState.currentMode = btn.dataset.mode;
+
+                    if (appState.currentMode === 'all') {
+                        const units = Object.keys(quizzes);
+                        startQuiz(units[0]);
+                    }
+                });
+            });
+        }
+
+        // Start the app
+        init();
+    </script>
+    <script src="../shared.js"></script>
+    <script src="../navbar.js"></script>
+</body>
+</html>
